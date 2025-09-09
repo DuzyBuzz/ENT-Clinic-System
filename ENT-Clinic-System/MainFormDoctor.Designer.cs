@@ -56,8 +56,8 @@
             this.systemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainPanel = new System.Windows.Forms.Panel();
             this.doctorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -171,14 +171,14 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(226, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(260, 30);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // printReportToolStripMenuItem
             // 
             this.printReportToolStripMenuItem.Name = "printReportToolStripMenuItem";
-            this.printReportToolStripMenuItem.Size = new System.Drawing.Size(226, 30);
-            this.printReportToolStripMenuItem.Text = "Print Patient Form";
+            this.printReportToolStripMenuItem.Size = new System.Drawing.Size(260, 30);
+            this.printReportToolStripMenuItem.Text = "Compare Consultation";
             // 
             // fileToolStripMenuItem
             // 
@@ -272,6 +272,12 @@
             this.logoutToolStripMenuItem.Size = new System.Drawing.Size(142, 30);
             this.logoutToolStripMenuItem.Text = "Logout";
             // 
+            // doctorToolStripMenuItem
+            // 
+            this.doctorToolStripMenuItem.Name = "doctorToolStripMenuItem";
+            this.doctorToolStripMenuItem.Size = new System.Drawing.Size(76, 29);
+            this.doctorToolStripMenuItem.Text = "Doctor";
+            // 
             // MainPanel
             // 
             this.MainPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MainPanel.BackgroundImage")));
@@ -284,12 +290,6 @@
             this.MainPanel.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
-            // 
-            // doctorToolStripMenuItem
-            // 
-            this.doctorToolStripMenuItem.Name = "doctorToolStripMenuItem";
-            this.doctorToolStripMenuItem.Size = new System.Drawing.Size(76, 29);
-            this.doctorToolStripMenuItem.Text = "Doctor";
             // 
             // MainFormDoctor
             // 
