@@ -106,7 +106,6 @@ namespace ENT_Clinic_System.CustomUI
                 BorderStyle = BorderStyle.FixedSingle
             };
 
-            capturedImagesPanel.Controls.Add(pb);
         }
         private void CameraUI_FormClosing(object sender, FormClosingEventArgs e)
         {

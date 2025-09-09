@@ -8,13 +8,20 @@ namespace ENT_Clinic_System.CustomUI
 {
     public class CameraToolStrip
     {
-        private ToolStrip toolStrip;
-        private FlowLayoutPanel capturedPanel;
+        private readonly ToolStrip toolStrip;
+        private readonly FlowLayoutHelper flowHelper; // ✅ Use helper, not direct panel
+
+        /// <summary>
+        /// Raised whenever a new image is successfully added (from camera or upload).
+        /// </summary>
+        public event EventHandler<Bitmap> ImageAdded;
 
         public CameraToolStrip(ToolStrip toolStrip, FlowLayoutPanel capturedPanel)
         {
             this.toolStrip = toolStrip ?? throw new ArgumentNullException(nameof(toolStrip));
-            this.capturedPanel = capturedPanel ?? throw new ArgumentNullException(nameof(capturedPanel));
+            if (capturedPanel == null) throw new ArgumentNullException(nameof(capturedPanel));
+
+            flowHelper = new FlowLayoutHelper(capturedPanel);
             InitializeControls();
         }
 
@@ -59,7 +66,7 @@ namespace ENT_Clinic_System.CustomUI
 
         private void OpenCamera()
         {
-            // Open CameraUI form
+            // Use ShowDialog to block until closed
             using (CameraUI camWindow = new CameraUI())
             {
                 camWindow.StartPosition = FormStartPosition.CenterParent;
@@ -67,16 +74,18 @@ namespace ENT_Clinic_System.CustomUI
                 // Subscribe to captured image event
                 camWindow.ImageCaptured += (sender, bitmap) =>
                 {
-                    // Add captured image to FlowLayoutPanel
-                    PictureBox pb = new PictureBox
+                    try
                     {
-                        Image = bitmap,
-                        Width = 150,
-                        Height = 150,
-                        SizeMode = PictureBoxSizeMode.Zoom,
-                        Margin = new Padding(5)
-                    };
-                    capturedPanel.Controls.Add(pb);
+                        // ✅ Add via helper so delete + notes are enabled
+                        flowHelper.AddImage(bitmap);
+
+                        // Notify listeners
+                        ImageAdded?.Invoke(this, bitmap);
+                    }
+                    finally
+                    {
+                        bitmap.Dispose(); // we cloned inside AddImage, safe to dispose original
+                    }
                 };
 
                 camWindow.ShowDialog();
@@ -92,18 +101,14 @@ namespace ENT_Clinic_System.CustomUI
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    string path = ofd.FileName;
-                    Bitmap img = new Bitmap(path);
-
-                    PictureBox pb = new PictureBox
+                    using (Bitmap img = new Bitmap(ofd.FileName))
                     {
-                        Image = img,
-                        Width = 150,
-                        Height = 150,
-                        SizeMode = PictureBoxSizeMode.Zoom,
-                        Margin = new Padding(5)
-                    };
-                    capturedPanel.Controls.Add(pb);
+                        // ✅ Add via helper
+                        flowHelper.AddImage(img);
+
+                        // Notify listeners
+                        ImageAdded?.Invoke(this, (Bitmap)img.Clone());
+                    }
                 }
             }
         }

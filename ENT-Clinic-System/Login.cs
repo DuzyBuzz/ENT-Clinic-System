@@ -86,7 +86,9 @@ namespace ENT_Clinic_System
             try
             {
                 using (var conn = DBConfig.GetConnection())
-                using (var cmd = new MySqlCommand("SELECT user_id, username, password, full_name, role FROM user WHERE username=@username", conn))
+                using (var cmd = new MySqlCommand(
+                    "SELECT user_id, username, password, full_name, role " +
+                    "FROM user WHERE BINARY username=@username", conn))
                 {
                     cmd.Parameters.AddWithValue("@username", username);
                     conn.Open();
@@ -98,7 +100,8 @@ namespace ENT_Clinic_System
                             string storedPassword = reader["password"].ToString();
                             string role = reader["role"].ToString();
 
-                            if (storedPassword == password) // ⚠️ plaintext check (later you should use hashing like BCrypt)
+                            // ✅ force case-sensitive password check
+                            if (string.Equals(storedPassword, password, StringComparison.Ordinal))
                             {
                                 // ✅ Save user credentials globally
                                 UserCredentials.UserId = Convert.ToInt32(reader["user_id"]);
@@ -142,6 +145,7 @@ namespace ENT_Clinic_System
                 MessageBox.Show("Error connecting to database: " + ex.Message, "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
     }
 }

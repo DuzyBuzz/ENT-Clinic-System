@@ -7,58 +7,94 @@ namespace ENT_Clinic_System.Helpers
 {
     internal class FlowLayoutHelper
     {
-        private FlowLayoutPanel panel;
+        private readonly FlowLayoutPanel panel;
 
-        // Dictionary to store PictureBox -> note mapping
-        private Dictionary<PictureBox, string> imageNotes = new Dictionary<PictureBox, string>();
+        // Map Panel -> (PictureBox, Label, Note)
+        private readonly Dictionary<Panel, (PictureBox Pb, Label NoteLabel, string Note)> imageNotes
+            = new Dictionary<Panel, (PictureBox, Label, string)>();
 
         public FlowLayoutHelper(FlowLayoutPanel flowPanel)
         {
             panel = flowPanel ?? throw new ArgumentNullException(nameof(flowPanel));
+
+            // Configure FlowLayoutPanel for wrapping layout
+            panel.AutoScroll = true;
+            panel.WrapContents = true;
         }
 
         /// <summary>
-        /// Add an image to the FlowLayoutPanel with optional initial note
+        /// Add an image to the FlowLayoutPanel with optional initial note.
         /// </summary>
-        public void AddImage(Bitmap image, string initialNote = "")
+        public Panel AddImage(Bitmap image, string initialNote = "")
         {
-            if (image == null) return;
+            if (image == null) return null;
 
+            // --- Container panel ---
+            Panel container = new Panel
+            {
+                Width = 150,
+                Height = 190, // 150 image + 40 label
+                Margin = new Padding(5),
+                BorderStyle = BorderStyle.FixedSingle
+            };
+
+            // --- Image box ---
             PictureBox pb = new PictureBox
             {
                 Image = (Bitmap)image.Clone(),
                 SizeMode = PictureBoxSizeMode.Zoom,
                 Width = 150,
                 Height = 150,
-                Margin = new Padding(5),
-                BorderStyle = BorderStyle.FixedSingle,
+                Dock = DockStyle.Top,
                 Cursor = Cursors.Hand
             };
 
-            // Save initial note
-            imageNotes[pb] = initialNote;
+            // --- Label for notes ---
+            Label noteLabel = new Label
+            {
+                Text = string.IsNullOrEmpty(initialNote) ? "(double-click to add note)" : initialNote,
+                Dock = DockStyle.Bottom,
+                Height = 35,
+                TextAlign = ContentAlignment.TopCenter,
+                AutoEllipsis = true // show "..." if text is long
+            };
 
-            // Click to edit note
-            pb.Click += (s, e) => EditNote(pb);
+            // Save mapping
+            imageNotes[container] = (pb, noteLabel, initialNote);
 
-            // Optional: Context menu to delete
+            // Context menu (delete)
             ContextMenuStrip menu = new ContextMenuStrip();
-            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete");
-            deleteItem.Click += (s, e) => DeleteImage(pb);
+            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete")
+            {
+                ForeColor = Color.Red
+            };
+            deleteItem.Click += (s, e) => DeleteImage(container);
             menu.Items.Add(deleteItem);
             pb.ContextMenuStrip = menu;
+            noteLabel.ContextMenuStrip = menu;
 
-            panel.Controls.Add(pb);
+            // Click to edit note
+            pb.DoubleClick += (s, e) => EditNote(container);
+            noteLabel.DoubleClick += (s, e) => EditNote(container);
+
+            // Build container
+            container.Controls.Add(noteLabel);
+            container.Controls.Add(pb);
+
+            panel.Controls.Add(container);
+
+            return container;
         }
 
         /// <summary>
-        /// Edit the note associated with the PictureBox
+        /// Edit the note associated with an image container.
         /// </summary>
-        private void EditNote(PictureBox pb)
+        private void EditNote(Panel container)
         {
-            if (!imageNotes.ContainsKey(pb)) return;
+            if (!imageNotes.ContainsKey(container)) return;
 
-            string currentNote = imageNotes[pb];
+            var data = imageNotes[container];
+
             using (Form noteForm = new Form())
             {
                 noteForm.Text = "Edit Note";
@@ -69,7 +105,7 @@ namespace ENT_Clinic_System.Helpers
                 {
                     Multiline = true,
                     Dock = DockStyle.Fill,
-                    Text = currentNote
+                    Text = data.Note
                 };
                 noteForm.Controls.Add(tb);
 
@@ -81,7 +117,9 @@ namespace ENT_Clinic_System.Helpers
                 };
                 saveBtn.Click += (s, e) =>
                 {
-                    imageNotes[pb] = tb.Text;
+                    string newNote = tb.Text;
+                    imageNotes[container] = (data.Pb, data.NoteLabel, newNote);
+                    data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "(double-click to add note)" : newNote;
                     noteForm.Close();
                 };
                 noteForm.Controls.Add(saveBtn);
@@ -91,28 +129,32 @@ namespace ENT_Clinic_System.Helpers
         }
 
         /// <summary>
-        /// Delete the image and note
+        /// Delete an image container and its note.
         /// </summary>
-        public void DeleteImage(PictureBox pb)
+        public void DeleteImage(Panel container)
         {
-            if (panel.Controls.Contains(pb))
+            if (panel.Controls.Contains(container))
             {
-                panel.Controls.Remove(pb);
-                pb.Dispose();
-                if (imageNotes.ContainsKey(pb))
-                    imageNotes.Remove(pb);
+                // Dispose picturebox image
+                var data = imageNotes[container];
+                data.Pb.Image?.Dispose();
+
+                panel.Controls.Remove(container);
+                container.Dispose();
+                imageNotes.Remove(container);
             }
         }
 
         /// <summary>
-        /// Get all images with their notes
+        /// Get all images with their notes.
         /// </summary>
         public List<(Bitmap Image, string Note)> GetAllImages()
         {
             List<(Bitmap, string)> list = new List<(Bitmap, string)>();
             foreach (var kvp in imageNotes)
             {
-                list.Add((kvp.Key.Image as Bitmap, kvp.Value));
+                // clone so caller owns it safely
+                list.Add(((Bitmap)kvp.Value.Pb.Image.Clone(), kvp.Value.Note));
             }
             return list;
         }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -27,18 +28,20 @@ namespace ENT_Clinic_System.UserControls
             _patientId = patientId;
             Debug.WriteLine(patientId);
 
-
+            LoadPatientLabels(_patientId);
 
         }
 
         private void InitializeCamera()
         {
-            // Initialize the camera toolbar
             cameraToolStrip = new CameraToolStrip(imageToolStrip, imageFlowLayoutPanel);
 
-            flowHelper = new FlowLayoutHelper(imageFlowLayoutPanel);
+            // Optional: listen if you want
+            cameraToolStrip.ImageAdded += (s, bmp) =>
+            {
+                Debug.WriteLine("New image added to panel.");
+            };
         }
-
         private void ConsultationControl_Load(object sender, EventArgs e)
         {
             ToolStripInitializer();
@@ -46,6 +49,27 @@ namespace ENT_Clinic_System.UserControls
             InitializeCamera();
 
         }
+        private void LoadPatientLabels(int patientId)
+        {
+            try
+            {
+                fullNameLabel.Text = PatientDataHelper.GetPatientValue(patientId, "full_name");
+                addressLabel.Text = PatientDataHelper.GetPatientValue(patientId, "address");
+                ageLabel.Text = PatientDataHelper.GetPatientValue(patientId, "age");
+                sexLabel.Text = PatientDataHelper.GetPatientValue(patientId, "sex");
+                civilStatusLabel.Text = PatientDataHelper.GetPatientValue(patientId, "civil_status");
+                patientContactNumberLabel.Text = PatientDataHelper.GetPatientValue(patientId, "patient_contact_number");
+                emergencyNameLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_name");
+                emergencyContactNumberLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_contact_number");
+                emergencyRelationshipLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_relationship");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading patient info: " + ex.Message, "Database Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         // Stop camera safely when needed (e.g., button click)
         private void button1_Click(object sender, EventArgs e)
@@ -81,6 +105,11 @@ namespace ENT_Clinic_System.UserControls
         }
 
         private void earsDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel25_Paint(object sender, PaintEventArgs e)
         {
 
         }

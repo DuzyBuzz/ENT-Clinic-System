@@ -134,6 +134,7 @@
       <DependentUpon>ImageEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PatientAgeHelper.cs" />
+    <Compile Include="Helpers\PatientDataHelper.cs" />
     <Compile Include="Helpers\PhoneNumberValidatorHelper.cs" />
     <Compile Include="Helpers\PlaceholderHelper.cs" />
     <Compile Include="CustomUI\RichTextBulletHelper.cs" />
