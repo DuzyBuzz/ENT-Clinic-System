@@ -1,6 +1,10 @@
-﻿using System;
+﻿using ENT_Clinic_System.CustomUI;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Helpers
@@ -8,37 +12,41 @@ namespace ENT_Clinic_System.Helpers
     internal class FlowLayoutHelper
     {
         private readonly FlowLayoutPanel panel;
+        private readonly FlowLayoutPanel capturedPanel;
 
-        // Map Panel -> (PictureBox, Label, Note)
-        private readonly Dictionary<Panel, (PictureBox Pb, Label NoteLabel, string Note)> imageNotes
-            = new Dictionary<Panel, (PictureBox, Label, string)>();
+        private readonly Dictionary<Panel, (PictureBox Pb, Label NoteLabel, Label CategoryLabel, string Note, string Category)> imageNotes
+            = new Dictionary<Panel, (PictureBox, Label, Label, string, string)>();
 
-        public FlowLayoutHelper(FlowLayoutPanel flowPanel)
+        private readonly string[] categories = new[] { "Nose", "Ears", "Throat" };
+
+        public FlowLayoutHelper(FlowLayoutPanel flowPanel, FlowLayoutPanel capturedImagesPanel = null)
         {
             panel = flowPanel ?? throw new ArgumentNullException(nameof(flowPanel));
+            capturedPanel = capturedImagesPanel;
 
-            // Configure FlowLayoutPanel for wrapping layout
             panel.AutoScroll = true;
             panel.WrapContents = true;
+
+            if (capturedPanel != null)
+            {
+                capturedPanel.AutoScroll = true;
+                capturedPanel.WrapContents = true;
+            }
         }
 
-        /// <summary>
-        /// Add an image to the FlowLayoutPanel with optional initial note.
-        /// </summary>
-        public Panel AddImage(Bitmap image, string initialNote = "")
+        public Panel AddImage(Bitmap image, string initialNote = "", string initialCategory = "")
         {
             if (image == null) return null;
+            if (string.IsNullOrEmpty(initialCategory)) initialCategory = "(no category)";
 
-            // --- Container panel ---
             Panel container = new Panel
             {
                 Width = 150,
-                Height = 190, // 150 image + 40 label
+                Height = 220,
                 Margin = new Padding(5),
                 BorderStyle = BorderStyle.FixedSingle
             };
 
-            // --- Image box ---
             PictureBox pb = new PictureBox
             {
                 Image = (Bitmap)image.Clone(),
@@ -49,93 +57,228 @@ namespace ENT_Clinic_System.Helpers
                 Cursor = Cursors.Hand
             };
 
-            // --- Label for notes ---
             Label noteLabel = new Label
             {
                 Text = string.IsNullOrEmpty(initialNote) ? "(double-click to add note)" : initialNote,
                 Dock = DockStyle.Bottom,
                 Height = 35,
                 TextAlign = ContentAlignment.TopCenter,
-                AutoEllipsis = true // show "..." if text is long
+                AutoEllipsis = true
             };
 
-            // Save mapping
-            imageNotes[container] = (pb, noteLabel, initialNote);
-
-            // Context menu (delete)
-            ContextMenuStrip menu = new ContextMenuStrip();
-            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete")
+            Label categoryLabel = new Label
             {
-                ForeColor = Color.Red
+                Text = initialCategory,
+                Dock = DockStyle.Bottom,
+                Height = 20,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Segoe UI", 8, FontStyle.Italic),
+                ForeColor = Color.Gray
             };
+
+            imageNotes[container] = (pb, noteLabel, categoryLabel, initialNote, initialCategory);
+
+            // Context menu: only delete
+            ContextMenuStrip menu = new ContextMenuStrip();
+            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete") { ForeColor = Color.Red };
             deleteItem.Click += (s, e) => DeleteImage(container);
             menu.Items.Add(deleteItem);
+
             pb.ContextMenuStrip = menu;
             noteLabel.ContextMenuStrip = menu;
+            categoryLabel.ContextMenuStrip = menu;
 
-            // Click to edit note
-            pb.DoubleClick += (s, e) => EditNote(container);
-            noteLabel.DoubleClick += (s, e) => EditNote(container);
+            // ====== Double-clicks ======
+            pb.DoubleClick += (s, e) =>
+            {
+                if (pb.Image != null)
+                    OpenImageInDefaultViewer(new Bitmap(pb.Image));
+            };
 
-            // Build container
+            noteLabel.DoubleClick += (s, e) => EditNoteAndCategory(container); // only for notes
+            categoryLabel.DoubleClick += (s, e) => EditNoteAndCategory(container); // only for category
+
             container.Controls.Add(noteLabel);
+            container.Controls.Add(categoryLabel);
             container.Controls.Add(pb);
 
             panel.Controls.Add(container);
 
+            // Captured panel (optional read-only)
+            if (capturedPanel != null)
+            {
+                Panel capturedContainer = new Panel
+                {
+                    Width = 120,
+                    Height = 140,
+                    Margin = new Padding(5),
+                    BorderStyle = BorderStyle.FixedSingle
+                };
+
+                PictureBox capturedPb = new PictureBox
+                {
+                    Image = (Bitmap)image.Clone(),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Dock = DockStyle.Fill
+                };
+
+                capturedPb.DoubleClick += (s, e) =>
+                {
+                    if (capturedPb.Image != null)
+                        OpenImageInDefaultViewer(new Bitmap(capturedPb.Image));
+                };
+
+
+                ContextMenuStrip capturedMenu = new ContextMenuStrip();
+                ToolStripMenuItem capturedDelete = new ToolStripMenuItem("Delete") { ForeColor = Color.Red };
+                capturedDelete.Click += (s, e) =>
+                {
+                    capturedPanel.Controls.Remove(capturedContainer);
+                    capturedPb.Image?.Dispose();
+                    capturedContainer.Dispose();
+                };
+                capturedMenu.Items.Add(capturedDelete);
+                capturedPb.ContextMenuStrip = capturedMenu;
+
+                capturedContainer.Controls.Add(capturedPb);
+                capturedPanel.Controls.Add(capturedContainer);
+            }
+
             return container;
         }
 
-        /// <summary>
-        /// Edit the note associated with an image container.
-        /// </summary>
-        private void EditNote(Panel container)
+        private void EditNoteAndCategory(Panel container)
         {
             if (!imageNotes.ContainsKey(container)) return;
 
             var data = imageNotes[container];
 
-            using (Form noteForm = new Form())
+            using (Form editForm = new BaseForm())
             {
-                noteForm.Text = "Edit Note";
-                noteForm.Size = new Size(300, 200);
-                noteForm.StartPosition = FormStartPosition.CenterParent;
+                editForm.Text = "Image Note & Category";
+                editForm.Size = new Size(700, 700);
+                editForm.StartPosition = FormStartPosition.CenterParent;
+                editForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
 
-                TextBox tb = new TextBox
+                TableLayoutPanel layout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    RowCount = 5,
+                    ColumnCount = 2,
+                    Padding = new Padding(10),
+                    AutoScroll = true
+                };
+
+                layout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+                layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                layout.RowStyles.Add(new RowStyle(SizeType.Percent, 40));
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+                PictureBox previewPb = new PictureBox
+                {
+                    Image = (Bitmap)data.Pb.Image.Clone(),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Dock = DockStyle.Fill,
+                    Height = 400
+                };
+                layout.Controls.Add(previewPb, 0, 0);
+                layout.SetColumnSpan(previewPb, 2);
+
+                Label lblNote = new Label
+                {
+                    Text = "Note:",
+                    AutoSize = true,
+                    Anchor = AnchorStyles.Left,
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold)
+                };
+                layout.Controls.Add(lblNote, 0, 1);
+                layout.SetColumnSpan(lblNote, 2);
+
+                TextBox tbNote = new TextBox
                 {
                     Multiline = true,
+                    Text = data.Note,
                     Dock = DockStyle.Fill,
-                    Text = data.Note
+                    Height = 80
                 };
-                noteForm.Controls.Add(tb);
+                layout.Controls.Add(tbNote, 0, 2);
+                layout.SetColumnSpan(tbNote, 2);
+
+                Label lblCategory = new Label
+                {
+                    Text = "Category:",
+                    AutoSize = true,
+                    Anchor = AnchorStyles.Left,
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold)
+                };
+                layout.Controls.Add(lblCategory, 0, 3);
+
+                ComboBox cbCategory = new ComboBox
+                {
+                    DropDownStyle = ComboBoxStyle.DropDownList,
+                    Dock = DockStyle.Fill
+                };
+                cbCategory.Items.AddRange(categories);
+                cbCategory.SelectedItem = categories.Contains(data.Category) ? data.Category : categories[0];
+                layout.Controls.Add(cbCategory, 1, 3);
 
                 Button saveBtn = new Button
                 {
                     Text = "Save",
                     Dock = DockStyle.Bottom,
-                    Height = 30
+                    Height = 35
                 };
                 saveBtn.Click += (s, e) =>
                 {
-                    string newNote = tb.Text;
-                    imageNotes[container] = (data.Pb, data.NoteLabel, newNote);
-                    data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "(double-click to add note)" : newNote;
-                    noteForm.Close();
-                };
-                noteForm.Controls.Add(saveBtn);
+                    string newNote = tbNote.Text;
+                    string newCategory = cbCategory.SelectedItem?.ToString() ?? categories[0];
 
-                noteForm.ShowDialog();
+                    imageNotes[container] = (data.Pb, data.NoteLabel, data.CategoryLabel, newNote, newCategory);
+
+                    data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "(add note and category)" : newNote;
+                    data.CategoryLabel.Text = newCategory;
+
+                    editForm.Close();
+                };
+
+                layout.Controls.Add(saveBtn, 0, 4);
+                layout.SetColumnSpan(saveBtn, 2);
+
+                editForm.Controls.Add(layout);
+                editForm.ShowDialog();
             }
         }
 
-        /// <summary>
-        /// Delete an image container and its note.
-        /// </summary>
+        private void OpenImageInDefaultViewer(Bitmap image)
+        {
+            if (image == null) return;
+
+            try
+            {
+                string tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".png");
+                image.Save(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = tempPath,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open image: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public void DeleteImage(Panel container)
         {
             if (panel.Controls.Contains(container))
             {
-                // Dispose picturebox image
                 var data = imageNotes[container];
                 data.Pb.Image?.Dispose();
 
@@ -145,16 +288,12 @@ namespace ENT_Clinic_System.Helpers
             }
         }
 
-        /// <summary>
-        /// Get all images with their notes.
-        /// </summary>
-        public List<(Bitmap Image, string Note)> GetAllImages()
+        public List<(Bitmap Image, string Note, string Category)> GetAllImages()
         {
-            List<(Bitmap, string)> list = new List<(Bitmap, string)>();
+            List<(Bitmap, string, string)> list = new List<(Bitmap, string, string)>();
             foreach (var kvp in imageNotes)
             {
-                // clone so caller owns it safely
-                list.Add(((Bitmap)kvp.Value.Pb.Image.Clone(), kvp.Value.Note));
+                list.Add(((Bitmap)kvp.Value.Pb.Image.Clone(), kvp.Value.Note, kvp.Value.Category));
             }
             return list;
         }

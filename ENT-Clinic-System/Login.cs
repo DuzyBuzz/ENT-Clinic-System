@@ -146,6 +146,9 @@ namespace ENT_Clinic_System
             }
         }
 
-
+        private void Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            VideoFolderHelper.DeleteAllVideos();
+        }
     }
 }

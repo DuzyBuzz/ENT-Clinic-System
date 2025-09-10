@@ -12,9 +12,11 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -32,9 +34,30 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ENT LOGO.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Video, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Video.3.8.0\lib\net462\Accord.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Video.FFMPEG, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=x86">
+      <HintPath>..\packages\Accord.Video.FFMPEG.3.8.0\lib\net462\Accord.Video.FFMPEG.dll</HintPath>
+    </Reference>
     <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
       <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Controls, Version=2.2.5.0, Culture=neutral, PublicKeyToken=a8ac264d1dc6b9d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Controls.2.2.5\lib\AForge.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging, Version=2.2.5.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Imaging.2.2.5\lib\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">
       <HintPath>..\packages\AForge.Video.2.2.5\lib\AForge.Video.dll</HintPath>
@@ -109,6 +132,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomUI\BaseForm .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomUI\BaseForm .Designer.cs">
+      <DependentUpon>BaseForm .cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomUI\cameraToolStrip.cs" />
     <Compile Include="CustomUI\CustomMenuRenderer.cs" />
     <Compile Include="CustomUI\textEditorToolStrip.cs" />
@@ -127,12 +156,6 @@
     <Compile Include="Helpers\DGVCrudHelper.cs" />
     <Compile Include="Helpers\DGVDeleteHelper.cs" />
     <Compile Include="Helpers\FlowLayoutHelper.cs" />
-    <Compile Include="Helpers\ImageEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Helpers\ImageEditorForm.Designer.cs">
-      <DependentUpon>ImageEditorForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
     <Compile Include="Helpers\PhoneNumberValidatorHelper.cs" />
@@ -140,6 +163,14 @@
     <Compile Include="CustomUI\RichTextBulletHelper.cs" />
     <Compile Include="Helpers\SearchDGVHelper.cs" />
     <Compile Include="Helpers\UserCredentials.cs" />
+    <Compile Include="Helpers\VideoFlowHelper.cs" />
+    <Compile Include="Helpers\VideoFolderHelper.cs" />
+    <Compile Include="Helpers\VideoRecorder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helpers\VideoRecorder.Designer.cs">
+      <DependentUpon>VideoRecorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="InsertForms\ConsultationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,8 +218,11 @@
     <EmbeddedResource Include="Helpers\CameraUI.resx">
       <DependentUpon>CameraUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Helpers\ImageEditorForm.resx">
-      <DependentUpon>ImageEditorForm.cs</DependentUpon>
+    <EmbeddedResource Include="Helpers\VideoRecorder.resx">
+      <DependentUpon>VideoRecorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertForms\ConsultationForm.resx">
+      <DependentUpon>ConsultationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InsertForms\PatientInfoForm.resx">
       <DependentUpon>PatientInfoForm.cs</DependentUpon>
@@ -234,5 +268,38 @@
   <ItemGroup>
     <Folder Include="obj\Debug\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\icon\ent_logo.ico" />
+    <Content Include="assets\images\ENT LOGO.jpg" />
+    <Content Include="ENT LOGO.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
+    <Error Condition="!Exists('..\packages\Accord.Video.FFMPEG.3.8.0\build\Accord.Video.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.Video.FFMPEG.3.8.0\build\Accord.Video.FFMPEG.targets'))" />
+  </Target>
+  <Import Project="..\packages\Accord.Video.FFMPEG.3.8.0\build\Accord.Video.FFMPEG.targets" Condition="Exists('..\packages\Accord.Video.FFMPEG.3.8.0\build\Accord.Video.FFMPEG.targets')" />
 </Project>
