@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -45,6 +45,12 @@
             this.illnessHistoryRichTextBox = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel22 = new System.Windows.Forms.TableLayoutPanel();
+            this.throatRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel21 = new System.Windows.Forms.TableLayoutPanel();
+            this.noseRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.tableLayoutPanel20 = new System.Windows.Forms.TableLayoutPanel();
             this.earsRichTextBox = new System.Windows.Forms.RichTextBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -69,7 +75,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
             this.videoFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.printPreviewControl2 = new System.Windows.Forms.PrintPreviewControl();
             this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
             this.openRecorderButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -78,7 +83,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.imageToolStrip = new System.Windows.Forms.ToolStrip();
             this.imageFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.printPreviewControl1 = new System.Windows.Forms.PrintPreviewControl();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -107,12 +111,6 @@
             this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tableLayoutPanel21 = new System.Windows.Forms.TableLayoutPanel();
-            this.noseRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel22 = new System.Windows.Forms.TableLayoutPanel();
-            this.throatRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.label19 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -122,6 +120,8 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanel22.SuspendLayout();
+            this.tableLayoutPanel21.SuspendLayout();
             this.tableLayoutPanel20.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
@@ -131,17 +131,13 @@
             this.tableLayoutPanel19.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
-            this.videoFlowLayoutPanel.SuspendLayout();
             this.tableLayoutPanel17.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
-            this.imageFlowLayoutPanel.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.tableLayoutPanel25.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tableLayoutPanel21.SuspendLayout();
-            this.tableLayoutPanel22.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -198,8 +194,8 @@
             // consultationDateDataGridView
             // 
             this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -351,10 +347,84 @@
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 1;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 479F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 479F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 476F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 476F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(1004, 477);
             this.tableLayoutPanel8.TabIndex = 0;
+            // 
+            // tableLayoutPanel22
+            // 
+            this.tableLayoutPanel22.ColumnCount = 1;
+            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel22.Controls.Add(this.throatRichTextBox, 0, 1);
+            this.tableLayoutPanel22.Controls.Add(this.label19, 0, 0);
+            this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel22.Location = new System.Drawing.Point(673, 6);
+            this.tableLayoutPanel22.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel22.Name = "tableLayoutPanel22";
+            this.tableLayoutPanel22.RowCount = 2;
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.117271F));
+            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.88273F));
+            this.tableLayoutPanel22.Size = new System.Drawing.Size(326, 465);
+            this.tableLayoutPanel22.TabIndex = 5;
+            // 
+            // throatRichTextBox
+            // 
+            this.throatRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.throatRichTextBox.Location = new System.Drawing.Point(3, 26);
+            this.throatRichTextBox.Name = "throatRichTextBox";
+            this.throatRichTextBox.Size = new System.Drawing.Size(320, 436);
+            this.throatRichTextBox.TabIndex = 7;
+            this.throatRichTextBox.Text = "";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label19.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(3, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(320, 23);
+            this.label19.TabIndex = 3;
+            this.label19.Text = "Throat";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel21
+            // 
+            this.tableLayoutPanel21.ColumnCount = 1;
+            this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel21.Controls.Add(this.noseRichTextBox, 0, 1);
+            this.tableLayoutPanel21.Controls.Add(this.label17, 0, 0);
+            this.tableLayoutPanel21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel21.Location = new System.Drawing.Point(339, 6);
+            this.tableLayoutPanel21.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel21.Name = "tableLayoutPanel21";
+            this.tableLayoutPanel21.RowCount = 2;
+            this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.117271F));
+            this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.88273F));
+            this.tableLayoutPanel21.Size = new System.Drawing.Size(325, 465);
+            this.tableLayoutPanel21.TabIndex = 4;
+            // 
+            // noseRichTextBox
+            // 
+            this.noseRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.noseRichTextBox.Location = new System.Drawing.Point(3, 26);
+            this.noseRichTextBox.Name = "noseRichTextBox";
+            this.noseRichTextBox.Size = new System.Drawing.Size(319, 436);
+            this.noseRichTextBox.TabIndex = 7;
+            this.noseRichTextBox.Text = "";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label17.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(3, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(319, 23);
+            this.label17.TabIndex = 3;
+            this.label17.Text = "Nose";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel20
             // 
@@ -420,7 +490,7 @@
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 289F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 288F));
             this.tableLayoutPanel9.Size = new System.Drawing.Size(1335, 289);
             this.tableLayoutPanel9.TabIndex = 2;
             // 
@@ -519,7 +589,7 @@
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 1;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanel16.Size = new System.Drawing.Size(431, 44);
             this.tableLayoutPanel16.TabIndex = 8;
             // 
@@ -580,7 +650,7 @@
             this.tableLayoutPanel19.Name = "tableLayoutPanel19";
             this.tableLayoutPanel19.RowCount = 1;
             this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 99.99999F));
-            this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 244F));
+            this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 240F));
             this.tableLayoutPanel19.Size = new System.Drawing.Size(427, 240);
             this.tableLayoutPanel19.TabIndex = 6;
             // 
@@ -669,19 +739,11 @@
             // 
             this.videoFlowLayoutPanel.AutoScroll = true;
             this.videoFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.videoFlowLayoutPanel.Controls.Add(this.printPreviewControl2);
             this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 605);
             this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
             this.videoFlowLayoutPanel.Size = new System.Drawing.Size(359, 230);
             this.videoFlowLayoutPanel.TabIndex = 6;
-            // 
-            // printPreviewControl2
-            // 
-            this.printPreviewControl2.Location = new System.Drawing.Point(3, 3);
-            this.printPreviewControl2.Name = "printPreviewControl2";
-            this.printPreviewControl2.Size = new System.Drawing.Size(8, 8);
-            this.printPreviewControl2.TabIndex = 0;
             // 
             // tableLayoutPanel17
             // 
@@ -766,19 +828,11 @@
             // 
             this.imageFlowLayoutPanel.AutoScroll = true;
             this.imageFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.imageFlowLayoutPanel.Controls.Add(this.printPreviewControl1);
             this.imageFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageFlowLayoutPanel.Location = new System.Drawing.Point(4, 80);
             this.imageFlowLayoutPanel.Name = "imageFlowLayoutPanel";
             this.imageFlowLayoutPanel.Size = new System.Drawing.Size(359, 478);
             this.imageFlowLayoutPanel.TabIndex = 4;
-            // 
-            // printPreviewControl1
-            // 
-            this.printPreviewControl1.Location = new System.Drawing.Point(3, 3);
-            this.printPreviewControl1.Name = "printPreviewControl1";
-            this.printPreviewControl1.Size = new System.Drawing.Size(8, 8);
-            this.printPreviewControl1.TabIndex = 0;
             // 
             // tableLayoutPanel23
             // 
@@ -1115,8 +1169,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1139,80 +1193,6 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // tableLayoutPanel21
-            // 
-            this.tableLayoutPanel21.ColumnCount = 1;
-            this.tableLayoutPanel21.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel21.Controls.Add(this.noseRichTextBox, 0, 1);
-            this.tableLayoutPanel21.Controls.Add(this.label17, 0, 0);
-            this.tableLayoutPanel21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel21.Location = new System.Drawing.Point(339, 6);
-            this.tableLayoutPanel21.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tableLayoutPanel21.Name = "tableLayoutPanel21";
-            this.tableLayoutPanel21.RowCount = 2;
-            this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.117271F));
-            this.tableLayoutPanel21.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.88273F));
-            this.tableLayoutPanel21.Size = new System.Drawing.Size(325, 465);
-            this.tableLayoutPanel21.TabIndex = 4;
-            // 
-            // noseRichTextBox
-            // 
-            this.noseRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.noseRichTextBox.Location = new System.Drawing.Point(3, 26);
-            this.noseRichTextBox.Name = "noseRichTextBox";
-            this.noseRichTextBox.Size = new System.Drawing.Size(319, 436);
-            this.noseRichTextBox.TabIndex = 7;
-            this.noseRichTextBox.Text = "";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label17.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(3, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(319, 23);
-            this.label17.TabIndex = 3;
-            this.label17.Text = "Nose";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel22
-            // 
-            this.tableLayoutPanel22.ColumnCount = 1;
-            this.tableLayoutPanel22.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel22.Controls.Add(this.throatRichTextBox, 0, 1);
-            this.tableLayoutPanel22.Controls.Add(this.label19, 0, 0);
-            this.tableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel22.Location = new System.Drawing.Point(673, 6);
-            this.tableLayoutPanel22.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tableLayoutPanel22.Name = "tableLayoutPanel22";
-            this.tableLayoutPanel22.RowCount = 2;
-            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.117271F));
-            this.tableLayoutPanel22.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.88273F));
-            this.tableLayoutPanel22.Size = new System.Drawing.Size(326, 465);
-            this.tableLayoutPanel22.TabIndex = 5;
-            // 
-            // throatRichTextBox
-            // 
-            this.throatRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.throatRichTextBox.Location = new System.Drawing.Point(3, 26);
-            this.throatRichTextBox.Name = "throatRichTextBox";
-            this.throatRichTextBox.Size = new System.Drawing.Size(320, 436);
-            this.throatRichTextBox.TabIndex = 7;
-            this.throatRichTextBox.Text = "";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label19.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(3, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(320, 23);
-            this.label19.TabIndex = 3;
-            this.label19.Text = "Throat";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // ConsultationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -1234,6 +1214,10 @@
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel22.ResumeLayout(false);
+            this.tableLayoutPanel22.PerformLayout();
+            this.tableLayoutPanel21.ResumeLayout(false);
+            this.tableLayoutPanel21.PerformLayout();
             this.tableLayoutPanel20.ResumeLayout(false);
             this.tableLayoutPanel20.PerformLayout();
             this.tableLayoutPanel9.ResumeLayout(false);
@@ -1249,12 +1233,10 @@
             this.tableLayoutPanel10.PerformLayout();
             this.tableLayoutPanel13.ResumeLayout(false);
             this.tableLayoutPanel13.PerformLayout();
-            this.videoFlowLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel17.ResumeLayout(false);
             this.tableLayoutPanel17.PerformLayout();
             this.tableLayoutPanel14.ResumeLayout(false);
             this.tableLayoutPanel14.PerformLayout();
-            this.imageFlowLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel23.ResumeLayout(false);
             this.tableLayoutPanel23.PerformLayout();
             this.tableLayoutPanel24.ResumeLayout(false);
@@ -1263,10 +1245,6 @@
             this.tableLayoutPanel25.PerformLayout();
             this.tableLayoutPanel18.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tableLayoutPanel21.ResumeLayout(false);
-            this.tableLayoutPanel21.PerformLayout();
-            this.tableLayoutPanel22.ResumeLayout(false);
-            this.tableLayoutPanel22.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1345,10 +1323,8 @@
         private System.Windows.Forms.RichTextBox recommendationRichTextBox;
         private System.Windows.Forms.RichTextBox earsRichTextBox;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.PrintPreviewControl printPreviewControl1;
         private System.Windows.Forms.Button openRecorderButton;
         private System.Windows.Forms.FlowLayoutPanel videoFlowLayoutPanel;
-        private System.Windows.Forms.PrintPreviewControl printPreviewControl2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel22;
         private System.Windows.Forms.RichTextBox throatRichTextBox;
         private System.Windows.Forms.Label label19;

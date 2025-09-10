@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
@@ -16,6 +17,9 @@ namespace ENT_Clinic_System.CustomUI
         private readonly object frameLock = new object();
 
         private bool isClosing = false;
+
+        // Folder to save captured images
+        private string tempVideoFolder = Path.Combine(Application.StartupPath, "Images");
 
         // Event to notify other parts of the app when an image is captured.
         public event EventHandler<Bitmap> ImageCaptured;
@@ -93,7 +97,7 @@ namespace ENT_Clinic_System.CustomUI
                     }
                     catch
                     {
-                        // ignore stop errors, continue to start new device
+                        // ignore stop errors
                     }
                     videoDevice = null;
                 }
@@ -122,18 +126,13 @@ namespace ENT_Clinic_System.CustomUI
 
             try
             {
-                // Clone the frame provided by AForge
                 Bitmap frame = (Bitmap)eventArgs.Frame.Clone();
-
-                // Create a separate clone for preview (so preview and currentFrame are different objects)
                 Bitmap previewImage = (Bitmap)frame.Clone();
 
-                // Update previewBox on UI thread
                 if (previewBox.InvokeRequired)
                 {
                     previewBox.Invoke(new Action(() =>
                     {
-                        // Dispose previous preview image safely
                         previewBox.Image?.Dispose();
                         previewBox.Image = previewImage;
                     }));
@@ -144,11 +143,10 @@ namespace ENT_Clinic_System.CustomUI
                     previewBox.Image = previewImage;
                 }
 
-                // Atomically replace currentFrame so CaptureButton_Click can clone safely
                 lock (frameLock)
                 {
                     currentFrame?.Dispose();
-                    currentFrame = frame; // take ownership of 'frame' (do not dispose it here)
+                    currentFrame = frame;
                 }
             }
             catch
@@ -158,12 +156,11 @@ namespace ENT_Clinic_System.CustomUI
         }
 
         /// <summary>
-        /// Capture current frame, raise ImageCaptured, and add thumbnail to capturedFlowPanel.
+        /// Capture current frame, save it, raise ImageCaptured, and add thumbnail to capturedImagesPanel.
         /// Uses locking to avoid races and clones bitmaps so each consumer has own copy.
         /// </summary>
         private void CaptureButton_Click(object sender, EventArgs e)
         {
-            // Clone the current frame under lock
             Bitmap captured = null;
             try
             {
@@ -171,75 +168,62 @@ namespace ENT_Clinic_System.CustomUI
                 {
                     if (currentFrame == null)
                     {
-                        MessageBox.Show("No frame available to capture.", "Capture", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("No frame available to capture.");
                         return;
                     }
-
-                    // Clone so we detach from the shared currentFrame
                     captured = (Bitmap)currentFrame.Clone();
                 }
             }
-            catch (Exception ex)
-            {
-                // This is the place where "Parameter is not valid" often appears.
-                MessageBox.Show("Error capturing image: " + ex.Message, "Capture Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                captured?.Dispose();
-                return;
-            }
+            catch { return; }
 
-            if (captured == null)
-                return;
+            if (captured == null) return;
 
-            // Fire event with a clone so subscribers get their own copy
-            try
-            {
-                ImageCaptured?.Invoke(this, (Bitmap)captured.Clone());
-            }
-            catch
-            {
-                // swallow subscriber exceptions; keep captured for our UI
-            }
+            // Fire event for listeners (CameraToolStrip will save the image)
+            ImageCaptured?.Invoke(this, (Bitmap)captured.Clone());
 
-            // Add the captured image into the capturedFlowPanel (thumbnail with delete)
-            try
+            // Add thumbnail preview in CameraUI
+            if (capturedImagesPanel != null)
             {
-                if (capturedImagesPanel != null)
+                PictureBox thumb = new PictureBox
                 {
-                    Panel container = new Panel
-                    {
-                        Width = 140,
-                        Height = 80,
-                        Margin = new Padding(5),
-                        BorderStyle = BorderStyle.FixedSingle
-                    };
+                    Image = (Bitmap)captured.Clone(),
+                    Width = 100,
+                    Height = 80,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Margin = new Padding(5),
+                    Cursor = Cursors.Hand
+                };
 
-                    PictureBox pb = new PictureBox
-                    {
-                        // give the panel ownership of this captured bitmap
-                        Image = captured,
-                        SizeMode = PictureBoxSizeMode.Zoom,
-                        Dock = DockStyle.Fill
-                    };
-
-
-
-                    container.Controls.Add(pb);
-                    capturedImagesPanel.Controls.Add(container);
-                }
-                else
+                // Click to open full image
+                thumb.Click += (s, e2) =>
                 {
-                    // If the capturedFlowPanel control is missing for any reason,
-                    // dispose the captured bitmap to avoid a leak.
-                    captured.Dispose();
-                }
+                    if (thumb.Image != null)
+                    {
+                        Form previewForm = new Form
+                        {
+                            Size = new Size(800, 600),
+                            StartPosition = FormStartPosition.CenterParent
+                        };
+                        PictureBox fullPb = new PictureBox
+                        {
+                            Image = (Bitmap)thumb.Image.Clone(),
+                            Dock = DockStyle.Fill,
+                            SizeMode = PictureBoxSizeMode.Zoom
+                        };
+                        previewForm.Controls.Add(fullPb);
+                        previewForm.ShowDialog();
+                    }
+                };
+
+                capturedImagesPanel.Controls.Add(thumb);
             }
-            catch (Exception ex)
-            {
-                // In case adding to panel fails for any reason, make sure to free resources
-                captured.Dispose();
-                MessageBox.Show("Failed to add captured image to panel: " + ex.Message, "UI Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
+            captured.Dispose(); // safe to dispose original
         }
+
+
+
+
 
         private void CameraUI_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -252,31 +236,22 @@ namespace ENT_Clinic_System.CustomUI
                     if (videoDevice.IsRunning)
                     {
                         videoDevice.SignalToStop();
-
                         DateTime waitUntil = DateTime.Now.AddSeconds(3);
                         while (videoDevice.IsRunning && DateTime.Now < waitUntil)
                         {
                             Application.DoEvents();
                             System.Threading.Thread.Sleep(10);
                         }
-
                         if (videoDevice.IsRunning)
-                        {
-                            // Force stop if necessary
                             videoDevice.Stop();
-                        }
                     }
 
                     videoDevice.NewFrame -= VideoDevice_NewFrame;
                     videoDevice = null;
                 }
             }
-            catch
-            {
-                // ignore shutdown errors
-            }
+            catch { }
 
-            // Dispose the shared frame safely
             lock (frameLock)
             {
                 currentFrame?.Dispose();
@@ -284,10 +259,7 @@ namespace ENT_Clinic_System.CustomUI
             }
         }
 
-        // (Optional) if you have an unused designer-generated handler, keep it empty to avoid confusion
-        private void captureButton_Click_1(object sender, EventArgs e)
-        {
-            // Not used (capture handled by CaptureButton_Click event)
-        }
+        // Optional: keep empty handler if designer generated
+        private void captureButton_Click_1(object sender, EventArgs e) { }
     }
 }

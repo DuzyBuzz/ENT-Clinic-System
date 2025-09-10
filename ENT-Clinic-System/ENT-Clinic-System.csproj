@@ -151,6 +151,7 @@
       <DependentUpon>CameraUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ComboBoxCollectionHelper.cs" />
+    <Compile Include="Helpers\ConsultationSaver.cs" />
     <Compile Include="Helpers\DBConfig.cs" />
     <Compile Include="Helpers\DBConnectionMonitor.cs" />
     <Compile Include="Helpers\DGVCrudHelper.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Helpers\FlowLayoutHelper.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
+    <Compile Include="Helpers\PatientFileHelper.cs" />
     <Compile Include="Helpers\PhoneNumberValidatorHelper.cs" />
     <Compile Include="Helpers\PlaceholderHelper.cs" />
     <Compile Include="CustomUI\RichTextBulletHelper.cs" />

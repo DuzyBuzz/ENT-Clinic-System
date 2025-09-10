@@ -15,14 +15,24 @@ namespace ENT_Clinic_System.UserControls
         private CameraToolStrip cameraToolStrip;
         private ContextMenuStrip videoContextMenu;
         private VideoFlowHelper videoHelper;
+        private FlowLayoutHelper imageHelper;
 
         public ConsultationControl(int patientId)
         {
             InitializeComponent();
             _patientId = patientId;
-            LoadPatientLabels(_patientId);
 
+            LoadPatientLabels(_patientId);
             InitializeVideoContextMenu();
+            imageHelper = new FlowLayoutHelper(imageFlowLayoutPanel, imageFlowLayoutPanel);
+        }
+        private void InitializeCamera()
+        {
+            cameraToolStrip = new CameraToolStrip(imageToolStrip, imageFlowLayoutPanel);
+            cameraToolStrip.ImageAdded += (s, bmp) =>
+            {
+                Debug.WriteLine("New image added to panel.");
+            };
         }
 
         private void InitializeVideoContextMenu()
@@ -30,26 +40,42 @@ namespace ENT_Clinic_System.UserControls
             videoContextMenu = new ContextMenuStrip();
             videoContextMenu.Items.Add("Delete").Click += (s, e) =>
             {
-                if (videoContextMenu.Tag is VideoClipControl clip)
+                if (videoContextMenu.Tag is Panel container)
                 {
-                    var result = MessageBox.Show("Are you sure you want to delete this video?", "Delete Video", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    var result = MessageBox.Show(
+                        "Are you sure you want to delete this video?",
+                        "Delete Video",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
                     if (result == DialogResult.Yes)
                     {
-                        videoFlowLayoutPanel.Controls.Remove(clip);
+                        // Remove from UI
+                        videoFlowLayoutPanel.Controls.Remove(container);
 
-                        // Optional: delete the file
-                        try { if (File.Exists(clip.VideoPath)) File.Delete(clip.VideoPath); } catch { }
+                        // Delete file if path exists
+                        string videoPath = container.Tag as string;
+                        if (!string.IsNullOrEmpty(videoPath))
+                        {
+                            try
+                            {
+                                if (File.Exists(videoPath))
+                                    File.Delete(videoPath);
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine("Error deleting video file: " + ex.Message);
+                            }
+                        }
                     }
                 }
             };
 
-            // Attach MouseDown to any existing video clips already in the panel
+            // Attach MouseDown to existing controls
             foreach (Control c in videoFlowLayoutPanel.Controls)
-            {
                 c.MouseDown += VideoControl_MouseDown;
-            }
 
-            // Attach MouseDown to any new controls added dynamically
+            // Attach automatically to new controls
             videoFlowLayoutPanel.ControlAdded += (s, e) =>
             {
                 e.Control.MouseDown += VideoControl_MouseDown;
@@ -62,29 +88,25 @@ namespace ENT_Clinic_System.UserControls
             {
                 Panel container = null;
 
-                // Determine which container was clicked
                 if (sender is Panel pnl && videoFlowLayoutPanel.Controls.Contains(pnl))
+                {
                     container = pnl;
-                else if (sender is Control ctrl)
-                    container = ctrl.Parent as Panel;
+                }
+                else if (sender is Control ctrl && ctrl.Parent is Panel parentPanel)
+                {
+                    container = parentPanel;
+                }
 
                 if (container != null)
                 {
-                    videoContextMenu.Tag = container; // store container
+                    videoContextMenu.Tag = container;
                     videoContextMenu.Show(Cursor.Position);
                 }
             }
         }
 
 
-        private void InitializeCamera()
-        {
-            cameraToolStrip = new CameraToolStrip(imageToolStrip, imageFlowLayoutPanel);
-            cameraToolStrip.ImageAdded += (s, bmp) =>
-            {
-                Debug.WriteLine("New image added to panel.");
-            };
-        }
+
 
         private void ConsultationControl_Load(object sender, EventArgs e)
         {
@@ -93,9 +115,9 @@ namespace ENT_Clinic_System.UserControls
             videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
         }
 
+
         private void LoadPatientLabels(int patientId)
         {
-
             fullNameLabel.Text = PatientDataHelper.GetPatientValue(patientId, "full_name");
             addressLabel.Text = PatientDataHelper.GetPatientValue(patientId, "address");
             ageLabel.Text = PatientDataHelper.GetPatientValue(patientId, "age");
@@ -105,7 +127,6 @@ namespace ENT_Clinic_System.UserControls
             emergencyNameLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_name");
             emergencyContactNumberLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_contact_number");
             emergencyRelationshipLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_relationship");
-
         }
 
         private void ToolStripInitializer()
@@ -119,19 +140,17 @@ namespace ENT_Clinic_System.UserControls
             RichTextBoxBulletHelper.EnableAutoBullets(earsRichTextBox);
             RichTextBoxBulletHelper.EnableAutoBullets(throatRichTextBox);
         }
+
         private void openRecorderButton_Click(object sender, EventArgs e)
         {
             VideoRecorder recorder = new VideoRecorder();
 
             recorder.VideoCaptured += (s, videoPath) =>
             {
-                // Use VideoFlowHelper to add video with note & category
                 videoFlowLayoutPanel.Invoke((MethodInvoker)(() =>
                 {
-                    // This automatically adds thumbnail, note label, category, and context menu
                     var container = videoHelper.AddVideo(videoPath);
 
-                    // Attach MouseDown for right-click (if needed)
                     if (container != null)
                     {
                         foreach (Control c in container.Controls)
@@ -145,10 +164,50 @@ namespace ENT_Clinic_System.UserControls
             recorder.ShowDialog();
         }
 
-
         private void saveConsultationButton_Click(object sender, EventArgs e)
         {
-            VideoFolderHelper.DeleteAllVideos();
+            //try
+            //{
+            //    ConsultationInputs inputs = new ConsultationInputs
+            //    {
+            //        ComplaintsRichText = complaintsRichTextBox,
+            //        IllnessHistoryRichText = illnessHistoryRichTextBox,
+            //        EarsRichText = earsRichTextBox,
+            //        NoseRichText = noseRichTextBox,
+            //        ThroatRichText = throatRichTextBox,
+            //        DiagnosisRichText = diagnosisRichTextBox,
+            //        RecommendationRichText = recommendationRichTextBox,
+            //        NoteRichText = noteRichTextBox,
+            //        ImageFlowLayout = imageFlowLayoutPanel,
+            //        VideoFlowLayout = videoFlowLayoutPanel
+            //    };
+
+            //    ConsultationSaver.SaveConsultation(
+            //        _patientId,
+            //        UserCredentials.Fullname,
+            //        DateTime.Now,
+            //        followUpDateTimePicker.Checked ? followUpDateTimePicker.Value : (DateTime?)null,
+            //        inputs,
+            //        imageHelper,
+            //        videoHelper
+            //    );
+
+            //    MessageBox.Show("Consultation and attachments saved successfully!",
+            //                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            //    // optional cleanup (only if videos are temporary!)
+            //    VideoFolderHelper.DeleteAllVideos();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error saving consultation: " + ex.Message,
+            //                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+        }
+
+        private void openCameraButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

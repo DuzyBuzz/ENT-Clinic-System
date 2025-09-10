@@ -66,31 +66,42 @@ namespace ENT_Clinic_System.CustomUI
 
         private void OpenCamera()
         {
-            // Use ShowDialog to block until closed
             using (CameraUI camWindow = new CameraUI())
             {
                 camWindow.StartPosition = FormStartPosition.CenterParent;
 
-                // Subscribe to captured image event
                 camWindow.ImageCaptured += (sender, bitmap) =>
                 {
                     try
                     {
-                        // ✅ Add via helper so delete + notes are enabled
-                        flowHelper.AddImage(bitmap);
+                        // Save the image to disk first
+                        string savedFilePath = Path.Combine(Path.Combine(Application.StartupPath, "Images"), $"Capture_{DateTime.Now:yyyyMMdd_HHmmssfff}.png");
+                        if (!Directory.Exists(Path.GetDirectoryName(savedFilePath)))
+                            Directory.CreateDirectory(Path.GetDirectoryName(savedFilePath));
+
+                        bitmap.Save(savedFilePath, System.Drawing.Imaging.ImageFormat.Png);
+
+                        // Add via helper, pass file path for deletion later
+                        flowHelper.AddImage(bitmap, "", "", savedFilePath);
 
                         // Notify listeners
                         ImageAdded?.Invoke(this, bitmap);
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to add captured image: " + ex.Message);
+                    }
                     finally
                     {
-                        bitmap.Dispose(); // we cloned inside AddImage, safe to dispose original
+                        bitmap.Dispose(); // safe because AddImage clones internally
                     }
                 };
 
+                // Show camera window as modal
                 camWindow.ShowDialog();
             }
         }
+
 
         private void UploadImage()
         {

@@ -14,8 +14,9 @@ namespace ENT_Clinic_System.Helpers
         private readonly FlowLayoutPanel panel;
         private readonly FlowLayoutPanel capturedPanel;
 
-        private readonly Dictionary<Panel, (PictureBox Pb, Label NoteLabel, Label CategoryLabel, string Note, string Category)> imageNotes
-            = new Dictionary<Panel, (PictureBox, Label, Label, string, string)>();
+        // Store PictureBox, Labels, Notes, Category, and saved file path
+        private readonly Dictionary<Panel, (PictureBox Pb, Label NoteLabel, Label CategoryLabel, string Note, string Category, string FilePath)> imageNotes
+            = new Dictionary<Panel, (PictureBox, Label, Label, string, string, string)>();
 
         private readonly string[] categories = new[] { "Nose", "Ears", "Throat" };
 
@@ -34,7 +35,7 @@ namespace ENT_Clinic_System.Helpers
             }
         }
 
-        public Panel AddImage(Bitmap image, string initialNote = "", string initialCategory = "")
+        public Panel AddImage(Bitmap image, string initialNote = "", string initialCategory = "", string filePath = "")
         {
             if (image == null) return null;
             if (string.IsNullOrEmpty(initialCategory)) initialCategory = "(no category)";
@@ -76,9 +77,9 @@ namespace ENT_Clinic_System.Helpers
                 ForeColor = Color.Gray
             };
 
-            imageNotes[container] = (pb, noteLabel, categoryLabel, initialNote, initialCategory);
+            imageNotes[container] = (pb, noteLabel, categoryLabel, initialNote, initialCategory, filePath);
 
-            // Context menu: only delete
+            // Context menu: Delete
             ContextMenuStrip menu = new ContextMenuStrip();
             ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete") { ForeColor = Color.Red };
             deleteItem.Click += (s, e) => DeleteImage(container);
@@ -88,15 +89,14 @@ namespace ENT_Clinic_System.Helpers
             noteLabel.ContextMenuStrip = menu;
             categoryLabel.ContextMenuStrip = menu;
 
-            // ====== Double-clicks ======
+            // Double-click handlers
             pb.DoubleClick += (s, e) =>
             {
                 if (pb.Image != null)
                     OpenImageInDefaultViewer(new Bitmap(pb.Image));
             };
-
-            noteLabel.DoubleClick += (s, e) => EditNoteAndCategory(container); // only for notes
-            categoryLabel.DoubleClick += (s, e) => EditNoteAndCategory(container); // only for category
+            noteLabel.DoubleClick += (s, e) => EditNoteAndCategory(container);
+            categoryLabel.DoubleClick += (s, e) => EditNoteAndCategory(container);
 
             container.Controls.Add(noteLabel);
             container.Controls.Add(categoryLabel);
@@ -104,7 +104,7 @@ namespace ENT_Clinic_System.Helpers
 
             panel.Controls.Add(container);
 
-            // Captured panel (optional read-only)
+            // Captured panel (optional, read-only)
             if (capturedPanel != null)
             {
                 Panel capturedContainer = new Panel
@@ -127,7 +127,6 @@ namespace ENT_Clinic_System.Helpers
                     if (capturedPb.Image != null)
                         OpenImageInDefaultViewer(new Bitmap(capturedPb.Image));
                 };
-
 
                 ContextMenuStrip capturedMenu = new ContextMenuStrip();
                 ToolStripMenuItem capturedDelete = new ToolStripMenuItem("Delete") { ForeColor = Color.Red };
@@ -237,7 +236,7 @@ namespace ENT_Clinic_System.Helpers
                     string newNote = tbNote.Text;
                     string newCategory = cbCategory.SelectedItem?.ToString() ?? categories[0];
 
-                    imageNotes[container] = (data.Pb, data.NoteLabel, data.CategoryLabel, newNote, newCategory);
+                    imageNotes[container] = (data.Pb, data.NoteLabel, data.CategoryLabel, newNote, newCategory, data.FilePath);
 
                     data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "(add note and category)" : newNote;
                     data.CategoryLabel.Text = newCategory;
@@ -284,9 +283,22 @@ namespace ENT_Clinic_System.Helpers
 
                 panel.Controls.Remove(container);
                 container.Dispose();
+
+                // Delete the saved file
+                try
+                {
+                    if (!string.IsNullOrEmpty(data.FilePath) && File.Exists(data.FilePath))
+                        File.Delete(data.FilePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to delete image file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 imageNotes.Remove(container);
             }
         }
+
 
         public List<(Bitmap Image, string Note, string Category)> GetAllImages()
         {
