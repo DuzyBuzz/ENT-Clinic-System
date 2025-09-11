@@ -66,7 +66,7 @@ namespace ENT_Clinic_System.CustomUI
 
         private void OpenCamera()
         {
-            using (CameraUI camWindow = new CameraUI())
+            using (ImageCameraUI camWindow = new ImageCameraUI())
             {
                 camWindow.StartPosition = FormStartPosition.CenterParent;
 

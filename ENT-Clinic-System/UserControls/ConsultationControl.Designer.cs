@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -76,12 +77,13 @@
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
             this.videoFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
-            this.openRecorderButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.imageToolStrip = new System.Windows.Forms.ToolStrip();
+            this.imageCaptureButton = new System.Windows.Forms.ToolStripButton();
+            this.uploadImageButton = new System.Windows.Forms.ToolStripButton();
             this.imageFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -111,6 +113,9 @@
             this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.openVideoButton = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -133,11 +138,13 @@
             this.tableLayoutPanel13.SuspendLayout();
             this.tableLayoutPanel17.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
+            this.imageToolStrip.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             this.tableLayoutPanel25.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -194,8 +201,8 @@
             // consultationDateDataGridView
             // 
             this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -730,8 +737,8 @@
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.306604F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.672986F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 58.41232F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.767581F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.24791F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.937948F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 29.11695F));
             this.tableLayoutPanel13.Size = new System.Drawing.Size(367, 839);
             this.tableLayoutPanel13.TabIndex = 2;
             // 
@@ -740,9 +747,9 @@
             this.videoFlowLayoutPanel.AutoScroll = true;
             this.videoFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 605);
+            this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 598);
             this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
-            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(359, 230);
+            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(359, 237);
             this.videoFlowLayoutPanel.TabIndex = 6;
             // 
             // tableLayoutPanel17
@@ -750,26 +757,15 @@
             this.tableLayoutPanel17.ColumnCount = 2;
             this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.78712F));
             this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.21289F));
-            this.tableLayoutPanel17.Controls.Add(this.openRecorderButton, 1, 0);
             this.tableLayoutPanel17.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel17.Controls.Add(this.toolStrip1, 1, 0);
             this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel17.Location = new System.Drawing.Point(4, 565);
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 1;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(359, 33);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(359, 26);
             this.tableLayoutPanel17.TabIndex = 5;
-            // 
-            // openRecorderButton
-            // 
-            this.openRecorderButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openRecorderButton.Location = new System.Drawing.Point(246, 3);
-            this.openRecorderButton.Name = "openRecorderButton";
-            this.openRecorderButton.Size = new System.Drawing.Size(110, 27);
-            this.openRecorderButton.TabIndex = 3;
-            this.openRecorderButton.Text = "Save Consultation";
-            this.openRecorderButton.UseVisualStyleBackColor = true;
-            this.openRecorderButton.Click += new System.EventHandler(this.openRecorderButton_Click);
             // 
             // label5
             // 
@@ -818,11 +814,34 @@
             // 
             // imageToolStrip
             // 
+            this.imageToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.imageCaptureButton,
+            this.uploadImageButton});
             this.imageToolStrip.Location = new System.Drawing.Point(243, 0);
             this.imageToolStrip.Name = "imageToolStrip";
             this.imageToolStrip.Size = new System.Drawing.Size(116, 24);
             this.imageToolStrip.TabIndex = 3;
             this.imageToolStrip.Text = "toolStrip1";
+            // 
+            // imageCaptureButton
+            // 
+            this.imageCaptureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.imageCaptureButton.Image = ((System.Drawing.Image)(resources.GetObject("imageCaptureButton.Image")));
+            this.imageCaptureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.imageCaptureButton.Name = "imageCaptureButton";
+            this.imageCaptureButton.Size = new System.Drawing.Size(89, 21);
+            this.imageCaptureButton.Text = "Capture Image";
+            this.imageCaptureButton.Click += new System.EventHandler(this.imageCaptureButton_Click);
+            // 
+            // uploadImageButton
+            // 
+            this.uploadImageButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.uploadImageButton.Image = ((System.Drawing.Image)(resources.GetObject("uploadImageButton.Image")));
+            this.uploadImageButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.uploadImageButton.Name = "uploadImageButton";
+            this.uploadImageButton.Size = new System.Drawing.Size(85, 19);
+            this.uploadImageButton.Text = "Upload Image";
+            this.uploadImageButton.Click += new System.EventHandler(this.uploadImageButton_Click);
             // 
             // imageFlowLayoutPanel
             // 
@@ -1169,8 +1188,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1192,6 +1211,26 @@
             this.dataGridViewTextBoxColumn1.HeaderText = "Consultation History";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openVideoButton});
+            this.toolStrip1.Location = new System.Drawing.Point(243, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(116, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // openVideoButton
+            // 
+            this.openVideoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openVideoButton.Image = ((System.Drawing.Image)(resources.GetObject("openVideoButton.Image")));
+            this.openVideoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openVideoButton.Name = "openVideoButton";
+            this.openVideoButton.Size = new System.Drawing.Size(72, 22);
+            this.openVideoButton.Text = "Record Clip";
+            this.openVideoButton.Click += new System.EventHandler(this.openVideoButton_Click);
             // 
             // ConsultationControl
             // 
@@ -1237,6 +1276,8 @@
             this.tableLayoutPanel17.PerformLayout();
             this.tableLayoutPanel14.ResumeLayout(false);
             this.tableLayoutPanel14.PerformLayout();
+            this.imageToolStrip.ResumeLayout(false);
+            this.imageToolStrip.PerformLayout();
             this.tableLayoutPanel23.ResumeLayout(false);
             this.tableLayoutPanel23.PerformLayout();
             this.tableLayoutPanel24.ResumeLayout(false);
@@ -1245,6 +1286,8 @@
             this.tableLayoutPanel25.PerformLayout();
             this.tableLayoutPanel18.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1323,7 +1366,6 @@
         private System.Windows.Forms.RichTextBox recommendationRichTextBox;
         private System.Windows.Forms.RichTextBox earsRichTextBox;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button openRecorderButton;
         private System.Windows.Forms.FlowLayoutPanel videoFlowLayoutPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel22;
         private System.Windows.Forms.RichTextBox throatRichTextBox;
@@ -1331,5 +1373,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel21;
         private System.Windows.Forms.RichTextBox noseRichTextBox;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ToolStripButton imageCaptureButton;
+        private System.Windows.Forms.ToolStripButton uploadImageButton;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton openVideoButton;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

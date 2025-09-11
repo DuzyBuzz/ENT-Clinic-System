@@ -144,11 +144,12 @@
     <Compile Include="Helpers\AgeCalculatorHelper.cs" />
     <Compile Include="Helpers\AutoCompleteHelper.cs" />
     <Compile Include="Helpers\CamelCaseHelper.cs" />
-    <Compile Include="Helpers\CameraUI.cs">
+    <Compile Include="Helpers\DGVViewHelper.cs" />
+    <Compile Include="Helpers\ImageCameraUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Helpers\CameraUI.Designer.cs">
-      <DependentUpon>CameraUI.cs</DependentUpon>
+    <Compile Include="Helpers\ImageCameraUI.Designer.cs">
+      <DependentUpon>ImageCameraUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ComboBoxCollectionHelper.cs" />
     <Compile Include="Helpers\ConsultationSaver.cs" />
@@ -157,6 +158,8 @@
     <Compile Include="Helpers\DGVCrudHelper.cs" />
     <Compile Include="Helpers\DGVDeleteHelper.cs" />
     <Compile Include="Helpers\FlowLayoutHelper.cs" />
+    <Compile Include="Helpers\ImageFlowHelper.cs" />
+    <Compile Include="Helpers\ImageFolderHelper.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
     <Compile Include="Helpers\PatientFileHelper.cs" />
@@ -217,8 +220,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Helpers\CameraUI.resx">
-      <DependentUpon>CameraUI.cs</DependentUpon>
+    <EmbeddedResource Include="Helpers\ImageCameraUI.resx">
+      <DependentUpon>ImageCameraUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helpers\VideoRecorder.resx">
       <DependentUpon>VideoRecorder.cs</DependentUpon>

@@ -5,30 +5,29 @@ using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
 
-namespace ENT_Clinic_System.CustomUI
+namespace ENT_Clinic_System.Helpers
 {
-    public partial class CameraUI : Form
+    public partial class ImageCameraUI : Form
     {
         private VideoCaptureDevice videoDevice;
         private FilterInfoCollection videoDevices;
 
-        // Shared current frame. Access must be synchronized via frameLock.
         private Bitmap currentFrame;
         private readonly object frameLock = new object();
-
         private bool isClosing = false;
 
-        // Folder to save captured images
-        private string tempVideoFolder = Path.Combine(Application.StartupPath, "Images");
+        private string tempImageFolder = Path.Combine(Application.StartupPath, "CapturedImages");
 
-        // Event to notify other parts of the app when an image is captured.
         public event EventHandler<Bitmap> ImageCaptured;
 
-        public CameraUI()
+        public ImageCameraUI()
         {
             InitializeComponent();
 
-            // Prepare UI panels (if present on the form)
+            // Create image folder
+            Directory.CreateDirectory(tempImageFolder);
+
+            // Setup FlowLayoutPanel for thumbnails
             if (capturedImagesPanel != null)
             {
                 capturedImagesPanel.AutoScroll = true;
@@ -38,16 +37,15 @@ namespace ENT_Clinic_System.CustomUI
             // Wire up events
             captureButton.Click += CaptureButton_Click;
             cameraComboBox.SelectedIndexChanged += CameraComboBox_SelectedIndexChanged;
-            this.FormClosing += CameraUI_FormClosing;
+            this.FormClosing += ImageCameraUI_FormClosing;
 
-            InitializeCamera();
+            LoadCameras();
         }
 
-        private void InitializeCamera()
+        private void LoadCameras()
         {
             try
             {
-                // Enumerate video devices
                 videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
                 cameraComboBox.Items.Clear();
 
@@ -55,9 +53,8 @@ namespace ENT_Clinic_System.CustomUI
                     cameraComboBox.Items.Add(device.Name);
 
                 if (cameraComboBox.Items.Count > 0)
-                    cameraComboBox.SelectedIndex = 0; // auto-select first device
+                    cameraComboBox.SelectedIndex = 0;
 
-                // Start the first camera (if any)
                 StartCamera();
             }
             catch (Exception ex)
@@ -68,7 +65,6 @@ namespace ENT_Clinic_System.CustomUI
 
         private void CameraComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Restart camera when user picks a different device
             StartCamera();
         }
 
@@ -76,34 +72,26 @@ namespace ENT_Clinic_System.CustomUI
         {
             try
             {
-                // Stop previous device safely
+                // Stop previous camera
                 if (videoDevice != null)
                 {
-                    try
+                    if (videoDevice.IsRunning)
                     {
-                        if (videoDevice.IsRunning)
+                        videoDevice.SignalToStop();
+                        DateTime waitUntil = DateTime.Now.AddSeconds(2);
+                        while (videoDevice.IsRunning && DateTime.Now < waitUntil)
                         {
-                            videoDevice.SignalToStop();
-                            DateTime waitUntil = DateTime.Now.AddSeconds(2);
-                            while (videoDevice.IsRunning && DateTime.Now < waitUntil)
-                            {
-                                Application.DoEvents();
-                                System.Threading.Thread.Sleep(10);
-                            }
-                            if (videoDevice.IsRunning)
-                                videoDevice.Stop();
+                            Application.DoEvents();
+                            System.Threading.Thread.Sleep(10);
                         }
-                        videoDevice.NewFrame -= VideoDevice_NewFrame;
+                        if (videoDevice.IsRunning)
+                            videoDevice.Stop();
                     }
-                    catch
-                    {
-                        // ignore stop errors
-                    }
+                    videoDevice.NewFrame -= VideoDevice_NewFrame;
                     videoDevice = null;
                 }
 
-                if (videoDevices == null || cameraComboBox.SelectedIndex < 0 || cameraComboBox.SelectedIndex >= videoDevices.Count)
-                    return;
+                if (videoDevices == null || cameraComboBox.SelectedIndex < 0) return;
 
                 videoDevice = new VideoCaptureDevice(videoDevices[cameraComboBox.SelectedIndex].MonikerString);
                 videoDevice.NewFrame += VideoDevice_NewFrame;
@@ -115,11 +103,6 @@ namespace ENT_Clinic_System.CustomUI
             }
         }
 
-        /// <summary>
-        /// Called on the camera thread whenever a new frame is available.
-        /// We clone the event frame, create a preview clone for the PictureBox,
-        /// then atomically replace currentFrame under lock to avoid races.
-        /// </summary>
         private void VideoDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             if (isClosing) return;
@@ -149,16 +132,9 @@ namespace ENT_Clinic_System.CustomUI
                     currentFrame = frame;
                 }
             }
-            catch
-            {
-                // Ignore exceptions here; they often occur when form is closing
-            }
+            catch { }
         }
 
-        /// <summary>
-        /// Capture current frame, save it, raise ImageCaptured, and add thumbnail to capturedImagesPanel.
-        /// Uses locking to avoid races and clones bitmaps so each consumer has own copy.
-        /// </summary>
         private void CaptureButton_Click(object sender, EventArgs e)
         {
             Bitmap captured = null;
@@ -178,10 +154,14 @@ namespace ENT_Clinic_System.CustomUI
 
             if (captured == null) return;
 
-            // Fire event for listeners (CameraToolStrip will save the image)
+            // Save to folder
+            string fileName = Path.Combine(tempImageFolder, $"Image_{DateTime.Now:yyyyMMdd_HHmmss}.png");
+            captured.Save(fileName);
+
+            // Fire event for parent
             ImageCaptured?.Invoke(this, (Bitmap)captured.Clone());
 
-            // Add thumbnail preview in CameraUI
+            // Add thumbnail
             if (capturedImagesPanel != null)
             {
                 PictureBox thumb = new PictureBox
@@ -194,38 +174,31 @@ namespace ENT_Clinic_System.CustomUI
                     Cursor = Cursors.Hand
                 };
 
-                // Click to open full image
+                // Click to view full image
                 thumb.Click += (s, e2) =>
                 {
-                    if (thumb.Image != null)
+                    Form previewForm = new Form
                     {
-                        Form previewForm = new Form
-                        {
-                            Size = new Size(800, 600),
-                            StartPosition = FormStartPosition.CenterParent
-                        };
-                        PictureBox fullPb = new PictureBox
-                        {
-                            Image = (Bitmap)thumb.Image.Clone(),
-                            Dock = DockStyle.Fill,
-                            SizeMode = PictureBoxSizeMode.Zoom
-                        };
-                        previewForm.Controls.Add(fullPb);
-                        previewForm.ShowDialog();
-                    }
+                        Size = new Size(800, 600),
+                        StartPosition = FormStartPosition.CenterParent
+                    };
+                    PictureBox fullPb = new PictureBox
+                    {
+                        Image = (Bitmap)thumb.Image.Clone(),
+                        Dock = DockStyle.Fill,
+                        SizeMode = PictureBoxSizeMode.Zoom
+                    };
+                    previewForm.Controls.Add(fullPb);
+                    previewForm.ShowDialog();
                 };
 
                 capturedImagesPanel.Controls.Add(thumb);
             }
 
-            captured.Dispose(); // safe to dispose original
+            captured.Dispose();
         }
 
-
-
-
-
-        private void CameraUI_FormClosing(object sender, FormClosingEventArgs e)
+        private void ImageCameraUI_FormClosing(object sender, FormClosingEventArgs e)
         {
             isClosing = true;
 
@@ -258,8 +231,5 @@ namespace ENT_Clinic_System.CustomUI
                 currentFrame = null;
             }
         }
-
-        // Optional: keep empty handler if designer generated
-        private void captureButton_Click_1(object sender, EventArgs e) { }
     }
 }
