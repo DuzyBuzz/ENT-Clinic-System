@@ -32,29 +32,30 @@
             this.consultationRichTextBox.Size = new System.Drawing.Size(600, 250);
             this.consultationRichTextBox.TabIndex = 0;
             this.consultationRichTextBox.Text = "";
+            this.consultationRichTextBox.Visible = false;
             // 
             // attachmentsPanel
             // 
             this.attachmentsPanel.AutoScroll = true;
             this.attachmentsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.attachmentsPanel.Location = new System.Drawing.Point(12, 270);
+            this.attachmentsPanel.Location = new System.Drawing.Point(12, 12);
             this.attachmentsPanel.Name = "attachmentsPanel";
-            this.attachmentsPanel.Size = new System.Drawing.Size(600, 200);
+            this.attachmentsPanel.Size = new System.Drawing.Size(776, 428);
             this.attachmentsPanel.TabIndex = 1;
             // 
             // printTextButton
             // 
-            this.printTextButton.Location = new System.Drawing.Point(630, 20);
+            this.printTextButton.Location = new System.Drawing.Point(606, 446);
             this.printTextButton.Name = "printTextButton";
-            this.printTextButton.Size = new System.Drawing.Size(120, 40);
+            this.printTextButton.Size = new System.Drawing.Size(182, 40);
             this.printTextButton.TabIndex = 2;
-            this.printTextButton.Text = "Print Text";
+            this.printTextButton.Text = "Print Consultation History";
             this.printTextButton.UseVisualStyleBackColor = true;
             this.printTextButton.Click += new System.EventHandler(this.printTextButton_Click);
             // 
             // printImageButton
             // 
-            this.printImageButton.Location = new System.Drawing.Point(630, 70);
+            this.printImageButton.Location = new System.Drawing.Point(450, 446);
             this.printImageButton.Name = "printImageButton";
             this.printImageButton.Size = new System.Drawing.Size(120, 40);
             this.printImageButton.TabIndex = 3;
@@ -72,6 +73,7 @@
             this.Name = "PrintConsultationHistory";
             this.Text = "Print Consultation History";
             this.ResumeLayout(false);
+
         }
     }
 }

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -201,8 +201,8 @@
             // consultationDateDataGridView
             // 
             this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -553,8 +553,8 @@
             // tableLayoutPanel15
             // 
             this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.77778F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.22222F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.99536F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.00464F));
             this.tableLayoutPanel15.Controls.Add(this.followUpDateTimePicker, 1, 0);
             this.tableLayoutPanel15.Controls.Add(this.label13, 0, 0);
             this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -568,10 +568,10 @@
             // followUpDateTimePicker
             // 
             this.followUpDateTimePicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.followUpDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.followUpDateTimePicker.Location = new System.Drawing.Point(295, 3);
+            this.followUpDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.followUpDateTimePicker.Location = new System.Drawing.Point(184, 3);
             this.followUpDateTimePicker.Name = "followUpDateTimePicker";
-            this.followUpDateTimePicker.Size = new System.Drawing.Size(133, 26);
+            this.followUpDateTimePicker.Size = new System.Drawing.Size(244, 26);
             this.followUpDateTimePicker.TabIndex = 0;
             // 
             // label13
@@ -1210,8 +1210,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;

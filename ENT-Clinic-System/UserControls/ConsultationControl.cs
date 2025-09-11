@@ -32,6 +32,7 @@ namespace ENT_Clinic_System.UserControls
 
         private void ConsultationControl_Load(object sender, EventArgs e)
         {
+            followUpDateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm tt";
             videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
             RichTextBulletAutocompleteHelper.LoadColumnsData(
                 "consultation",

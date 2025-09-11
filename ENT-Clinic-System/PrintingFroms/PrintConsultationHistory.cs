@@ -84,9 +84,10 @@ namespace ENT_Clinic_System.PrintingFroms
 
                 // Load consultation
                 string consultSql = @"
-                    SELECT chief_complaint, history, ear_exam, nose_exam, throat_exam,
-                           diagnosis, recommendations, notes
-                    FROM consultation WHERE consultation_id = @consultation_id";
+    SELECT consultation_date, chief_complaint, history, ear_exam, nose_exam, throat_exam,
+           diagnosis, recommendations, follow_up_date, follow_up_notes
+    FROM consultation 
+    WHERE consultation_id = @consultation_id";
 
                 using (var cmd = new MySqlCommand(consultSql, conn))
                 {
@@ -95,18 +96,36 @@ namespace ENT_Clinic_System.PrintingFroms
                     {
                         if (reader.Read())
                         {
+                            // Helper function to safely get values
+                            string SafeGet(object value) => value == DBNull.Value ? "N/A" : value.ToString();
+
+                            string consultationDate = SafeGet(reader["consultation_date"]);
+                            string chiefComplaint = SafeGet(reader["chief_complaint"]);
+                            string history = SafeGet(reader["history"]);
+                            string earExam = SafeGet(reader["ear_exam"]);
+                            string noseExam = SafeGet(reader["nose_exam"]);
+                            string throatExam = SafeGet(reader["throat_exam"]);
+                            string diagnosis = SafeGet(reader["diagnosis"]);
+                            string recommendations = SafeGet(reader["recommendations"]);
+                            string followUpDate = SafeGet(reader["follow_up_date"]);
+                            string followUpNotes = SafeGet(reader["follow_up_notes"]);
+
+                            // Structured & well-spaced text for printing
                             consultationText =
-                                $"Chief Complaint: {reader["chief_complaint"]}\n\n" +
-                                $"History of Illness: {reader["history"]}\n\n" +
-                                $"Ear Exam: {reader["ear_exam"]}\n\n" +
-                                $"Nose Exam: {reader["nose_exam"]}\n\n" +
-                                $"Throat Exam: {reader["throat_exam"]}\n\n" +
-                                $"Diagnosis: {reader["diagnosis"]}\n\n" +
-                                $"Recommendations: {reader["recommendations"]}\n\n" +
-                                $"Notes: {reader["notes"]}";
+                                $"Consultation Date: {consultationDate}\n\n" +
+                                $"Chief Complaint:\n   {chiefComplaint}\n\n" +
+                                $"History of Illness:\n   {history}\n\n" +
+                                $"Ear Exam:\n   {earExam}\n\n" +
+                                $"Nose Exam:\n   {noseExam}\n\n" +
+                                $"Throat Exam:\n   {throatExam}\n\n" +
+                                $"Diagnosis:\n   {diagnosis}\n\n" +
+                                $"Recommendations:\n   {recommendations}\n\n" +
+                                $"Follow-up Date: {followUpDate}\n\n" +
+                                $"Follow-up Notes:\n   {followUpNotes}";
                         }
                     }
                 }
+
 
                 // Load attachments (images)
                 string attachSql = @"SELECT file_path FROM attachments 
@@ -157,15 +176,14 @@ namespace ENT_Clinic_System.PrintingFroms
         {
             printSections = new List<(string Title, string Body)>();
 
-            string patientInfo =
-                $"Name: {patientName}\n" +
-                $"Address: {patientAddress}\n" +
-                $"Birth Date: {birthDate:MM/dd/yyyy}   Age: {patientAge}\n" +
-                $"Sex: {patientSex}   Civil Status: {civilStatus}\n" +
-                $"Contact: {patientContact}\n" +
-                $"Emergency: {emergencyName} ({emergencyRelationship}) - {emergencyContact}\n";
-
-            printSections.Add(("Patient Information", patientInfo));
+            // Use titles for each line; body contains the value
+            printSections.Add(("Name", patientName));
+            printSections.Add(("Address", patientAddress));
+            printSections.Add(("Birth Date", birthDate.ToString("MM/dd/yyyy")));
+            printSections.Add(("Age", patientAge.ToString()));
+            printSections.Add(("Sex", patientSex));
+            printSections.Add(("Civil Status", civilStatus));
+            // Split consultation text into sections
 
             string[] parts = consultationText.Split(new[] { "\n\n" }, StringSplitOptions.None);
             foreach (var part in parts)
@@ -183,6 +201,7 @@ namespace ENT_Clinic_System.PrintingFroms
                 }
             }
         }
+
 
         private void SetupPrintDocuments()
         {
@@ -238,19 +257,16 @@ namespace ENT_Clinic_System.PrintingFroms
                 // ================== CLINIC HEADER ==================
                 if (currentSectionIndex == 0 && currentSectionCharIndex == 0)
                 {
-                    // Doctor's name
                     g.DrawString("MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS",
                         clinicNameFont, Brushes.Black,
                         new RectangleF(x, y, contentWidth, 30), center);
                     y += 25;
 
-                    // Subtitle
                     g.DrawString("Fellow, Phil. Society of Otolaryngology, Head & Neck Surgery",
                         subTitleFont, Brushes.Black,
                         new RectangleF(x, y, contentWidth, 20), center);
                     y += 20;
 
-                    // Clinic Info (can adjust formatting if needed)
                     string clinicInfo =
                         "Clinic Address: 388 E. Lopez St., Jaro, Iloilo City (Front of Robinsons Jaro)\n" +
                         "Tel: 329-1796   Mobile: 0925-5000149\n" +
@@ -262,68 +278,47 @@ namespace ENT_Clinic_System.PrintingFroms
                         new RectangleF(x, y, contentWidth, 80));
                     y += 90;
 
-                    // Divider line
-                    g.DrawLine(Pens.Black, x, y, x + contentWidth, y);
+                    g.DrawLine(Pens.Black, x, y, x + contentWidth, y); // top divider
                     y += 20;
 
-                    // Document title
                     g.DrawString("CONSULTATION HISTORY",
                         docTitleFont, Brushes.Black,
                         new RectangleF(x, y, contentWidth, 25), center);
                     y += 40;
                 }
 
-                // ================== PRINT SECTIONS ==================
                 StringFormat sf = new StringFormat(StringFormat.GenericTypographic);
+
+                // ================== PRINT SECTIONS ==================
+                bool patientInfoDone = false; // To add line after patient info
 
                 while (currentSectionIndex < printSections.Count)
                 {
-                    var (title, body) = printSections[currentSectionIndex];
+                    var (label, value) = printSections[currentSectionIndex];
 
-                    SizeF headerSize = g.MeasureString(title, headerFont);
-                    if (y + headerSize.Height > pageBottom)
+                    // Draw a line separator after patient info
+                    if (!patientInfoDone && currentSectionIndex >= 6) // after Emergency line
+                    {
+                        g.DrawLine(Pens.Black, x, y, x + contentWidth, y); // separator line
+                        y += 10;
+                        patientInfoDone = true;
+                    }
+
+                    // Measure label and value
+                    SizeF labelSize = g.MeasureString(label + ":", headerFont);
+                    SizeF valueSize = g.MeasureString(value, bodyFont, new SizeF(contentWidth - 150, float.MaxValue));
+
+                    if (y + Math.Max(labelSize.Height, valueSize.Height) > pageBottom)
                     {
                         e.HasMorePages = true;
                         return;
                     }
 
-                    g.DrawString(title, headerFont, Brushes.Black, x, y);
-                    y += headerSize.Height + 5;
+                    g.DrawString(label + ":", headerFont, Brushes.Black, x, y);
+                    g.DrawString(value, bodyFont, Brushes.Black, x + 150, y);
 
-                    string remainingBody = body.Substring(currentSectionCharIndex);
-                    int charsFitted, linesFilled;
-                    SizeF layoutSize = new SizeF(contentWidth, pageBottom - y);
-                    g.MeasureString(remainingBody, bodyFont, layoutSize, sf,
-                        out charsFitted, out linesFilled);
-
-                    if (charsFitted > 0)
-                    {
-                        string toDraw = remainingBody.Substring(0, charsFitted);
-                        g.DrawString(toDraw, bodyFont, Brushes.Black,
-                            new RectangleF(x, y, contentWidth, layoutSize.Height), sf);
-
-                        y += g.MeasureString(toDraw, bodyFont,
-                            new SizeF(contentWidth, layoutSize.Height), sf).Height + 12;
-
-                        currentSectionCharIndex += charsFitted;
-
-                        if (currentSectionCharIndex < body.Length)
-                        {
-                            e.HasMorePages = true;
-                            return;
-                        }
-                        else
-                        {
-                            currentSectionCharIndex = 0;
-                            currentSectionIndex++;
-                            y += 15;
-                        }
-                    }
-                    else
-                    {
-                        e.HasMorePages = true;
-                        return;
-                    }
+                    y += Math.Max(labelSize.Height, valueSize.Height) + 10;
+                    currentSectionIndex++;
                 }
 
                 e.HasMorePages = false;
@@ -331,6 +326,8 @@ namespace ENT_Clinic_System.PrintingFroms
                 currentSectionCharIndex = 0;
             }
         }
+
+
 
 
         private void PrintDocImages_PrintPage(object sender, PrintPageEventArgs e)
