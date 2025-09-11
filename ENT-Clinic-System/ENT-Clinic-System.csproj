@@ -165,7 +165,8 @@
     <Compile Include="Helpers\PatientFileHelper.cs" />
     <Compile Include="Helpers\PhoneNumberValidatorHelper.cs" />
     <Compile Include="Helpers\PlaceholderHelper.cs" />
-    <Compile Include="CustomUI\RichTextBulletHelper.cs" />
+    <Compile Include="Helpers\PrintHelper.cs" />
+    <Compile Include="Helpers\RichTextAutocompleteHelper.cs" />
     <Compile Include="Helpers\SearchDGVHelper.cs" />
     <Compile Include="Helpers\UserCredentials.cs" />
     <Compile Include="Helpers\VideoFlowHelper.cs" />
@@ -199,6 +200,12 @@
     </Compile>
     <Compile Include="MainFormDoctor.Designer.cs">
       <DependentUpon>MainFormDoctor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintingFroms\PrintConsultationHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintingFroms\PrintConsultationHistory.Designer.cs">
+      <DependentUpon>PrintConsultationHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ConsultationControl.cs">
       <SubType>UserControl</SubType>
@@ -237,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainFormDoctor.resx">
       <DependentUpon>MainFormDoctor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintingFroms\PrintConsultationHistory.resx">
+      <DependentUpon>PrintConsultationHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ConsultationControl.resx">
       <DependentUpon>ConsultationControl.cs</DependentUpon>

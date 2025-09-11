@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -78,6 +78,8 @@
             this.videoFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.openVideoButton = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -113,9 +115,7 @@
             this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.openVideoButton = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -137,6 +137,7 @@
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
             this.tableLayoutPanel17.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.imageToolStrip.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
@@ -144,7 +145,6 @@
             this.tableLayoutPanel25.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -217,6 +217,7 @@
             this.consultationDateDataGridView.RowHeadersVisible = false;
             this.consultationDateDataGridView.Size = new System.Drawing.Size(156, 825);
             this.consultationDateDataGridView.TabIndex = 2;
+            this.consultationDateDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.consultationDateDataGridView_CellClick);
             // 
             // date
             // 
@@ -313,6 +314,7 @@
             this.complaintsRichTextBox.Size = new System.Drawing.Size(300, 231);
             this.complaintsRichTextBox.TabIndex = 0;
             this.complaintsRichTextBox.Text = "";
+            this.complaintsRichTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.complaintsRichTextBox_KeyUp);
             // 
             // illnessHistoryRichTextBox
             // 
@@ -777,6 +779,26 @@
             this.label5.TabIndex = 2;
             this.label5.Text = "Video";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openVideoButton});
+            this.toolStrip1.Location = new System.Drawing.Point(243, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(116, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // openVideoButton
+            // 
+            this.openVideoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openVideoButton.Image = ((System.Drawing.Image)(resources.GetObject("openVideoButton.Image")));
+            this.openVideoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openVideoButton.Name = "openVideoButton";
+            this.openVideoButton.Size = new System.Drawing.Size(72, 22);
+            this.openVideoButton.Text = "Record Clip";
+            this.openVideoButton.Click += new System.EventHandler(this.openVideoButton_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -1212,26 +1234,6 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openVideoButton});
-            this.toolStrip1.Location = new System.Drawing.Point(243, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(116, 25);
-            this.toolStrip1.TabIndex = 3;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // openVideoButton
-            // 
-            this.openVideoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.openVideoButton.Image = ((System.Drawing.Image)(resources.GetObject("openVideoButton.Image")));
-            this.openVideoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openVideoButton.Name = "openVideoButton";
-            this.openVideoButton.Size = new System.Drawing.Size(72, 22);
-            this.openVideoButton.Text = "Record Clip";
-            this.openVideoButton.Click += new System.EventHandler(this.openVideoButton_Click);
-            // 
             // ConsultationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -1274,6 +1276,8 @@
             this.tableLayoutPanel13.PerformLayout();
             this.tableLayoutPanel17.ResumeLayout(false);
             this.tableLayoutPanel17.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.tableLayoutPanel14.ResumeLayout(false);
             this.tableLayoutPanel14.PerformLayout();
             this.imageToolStrip.ResumeLayout(false);
@@ -1286,8 +1290,6 @@
             this.tableLayoutPanel25.PerformLayout();
             this.tableLayoutPanel18.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }

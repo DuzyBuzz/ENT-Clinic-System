@@ -1,11 +1,11 @@
-using AForge.Controls;
-using ENT_Clinic_System.Helpers;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
 using System.Windows.Forms;
+using ENT_Clinic_System.Helpers;
 
 namespace ENT_Clinic_System.PrintingFroms
 {
@@ -20,15 +20,14 @@ namespace ENT_Clinic_System.PrintingFroms
         private DateTime birthDate;
         private int patientAge;
 
-        // Consultation full text (kept for preview)
+        // Consultation full text
         private string consultationText;
 
-        // Two separate PrintDocument objects (one for text, one for images)
+        // PrintDocument objects
         private PrintDocument printDocText;
         private PrintDocument printDocImages;
 
         // State for paginated text printing
-        // We break the printable content into sections (title + body)
         private List<(string Title, string Body)> printSections;
         private int currentSectionIndex = 0;
         private int currentSectionCharIndex = 0;
@@ -39,7 +38,6 @@ namespace ENT_Clinic_System.PrintingFroms
         public PrintConsultationHistory(int consultationId, int patientId)
         {
             InitializeComponent();
-
             this.consultationId = consultationId;
             this.patientId = patientId;
 
@@ -110,7 +108,7 @@ namespace ENT_Clinic_System.PrintingFroms
                     }
                 }
 
-                // Load attachments (images) into attachmentsPanel
+                // Load attachments (images)
                 string attachSql = @"SELECT file_path FROM attachments 
                                      WHERE consultation_id=@consultation_id AND file_type='Image'";
                 using (var cmd = new MySqlCommand(attachSql, conn))
@@ -123,9 +121,8 @@ namespace ENT_Clinic_System.PrintingFroms
                             try
                             {
                                 string path = reader["file_path"]?.ToString() ?? "";
-                                if (!string.IsNullOrEmpty(path) && System.IO.File.Exists(path))
+                                if (!string.IsNullOrEmpty(path) && File.Exists(path))
                                 {
-                                    // Use Image.FromFile here (keeps the image locked) - it's the same pattern you had.
                                     PictureBox pb = new PictureBox
                                     {
                                         Image = Image.FromFile(path),
@@ -137,24 +134,14 @@ namespace ENT_Clinic_System.PrintingFroms
                                     attachmentsPanel.Controls.Add(pb);
                                 }
                             }
-                            catch
-                            {
-                                // If an image fails to load, skip it silently (production: log this)
-                            }
+                            catch { }
                         }
                     }
                 }
             }
 
-            // Build the preview text for the RichTextBox UI (keeps the UI preview)
+            // Preview text
             consultationRichTextBox.Text =
-                "MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS\n" +
-                "Fellow, Phil. Society of Otolaryngology, Head & Neck Surgery\n" +
-                "Clinic Address: 388 E. Lopez St., Jaro, Iloilo City | Tel: 329-1796 | Mobile: 0925-5000149\n" +
-                "Clinic Hours: Mon, Tue, Thu, Fri, Sat 11:00 AM - 2:00 PM\n" +
-                "Hospital Affiliations: St. Paul’s Hospital, Iloilo Doctors’ Hospital, Iloilo Mission Hospital, Western Visayas Medical Center, WVSU Med. Center, Medicus, Metro Iloilo Hospital\n" +
-                "================================================================================\n\n" +
-
                 "=== Patient Information ===\n" +
                 $"Name: {patientName}\n" +
                 $"Address: {patientAddress}\n" +
@@ -162,20 +149,14 @@ namespace ENT_Clinic_System.PrintingFroms
                 $"Sex: {patientSex}   Civil Status: {civilStatus}\n" +
                 $"Contact: {patientContact}\n" +
                 $"Emergency: {emergencyName} ({emergencyRelationship}) - {emergencyContact}\n\n" +
-
                 "=== Consultation Details ===\n" +
                 consultationText;
         }
 
-        /// <summary>
-        /// Prepare structured print sections to make formatted printing easier.
-        /// Each item is a pair: Title (bold) and Body (normal).
-        /// </summary>
         private void BuildPrintSections()
         {
             printSections = new List<(string Title, string Body)>();
 
-            // Patient information as one section (body contains multiple lines)
             string patientInfo =
                 $"Name: {patientName}\n" +
                 $"Address: {patientAddress}\n" +
@@ -186,16 +167,11 @@ namespace ENT_Clinic_System.PrintingFroms
 
             printSections.Add(("Patient Information", patientInfo));
 
-            // Break consultation into titled sections for better formatting
-            // (You can change titles/body mapping as required)
-            // Parse consultationText if you want, but we already have the concatenation; we'll split.
-            // For reliability, add each line individually searching for prefixes:
             string[] parts = consultationText.Split(new[] { "\n\n" }, StringSplitOptions.None);
             foreach (var part in parts)
             {
-                // Attempt to split "SectionTitle: content"
                 int colonIndex = part.IndexOf(':');
-                if (colonIndex > 0 && colonIndex < 40) // heuristic: treat 'Xxx: ' format as title
+                if (colonIndex > 0 && colonIndex < 40)
                 {
                     string title = part.Substring(0, colonIndex).Trim();
                     string body = part.Substring(colonIndex + 1).Trim();
@@ -203,200 +179,160 @@ namespace ENT_Clinic_System.PrintingFroms
                 }
                 else
                 {
-                    // fallback — put whole part in 'Notes' if we can't split
                     printSections.Add(("Details", part.Trim()));
                 }
             }
         }
 
-        /// <summary>
-        /// Creates and wires two PrintDocument objects:
-        /// - one for text printing (formatted, paginated)
-        /// - one for image printing (images printed sequentially, multi-page)
-        /// </summary>
         private void SetupPrintDocuments()
         {
-            // Text printing document
             printDocText = new PrintDocument();
             printDocText.PrintPage += PrintDocText_PrintPage;
-            // Images printing document
+
             printDocImages = new PrintDocument();
             printDocImages.PrintPage += PrintDocImages_PrintPage;
         }
 
-        /// <summary>
-        /// Click handler for 'Print Text' — shows PrintPreview (text only).
-        /// Reset text print state before previewing/printing.
-        /// </summary>
         private void printTextButton_Click(object sender, EventArgs e)
         {
-            string text = consultationRichTextBox.Text; // Replace with your RichTextBox
-            TextPrinter printer = new TextPrinter(text);
-            printer.Print();
+            currentSectionIndex = 0;
+            currentSectionCharIndex = 0;
+            PrintPreviewDialog preview = new PrintPreviewDialog
+            {
+                Document = printDocText,
+                Width = 1000,
+                Height = 800
+            };
+            preview.ShowDialog();
         }
 
-        /// <summary>
-        /// Click handler for 'Print Images' — shows PrintPreview (images only).
-        /// Reset image print state before previewing/printing.
-        /// </summary>
-        // Print only image
         private void printImageButton_Click(object sender, EventArgs e)
         {
-            if (printDocImages.Image != null) // Replace with your PictureBox
+            currentImageIndex = 0;
+            PrintPreviewDialog preview = new PrintPreviewDialog
             {
-                ImagePrinter printer = new ImagePrinter(printDocImages.Image);
-                printer.Print();
-            }
-            else
-            {
-                MessageBox.Show("No image to print.");
-            }
+                Document = printDocImages,
+                Width = 1000,
+                Height = 800
+            };
+            preview.ShowDialog();
         }
 
-        /// <summary>
-        /// Text printing handler — prints header on every page and then prints
-        /// sections with bold titles and paginated body text.
-        /// </summary>
         private void PrintDocText_PrintPage(object sender, PrintPageEventArgs e)
         {
-            // Basic layout variables
-            int margin = 50;
             float x = e.MarginBounds.Left;
             float y = e.MarginBounds.Top;
             float contentWidth = e.MarginBounds.Width;
             float pageBottom = e.MarginBounds.Bottom;
 
-            // Fonts: header, title (bold), body (normal)
-            using (Font headerFont = new Font("Arial", 12, FontStyle.Bold))
-            using (Font headerSubFont = new Font("Arial", 9, FontStyle.Regular))
-            using (Font titleFont = new Font("Arial", 10, FontStyle.Bold))
-            using (Font bodyFont = new Font("Arial", 10, FontStyle.Regular))
+            using (Font clinicNameFont = new Font("Arial", 14, FontStyle.Bold))
+            using (Font subTitleFont = new Font("Arial", 10, FontStyle.Italic))
+            using (Font clinicInfoFont = new Font("Arial", 9))
+            using (Font docTitleFont = new Font("Arial", 12, FontStyle.Bold))
+            using (Font headerFont = new Font("Arial", 11, FontStyle.Bold))
+            using (Font bodyFont = new Font("Arial", 11))
             {
                 Graphics g = e.Graphics;
-                g.PageUnit = GraphicsUnit.Pixel;
+                StringFormat center = new StringFormat() { Alignment = StringAlignment.Center };
 
-                // Draw clinic header (centered)
-                string clinicName = "MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS";
-                string clinicSub = "Fellow, Phil. Society of Otolaryngology, Head & Neck Surgery";
-                string clinicContact = "388 E. Lopez St., Jaro, Iloilo City | Tel: 329-1796 | Mobile: 0925-5000149";
+                // ================== CLINIC HEADER ==================
+                if (currentSectionIndex == 0 && currentSectionCharIndex == 0)
+                {
+                    // Doctor's name
+                    g.DrawString("MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS",
+                        clinicNameFont, Brushes.Black,
+                        new RectangleF(x, y, contentWidth, 30), center);
+                    y += 25;
 
-                // Center clinic name
-                SizeF clinicNameSize = g.MeasureString(clinicName, headerFont);
-                g.DrawString(clinicName, headerFont, Brushes.Black, x + (contentWidth - clinicNameSize.Width) / 2, y);
-                y += clinicNameSize.Height + 2;
+                    // Subtitle
+                    g.DrawString("Fellow, Phil. Society of Otolaryngology, Head & Neck Surgery",
+                        subTitleFont, Brushes.Black,
+                        new RectangleF(x, y, contentWidth, 20), center);
+                    y += 20;
 
-                SizeF subSize = g.MeasureString(clinicSub, headerSubFont);
-                g.DrawString(clinicSub, headerSubFont, Brushes.Black, x + (contentWidth - subSize.Width) / 2, y);
-                y += subSize.Height + 2;
+                    // Clinic Info (can adjust formatting if needed)
+                    string clinicInfo =
+                        "Clinic Address: 388 E. Lopez St., Jaro, Iloilo City (Front of Robinsons Jaro)\n" +
+                        "Tel: 329-1796   Mobile: 0925-5000149\n" +
+                        "Clinic Hours: Mon, Tue, Thu, Fri, Sat  11:00 AM – 2:00 PM\n" +
+                        "Hospital Affiliations: St. Paul’s Hospital, Iloilo Doctors’ Hospital, Iloilo Mission Hospital,\n" +
+                        "Western Visayas Medical Center, WVSU Med Center, Medicus Ambulatory, Metro Iloilo Hospital";
 
-                SizeF contactSize = g.MeasureString(clinicContact, headerSubFont);
-                g.DrawString(clinicContact, headerSubFont, Brushes.Black, x + (contentWidth - contactSize.Width) / 2, y);
-                y += contactSize.Height + 6;
+                    g.DrawString(clinicInfo, clinicInfoFont, Brushes.Black,
+                        new RectangleF(x, y, contentWidth, 80));
+                    y += 90;
 
-                // Draw separator line
-                g.DrawLine(Pens.Black, x, y, x + contentWidth, y);
-                y += 8;
+                    // Divider line
+                    g.DrawLine(Pens.Black, x, y, x + contentWidth, y);
+                    y += 20;
 
-                // Now iterate sections starting from currentSectionIndex
+                    // Document title
+                    g.DrawString("CONSULTATION HISTORY",
+                        docTitleFont, Brushes.Black,
+                        new RectangleF(x, y, contentWidth, 25), center);
+                    y += 40;
+                }
+
+                // ================== PRINT SECTIONS ==================
                 StringFormat sf = new StringFormat(StringFormat.GenericTypographic);
-                sf.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
 
-                // Loop through sections starting where we left off
                 while (currentSectionIndex < printSections.Count)
                 {
                     var (title, body) = printSections[currentSectionIndex];
 
-                    // Measure title
-                    SizeF titleSize = g.MeasureString(title, titleFont);
-                    // If not enough room for title, request new page (title will be reprinted next page)
-                    if (y + titleSize.Height > pageBottom)
+                    SizeF headerSize = g.MeasureString(title, headerFont);
+                    if (y + headerSize.Height > pageBottom)
                     {
                         e.HasMorePages = true;
                         return;
                     }
 
-                    // Draw title
-                    g.DrawString(title, titleFont, Brushes.Black, new RectangleF(x, y, contentWidth, titleSize.Height), sf);
-                    y += titleSize.Height + 4;
+                    g.DrawString(title, headerFont, Brushes.Black, x, y);
+                    y += headerSize.Height + 5;
 
-                    // Now draw the body text (may be paginated)
-                    string remainingBody = body;
-                    if (currentSectionCharIndex > 0)
-                    {
-                        // continue from previous char index if mid-section
-                        if (currentSectionCharIndex >= body.Length)
-                        {
-                            // Shouldn't happen, but skip if body is already done
-                            currentSectionCharIndex = 0;
-                            currentSectionIndex++;
-                            continue;
-                        }
-                        remainingBody = body.Substring(currentSectionCharIndex);
-                    }
-
-                    // Determine how many characters fit in the remaining area
-                    int charsFitted = 0;
-                    int linesFilled = 0;
+                    string remainingBody = body.Substring(currentSectionCharIndex);
+                    int charsFitted, linesFilled;
                     SizeF layoutSize = new SizeF(contentWidth, pageBottom - y);
-
-                    if (layoutSize.Height <= 0)
-                    {
-                        // No room on this page
-                        e.HasMorePages = true;
-                        return;
-                    }
-
-                    // Measure how many chars of remainingBody fit into the layout rectangle
-                    SizeF measured = g.MeasureString(remainingBody, bodyFont, layoutSize, sf, out charsFitted, out linesFilled);
+                    g.MeasureString(remainingBody, bodyFont, layoutSize, sf,
+                        out charsFitted, out linesFilled);
 
                     if (charsFitted > 0)
                     {
-                        // Draw the substring that fits
                         string toDraw = remainingBody.Substring(0, charsFitted);
-                        g.DrawString(toDraw, bodyFont, Brushes.Black, new RectangleF(x, y, contentWidth, measured.Height), sf);
+                        g.DrawString(toDraw, bodyFont, Brushes.Black,
+                            new RectangleF(x, y, contentWidth, layoutSize.Height), sf);
 
-                        // Advance y by measured height
-                        y += measured.Height + 6;
+                        y += g.MeasureString(toDraw, bodyFont,
+                            new SizeF(contentWidth, layoutSize.Height), sf).Height + 12;
 
-                        // Update indexes
                         currentSectionCharIndex += charsFitted;
 
                         if (currentSectionCharIndex < body.Length)
                         {
-                            // Not finished with this section -> more pages
                             e.HasMorePages = true;
                             return;
                         }
                         else
                         {
-                            // Finished this section -> move to next
                             currentSectionCharIndex = 0;
                             currentSectionIndex++;
-                            // continue to next section on same page (if room)
+                            y += 15;
                         }
                     }
                     else
                     {
-                        // Nothing fits (shouldn't normally happen because we checked layoutSize), request next page
                         e.HasMorePages = true;
                         return;
                     }
-                } // end while sections
+                }
 
-                // If we reach here we finished all sections -> no more pages
                 e.HasMorePages = false;
-
-                // Reset state so subsequent print operations start cleanly
                 currentSectionIndex = 0;
                 currentSectionCharIndex = 0;
-            } // end using fonts
+            }
         }
 
-        /// <summary>
-        /// Image printing handler: prints all PictureBox images found in attachmentsPanel sequentially.
-        /// Each image is scaled to fit page width while preserving aspect ratio.
-        /// If image(s) overflow page space, printing continues on subsequent pages.
-        /// </summary>
+
         private void PrintDocImages_PrintPage(object sender, PrintPageEventArgs e)
         {
             float x = e.MarginBounds.Left;
@@ -405,66 +341,54 @@ namespace ENT_Clinic_System.PrintingFroms
             float pageBottom = e.MarginBounds.Bottom;
 
             Graphics g = e.Graphics;
-            g.PageUnit = GraphicsUnit.Pixel;
 
-            // Maximum height we allow per image to avoid overly large images; adjust as needed
-            float maxImageHeight = e.MarginBounds.Height - 20;
-
-            // Build a list of images from attachmentsPanel (PictureBoxes)
             List<Image> images = new List<Image>();
             foreach (Control ctrl in attachmentsPanel.Controls)
             {
                 if (ctrl is PictureBox pb && pb.Image != null)
-                {
                     images.Add(pb.Image);
+            }
+
+            using (Font headerFont = new Font("Arial", 14, FontStyle.Bold))
+            {
+                // Print "Attachments" title once at start
+                if (currentImageIndex == 0)
+                {
+                    string attachTitle = "Attachments";
+                    SizeF headerSize = g.MeasureString(attachTitle, headerFont);
+
+                    g.DrawString(attachTitle, headerFont, Brushes.Black,
+                        x + (contentWidth - headerSize.Width) / 2, y);
+
+                    y += headerSize.Height + 20;
                 }
             }
 
-            // Print starting at currentImageIndex
             while (currentImageIndex < images.Count)
             {
                 Image img = images[currentImageIndex];
-                // Compute scaled size to fit contentWidth
-                float ratio = Math.Min(contentWidth / img.Width, maxImageHeight / img.Height);
-                if (ratio > 1f) ratio = 1f; // do not upscale
+                float ratio = Math.Min(contentWidth / img.Width,
+                                       e.MarginBounds.Height / (float)img.Height);
+
                 int drawWidth = (int)(img.Width * ratio);
                 int drawHeight = (int)(img.Height * ratio);
 
-                // If image doesn't fit vertically, start a new page
                 if (y + drawHeight > pageBottom)
                 {
                     e.HasMorePages = true;
                     return;
                 }
 
-                // Draw the image centered horizontally within margins
                 float drawX = x + (contentWidth - drawWidth) / 2;
                 g.DrawImage(img, new RectangleF(drawX, y, drawWidth, drawHeight));
 
-                // Advance y
-                y += drawHeight + 20;
-
-                // Advance to next image
+                y += drawHeight + 25;
                 currentImageIndex++;
             }
 
-            // Done printing images
             e.HasMorePages = false;
-            // Reset for subsequent print cycles
             currentImageIndex = 0;
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null) components.Dispose();
-
-                // Dispose print documents if created
-                printDocText?.Dispose();
-                printDocImages?.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
-}  fix here
+}

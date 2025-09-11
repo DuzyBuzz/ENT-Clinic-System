@@ -1,10 +1,7 @@
-﻿using ENT_Clinic_Receptionist.CustomUI;
-using ENT_Clinic_Receptionist.Helpers;
-using ENT_Clinic_System.CustomUI;
-using ENT_Clinic_System.Helpers;
+﻿using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.PrintingFroms;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -35,8 +32,20 @@ namespace ENT_Clinic_System.UserControls
 
         private void ConsultationControl_Load(object sender, EventArgs e)
         {
-            ToolStripInitializer();
             videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
+            RichTextBulletAutocompleteHelper.LoadColumnsData(
+                "consultation",
+                new List<string> { "chief_complaint", "history", "ear_exam", "nose_exam", "throat_exam", "diagnosis", "recommendations" }
+            );
+
+            RichTextBulletAutocompleteHelper.Enable(complaintsRichTextBox, "consultation", "chief_complaint");
+            RichTextBulletAutocompleteHelper.Enable(illnessHistoryRichTextBox, "consultation", "history");
+            RichTextBulletAutocompleteHelper.Enable(earsRichTextBox, "consultation", "ear_exam");
+            RichTextBulletAutocompleteHelper.Enable(noseRichTextBox, "consultation", "nose_exam");
+            RichTextBulletAutocompleteHelper.Enable(throatRichTextBox, "consultation", "throat_exam");
+            RichTextBulletAutocompleteHelper.Enable(diagnosisRichTextBox, "consultation", "diagnosis");
+            RichTextBulletAutocompleteHelper.Enable(recommendationRichTextBox, "consultation", "recommendations");
+
         }
 
         private void LoadConsultationDate(int patientID)
@@ -49,10 +58,10 @@ namespace ENT_Clinic_System.UserControls
             };
 
             viewHelper = new DGVViewHelper(
-                consultationDateDataGridView,   // Your DataGridView
-                "consultation",                 // Table name
+                consultationDateDataGridView,   
+                "consultation",               
                 consultationColumns,
-                "patient_id"                    // Column used for filtering
+                "patient_id"                
             );
 
             viewHelper.LoadData(patientID);
@@ -125,18 +134,6 @@ namespace ENT_Clinic_System.UserControls
             emergencyRelationshipLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_relationship");
         }
 
-        private void ToolStripInitializer()
-        {
-            // Only for RichTextBoxes, no image handling
-            RichTextBoxBulletHelper.EnableAutoBullets(complaintsRichTextBox);
-            RichTextBoxBulletHelper.EnableAutoBullets(illnessHistoryRichTextBox);
-            RichTextBoxBulletHelper.EnableAutoBullets(diagnosisRichTextBox);
-            RichTextBoxBulletHelper.EnableAutoBullets(recommendationRichTextBox);
-            RichTextBoxBulletHelper.EnableAutoBullets(noteRichTextBox);
-            RichTextBoxBulletHelper.EnableAutoBullets(noseRichTextBox);
-            RichTextBoxBulletHelper.EnableAutoBullets(earsRichTextBox);
-            RichTextBoxBulletHelper.EnableAutoBullets(throatRichTextBox);
-        }
 
         private void openRecorderButton_Click(object sender, EventArgs e)
         {
@@ -246,5 +243,38 @@ namespace ENT_Clinic_System.UserControls
             };
             recorder.ShowDialog();
         }
+
+        private void complaintsRichTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+
+
+
+        }
+
+        private void consultationDateDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // Prevent errors if user clicks the header row
+                if (e.RowIndex < 0) return;
+
+                // Get the selected row
+                DataGridViewRow row = consultationDateDataGridView.Rows[e.RowIndex];
+
+                // Extract consultation_id and patient_id
+                int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+                int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+
+                // Open the PrintConsultationHistory form and pass the IDs
+                PrintConsultationHistory printForm = new PrintConsultationHistory(consultationId, patientId);
+                printForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation record: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
