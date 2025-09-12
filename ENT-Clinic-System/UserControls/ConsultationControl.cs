@@ -254,21 +254,84 @@ namespace ENT_Clinic_System.UserControls
 
         private void consultationDateDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+
+        }
+
+        private void printConsultationHistoryButton_Click(object sender, EventArgs e)
+        {
             try
             {
-                // Prevent errors if user clicks the header row
-                if (e.RowIndex < 0) return;
+                if (consultationDateDataGridView.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a consultation to print.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                // Get the selected row
-                DataGridViewRow row = consultationDateDataGridView.Rows[e.RowIndex];
+                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+                {
+                    if (row.Cells["consultation_id"].Value == null ||
+                        row.Cells["patient_id"].Value == null ||
+                            row.Cells["consultation_date"].Value == null)
+                        continue;
 
-                // Extract consultation_id and patient_id
-                int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
-                int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+                    int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+                    string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
 
-                // Open the PrintConsultationHistory form and pass the IDs
-                PrintConsultationHistory printForm = new PrintConsultationHistory(consultationId, patientId);
-                printForm.ShowDialog();
+                    // Create the helper
+                    PrintTextHistory printer = new PrintTextHistory(patientId, consultationId);
+                    string fullName = PatientDataHelper.GetPatientValue(patientId, "full_name");
+                    // Use custom MultiPrintPreviewDialog (non-modal, taskbar visible)
+                    MultiPrintPreviewDialog previewDialog = new MultiPrintPreviewDialog
+                    {
+                        Document = printer.Document,
+                        StartPosition = FormStartPosition.CenterScreen,
+                        ShowInTaskbar = true,
+                        Text = $"{fullName} - {consultationDate}",
+                        ShowIcon = false,
+                       
+
+
+                    };
+
+                    previewDialog.Show(); // Non-modal: multiple dialogs can be opened
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation record: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void printAttachmentButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (consultationDateDataGridView.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a consultation to print.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+                {
+                    if (row.Cells["consultation_id"].Value == null ||
+                        row.Cells["patient_id"].Value == null ||
+                        row.Cells["consultation_date"].Value == null)
+                        continue;
+
+                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+                    int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+                    string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
+
+                    // Open the PrintConsultationHistory form and pass the IDs
+                    PrintAttachments printForm = new PrintAttachments(consultationId, patientId);
+                    printForm.Show();
+
+                }
             }
             catch (Exception ex)
             {

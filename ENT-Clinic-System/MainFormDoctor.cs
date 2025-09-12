@@ -20,7 +20,6 @@ namespace ENT_Clinic_System
             this.StartPosition = FormStartPosition.CenterScreen; // Optional
             this.Resize += MainForm_Resize;
 
-
         }
         private void MainForm_Resize(object sender, EventArgs e)
         {
@@ -47,22 +46,23 @@ namespace ENT_Clinic_System
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Ask user for confirmation
-            DialogResult result = MessageBox.Show(
+            // Optional: ask the user for confirmation
+            var result = MessageBox.Show(
                 "Are you sure you want to exit the application?",
                 "Confirm Exit",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning,
-                MessageBoxDefaultButton.Button2 // Default to No
-            );
+                MessageBoxIcon.Question);
 
-            if (result == DialogResult.No)
+            if (result == DialogResult.Yes)
+            {
+                // This will close all forms and exit the application
+                Application.Exit();
+            }
+            else
             {
                 // Cancel the closing
                 e.Cancel = true;
             }
-            // If Yes, the form will close normally
-
         }
 
 
@@ -161,9 +161,6 @@ namespace ENT_Clinic_System
 
             base.WndProc(ref m);
         }
-
-
-
     }
 
 }

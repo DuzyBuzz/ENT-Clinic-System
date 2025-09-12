@@ -219,6 +219,7 @@
             // closeButton
             // 
             this.closeButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.closeButton.ForeColor = System.Drawing.Color.Red;
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(46, 29);
             this.closeButton.Text = "✖";

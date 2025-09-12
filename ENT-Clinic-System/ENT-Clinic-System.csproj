@@ -213,12 +213,13 @@
     <Compile Include="MainFormDoctor.Designer.cs">
       <DependentUpon>MainFormDoctor.cs</DependentUpon>
     </Compile>
-    <Compile Include="PrintingFroms\PrintConsultationHistory.cs">
+    <Compile Include="PrintingFroms\PrintAttachments.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PrintingFroms\PrintConsultationHistory.Designer.cs">
-      <DependentUpon>PrintConsultationHistory.cs</DependentUpon>
+    <Compile Include="PrintingFroms\PrintAttachments.Designer.cs">
+      <DependentUpon>PrintAttachments.cs</DependentUpon>
     </Compile>
+    <Compile Include="PrintingFroms\PrintTextHistory.cs" />
     <Compile Include="UserControls\ConsultationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -242,6 +243,7 @@
     <EmbeddedResource Include="Helpers\ImageCameraUI.resx">
       <DependentUpon>ImageCameraUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Helpers\VideoCameraUI.resx" />
     <EmbeddedResource Include="Helpers\VideoRecorder.resx">
       <DependentUpon>VideoRecorder.cs</DependentUpon>
     </EmbeddedResource>
@@ -257,8 +259,8 @@
     <EmbeddedResource Include="MainFormDoctor.resx">
       <DependentUpon>MainFormDoctor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PrintingFroms\PrintConsultationHistory.resx">
-      <DependentUpon>PrintConsultationHistory.cs</DependentUpon>
+    <EmbeddedResource Include="PrintingFroms\PrintAttachments.resx">
+      <DependentUpon>PrintAttachments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ConsultationControl.resx">
       <DependentUpon>ConsultationControl.cs</DependentUpon>
@@ -293,7 +295,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="obj\Debug\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\icon\ent_logo.ico" />
