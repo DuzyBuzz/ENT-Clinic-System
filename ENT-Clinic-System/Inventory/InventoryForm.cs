@@ -44,10 +44,12 @@ namespace ENT_Clinic_System.Inventory
             try
             {
                 string name = txtItemName.Text.Trim();
+                string description = txtDescription.Text.Trim();
                 string category = txtCategory.Text.Trim();
                 decimal costPrice = decimal.Parse(txtCostPrice.Text.Trim());
+                decimal sellingPrice = decimal.Parse(txtSellingPrice.Text.Trim());
 
-                if (_inventoryHelper.AddItem(name, category, costPrice))
+                if (_inventoryHelper.AddItem(name, description, category, costPrice, sellingPrice))
                 {
                     MessageBox.Show("✅ Item added successfully!");
                     LoadInventory();
@@ -75,10 +77,12 @@ namespace ENT_Clinic_System.Inventory
 
                 int itemId = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["item_id"].Value);
                 string name = txtItemName.Text.Trim();
+                string description = txtDescription.Text.Trim();
                 string category = txtCategory.Text.Trim();
                 decimal costPrice = decimal.Parse(txtCostPrice.Text.Trim());
+                decimal sellingPrice = decimal.Parse(txtSellingPrice.Text.Trim());
 
-                if (_inventoryHelper.UpdateItem(itemId, name, category, costPrice))
+                if (_inventoryHelper.UpdateItem(itemId, name,description, category, costPrice, sellingPrice))
                 {
                     MessageBox.Show("✅ Item updated successfully!");
                     LoadInventory();
@@ -188,6 +192,7 @@ private void btnStockOut_Click(object sender, EventArgs e)
                 DataGridViewRow row = dgvItems.SelectedRows[0];
                 txtItemId.Text = row.Cells["item_id"].Value.ToString();
                 txtItemName.Text = row.Cells["item_name"].Value.ToString();
+                txtDescription.Text = row.Cells["description"].Value.ToString();
                 txtCategory.Text = row.Cells["category"].Value.ToString();
                 txtCostPrice.Text = row.Cells["cost_price"].Value.ToString();
                 txtSellingPrice.Text = row.Cells["selling_price"].Value.ToString();

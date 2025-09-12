@@ -53,13 +53,15 @@
             this.btnUpdateItem = new System.Windows.Forms.Button();
             this.btnDeleteItem = new System.Windows.Forms.Button();
             this.groupBoxStock = new System.Windows.Forms.GroupBox();
+            this.discountCheckBox = new System.Windows.Forms.CheckBox();
             this.lblItemId = new System.Windows.Forms.Label();
             this.lblQuantity = new System.Windows.Forms.Label();
             this.txtItemId = new System.Windows.Forms.TextBox();
             this.txtQuantity = new System.Windows.Forms.TextBox();
             this.btnStockIn = new System.Windows.Forms.Button();
             this.btnStockOut = new System.Windows.Forms.Button();
-            this.discountCheckBox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.groupBoxItem.SuspendLayout();
             this.groupBoxStock.SuspendLayout();
@@ -84,6 +86,8 @@
             // 
             // groupBoxItem
             // 
+            this.groupBoxItem.Controls.Add(this.label1);
+            this.groupBoxItem.Controls.Add(this.txtDescription);
             this.groupBoxItem.Controls.Add(this.lblItemName);
             this.groupBoxItem.Controls.Add(this.lblCategory);
             this.groupBoxItem.Controls.Add(this.lblCostPrice);
@@ -97,7 +101,7 @@
             this.groupBoxItem.Controls.Add(this.btnDeleteItem);
             this.groupBoxItem.Location = new System.Drawing.Point(10, 217);
             this.groupBoxItem.Name = "groupBoxItem";
-            this.groupBoxItem.Size = new System.Drawing.Size(317, 156);
+            this.groupBoxItem.Size = new System.Drawing.Size(317, 189);
             this.groupBoxItem.TabIndex = 1;
             this.groupBoxItem.TabStop = false;
             this.groupBoxItem.Text = "Add / Update Item";
@@ -116,14 +120,14 @@
             this.lblCategory.AutoSize = true;
             this.lblCategory.Location = new System.Drawing.Point(13, 52);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(52, 13);
+            this.lblCategory.Size = new System.Drawing.Size(63, 13);
             this.lblCategory.TabIndex = 1;
-            this.lblCategory.Text = "Category:";
+            this.lblCategory.Text = "Description:";
             // 
             // lblCostPrice
             // 
             this.lblCostPrice.AutoSize = true;
-            this.lblCostPrice.Location = new System.Drawing.Point(13, 78);
+            this.lblCostPrice.Location = new System.Drawing.Point(13, 107);
             this.lblCostPrice.Name = "lblCostPrice";
             this.lblCostPrice.Size = new System.Drawing.Size(58, 13);
             this.lblCostPrice.TabIndex = 2;
@@ -132,7 +136,7 @@
             // lblSellingPrice
             // 
             this.lblSellingPrice.AutoSize = true;
-            this.lblSellingPrice.Location = new System.Drawing.Point(13, 104);
+            this.lblSellingPrice.Location = new System.Drawing.Point(13, 133);
             this.lblSellingPrice.Name = "lblSellingPrice";
             this.lblSellingPrice.Size = new System.Drawing.Size(68, 13);
             this.lblSellingPrice.TabIndex = 3;
@@ -147,28 +151,28 @@
             // 
             // txtCategory
             // 
-            this.txtCategory.Location = new System.Drawing.Point(86, 49);
+            this.txtCategory.Location = new System.Drawing.Point(86, 75);
             this.txtCategory.Name = "txtCategory";
             this.txtCategory.Size = new System.Drawing.Size(215, 20);
             this.txtCategory.TabIndex = 5;
             // 
             // txtCostPrice
             // 
-            this.txtCostPrice.Location = new System.Drawing.Point(86, 75);
+            this.txtCostPrice.Location = new System.Drawing.Point(86, 104);
             this.txtCostPrice.Name = "txtCostPrice";
             this.txtCostPrice.Size = new System.Drawing.Size(86, 20);
             this.txtCostPrice.TabIndex = 6;
             // 
             // txtSellingPrice
             // 
-            this.txtSellingPrice.Location = new System.Drawing.Point(86, 101);
+            this.txtSellingPrice.Location = new System.Drawing.Point(86, 130);
             this.txtSellingPrice.Name = "txtSellingPrice";
             this.txtSellingPrice.Size = new System.Drawing.Size(86, 20);
             this.txtSellingPrice.TabIndex = 7;
             // 
             // btnAddItem
             // 
-            this.btnAddItem.Location = new System.Drawing.Point(189, 74);
+            this.btnAddItem.Location = new System.Drawing.Point(189, 103);
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(103, 22);
             this.btnAddItem.TabIndex = 8;
@@ -176,7 +180,7 @@
             // 
             // btnUpdateItem
             // 
-            this.btnUpdateItem.Location = new System.Drawing.Point(189, 100);
+            this.btnUpdateItem.Location = new System.Drawing.Point(189, 129);
             this.btnUpdateItem.Name = "btnUpdateItem";
             this.btnUpdateItem.Size = new System.Drawing.Size(103, 22);
             this.btnUpdateItem.TabIndex = 9;
@@ -184,7 +188,7 @@
             // 
             // btnDeleteItem
             // 
-            this.btnDeleteItem.Location = new System.Drawing.Point(189, 126);
+            this.btnDeleteItem.Location = new System.Drawing.Point(189, 155);
             this.btnDeleteItem.Name = "btnDeleteItem";
             this.btnDeleteItem.Size = new System.Drawing.Size(103, 22);
             this.btnDeleteItem.TabIndex = 10;
@@ -201,10 +205,20 @@
             this.groupBoxStock.Controls.Add(this.btnStockOut);
             this.groupBoxStock.Location = new System.Drawing.Point(343, 217);
             this.groupBoxStock.Name = "groupBoxStock";
-            this.groupBoxStock.Size = new System.Drawing.Size(317, 156);
+            this.groupBoxStock.Size = new System.Drawing.Size(317, 189);
             this.groupBoxStock.TabIndex = 2;
             this.groupBoxStock.TabStop = false;
             this.groupBoxStock.Text = "Stock In / Out";
+            // 
+            // discountCheckBox
+            // 
+            this.discountCheckBox.AutoSize = true;
+            this.discountCheckBox.Location = new System.Drawing.Point(16, 84);
+            this.discountCheckBox.Name = "discountCheckBox";
+            this.discountCheckBox.Size = new System.Drawing.Size(78, 17);
+            this.discountCheckBox.TabIndex = 6;
+            this.discountCheckBox.Text = "discounted";
+            this.discountCheckBox.UseVisualStyleBackColor = true;
             // 
             // lblItemId
             // 
@@ -254,21 +268,27 @@
             this.btnStockOut.TabIndex = 5;
             this.btnStockOut.Text = "Stock Out";
             // 
-            // discountCheckBox
+            // label1
             // 
-            this.discountCheckBox.AutoSize = true;
-            this.discountCheckBox.Location = new System.Drawing.Point(16, 84);
-            this.discountCheckBox.Name = "discountCheckBox";
-            this.discountCheckBox.Size = new System.Drawing.Size(78, 17);
-            this.discountCheckBox.TabIndex = 6;
-            this.discountCheckBox.Text = "discounted";
-            this.discountCheckBox.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(14, 78);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Category:";
+            // 
+            // txtDescription
+            // 
+            this.txtDescription.Location = new System.Drawing.Point(86, 49);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(215, 20);
+            this.txtDescription.TabIndex = 12;
             // 
             // InventoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(672, 400);
+            this.ClientSize = new System.Drawing.Size(672, 418);
             this.Controls.Add(this.dgvItems);
             this.Controls.Add(this.groupBoxItem);
             this.Controls.Add(this.groupBoxStock);
@@ -286,5 +306,7 @@
         #endregion
 
         private System.Windows.Forms.CheckBox discountCheckBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtDescription;
     }
 }
