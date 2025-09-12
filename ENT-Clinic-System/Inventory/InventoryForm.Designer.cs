@@ -41,6 +41,10 @@
         {
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.groupBoxItem = new System.Windows.Forms.GroupBox();
+            this.lblItemName = new System.Windows.Forms.Label();
+            this.lblCategory = new System.Windows.Forms.Label();
+            this.lblCostPrice = new System.Windows.Forms.Label();
+            this.lblSellingPrice = new System.Windows.Forms.Label();
             this.txtItemName = new System.Windows.Forms.TextBox();
             this.txtCategory = new System.Windows.Forms.TextBox();
             this.txtCostPrice = new System.Windows.Forms.TextBox();
@@ -48,45 +52,38 @@
             this.btnAddItem = new System.Windows.Forms.Button();
             this.btnUpdateItem = new System.Windows.Forms.Button();
             this.btnDeleteItem = new System.Windows.Forms.Button();
-            this.lblItemName = new System.Windows.Forms.Label();
-            this.lblCategory = new System.Windows.Forms.Label();
-            this.lblCostPrice = new System.Windows.Forms.Label();
-            this.lblSellingPrice = new System.Windows.Forms.Label();
-
             this.groupBoxStock = new System.Windows.Forms.GroupBox();
+            this.lblItemId = new System.Windows.Forms.Label();
+            this.lblQuantity = new System.Windows.Forms.Label();
             this.txtItemId = new System.Windows.Forms.TextBox();
             this.txtQuantity = new System.Windows.Forms.TextBox();
             this.btnStockIn = new System.Windows.Forms.Button();
             this.btnStockOut = new System.Windows.Forms.Button();
-            this.lblItemId = new System.Windows.Forms.Label();
-            this.lblQuantity = new System.Windows.Forms.Label();
-
+            this.discountCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.groupBoxItem.SuspendLayout();
             this.groupBoxStock.SuspendLayout();
             this.SuspendLayout();
-
-            // ========================
-            // 🔹 DataGridView
-            // ========================
+            // 
+            // dgvItems
+            // 
             this.dgvItems.AllowUserToAddRows = false;
             this.dgvItems.AllowUserToDeleteRows = false;
             this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvItems.BackgroundColor = System.Drawing.Color.White;
             this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvItems.Location = new System.Drawing.Point(12, 12);
+            this.dgvItems.Location = new System.Drawing.Point(10, 10);
             this.dgvItems.MultiSelect = false;
             this.dgvItems.Name = "dgvItems";
             this.dgvItems.ReadOnly = true;
             this.dgvItems.RowHeadersVisible = false;
             this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvItems.Size = new System.Drawing.Size(760, 220);
+            this.dgvItems.Size = new System.Drawing.Size(651, 191);
             this.dgvItems.TabIndex = 0;
-
-            // ========================
-            // 🔹 GroupBox Item
-            // ========================
+            // 
+            // groupBoxItem
+            // 
             this.groupBoxItem.Controls.Add(this.lblItemName);
             this.groupBoxItem.Controls.Add(this.lblCategory);
             this.groupBoxItem.Controls.Add(this.lblCostPrice);
@@ -98,107 +95,196 @@
             this.groupBoxItem.Controls.Add(this.btnAddItem);
             this.groupBoxItem.Controls.Add(this.btnUpdateItem);
             this.groupBoxItem.Controls.Add(this.btnDeleteItem);
-            this.groupBoxItem.Location = new System.Drawing.Point(12, 250);
+            this.groupBoxItem.Location = new System.Drawing.Point(10, 217);
             this.groupBoxItem.Name = "groupBoxItem";
-            this.groupBoxItem.Size = new System.Drawing.Size(370, 180);
+            this.groupBoxItem.Size = new System.Drawing.Size(317, 156);
             this.groupBoxItem.TabIndex = 1;
             this.groupBoxItem.TabStop = false;
             this.groupBoxItem.Text = "Add / Update Item";
-
-            // Labels + Textboxes
+            // 
+            // lblItemName
+            // 
             this.lblItemName.AutoSize = true;
-            this.lblItemName.Location = new System.Drawing.Point(15, 30);
+            this.lblItemName.Location = new System.Drawing.Point(13, 26);
+            this.lblItemName.Name = "lblItemName";
+            this.lblItemName.Size = new System.Drawing.Size(61, 13);
+            this.lblItemName.TabIndex = 0;
             this.lblItemName.Text = "Item Name:";
-            this.txtItemName.Location = new System.Drawing.Point(100, 27);
-            this.txtItemName.Size = new System.Drawing.Size(250, 23);
-
+            // 
+            // lblCategory
+            // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(15, 60);
+            this.lblCategory.Location = new System.Drawing.Point(13, 52);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(52, 13);
+            this.lblCategory.TabIndex = 1;
             this.lblCategory.Text = "Category:";
-            this.txtCategory.Location = new System.Drawing.Point(100, 57);
-            this.txtCategory.Size = new System.Drawing.Size(250, 23);
-
+            // 
+            // lblCostPrice
+            // 
             this.lblCostPrice.AutoSize = true;
-            this.lblCostPrice.Location = new System.Drawing.Point(15, 90);
+            this.lblCostPrice.Location = new System.Drawing.Point(13, 78);
+            this.lblCostPrice.Name = "lblCostPrice";
+            this.lblCostPrice.Size = new System.Drawing.Size(58, 13);
+            this.lblCostPrice.TabIndex = 2;
             this.lblCostPrice.Text = "Cost Price:";
-            this.txtCostPrice.Location = new System.Drawing.Point(100, 87);
-            this.txtCostPrice.Size = new System.Drawing.Size(100, 23);
-
+            // 
+            // lblSellingPrice
+            // 
             this.lblSellingPrice.AutoSize = true;
-            this.lblSellingPrice.Location = new System.Drawing.Point(15, 120);
+            this.lblSellingPrice.Location = new System.Drawing.Point(13, 104);
+            this.lblSellingPrice.Name = "lblSellingPrice";
+            this.lblSellingPrice.Size = new System.Drawing.Size(68, 13);
+            this.lblSellingPrice.TabIndex = 3;
             this.lblSellingPrice.Text = "Selling Price:";
-            this.txtSellingPrice.Location = new System.Drawing.Point(100, 117);
-            this.txtSellingPrice.Size = new System.Drawing.Size(100, 23);
-
-            // Buttons
+            // 
+            // txtItemName
+            // 
+            this.txtItemName.Location = new System.Drawing.Point(86, 23);
+            this.txtItemName.Name = "txtItemName";
+            this.txtItemName.Size = new System.Drawing.Size(215, 20);
+            this.txtItemName.TabIndex = 4;
+            // 
+            // txtCategory
+            // 
+            this.txtCategory.Location = new System.Drawing.Point(86, 49);
+            this.txtCategory.Name = "txtCategory";
+            this.txtCategory.Size = new System.Drawing.Size(215, 20);
+            this.txtCategory.TabIndex = 5;
+            // 
+            // txtCostPrice
+            // 
+            this.txtCostPrice.Location = new System.Drawing.Point(86, 75);
+            this.txtCostPrice.Name = "txtCostPrice";
+            this.txtCostPrice.Size = new System.Drawing.Size(86, 20);
+            this.txtCostPrice.TabIndex = 6;
+            // 
+            // txtSellingPrice
+            // 
+            this.txtSellingPrice.Location = new System.Drawing.Point(86, 101);
+            this.txtSellingPrice.Name = "txtSellingPrice";
+            this.txtSellingPrice.Size = new System.Drawing.Size(86, 20);
+            this.txtSellingPrice.TabIndex = 7;
+            // 
+            // btnAddItem
+            // 
+            this.btnAddItem.Location = new System.Drawing.Point(189, 74);
+            this.btnAddItem.Name = "btnAddItem";
+            this.btnAddItem.Size = new System.Drawing.Size(103, 22);
+            this.btnAddItem.TabIndex = 8;
             this.btnAddItem.Text = "Add Item";
-            this.btnAddItem.Location = new System.Drawing.Point(220, 85);
-            this.btnAddItem.Size = new System.Drawing.Size(120, 25);
-
+            // 
+            // btnUpdateItem
+            // 
+            this.btnUpdateItem.Location = new System.Drawing.Point(189, 100);
+            this.btnUpdateItem.Name = "btnUpdateItem";
+            this.btnUpdateItem.Size = new System.Drawing.Size(103, 22);
+            this.btnUpdateItem.TabIndex = 9;
             this.btnUpdateItem.Text = "Update Item";
-            this.btnUpdateItem.Location = new System.Drawing.Point(220, 115);
-            this.btnUpdateItem.Size = new System.Drawing.Size(120, 25);
-
+            // 
+            // btnDeleteItem
+            // 
+            this.btnDeleteItem.Location = new System.Drawing.Point(189, 126);
+            this.btnDeleteItem.Name = "btnDeleteItem";
+            this.btnDeleteItem.Size = new System.Drawing.Size(103, 22);
+            this.btnDeleteItem.TabIndex = 10;
             this.btnDeleteItem.Text = "Delete Item";
-            this.btnDeleteItem.Location = new System.Drawing.Point(220, 145);
-            this.btnDeleteItem.Size = new System.Drawing.Size(120, 25);
-
-            // ========================
-            // 🔹 GroupBox Stock
-            // ========================
+            // 
+            // groupBoxStock
+            // 
+            this.groupBoxStock.Controls.Add(this.discountCheckBox);
             this.groupBoxStock.Controls.Add(this.lblItemId);
             this.groupBoxStock.Controls.Add(this.lblQuantity);
             this.groupBoxStock.Controls.Add(this.txtItemId);
             this.groupBoxStock.Controls.Add(this.txtQuantity);
             this.groupBoxStock.Controls.Add(this.btnStockIn);
             this.groupBoxStock.Controls.Add(this.btnStockOut);
-            this.groupBoxStock.Location = new System.Drawing.Point(400, 250);
+            this.groupBoxStock.Location = new System.Drawing.Point(343, 217);
             this.groupBoxStock.Name = "groupBoxStock";
-            this.groupBoxStock.Size = new System.Drawing.Size(370, 180);
+            this.groupBoxStock.Size = new System.Drawing.Size(317, 156);
             this.groupBoxStock.TabIndex = 2;
             this.groupBoxStock.TabStop = false;
             this.groupBoxStock.Text = "Stock In / Out";
-
+            // 
+            // lblItemId
+            // 
             this.lblItemId.AutoSize = true;
-            this.lblItemId.Location = new System.Drawing.Point(15, 40);
+            this.lblItemId.Location = new System.Drawing.Point(13, 35);
+            this.lblItemId.Name = "lblItemId";
+            this.lblItemId.Size = new System.Drawing.Size(44, 13);
+            this.lblItemId.TabIndex = 0;
             this.lblItemId.Text = "Item ID:";
-            this.txtItemId.Location = new System.Drawing.Point(100, 37);
-            this.txtItemId.Size = new System.Drawing.Size(100, 23);
-
+            // 
+            // lblQuantity
+            // 
             this.lblQuantity.AutoSize = true;
-            this.lblQuantity.Location = new System.Drawing.Point(15, 70);
+            this.lblQuantity.Location = new System.Drawing.Point(13, 61);
+            this.lblQuantity.Name = "lblQuantity";
+            this.lblQuantity.Size = new System.Drawing.Size(49, 13);
+            this.lblQuantity.TabIndex = 1;
             this.lblQuantity.Text = "Quantity:";
-            this.txtQuantity.Location = new System.Drawing.Point(100, 67);
-            this.txtQuantity.Size = new System.Drawing.Size(100, 23);
-
+            // 
+            // txtItemId
+            // 
+            this.txtItemId.Location = new System.Drawing.Point(86, 32);
+            this.txtItemId.Name = "txtItemId";
+            this.txtItemId.Size = new System.Drawing.Size(86, 20);
+            this.txtItemId.TabIndex = 2;
+            // 
+            // txtQuantity
+            // 
+            this.txtQuantity.Location = new System.Drawing.Point(86, 58);
+            this.txtQuantity.Name = "txtQuantity";
+            this.txtQuantity.Size = new System.Drawing.Size(86, 20);
+            this.txtQuantity.TabIndex = 3;
+            // 
+            // btnStockIn
+            // 
+            this.btnStockIn.Location = new System.Drawing.Point(189, 30);
+            this.btnStockIn.Name = "btnStockIn";
+            this.btnStockIn.Size = new System.Drawing.Size(103, 22);
+            this.btnStockIn.TabIndex = 4;
             this.btnStockIn.Text = "Stock In";
-            this.btnStockIn.Location = new System.Drawing.Point(220, 35);
-            this.btnStockIn.Size = new System.Drawing.Size(120, 25);
-
+            // 
+            // btnStockOut
+            // 
+            this.btnStockOut.Location = new System.Drawing.Point(189, 56);
+            this.btnStockOut.Name = "btnStockOut";
+            this.btnStockOut.Size = new System.Drawing.Size(103, 22);
+            this.btnStockOut.TabIndex = 5;
             this.btnStockOut.Text = "Stock Out";
-            this.btnStockOut.Location = new System.Drawing.Point(220, 65);
-            this.btnStockOut.Size = new System.Drawing.Size(120, 25);
-
-            // ========================
-            // 🔹 Form Layout
-            // ========================
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            // 
+            // discountCheckBox
+            // 
+            this.discountCheckBox.AutoSize = true;
+            this.discountCheckBox.Location = new System.Drawing.Point(16, 84);
+            this.discountCheckBox.Name = "discountCheckBox";
+            this.discountCheckBox.Size = new System.Drawing.Size(78, 17);
+            this.discountCheckBox.TabIndex = 6;
+            this.discountCheckBox.Text = "discounted";
+            this.discountCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // InventoryForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(672, 400);
             this.Controls.Add(this.dgvItems);
             this.Controls.Add(this.groupBoxItem);
             this.Controls.Add(this.groupBoxStock);
             this.Name = "InventoryForm";
             this.Text = "Inventory Management - ENT Clinic";
-
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
             this.groupBoxItem.ResumeLayout(false);
             this.groupBoxItem.PerformLayout();
             this.groupBoxStock.ResumeLayout(false);
             this.groupBoxStock.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.CheckBox discountCheckBox;
     }
 }
