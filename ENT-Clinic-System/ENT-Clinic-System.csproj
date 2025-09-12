@@ -172,6 +172,8 @@
     <Compile Include="Helpers\FlowLayoutHelper.cs" />
     <Compile Include="Helpers\ImageFlowHelper.cs" />
     <Compile Include="Helpers\ImageFolderHelper.cs" />
+    <Compile Include="Helpers\InsertHelper.cs" />
+    <Compile Include="Helpers\InventoryHelper.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
     <Compile Include="Helpers\PatientFileHelper.cs" />
@@ -200,6 +202,12 @@
     </Compile>
     <Compile Include="InsertForms\PatientInfoForm.Designer.cs">
       <DependentUpon>PatientInfoForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\InventoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\InventoryForm.Designer.cs">
+      <DependentUpon>InventoryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>

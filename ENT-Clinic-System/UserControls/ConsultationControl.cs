@@ -180,7 +180,7 @@ namespace ENT_Clinic_System.UserControls
                                          : null;
                 var savedFiles = ConsultationSaver.SaveConsultation(
                     _patientId,
-                    "Dr. Smith",
+                    $"Dr. {UserCredentials.Fullname}",
                     DateTime.Now,
                     followUpDate,
                     inputs,

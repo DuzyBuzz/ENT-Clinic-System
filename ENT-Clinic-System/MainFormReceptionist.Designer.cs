@@ -33,8 +33,8 @@
             this.registrationReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dailyPatientListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.issueMedicineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkStockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stockOutButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.stockInButton = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutENTSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,23 +86,24 @@
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
             this.reportsToolStripMenuItem.Text = "Report";
             // 
-            // issueMedicineToolStripMenuItem
+            // stockOutButton
             // 
-            this.issueMedicineToolStripMenuItem.Name = "issueMedicineToolStripMenuItem";
-            this.issueMedicineToolStripMenuItem.Size = new System.Drawing.Size(203, 30);
-            this.issueMedicineToolStripMenuItem.Text = "Issue Medicine";
+            this.stockOutButton.Name = "stockOutButton";
+            this.stockOutButton.Size = new System.Drawing.Size(180, 30);
+            this.stockOutButton.Text = "Stock Out";
             // 
-            // checkStockToolStripMenuItem
+            // stockInButton
             // 
-            this.checkStockToolStripMenuItem.Name = "checkStockToolStripMenuItem";
-            this.checkStockToolStripMenuItem.Size = new System.Drawing.Size(203, 30);
-            this.checkStockToolStripMenuItem.Text = "Check Stock";
+            this.stockInButton.Name = "stockInButton";
+            this.stockInButton.Size = new System.Drawing.Size(180, 30);
+            this.stockInButton.Text = "Stock In";
+            this.stockInButton.Click += new System.EventHandler(this.stockInButton_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkStockToolStripMenuItem,
-            this.issueMedicineToolStripMenuItem});
+            this.stockInButton,
+            this.stockOutButton});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(97, 29);
             this.settingsToolStripMenuItem.Text = "Inventory";
@@ -307,8 +308,8 @@
         private System.Windows.Forms.ToolStripMenuItem registrationReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dailyPatientListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem issueMedicineToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem checkStockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stockOutButton;
+        private System.Windows.Forms.ToolStripMenuItem stockInButton;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutENTSystemToolStripMenuItem;

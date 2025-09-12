@@ -1,4 +1,5 @@
 ﻿using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.UserControls;
 using System;
 using System.Drawing;
@@ -165,8 +166,12 @@ namespace ENT_Clinic_System
             base.WndProc(ref m);
         }
 
+        private void stockInButton_Click(object sender, EventArgs e)
+        {
+            InventoryForm inventoryForm = new InventoryForm();
+            inventoryForm.Show();
 
-
+        }
     }
 
 }

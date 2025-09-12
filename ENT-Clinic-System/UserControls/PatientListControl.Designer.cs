@@ -42,7 +42,6 @@
             this.patientsDataGridView = new System.Windows.Forms.DataGridView();
             this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addLatestConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addressColumnTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -218,24 +217,16 @@
             // patientsContextMenuStrip
             // 
             this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewConsultationToolStripMenuItem,
-            this.addLatestConsultationToolStripMenuItem});
+            this.viewConsultationToolStripMenuItem});
             this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(202, 48);
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(171, 26);
             // 
             // viewConsultationToolStripMenuItem
             // 
             this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.viewConsultationToolStripMenuItem.Text = "View Consultation";
             this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
-            // 
-            // addLatestConsultationToolStripMenuItem
-            // 
-            this.addLatestConsultationToolStripMenuItem.Name = "addLatestConsultationToolStripMenuItem";
-            this.addLatestConsultationToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.addLatestConsultationToolStripMenuItem.Text = "Add Latest Consultation";
-            this.addLatestConsultationToolStripMenuItem.Click += new System.EventHandler(this.addLatestConsultationToolStripMenuItem_Click);
             // 
             // patient_id
             // 
@@ -267,6 +258,7 @@
             this.age.DataPropertyName = "age";
             this.age.HeaderText = "Age";
             this.age.Name = "age";
+            this.age.ReadOnly = true;
             // 
             // sex
             // 
@@ -337,7 +329,6 @@
         private System.Windows.Forms.Button prevButton;
         private System.Windows.Forms.ContextMenuStrip patientsContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem viewConsultationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addLatestConsultationToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn patient_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn full_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn addressColumnTextBox;
