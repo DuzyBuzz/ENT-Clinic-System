@@ -145,39 +145,41 @@ namespace ENT_Clinic_System.Inventory
             }
         }
 
-        private void btnStockOut_Click(object sender, EventArgs e)
+private void btnStockOut_Click(object sender, EventArgs e)
+{
+    try
+    {
+        int itemId = int.Parse(txtItemId.Text.Trim());
+        int quantity = int.Parse(txtQuantity.Text.Trim());
+        decimal costPrice = decimal.Parse(txtCostPrice.Text.Trim());
+
+        // Calculate price details with discount flag
+        var priceDetails = _inventoryHelper.CalculateFinalPrice(costPrice, discountCheckBox.Checked, quantity);
+
+        // Pass the discount flag and correct movement type
+        if (_inventoryHelper.AddStockMovement(itemId, "OUT", quantity, discountCheckBox.Checked))
         {
-            try
-            {
-                int itemId = int.Parse(txtItemId.Text.Trim());
-                int quantity = int.Parse(txtQuantity.Text.Trim());
-                decimal costPrice = decimal.Parse(txtCostPrice.Text.Trim());
+            MessageBox.Show(
+                $"✅ Stock out successful!\n\n" +
+                $"Base: {priceDetails.BasePrice:C}\n" +
+                $"Discount: -{priceDetails.DiscountAmount:C}\n" +
+                $"Quantity: -{quantity}\n" +
+                $"Tax: +{priceDetails.TaxAmount:C}\n" +
+                $"Final: {priceDetails.FinalPrice:C}");
 
-
-                var priceDetails = _inventoryHelper.CalculateFinalPrice(costPrice, discountCheckBox.Checked, quantity);
-
-                if (_inventoryHelper.AddStockMovement(itemId, "OUT", quantity))
-                {
-                    MessageBox.Show(
-                        $"✅ Stock out successful!\n\n" +
-                        $"Base: {priceDetails.BasePrice:C}\n" +
-                        $"Discount: -{priceDetails.DiscountAmount:C}\n" +
-                        $"Quantiry: -{quantity}\n" +
-                        $"Tax: +{priceDetails.TaxAmount:C}\n" +
-                        $"Final: {priceDetails.FinalPrice:C}");
-
-                    LoadInventory();
-                }
-                else
-                {
-                    MessageBox.Show("❌ Failed to stock out.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error stocking out: " + ex.Message);
-            }
+            LoadInventory();
         }
+        else
+        {
+            MessageBox.Show("❌ Failed to stock out.");
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Error stocking out: " + ex.Message);
+    }
+}
+
 
         private void dgvItems_SelectionChanged(object sender, EventArgs e)
         {

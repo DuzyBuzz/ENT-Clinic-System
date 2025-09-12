@@ -312,6 +312,7 @@
   <ItemGroup>
     <Content Include="assets\icon\ent_logo.ico" />
     <Content Include="assets\images\ENT LOGO.jpg" />
+    <Content Include="Database\ent_clinic_db.sql" />
     <Content Include="ENT LOGO.ico" />
   </ItemGroup>
   <ItemGroup>
