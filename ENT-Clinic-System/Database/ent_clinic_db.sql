@@ -38,7 +38,7 @@ CREATE TABLE `attachments` (
   KEY `fk_attachments_consultation` (`consultation_id`),
   CONSTRAINT `attachments_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_attachments_consultation` FOREIGN KEY (`consultation_id`) REFERENCES `consultation` (`consultation_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ CREATE TABLE `attachments` (
 
 LOCK TABLES `attachments` WRITE;
 /*!40000 ALTER TABLE `attachments` DISABLE KEYS */;
-INSERT INTO `attachments` VALUES (37,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_3c77c3f3-6c5e-4e91-925e-d23fb07d90bd.png','Image','(no category)','2025-09-11 16:39:44',''),(38,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_17d78d2c-d5a3-4f52-96f6-304e7788cd4c.png','Image','(no category)','2025-09-11 16:39:44',''),(39,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_bb42eb7e-bec6-4577-8c45-218c29918b13.png','Image','(no category)','2025-09-11 16:39:44',''),(40,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_5fce860a-cb08-4831-a48e-ecf3e3a932da.png','Image','(no category)','2025-09-11 16:39:44',''),(41,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_ca15c3ff-8c95-498c-b1a8-3fed6404dbd3.png','Image','(no category)','2025-09-11 16:39:44',''),(42,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_5ffdfed2-0e90-4535-89e8-339abc81bff2.png','Image','(no category)','2025-09-11 16:39:44',''),(43,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_d6ccdd2c-3033-4f47-9714-83f28af6ac43.png','Image','(no category)','2025-09-11 16:39:44',''),(44,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_b6179886-ad38-4b7d-80a6-ff85406b3b5f.png','Image','(no category)','2025-09-11 16:39:44',''),(45,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_2c0d3a8a-c1ef-4b08-9e20-4c5fab9647ad.png','Image','(no category)','2025-09-11 16:39:44',''),(46,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250911_163931.mp4','Video','(no category)','2025-09-11 16:39:44',''),(47,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250911_163934.mp4','Video','(no category)','2025-09-11 16:39:44',''),(48,38,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\ent-61-complications-after-ear-tube-surgery.jpg','Image','Ears','2025-09-12 01:56:01','this is on the ear'),(49,38,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250912_013232.mp4','Video','(no category)','2025-09-12 01:56:01',''),(50,38,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250912_013240.mp4','Video','(no category)','2025-09-12 01:56:01',''),(51,39,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250913_002051.mp4','Video','Nose','2025-09-13 00:21:00','asdasdasdasd');
+INSERT INTO `attachments` VALUES (37,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_3c77c3f3-6c5e-4e91-925e-d23fb07d90bd.png','Image','(no category)','2025-09-11 16:39:44',''),(38,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_17d78d2c-d5a3-4f52-96f6-304e7788cd4c.png','Image','(no category)','2025-09-11 16:39:44',''),(39,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_bb42eb7e-bec6-4577-8c45-218c29918b13.png','Image','(no category)','2025-09-11 16:39:44',''),(40,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_5fce860a-cb08-4831-a48e-ecf3e3a932da.png','Image','(no category)','2025-09-11 16:39:44',''),(41,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_ca15c3ff-8c95-498c-b1a8-3fed6404dbd3.png','Image','(no category)','2025-09-11 16:39:44',''),(42,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_5ffdfed2-0e90-4535-89e8-339abc81bff2.png','Image','(no category)','2025-09-11 16:39:44',''),(43,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_d6ccdd2c-3033-4f47-9714-83f28af6ac43.png','Image','(no category)','2025-09-11 16:39:44',''),(44,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_b6179886-ad38-4b7d-80a6-ff85406b3b5f.png','Image','(no category)','2025-09-11 16:39:44',''),(45,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\image_2c0d3a8a-c1ef-4b08-9e20-4c5fab9647ad.png','Image','(no category)','2025-09-11 16:39:44',''),(46,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250911_163931.mp4','Video','(no category)','2025-09-11 16:39:44',''),(47,35,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250911_163934.mp4','Video','(no category)','2025-09-11 16:39:44',''),(48,38,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\ent-61-complications-after-ear-tube-surgery.jpg','Image','Ears','2025-09-12 01:56:01','this is on the ear'),(49,38,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250912_013232.mp4','Video','(no category)','2025-09-12 01:56:01',''),(50,38,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250912_013240.mp4','Video','(no category)','2025-09-12 01:56:01',''),(51,39,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Videos\\Video_20250913_002051.mp4','Video','Nose','2025-09-13 00:21:00','asdasdasdasd'),(52,40,2,'C:\\Users\\wenwe\\Documents\\ENTClinic\\2\\Images\\535196013_1484460269486778_5225315320640347734_n.jpg','Image','(no category)','2025-09-13 14:49:37',''),(53,41,990,'C:\\Users\\wenwe\\Documents\\ENTClinic\\990\\Images\\535196013_1484460269486778_5225315320640347734_n.jpg','Image','(no category)','2025-09-13 14:49:53','');
 /*!40000 ALTER TABLE `attachments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +102,7 @@ CREATE TABLE `consultation` (
   PRIMARY KEY (`consultation_id`),
   KEY `patient_id` (`patient_id`),
   CONSTRAINT `consultation_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +111,7 @@ CREATE TABLE `consultation` (
 
 LOCK TABLES `consultation` WRITE;
 /*!40000 ALTER TABLE `consultation` DISABLE KEYS */;
-INSERT INTO `consultation` VALUES (35,2,'Dr. Smith','2025-09-11 16:39:44','• ASDASD','• ASDA','• ASDASDASD','• ASD','• DSDASDA','• ASDASDASDASDASD','• A','• ASDASASDASD','2025-09-03',NULL),(36,2,'Dr. Smith','2025-09-12 00:22:16','• fever\n• cuagh\n• chooke','• ','• ','• ','• ','• ','• ','• ','2025-09-12',NULL),(37,2,'Dr. Smith','2025-09-12 01:29:13','• Ear pain for 3 days\n• Hearing loss in right ear\n• Frequent nasal congestion\n• Sore throat with difficulty swallowing','• Patient reports ear pain starting 3 days ago, progressively worsening\n• Associated with mild fever and occasional dizziness\n• No history of ear trauma or foreign body insertion\n• Took paracetamol with partial relief\n• No hearing loss on the left ear','• External ear normal\n• Tympanic membrane intact\n• Ear canal with mild redness\n• Cerumen impaction noted','• Nasal septum midline\n• Turbinates hypertrophied\n• Clear watery discharge\n• No polyps seen','• Tonsils enlarged grade II\n• Pharyngeal wall congested\n• No exudates seen\n• Uvula midline','• Acute otitis media\n• Allergic rhinitis\n• Pharyngitis\n• Impacted cerumen','• Prescribe Amoxicillin 500mg TID for 7 days\n• Advise steam inhalation\n• Increase fluid intake\n• Follow-up after 1 week','• Blood pressure taken: 120/80 mmHg\n• Temperature recorded at 37.2°C\n• Patient reports no known drug allergies\n• Noted patient’s concern about recurrent episodes\n• Will coordinate with pediatrician for further evaluation','2025-09-16',NULL),(38,2,'Dr. Smith','2025-09-12 01:56:01','• Ear pain for 3 days\n• Hearing loss in right ear\n• Frequent nasal congestion\n• Sore throat with difficulty swallowing','• Patient reports ear pain starting 3 days ago, progressively worsening\n• Associated with mild fever and occasional dizziness\n• No history of ear trauma or foreign body insertion\n• Took paracetamol with partial relief\n• No hearing loss on the left ear','• External ear normal\n• Tympanic membrane intact\n• Ear canal with mild redness\n• Cerumen impaction noted','• Nasal septum midline\n• Turbinates hypertrophied\n• Clear watery discharge\n• No polyps seen','• Tonsils enlarged grade II\n• Pharyngeal wall congested\n• No exudates seen\n• Uvula midline','• Acute otitis media\n• Allergic rhinitis\n• Pharyngitis\n• Impacted cerumen','• Prescribe Amoxicillin 500mg TID for 7 days\n• Advise steam inhalation\n• Increase fluid intake\n• Follow-up after 1 week','• Blood pressure taken: 120/80 mmHg\n• Temperature recorded at 37.2°C\n• Patient reports no known drug allergies\n• Noted patient’s concern about recurrent episodes\n• Will coordinate with pediatrician for further evaluation','2025-09-16',NULL),(39,2,'Dr. Smith','2025-09-13 00:21:01','• ','• ','• ','• ','• ','• ','• ','','2025-09-13',NULL);
+INSERT INTO `consultation` VALUES (35,2,'Dr. Smith','2025-09-11 16:39:44','• ASDASD','• ASDA','• ASDASDASD','• ASD','• DSDASDA','• ASDASDASDASDASD','• A','• ASDASASDASD','2025-09-03',NULL),(36,2,'Dr. Smith','2025-09-12 00:22:16','• fever\n• cuagh\n• chooke','• ','• ','• ','• ','• ','• ','• ','2025-09-12',NULL),(37,2,'Dr. Smith','2025-09-12 01:29:13','• Ear pain for 3 days\n• Hearing loss in right ear\n• Frequent nasal congestion\n• Sore throat with difficulty swallowing','• Patient reports ear pain starting 3 days ago, progressively worsening\n• Associated with mild fever and occasional dizziness\n• No history of ear trauma or foreign body insertion\n• Took paracetamol with partial relief\n• No hearing loss on the left ear','• External ear normal\n• Tympanic membrane intact\n• Ear canal with mild redness\n• Cerumen impaction noted','• Nasal septum midline\n• Turbinates hypertrophied\n• Clear watery discharge\n• No polyps seen','• Tonsils enlarged grade II\n• Pharyngeal wall congested\n• No exudates seen\n• Uvula midline','• Acute otitis media\n• Allergic rhinitis\n• Pharyngitis\n• Impacted cerumen','• Prescribe Amoxicillin 500mg TID for 7 days\n• Advise steam inhalation\n• Increase fluid intake\n• Follow-up after 1 week','• Blood pressure taken: 120/80 mmHg\n• Temperature recorded at 37.2°C\n• Patient reports no known drug allergies\n• Noted patient’s concern about recurrent episodes\n• Will coordinate with pediatrician for further evaluation','2025-09-16',NULL),(38,2,'Dr. Smith','2025-09-12 01:56:01','• Ear pain for 3 days\n• Hearing loss in right ear\n• Frequent nasal congestion\n• Sore throat with difficulty swallowing','• Patient reports ear pain starting 3 days ago, progressively worsening\n• Associated with mild fever and occasional dizziness\n• No history of ear trauma or foreign body insertion\n• Took paracetamol with partial relief\n• No hearing loss on the left ear','• External ear normal\n• Tympanic membrane intact\n• Ear canal with mild redness\n• Cerumen impaction noted','• Nasal septum midline\n• Turbinates hypertrophied\n• Clear watery discharge\n• No polyps seen','• Tonsils enlarged grade II\n• Pharyngeal wall congested\n• No exudates seen\n• Uvula midline','• Acute otitis media\n• Allergic rhinitis\n• Pharyngitis\n• Impacted cerumen','• Prescribe Amoxicillin 500mg TID for 7 days\n• Advise steam inhalation\n• Increase fluid intake\n• Follow-up after 1 week','• Blood pressure taken: 120/80 mmHg\n• Temperature recorded at 37.2°C\n• Patient reports no known drug allergies\n• Noted patient’s concern about recurrent episodes\n• Will coordinate with pediatrician for further evaluation','2025-09-16',NULL),(39,2,'Dr. Smith','2025-09-13 00:21:01','• ','• ','• ','• ','• ','• ','• ','','2025-09-13',NULL),(40,2,'Dr. Receptioist','2025-09-13 14:49:38','• ','• ','• ','• ','• ','• ','• ','','2025-09-13',NULL),(41,990,'Dr. Receptioist','2025-09-13 14:49:54','• ','• ','• ','• ','• ','• ','• ','','2025-09-13',NULL);
 /*!40000 ALTER TABLE `consultation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,6 +125,7 @@ DROP TABLE IF EXISTS `items`;
 CREATE TABLE `items` (
   `item_id` int NOT NULL AUTO_INCREMENT,
   `item_name` varchar(255) NOT NULL,
+  `description` varchar(100) DEFAULT NULL,
   `category` varchar(100) NOT NULL,
   `cost_price` decimal(10,2) NOT NULL,
   `selling_price` decimal(10,2) NOT NULL,
@@ -132,7 +133,7 @@ CREATE TABLE `items` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +142,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (4,'planax','medicine',12.00,16.00,1,'2025-09-12 18:33:15','2025-09-12 18:34:08'),(5,'asdas','ads',12.00,16.13,-40,'2025-09-12 18:45:55','2025-09-12 19:01:00'),(6,'hadokin','halala',12.00,16.13,0,'2025-09-12 18:51:47','2025-09-12 18:51:47'),(7,'amoxiciline','medicine',100.00,134.40,0,'2025-09-12 19:11:54','2025-09-12 19:40:01');
+INSERT INTO `items` VALUES (19,'amoxixiline','100mg','medicine',12.00,15.00,80,'2025-09-12 20:25:28','2025-09-12 20:26:00');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,6 +212,30 @@ LOCK TABLES `sales` WRITE;
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `sales_report`
+--
+
+DROP TABLE IF EXISTS `sales_report`;
+/*!50001 DROP VIEW IF EXISTS `sales_report`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `sales_report` AS SELECT 
+ 1 AS `movement_id`,
+ 1 AS `movement_date`,
+ 1 AS `item_id`,
+ 1 AS `item_name`,
+ 1 AS `description`,
+ 1 AS `category`,
+ 1 AS `cost_price`,
+ 1 AS `selling_price`,
+ 1 AS `quantity`,
+ 1 AS `discount_amount`,
+ 1 AS `tax_amount`,
+ 1 AS `gross_total`,
+ 1 AS `net_total`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `stock_movements`
 --
 
@@ -230,7 +255,7 @@ CREATE TABLE `stock_movements` (
   KEY `discount_id` (`discount_amount`),
   KEY `tax_id` (`tax_amount`),
   CONSTRAINT `stock_movements_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,7 +264,7 @@ CREATE TABLE `stock_movements` (
 
 LOCK TABLES `stock_movements` WRITE;
 /*!40000 ALTER TABLE `stock_movements` DISABLE KEYS */;
-INSERT INTO `stock_movements` VALUES (3,4,'IN',2,NULL,NULL,'2025-09-12 18:34:02'),(4,4,'OUT',1,NULL,NULL,'2025-09-12 18:34:08'),(5,5,'IN',100,NULL,NULL,'2025-09-12 18:51:56'),(6,5,'OUT',10,NULL,NULL,'2025-09-12 18:52:04'),(7,5,'OUT',10,NULL,NULL,'2025-09-12 18:52:22'),(8,5,'OUT',10,NULL,NULL,'2025-09-12 18:52:32'),(9,5,'OUT',10,NULL,NULL,'2025-09-12 18:52:53'),(10,5,'OUT',20,NULL,NULL,'2025-09-12 18:54:59'),(11,5,'OUT',10,NULL,NULL,'2025-09-12 18:55:06'),(12,5,'OUT',10,NULL,NULL,'2025-09-12 18:55:50'),(13,5,'OUT',10,NULL,NULL,'2025-09-12 18:56:15'),(14,5,'OUT',10,NULL,NULL,'2025-09-12 19:00:43'),(15,5,'OUT',10,NULL,NULL,'2025-09-12 19:00:49'),(16,5,'OUT',10,NULL,NULL,'2025-09-12 19:00:54'),(17,5,'OUT',10,NULL,NULL,'2025-09-12 19:00:57'),(18,5,'OUT',10,NULL,NULL,'2025-09-12 19:00:59'),(19,5,'OUT',10,NULL,NULL,'2025-09-12 19:01:00'),(20,7,'IN',200,NULL,NULL,'2025-09-12 19:12:04'),(21,7,'OUT',200,NULL,NULL,'2025-09-12 19:12:07'),(22,7,'IN',200,NULL,NULL,'2025-09-12 19:12:12'),(23,7,'OUT',100,NULL,NULL,'2025-09-12 19:12:17'),(24,7,'OUT',10,NULL,NULL,'2025-09-12 19:12:21'),(25,7,'OUT',10,NULL,NULL,'2025-09-12 19:12:24'),(26,7,'OUT',10,NULL,NULL,'2025-09-12 19:24:16'),(27,7,'OUT',10,NULL,NULL,'2025-09-12 19:24:20'),(28,7,'IN',10,0.00,0.00,'2025-09-12 19:30:00'),(29,7,'OUT',10,0.00,0.00,'2025-09-12 19:30:05'),(30,7,'OUT',10,0.00,0.00,'2025-09-12 19:30:27'),(31,7,'OUT',10,0.00,144.00,'2025-09-12 19:33:20'),(32,7,'OUT',10,0.00,144.00,'2025-09-12 19:33:36'),(33,7,'OUT',10,0.00,144.00,'2025-09-12 19:33:55'),(34,7,'OUT',10,0.00,144.00,'2025-09-12 19:34:07'),(35,7,'OUT',10,120.00,129.60,'2025-09-12 19:40:01');
+INSERT INTO `stock_movements` VALUES (40,19,'IN',100,0.00,180.00,'2025-09-12 20:25:36'),(41,19,'OUT',10,15.00,16.20,'2025-09-12 20:25:42'),(42,19,'OUT',10,0.00,18.00,'2025-09-12 20:26:00');
 /*!40000 ALTER TABLE `stock_movements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,7 +284,7 @@ CREATE TABLE `system_settings` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`setting_id`),
   UNIQUE KEY `setting_key` (`setting_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +293,7 @@ CREATE TABLE `system_settings` (
 
 LOCK TABLES `system_settings` WRITE;
 /*!40000 ALTER TABLE `system_settings` DISABLE KEYS */;
-INSERT INTO `system_settings` VALUES (19,'tax_percentage','12.00','Default VAT percentage applied to all items if not specified','2025-09-12 17:11:00','2025-09-12 17:11:00'),(20,'discount_percentage','10.00','Default discount for patients if not specified on item level','2025-09-12 17:11:00','2025-09-12 19:00:13'),(21,'default_currency','PHP','Default currency of the system','2025-09-12 17:11:00','2025-09-12 17:11:00'),(22,'currency_symbol','₱','Currency symbol for displaying prices','2025-09-12 17:11:00','2025-09-12 17:11:00'),(23,'invoice_prefix','INV','Prefix used when generating invoice numbers','2025-09-12 17:11:00','2025-09-12 17:11:00'),(24,'allow_negative_stock','0','Flag to allow or disallow negative stock. 0 = No, 1 = Yes','2025-09-12 17:11:00','2025-09-12 17:11:00'),(25,'low_stock_threshold','10','System alert threshold for low stock levels','2025-09-12 17:11:00','2025-09-12 17:11:00'),(26,'clinic_name','ENT Clinic Inventory System','Display name of the clinic in reports and headers','2025-09-12 17:11:00','2025-09-12 17:11:00'),(27,'clinic_address','388 E. Lopez St., Jaro, Iloilo City (Front of Robinsons Jaro)','Clinic Address','2025-09-12 17:11:00','2025-09-12 17:11:00'),(28,'clinic_tel','329-1796','Clinic Telephone Number','2025-09-12 17:11:00','2025-09-12 17:11:00'),(29,'clinic_mobile','0925-5000149','Clinic Mobile Number','2025-09-12 17:11:00','2025-09-12 17:11:00'),(30,'clinic_hours','Mon, Tue, Thu, Fri, Sat  11:00 AM – 2:00 PM','Clinic Operating Hours','2025-09-12 17:11:00','2025-09-12 17:11:00'),(31,'clinic_affiliations','St. Paul’s Hospital, Iloilo Doctors’ Hospital, Iloilo Mission Hospital, Western Visayas Medical Center, WVSU Med Center, Medicus Ambulatory, Metro Iloilo Hospital','Hospital Affiliations','2025-09-12 17:11:00','2025-09-12 17:11:00'),(32,'report_header','ENT CLINIC - OFFICIAL REPORT','Header text for printed reports','2025-09-12 17:11:00','2025-09-12 17:11:00'),(33,'report_footer','Thank you for trusting our clinic!','Footer text for printed reports','2025-09-12 17:11:00','2025-09-12 17:11:00'),(34,'date_format','yyyy-MM-dd','Default date format used across the system','2025-09-12 17:11:00','2025-09-12 17:11:00'),(35,'time_format','hh:mm tt','Default time format used across the system','2025-09-12 17:11:00','2025-09-12 17:11:00'),(36,'records_per_page','20','Default number of records to display in data grids','2025-09-12 17:11:00','2025-09-12 17:11:00');
+INSERT INTO `system_settings` VALUES (19,'tax_percentage','12.00','Default VAT percentage applied to all items if not specified','2025-09-12 17:11:00','2025-09-12 17:11:00'),(20,'discount_percentage','10.00','Default discount for patients if not specified on item level','2025-09-12 17:11:00','2025-09-12 19:00:13'),(21,'default_currency','PHP','Default currency of the system','2025-09-12 17:11:00','2025-09-12 17:11:00'),(22,'currency_symbol','₱','Currency symbol for displaying prices','2025-09-12 17:11:00','2025-09-12 17:11:00'),(23,'invoice_prefix','INV','Prefix used when generating invoice numbers','2025-09-12 17:11:00','2025-09-12 17:11:00'),(24,'allow_negative_stock','0','Flag to allow or disallow negative stock. 0 = No, 1 = Yes','2025-09-12 17:11:00','2025-09-12 17:11:00'),(25,'low_stock_threshold','10','System alert threshold for low stock levels','2025-09-12 17:11:00','2025-09-12 17:11:00'),(26,'clinic_name','ENT Clinic Inventory System','Display name of the clinic in reports and headers','2025-09-12 17:11:00','2025-09-12 17:11:00'),(27,'clinic_address','388 E. Lopez St., Jaro, Iloilo City (Front of Robinsons Jaro)','Clinic Address','2025-09-12 17:11:00','2025-09-12 17:11:00'),(28,'clinic_tel','329-1796','Clinic Telephone Number','2025-09-12 17:11:00','2025-09-12 17:11:00'),(29,'clinic_mobile','0925-5000149','Clinic Mobile Number','2025-09-12 17:11:00','2025-09-12 17:11:00'),(30,'clinic_hours','Mon, Tue, Thu, Fri, Sat  11:00 AM – 2:00 PM','Clinic Operating Hours','2025-09-12 17:11:00','2025-09-12 17:11:00'),(31,'clinic_affiliations','St. Paul’s Hospital, Iloilo Doctors’ Hospital, Iloilo Mission Hospital, Western Visayas Medical Center, WVSU Med Center, Medicus Ambulatory, Metro Iloilo Hospital','Hospital Affiliations','2025-09-12 17:11:00','2025-09-12 17:11:00'),(32,'report_header','ENT CLINIC - OFFICIAL REPORT','Header text for printed reports','2025-09-12 17:11:00','2025-09-12 17:11:00'),(33,'report_footer','Thank you for trusting our clinic!','Footer text for printed reports','2025-09-12 17:11:00','2025-09-12 17:11:00'),(34,'date_format','yyyy-MM-dd','Default date format used across the system','2025-09-12 17:11:00','2025-09-12 17:11:00'),(35,'time_format','hh:mm tt','Default time format used across the system','2025-09-12 17:11:00','2025-09-12 17:11:00'),(36,'records_per_page','20','Default number of records to display in data grids','2025-09-12 17:11:00','2025-09-12 17:11:00'),(37,'markup_percentage','50','Provides a profit margin on each sale','2025-09-12 20:09:24','2025-09-12 20:11:10');
 /*!40000 ALTER TABLE `system_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -299,6 +324,24 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES (1,'a','a','Receptioist','receptionist'),(2,'d','d','Doctor','doctor');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `sales_report`
+--
+
+/*!50001 DROP VIEW IF EXISTS `sales_report`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `sales_report` AS select `sm`.`movement_id` AS `movement_id`,`sm`.`movement_date` AS `movement_date`,`i`.`item_id` AS `item_id`,`i`.`item_name` AS `item_name`,`i`.`description` AS `description`,`i`.`category` AS `category`,`i`.`cost_price` AS `cost_price`,`i`.`selling_price` AS `selling_price`,`sm`.`quantity` AS `quantity`,`sm`.`discount_amount` AS `discount_amount`,`sm`.`tax_amount` AS `tax_amount`,(`i`.`selling_price` * `sm`.`quantity`) AS `gross_total`,(((`i`.`selling_price` * `sm`.`quantity`) - `sm`.`discount_amount`) + `sm`.`tax_amount`) AS `net_total` from (`stock_movements` `sm` join `items` `i` on((`sm`.`item_id` = `i`.`item_id`))) where (`sm`.`movement_type` = 'OUT') order by `sm`.`movement_date` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -309,4 +352,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-13  3:41:55
+-- Dump completed on 2025-09-13 14:53:19

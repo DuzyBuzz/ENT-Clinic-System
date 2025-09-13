@@ -33,9 +33,9 @@
             this.startRecordingButton = new System.Windows.Forms.Button();
             this.livePreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.recordCapturedFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.recordCapturedFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.livePreviewPictureBox)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -43,6 +43,7 @@
             // 
             // cameraComboBox
             // 
+            this.cameraComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cameraComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cameraComboBox.Location = new System.Drawing.Point(158, 3);
             this.cameraComboBox.Name = "cameraComboBox";
@@ -51,6 +52,7 @@
             // 
             // startRecordingButton
             // 
+            this.startRecordingButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.startRecordingButton.Location = new System.Drawing.Point(561, 3);
             this.startRecordingButton.Name = "startRecordingButton";
             this.startRecordingButton.Size = new System.Drawing.Size(120, 30);
@@ -86,6 +88,15 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1888, 971);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
+            // recordCapturedFlowLayoutPanel
+            // 
+            this.recordCapturedFlowLayoutPanel.AutoScroll = true;
+            this.recordCapturedFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.recordCapturedFlowLayoutPanel.Location = new System.Drawing.Point(3, 876);
+            this.recordCapturedFlowLayoutPanel.Name = "recordCapturedFlowLayoutPanel";
+            this.recordCapturedFlowLayoutPanel.Size = new System.Drawing.Size(1882, 92);
+            this.recordCapturedFlowLayoutPanel.TabIndex = 3;
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 4;
@@ -113,15 +124,6 @@
             this.label1.Size = new System.Drawing.Size(130, 24);
             this.label1.TabIndex = 2;
             this.label1.Text = "Select Device:";
-            // 
-            // recordCapturedFlowLayoutPanel
-            // 
-            this.recordCapturedFlowLayoutPanel.AutoScroll = true;
-            this.recordCapturedFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.recordCapturedFlowLayoutPanel.Location = new System.Drawing.Point(3, 876);
-            this.recordCapturedFlowLayoutPanel.Name = "recordCapturedFlowLayoutPanel";
-            this.recordCapturedFlowLayoutPanel.Size = new System.Drawing.Size(1882, 92);
-            this.recordCapturedFlowLayoutPanel.TabIndex = 3;
             // 
             // VideoRecorder
             // 

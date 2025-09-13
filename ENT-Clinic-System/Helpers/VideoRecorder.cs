@@ -2,7 +2,6 @@
 using AForge.Video;
 using AForge.Video.DirectShow;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -25,6 +24,9 @@ namespace ENT_Clinic_System.Helpers
         private const int MaxRecordingSeconds = 300;
         private bool isClosing = false;
 
+        // 🔹 Firefly device helper
+        private FireflyHelper fireflyHelper;
+
         public VideoRecorder()
         {
             try
@@ -35,6 +37,10 @@ namespace ENT_Clinic_System.Helpers
                 this.FormClosing += VideoRecorder_FormClosing;
                 startRecordingButton.Text = "Start Recording";
                 recordingTimer = new Stopwatch();
+
+                // 🔹 Setup Firefly helper
+                fireflyHelper = new FireflyHelper();
+                fireflyHelper.FireflyButtonPressed += FireflyHelper_FireflyButtonPressed;
             }
             catch (Exception ex)
             {
@@ -74,6 +80,12 @@ namespace ENT_Clinic_System.Helpers
             {
                 ShowError("Error toggling recording", ex);
             }
+        }
+
+        private void FireflyHelper_FireflyButtonPressed(object sender, EventArgs e)
+        {
+            // 🔹 Simulate clicking the Start/Stop button
+            startRecordingButton.PerformClick();
         }
 
         private void StartRecording()
@@ -223,7 +235,6 @@ namespace ENT_Clinic_System.Helpers
 
             try
             {
-                // Prevent closing if recording
                 if (isRecording)
                 {
                     var result = MessageBox.Show(
@@ -243,10 +254,9 @@ namespace ENT_Clinic_System.Helpers
                     StopRecordingWithoutForwarding();
                 }
 
-                // Wait for camera to stop safely
                 if (videoSource != null && videoSource.IsRunning)
                 {
-                    e.Cancel = true; // block immediate close
+                    e.Cancel = true;
                     Cursor.Current = Cursors.WaitCursor;
 
                     bool stopped = await StopCameraSafely();
@@ -260,12 +270,10 @@ namespace ENT_Clinic_System.Helpers
                         return;
                     }
 
-                    // Retry closing
                     this.Close();
                     return;
                 }
 
-                // Dispose preview safely
                 if (livePreviewPictureBox.Image != null)
                 {
                     livePreviewPictureBox.Image.Dispose();
@@ -275,6 +283,10 @@ namespace ENT_Clinic_System.Helpers
             catch (Exception ex)
             {
                 ShowError("Error while closing", ex);
+            }
+            finally
+            {
+                fireflyHelper?.Dispose();
             }
         }
 
@@ -338,16 +350,13 @@ namespace ENT_Clinic_System.Helpers
             VideoSource_NewFrame(sender, e);
         }
 
-        /// <summary>
-        /// Centralized error handling method
-        /// </summary>
         private void ShowError(string title, Exception ex)
         {
             try
             {
                 MessageBox.Show($"{title}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch { /* ignore if even MessageBox fails */ }
+            catch { }
         }
     }
 
@@ -373,16 +382,6 @@ namespace ENT_Clinic_System.Helpers
                 Cursor = Cursors.Hand
             };
 
-            //Label lbl = new Label
-            //{
-            //    Text = Path.GetFileName(videoPath),
-            //    Dock = DockStyle.Bottom,
-            //    Height = 50,
-            //    TextAlign = ContentAlignment.MiddleCenter,
-            //    AutoEllipsis = true
-            //};
-
-            //this.Controls.Add(lbl);
             this.Controls.Add(pb);
 
             pb.DoubleClick += (s, e) =>
@@ -427,4 +426,3 @@ namespace ENT_Clinic_System.Helpers
         }
     }
 }
-

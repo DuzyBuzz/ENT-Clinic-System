@@ -49,19 +49,20 @@
             // 
             // cameraComboBox
             // 
-            this.cameraComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cameraComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.cameraComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cameraComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cameraComboBox.Location = new System.Drawing.Point(158, 3);
             this.cameraComboBox.Name = "cameraComboBox";
-            this.cameraComboBox.Size = new System.Drawing.Size(121, 32);
+            this.cameraComboBox.Size = new System.Drawing.Size(388, 32);
             this.cameraComboBox.TabIndex = 1;
             // 
             // captureButton
             // 
-            this.captureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.captureButton.Location = new System.Drawing.Point(561, 3);
+            this.captureButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.captureButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.captureButton.Location = new System.Drawing.Point(579, 3);
             this.captureButton.Name = "captureButton";
-            this.captureButton.Size = new System.Drawing.Size(75, 23);
+            this.captureButton.Size = new System.Drawing.Size(82, 32);
             this.captureButton.TabIndex = 2;
             this.captureButton.Text = "Capture";
             // 
@@ -95,8 +96,8 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 4;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.23F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.41F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.27F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.36982F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.31456F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.cameraComboBox, 1, 0);

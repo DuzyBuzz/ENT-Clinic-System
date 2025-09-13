@@ -20,6 +20,9 @@ namespace ENT_Clinic_System.Helpers
 
         public event EventHandler<Bitmap> ImageCaptured;
 
+        // 🔹 Firefly device helper
+        private FireflyHelper fireflyHelper;
+
         public ImageCameraUI()
         {
             InitializeComponent();
@@ -39,7 +42,17 @@ namespace ENT_Clinic_System.Helpers
             cameraComboBox.SelectedIndexChanged += CameraComboBox_SelectedIndexChanged;
             this.FormClosing += ImageCameraUI_FormClosing;
 
+            // 🔹 Setup Firefly helper (device button)
+            fireflyHelper = new FireflyHelper();
+            fireflyHelper.FireflyButtonPressed += FireflyHelper_FireflyButtonPressed;
+
             LoadCameras();
+        }
+
+        private void FireflyHelper_FireflyButtonPressed(object sender, EventArgs e)
+        {
+            // 🔹 Trigger capture just like clicking the UI button
+            CaptureButton_Click(captureButton, EventArgs.Empty);
         }
 
         private void LoadCameras()
@@ -230,6 +243,9 @@ namespace ENT_Clinic_System.Helpers
                 currentFrame?.Dispose();
                 currentFrame = null;
             }
+
+            // 🔹 Dispose Firefly helper
+            fireflyHelper?.Dispose();
         }
     }
 }
