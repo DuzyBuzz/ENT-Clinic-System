@@ -73,7 +73,7 @@ namespace ENT_Clinic_System.UserControls
             SearchHelper.Search(
                 dgv: patientsDataGridView,
                 tableName: "patients",
-                columnName: "full_name",
+                columnNames: new string[] { "full_name"},
                 filterControl: searchPatientNameTextBox
             );
 
@@ -86,6 +86,7 @@ namespace ENT_Clinic_System.UserControls
 
         private void refreshPatientsButton_Click(object sender, EventArgs e)
         {
+            searchPatientNameTextBox.Text = "";
             patientCrud.LoadData();
         }
         private void UpdatePaginationButtons()

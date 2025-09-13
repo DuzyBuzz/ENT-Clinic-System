@@ -1,9 +1,11 @@
 ﻿using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.UserControls;
+using ENT_Clinic_System.PrintingFroms;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ENT_Clinic_System.PrintingForms;
 
 namespace ENT_Clinic_System
 {
@@ -171,6 +173,12 @@ namespace ENT_Clinic_System
             InventoryForm inventoryForm = new InventoryForm();
             inventoryForm.Show();
 
+        }
+
+        private void salesReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SalesReportForm salesReportForm = new SalesReportForm();
+            salesReportForm.Show();
         }
     }
 

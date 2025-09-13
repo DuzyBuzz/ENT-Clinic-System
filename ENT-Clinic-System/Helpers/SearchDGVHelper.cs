@@ -23,7 +23,7 @@ namespace ENT_Clinic_System.Helpers
         public static void Search(
             DataGridView dgv,
             string tableName,
-            string columnName,
+            string[] columnNames,           // <-- now an array
             Control filterControl = null,
             DateTime? fromDate = null,
             DateTime? toDate = null,
@@ -51,18 +51,26 @@ namespace ENT_Clinic_System.Helpers
                 // Build WHERE clause
                 var conditions = new System.Collections.Generic.List<string>();
 
-                if (!string.IsNullOrEmpty(filterValue))
+                if (!string.IsNullOrEmpty(filterValue) && columnNames.Length > 0)
                 {
                     if (filterControl is DateTimePicker)
-                        conditions.Add($"DATE({columnName}) = @filterValue");
+                    {
+                        foreach (var col in columnNames)
+                            conditions.Add($"DATE({col}) = @filterValue");
+                    }
                     else
-                        conditions.Add($"{columnName} LIKE @filterValue");
+                    {
+                        var orConditions = new System.Collections.Generic.List<string>();
+                        foreach (var col in columnNames)
+                            orConditions.Add($"{col} LIKE @filterValue");
+                        conditions.Add("(" + string.Join(" OR ", orConditions) + ")");
+                    }
                 }
 
                 if (fromDate.HasValue)
-                    conditions.Add($"DATE({columnName}) >= @fromDate");
+                    conditions.Add($"DATE({columnNames[0]}) >= @fromDate"); // you can choose which column applies for date range
                 if (toDate.HasValue)
-                    conditions.Add($"DATE({columnName}) <= @toDate");
+                    conditions.Add($"DATE({columnNames[0]}) <= @toDate");
 
                 if (conditions.Count > 0)
                     sql += " WHERE " + string.Join(" AND ", conditions);
@@ -95,6 +103,7 @@ namespace ENT_Clinic_System.Helpers
                 MessageBox.Show("Search failed: " + ex.Message);
             }
         }
+
     }
 }
 

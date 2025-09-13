@@ -183,6 +183,7 @@
     <Compile Include="Helpers\PrintHelper.cs" />
     <Compile Include="Helpers\RichTextAutocompleteHelper.cs" />
     <Compile Include="Helpers\SearchDGVHelper.cs" />
+    <Compile Include="Helpers\UniqueHelper.cs" />
     <Compile Include="Helpers\UserCredentials.cs" />
     <Compile Include="Helpers\VideoFlowHelper.cs" />
     <Compile Include="Helpers\VideoFolderHelper.cs" />
@@ -229,6 +230,12 @@
       <DependentUpon>PrintAttachments.cs</DependentUpon>
     </Compile>
     <Compile Include="PrintingFroms\PrintTextHistory.cs" />
+    <Compile Include="PrintingFroms\SalesReportForm .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintingFroms\SalesReportForm .Designer.cs">
+      <DependentUpon>SalesReportForm .cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ConsultationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -275,6 +282,9 @@
     <EmbeddedResource Include="PrintingFroms\PrintAttachments.resx">
       <DependentUpon>PrintAttachments.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PrintingFroms\SalesReportForm .resx">
+      <DependentUpon>SalesReportForm .cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ConsultationControl.resx">
       <DependentUpon>ConsultationControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,12 +324,12 @@
     <Content Include="assets\icon\ent_logo.ico" />
     <Content Include="assets\images\ENT LOGO.jpg" />
     <Content Include="BDADLL.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Database\ent_clinic_db.sql" />
     <Content Include="ENT LOGO.ico" />
     <Content Include="SnapDll.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

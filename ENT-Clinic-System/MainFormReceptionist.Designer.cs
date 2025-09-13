@@ -30,8 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormReceptionist));
             this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.registrationReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dailyPatientListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockOutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.stockInButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +54,7 @@
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.salesReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,23 +64,10 @@
             this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(232, 30);
             this.userGuideToolStripMenuItem.Text = "User Guide";
             // 
-            // registrationReportToolStripMenuItem
-            // 
-            this.registrationReportToolStripMenuItem.Name = "registrationReportToolStripMenuItem";
-            this.registrationReportToolStripMenuItem.Size = new System.Drawing.Size(237, 30);
-            this.registrationReportToolStripMenuItem.Text = "Registration Report";
-            // 
-            // dailyPatientListToolStripMenuItem
-            // 
-            this.dailyPatientListToolStripMenuItem.Name = "dailyPatientListToolStripMenuItem";
-            this.dailyPatientListToolStripMenuItem.Size = new System.Drawing.Size(237, 30);
-            this.dailyPatientListToolStripMenuItem.Text = "Daily Patient List";
-            // 
             // reportsToolStripMenuItem
             // 
             this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dailyPatientListToolStripMenuItem,
-            this.registrationReportToolStripMenuItem});
+            this.salesReportToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
             this.reportsToolStripMenuItem.Text = "Report";
@@ -89,13 +75,13 @@
             // stockOutButton
             // 
             this.stockOutButton.Name = "stockOutButton";
-            this.stockOutButton.Size = new System.Drawing.Size(180, 30);
+            this.stockOutButton.Size = new System.Drawing.Size(161, 30);
             this.stockOutButton.Text = "Stock Out";
             // 
             // stockInButton
             // 
             this.stockInButton.Name = "stockInButton";
-            this.stockInButton.Size = new System.Drawing.Size(180, 30);
+            this.stockInButton.Size = new System.Drawing.Size(161, 30);
             this.stockInButton.Text = "Stock In";
             this.stockInButton.Click += new System.EventHandler(this.stockInButton_Click);
             // 
@@ -277,6 +263,13 @@
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
             // 
+            // salesReportToolStripMenuItem
+            // 
+            this.salesReportToolStripMenuItem.Name = "salesReportToolStripMenuItem";
+            this.salesReportToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.salesReportToolStripMenuItem.Text = "Sales";
+            this.salesReportToolStripMenuItem.Click += new System.EventHandler(this.salesReportToolStripMenuItem_Click);
+            // 
             // MainFormReceptionist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -305,8 +298,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem registrationReportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dailyPatientListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stockOutButton;
         private System.Windows.Forms.ToolStripMenuItem stockInButton;
@@ -331,5 +322,6 @@
         private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem salesReportToolStripMenuItem;
     }
 }

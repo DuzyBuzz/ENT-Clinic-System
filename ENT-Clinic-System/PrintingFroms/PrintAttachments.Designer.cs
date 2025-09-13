@@ -107,6 +107,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "PrintAttachments";
             this.Text = "Print Attachments";
+            this.Load += new System.EventHandler(this.PrintAttachments_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

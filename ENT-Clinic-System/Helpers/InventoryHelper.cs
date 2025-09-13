@@ -72,7 +72,7 @@ namespace ENT_Clinic_System.Helpers
         // ================================
         // 🔹 Stock Movements (insert + sales tracking)
         // ================================
-        public bool AddStockMovement(int itemId, string movementType, int quantity, bool applyDiscount = false)
+        public bool AddStockMovement(int itemId, string movementType, int quantity, DateTime expirationDate, bool applyDiscount, bool hasExpiration)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace ENT_Clinic_System.Helpers
                 {
                     conn.Open();
 
-                    // 🔹 Step 1: Get cost price from items first
+                    // 🔹 Step 1: Get selling price (unit price)
                     decimal sellingPrice = 0;
                     string priceQuery = "SELECT selling_price FROM items WHERE item_id=@itemId";
                     using (var cmd = new MySqlCommand(priceQuery, conn))
@@ -90,13 +90,13 @@ namespace ENT_Clinic_System.Helpers
                         if (result != null) sellingPrice = Convert.ToDecimal(result);
                     }
 
-                    // 🔹 Step 2: Now calculate price details correctly
+                    // 🔹 Step 2: Calculate price details
                     var priceDetails = CalculateFinalPrice(sellingPrice, applyDiscount, quantity);
 
                     // 🔹 Step 3: Insert into stock_movements
                     string movementQuery = @"INSERT INTO stock_movements 
-                        (item_id, movement_type, quantity, discount_amount, tax_amount)
-                        VALUES (@itemId, @movementType, @quantity, @discount_amount, @tax_amount)";
+                (item_id, movement_type, quantity, discount_amount, tax_amount, expiration_date)
+                VALUES (@itemId, @movementType, @quantity, @discount_amount, @tax_amount, @expiration_date)";
 
                     using (var cmd = new MySqlCommand(movementQuery, conn))
                     {
@@ -105,21 +105,27 @@ namespace ENT_Clinic_System.Helpers
                         cmd.Parameters.AddWithValue("@quantity", quantity);
                         cmd.Parameters.AddWithValue("@discount_amount", priceDetails.DiscountAmount);
                         cmd.Parameters.AddWithValue("@tax_amount", priceDetails.TaxAmount);
+
+                        if (hasExpiration)
+                            cmd.Parameters.AddWithValue("@expiration_date", expirationDate);
+                        else
+                            cmd.Parameters.AddWithValue("@expiration_date", DBNull.Value);
+
                         cmd.ExecuteNonQuery();
                     }
 
-                    // 🔹 Step 4: If it's a StockOut, also insert into sales
-                    if (movementType.Equals("StockOut", StringComparison.OrdinalIgnoreCase))
+                    // 🔹 Step 4: If Stock OUT, also insert into sales
+                    if (movementType.Equals("OUT", StringComparison.OrdinalIgnoreCase))
                     {
                         string salesQuery = @"INSERT INTO sales 
-                          (item_id, quantity, unit_price, discount_amount, tax_amount, total_price)
-                          VALUES (@itemId, @quantity, @unit_price, @discount_amount, @tax_amount, @total_price)";
+                  (item_id, quantity, unit_price, discount_amount, tax_amount, total_price)
+                  VALUES (@itemId, @quantity, @unit_price, @discount_amount, @tax_amount, @total_price)";
 
                         using (var cmd = new MySqlCommand(salesQuery, conn))
                         {
                             cmd.Parameters.AddWithValue("@itemId", itemId);
                             cmd.Parameters.AddWithValue("@quantity", quantity);
-                            cmd.Parameters.AddWithValue("@unit_price", priceDetails.BasePrice / quantity); // per unit
+                            cmd.Parameters.AddWithValue("@unit_price", sellingPrice); // ✅ unit price only
                             cmd.Parameters.AddWithValue("@discount_amount", priceDetails.DiscountAmount);
                             cmd.Parameters.AddWithValue("@tax_amount", priceDetails.TaxAmount);
                             cmd.Parameters.AddWithValue("@total_price", priceDetails.FinalPrice);
@@ -136,6 +142,7 @@ namespace ENT_Clinic_System.Helpers
                 return false;
             }
         }
+
 
 
 
@@ -177,7 +184,7 @@ namespace ENT_Clinic_System.Helpers
                 using (MySqlConnection conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT item_id, item_name, description, category, cost_price, selling_price, stock_quantity
+                    string query = @"SELECT item_id, item_name, description, category, cost_price, selling_price, stock_quantity, created_at, updated_at
                                      FROM items ORDER BY item_name";
 
                     using (var adapter = new MySqlDataAdapter(query, conn))

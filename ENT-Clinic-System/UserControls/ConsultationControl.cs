@@ -328,7 +328,7 @@ namespace ENT_Clinic_System.UserControls
                     string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
 
                     // Open the PrintConsultationHistory form and pass the IDs
-                    PrintAttachments printForm = new PrintAttachments(consultationId, patientId);
+                    PrintAttachments printForm = new PrintAttachments(consultationId, patientId, fullNameLabel.Text, consultationDate);
                     printForm.Show();
 
                 }

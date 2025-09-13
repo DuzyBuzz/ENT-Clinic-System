@@ -13,6 +13,8 @@ namespace ENT_Clinic_System.PrintingFroms
     {
         private int consultationId;
         private int patientId;
+        private string fullName;
+        private string consultationDate;
 
         private ImageFlowHelper imageHelper;
         private VideoFlowHelper videoHelper;
@@ -22,11 +24,13 @@ namespace ENT_Clinic_System.PrintingFroms
         // Keep this field at class-level so pagination works
         private int currentImageIndex = 0;
 
-        public PrintAttachments(int consultationId, int patientId)
+        public PrintAttachments(int consultationId, int patientId, string fullName, string consultationDate)
         {
             InitializeComponent();
             this.consultationId = consultationId;
             this.patientId = patientId;
+            this.fullName = fullName;
+            this.consultationDate = consultationDate;
 
             imageHelper = new ImageFlowHelper(imagesPanel);
             videoHelper = new VideoFlowHelper(videosPanel);
@@ -183,6 +187,11 @@ namespace ENT_Clinic_System.PrintingFroms
             // ✅ No more pages → reset index
             e.HasMorePages = false;
             currentImageIndex = 0;
+        }
+
+        private void PrintAttachments_Load(object sender, EventArgs e)
+        {
+            this.Text = $"{fullName} - {consultationDate}";
         }
     }
 }

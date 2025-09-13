@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ENT_Clinic_System.Helpers;
+using Google.Protobuf.WellKnownTypes;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
-using ENT_Clinic_System.Helpers;
 
 namespace ENT_Clinic_System.Inventory
 {
@@ -23,15 +25,20 @@ namespace ENT_Clinic_System.Inventory
             btnStockIn.Click += btnStockIn_Click;
             btnStockOut.Click += btnStockOut_Click;
 
-            dgvItems.SelectionChanged += dgvItems_SelectionChanged;
         }
 
         private void LoadInventory()
         {
+            ComboBoxCollectionHelper.PopulateComboBox(categoryCombobox, "items", "category");
+            ComboBoxCollectionHelper.PopulateComboBox(addItemNameComboBox, "items", "item_name");
+            ComboBoxCollectionHelper.PopulateComboBox(addDescriptionComboBox, "items", "description");
+            ComboBoxCollectionHelper.PopulateComboBox(addCategoryComboBox, "items", "category");
             try
             {
                 DataTable dt = _inventoryHelper.GetAllItems();
                 dgvItems.DataSource = dt;
+                dgvItems.Columns["created_at"].Visible = false;
+                dgvItems.Columns["updated_at"].Visible = false;
             }
             catch (Exception ex)
             {
@@ -41,28 +48,45 @@ namespace ENT_Clinic_System.Inventory
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string name = txtItemName.Text.Trim();
-                string description = txtDescription.Text.Trim();
-                string category = txtCategory.Text.Trim();
-                decimal costPrice = decimal.Parse(txtCostPrice.Text.Trim());
-                decimal sellingPrice = decimal.Parse(txtSellingPrice.Text.Trim());
+            string name = addItemNameComboBox.Text.Trim();
+            string description = addDescriptionComboBox.Text.Trim();
+            string category = addCategoryComboBox.Text.Trim();
+            decimal costPrice = decimal.Parse(costPriceTextBox.Text.Trim());
+            decimal sellingPrice = decimal.Parse(sellingPriceTextBox.Text.Trim());
 
-                if (_inventoryHelper.AddItem(name, description, category, costPrice, sellingPrice))
-                {
-                    MessageBox.Show("✅ Item added successfully!");
-                    LoadInventory();
-                }
-                else
-                {
-                    MessageBox.Show("❌ Failed to add item.");
-                }
-            }
-            catch (Exception ex)
+
+            string[] columns = { "item_name", "description", "category" };
+            object[] values = { name, description, category };
+
+            bool exists = UniqueHelper.Exists("items", columns, values);
+
+            if (exists)
             {
-                MessageBox.Show("Error adding item: " + ex.Message);
+                MessageBox.Show("This item already exists!");
             }
+            else
+            {
+                try
+                {
+
+
+                    if (_inventoryHelper.AddItem(name, description, category, costPrice, sellingPrice))
+                    {
+                        MessageBox.Show("✅ Item added successfully!");
+                        LoadInventory();
+                    }
+                    else
+                    {
+                        MessageBox.Show("❌ Failed to add item.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error adding item: " + ex.Message);
+                }
+            }
+
+
         }
 
         private void btnUpdateItem_Click(object sender, EventArgs e)
@@ -76,11 +100,11 @@ namespace ENT_Clinic_System.Inventory
                 }
 
                 int itemId = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["item_id"].Value);
-                string name = txtItemName.Text.Trim();
-                string description = txtDescription.Text.Trim();
-                string category = txtCategory.Text.Trim();
-                decimal costPrice = decimal.Parse(txtCostPrice.Text.Trim());
-                decimal sellingPrice = decimal.Parse(txtSellingPrice.Text.Trim());
+                string name = addItemNameComboBox.Text.Trim();
+                string description = addDescriptionComboBox.Text.Trim();
+                string category = addCategoryComboBox.Text.Trim();
+                decimal costPrice = decimal.Parse(costPriceTextBox.Text.Trim());
+                decimal sellingPrice = decimal.Parse(sellingPriceTextBox.Text.Trim());
 
                 if (_inventoryHelper.UpdateItem(itemId, name,description, category, costPrice, sellingPrice))
                 {
@@ -130,10 +154,14 @@ namespace ENT_Clinic_System.Inventory
         {
             try
             {
-                int itemId = int.Parse(txtItemId.Text.Trim());
-                int quantity = int.Parse(txtQuantity.Text.Trim());
+                int itemId = int.Parse(itemIdTextBox.Text.Trim());
+                int quantity = int.Parse(quantityTextBox.Text.Trim());
+                DateTime expirationDate = expirationDateTimePicker.Value;
 
-                if (_inventoryHelper.AddStockMovement(itemId, "IN", quantity))
+                bool discount = false; // Usually stock IN does not apply discount
+                bool hasExpiration = expirationDateCheckBox.Checked;
+
+                if (_inventoryHelper.AddStockMovement(itemId, "IN", quantity, expirationDate, discount, hasExpiration))
                 {
                     MessageBox.Show("✅ Stock in successful!");
                     LoadInventory();
@@ -149,57 +177,141 @@ namespace ENT_Clinic_System.Inventory
             }
         }
 
-private void btnStockOut_Click(object sender, EventArgs e)
-{
-    try
-    {
-        int itemId = int.Parse(txtItemId.Text.Trim());
-        int quantity = int.Parse(txtQuantity.Text.Trim());
-        decimal costPrice = decimal.Parse(txtCostPrice.Text.Trim());
 
-        // Calculate price details with discount flag
-        var priceDetails = _inventoryHelper.CalculateFinalPrice(costPrice, discountCheckBox.Checked, quantity);
-
-        // Pass the discount flag and correct movement type
-        if (_inventoryHelper.AddStockMovement(itemId, "OUT", quantity, discountCheckBox.Checked))
+        private void btnStockOut_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                $"✅ Stock out successful!\n\n" +
-                $"Base: {priceDetails.BasePrice:C}\n" +
-                $"Discount: -{priceDetails.DiscountAmount:C}\n" +
-                $"Quantity: -{quantity}\n" +
-                $"Tax: +{priceDetails.TaxAmount:C}\n" +
-                $"Final: {priceDetails.FinalPrice:C}");
+            try
+            {
+                int itemId = int.Parse(itemIdTextBox.Text.Trim());
+                int quantity = int.Parse(quantityTextBox.Text.Trim());
 
+                bool hasExpiration = false; // Stock OUT usually does not require expiration
+                DateTime expirationDate = DateTime.Now; // Placeholder, won’t be used
+                bool applyDiscount = discountCheckBox.Checked;
+
+                if (_inventoryHelper.AddStockMovement(itemId, "OUT", quantity, expirationDate, applyDiscount, hasExpiration))
+                {
+                    MessageBox.Show("✅ Stock out successful!");
+                    LoadInventory();
+                }
+                else
+                {
+                    MessageBox.Show("❌ Failed to stock out.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error stocking out: " + ex.Message);
+            }
+        }
+
+
+
+        private void dgvItems_Selected(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStockOut_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void searchPatientButton_Click(object sender, EventArgs e)
+        {
+            SearchHelper.Search(
+                dgv: dgvItems,
+                tableName: "items",
+                columnNames: new string[] { "item_name", "description" },
+                filterControl: searchItemsTextBox
+            );
+
+
+        }
+
+        private void refreshPatientsButton_Click(object sender, EventArgs e)
+        {
             LoadInventory();
         }
-        else
+
+        private void categoryCombobox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("❌ Failed to stock out.");
+            SearchHelper.Search(
+            dgv: dgvItems,
+            tableName: "items",
+            columnNames: new string[] { "category"},
+            filterControl: categoryCombobox
+        );
         }
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show("Error stocking out: " + ex.Message);
-    }
-}
 
+        private void addItemNameComboBox_TextChanged(object sender, EventArgs e)
+        {
+        }
 
-        private void dgvItems_SelectionChanged(object sender, EventArgs e)
+        private void addDescriptionComboBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addCategoryComboBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void InventoryForm_Load(object sender, EventArgs e)
+        {
+            AutoCompleteHelper.SetupAutoComplete(addItemNameComboBox, "items", new List<string> { "item_name" });
+            AutoCompleteHelper.SetupAutoComplete(addDescriptionComboBox, "items", new List<string> { "description" });
+            AutoCompleteHelper.SetupAutoComplete(addCategoryComboBox, "items", new List<string> { "category" });
+        }
+
+        private void dgvItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvItems.SelectedRows.Count > 0)
             {
                 DataGridViewRow row = dgvItems.SelectedRows[0];
-                txtItemId.Text = row.Cells["item_id"].Value.ToString();
-                txtItemName.Text = row.Cells["item_name"].Value.ToString();
-                txtDescription.Text = row.Cells["description"].Value.ToString();
-                txtCategory.Text = row.Cells["category"].Value.ToString();
-                txtCostPrice.Text = row.Cells["cost_price"].Value.ToString();
-                txtSellingPrice.Text = row.Cells["selling_price"].Value.ToString();
+                addItemNameComboBox.Text = row.Cells["item_name"].Value.ToString();
+                addDescriptionComboBox.Text = row.Cells["description"].Value.ToString();
+                addCategoryComboBox.Text = row.Cells["category"].Value.ToString();
+                costPriceTextBox.Text = row.Cells["cost_price"].Value.ToString();
+                sellingPriceTextBox.Text = row.Cells["selling_price"].Value.ToString();
+
+                /// stock in load
+                itemIdTextBox.Text = row.Cells["item_id"].Value.ToString();
+
 
                 // ❌ No need to auto-check discount checkbox (discount only applies during stock out)
                 discountCheckBox.Checked = false;
             }
         }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            addItemNameComboBox.Text = "";
+            addDescriptionComboBox.Text = "";
+            addCategoryComboBox.Text = "";
+            costPriceTextBox.Text = "";
+            sellingPriceTextBox.Text = "";
+        }
+
+        private void expirationDateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // If checkbox is checked, enable the DateTimePicker
+            // If checkbox is unchecked, disable it
+            expirationDateTimePicker.Enabled = expirationDateCheckBox.Checked;
+
+            // Optional: Reset the value to null if unchecked
+            if (!expirationDateCheckBox.Checked)
+            {
+
+                expirationDateTimePicker.Checked = false; // or keep a default value
+            }
+        }
+
     }
 }
