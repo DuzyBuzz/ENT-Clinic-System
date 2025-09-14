@@ -345,6 +345,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Database\ent_clinic_db.sql" />
+    <Content Include="Database\lanuser.txt" />
     <Content Include="ENT LOGO.ico" />
     <Content Include="SnapDll.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
