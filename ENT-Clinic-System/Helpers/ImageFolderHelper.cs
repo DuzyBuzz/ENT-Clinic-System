@@ -17,14 +17,12 @@ namespace ENT_Clinic_System.Helpers
         {
             if (!Directory.Exists(ImageFolderPath))
             {
-                MessageBox.Show("No images to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             string[] files = Directory.GetFiles(ImageFolderPath);
             if (files.Length == 0)
             {
-                MessageBox.Show("No images to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -83,7 +81,6 @@ namespace ENT_Clinic_System.Helpers
             };
 
             progressForm.ShowDialog();
-            MessageBox.Show("All images have been deleted.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
