@@ -56,7 +56,7 @@ namespace ENT_Clinic_System.PrintingForms
         public void PrintReceipt()
         {
             PrintDocument pd = new PrintDocument();
-            pd.PrinterSettings.PrinterName = "";
+            pd.PrinterSettings.PrinterName = "Thermal Printer";
             pd.PrintPage += PrintPage;
             pd.Print();
         }

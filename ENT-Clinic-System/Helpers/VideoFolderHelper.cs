@@ -16,14 +16,12 @@ namespace ENT_Clinic_System.Helpers
         {
             if (!Directory.Exists(VideoFolderPath))
             {
-                MessageBox.Show("No videos to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             string[] files = Directory.GetFiles(VideoFolderPath);
             if (files.Length == 0)
             {
-                MessageBox.Show("No videos to delete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -81,7 +79,6 @@ namespace ENT_Clinic_System.Helpers
             };
 
             progressForm.ShowDialog();
-            MessageBox.Show("All videos have been deleted.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
