@@ -1,0 +1,14 @@
+﻿-- Step 1: Drop the user if it already exists (optional)
+DROP USER IF EXISTS 'lanuser'@'%';
+
+-- Step 2: Create the user with the same password and plugin
+CREATE USER 'lanuser'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+
+-- Step 3: Grant full privileges on your database
+GRANT ALL PRIVILEGES ON `ent_clinic_db`.* TO 'lanuser'@'%';
+
+-- Step 4: Apply changes immediately
+FLUSH PRIVILEGES;
+
+-- Step 5: Verify grants (optional)
+SHOW GRANTS FOR 'lanuser'@'%';
