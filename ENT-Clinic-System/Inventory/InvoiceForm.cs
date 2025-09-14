@@ -246,6 +246,7 @@ namespace ENT_Clinic_System.Inventory
 
                     InvoicePrinter printer = new InvoicePrinter(currentInvoiceId);
                     printer.PrintReceipt();
+                    this.Close();
                 }
             }
             else

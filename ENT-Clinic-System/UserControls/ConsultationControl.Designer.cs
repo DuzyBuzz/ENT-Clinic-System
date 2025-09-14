@@ -40,6 +40,7 @@
             this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
             this.printAttachmentButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.printMedicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -236,9 +237,10 @@
             // 
             this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.printConsultationHistoryButton,
-            this.printAttachmentButton});
+            this.printAttachmentButton,
+            this.printMedicalCertificateToolStripMenuItem});
             this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
-            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 48);
+            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 70);
             // 
             // printConsultationHistoryButton
             // 
@@ -254,6 +256,13 @@
             this.printAttachmentButton.Size = new System.Drawing.Size(215, 22);
             this.printAttachmentButton.Text = "Show Attachments";
             this.printAttachmentButton.Click += new System.EventHandler(this.printAttachmentButton_Click);
+            // 
+            // printMedicalCertificateToolStripMenuItem
+            // 
+            this.printMedicalCertificateToolStripMenuItem.Name = "printMedicalCertificateToolStripMenuItem";
+            this.printMedicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.printMedicalCertificateToolStripMenuItem.Text = "Print Medical Certificate";
+            this.printMedicalCertificateToolStripMenuItem.Click += new System.EventHandler(this.printMedicalCertificateToolStripMenuItem_Click);
             // 
             // tableLayoutPanel6
             // 
@@ -1424,5 +1433,6 @@
         private System.Windows.Forms.ToolStripMenuItem printAttachmentButton;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.DataGridViewTextBoxColumn consultation_date;
+        private System.Windows.Forms.ToolStripMenuItem printMedicalCertificateToolStripMenuItem;
     }
 }

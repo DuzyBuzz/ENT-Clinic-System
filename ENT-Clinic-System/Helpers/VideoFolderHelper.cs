@@ -16,7 +16,7 @@ namespace ENT_Clinic_System.Helpers
         {
             if (!Directory.Exists(VideoFolderPath))
             {
-                return;
+                return; 
             }
 
             string[] files = Directory.GetFiles(VideoFolderPath);

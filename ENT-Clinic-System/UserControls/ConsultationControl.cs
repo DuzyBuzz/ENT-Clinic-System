@@ -1,4 +1,5 @@
 ﻿using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.PrintingForms;
 using ENT_Clinic_System.PrintingFroms;
 using System;
 using System.Collections.Generic;
@@ -188,10 +189,10 @@ namespace ENT_Clinic_System.UserControls
                     videoHelper
                 );
 
-                string message = "Consultation saved successfully!\n\nSaved files:\n";
-                foreach (var (type, path) in savedFiles)
-                    message += $"{type}: {path}\n";
-
+                //string message = "Consultation saved successfully!\n\nSaved files:\n";
+                //foreach (var (type, path) in savedFiles)
+                //    message += $"{type}: {path}\n";
+                string message = "Consultation saved successfully!";
                 MessageBox.Show(message, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Reset UI
@@ -199,6 +200,10 @@ namespace ENT_Clinic_System.UserControls
                 videoFlowLayoutPanel.Controls.Clear();
                 imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
                 videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
+                if(this.Parent != null)
+                {
+                    this.Parent.Controls.Remove(this);
+                }
             }
             catch (Exception ex)
             {
@@ -331,6 +336,48 @@ namespace ENT_Clinic_System.UserControls
                     PrintAttachments printForm = new PrintAttachments(consultationId, patientId, fullNameLabel.Text, consultationDate);
                     printForm.Show();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation record: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void printMedicalCertificateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (consultationDateDataGridView.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a consultation to print.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+                {
+                    if (row.Cells["consultation_id"].Value == null ||
+                        row.Cells["patient_id"].Value == null ||
+                        row.Cells["consultation_date"].Value == null)
+                        continue;
+
+                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+                    int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+
+                    // 🔹 Show input dialog before printing
+                    using (var inputForm = new PurposeInputForm())
+                    {
+                        if (inputForm.ShowDialog() == DialogResult.OK)
+                        {
+                            string requestName = inputForm.PurposeText;
+
+                            // Pass user input to MedicalCertificatePrinter
+                            var printer = new MedicalCertificatePrinter(patientId, consultationId, requestName);
+                            printer.ShowPreview();
+                        }
+                    }
                 }
             }
             catch (Exception ex)

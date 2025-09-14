@@ -175,6 +175,13 @@
     <Compile Include="Helpers\ImageFolderHelper.cs" />
     <Compile Include="Helpers\InsertHelper.cs" />
     <Compile Include="Helpers\InventoryHelper.cs" />
+    <Compile Include="Helpers\PurposeInputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helpers\PurposeInputForm.Designer.cs">
+      <DependentUpon>PurposeInputForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintingFroms\MedicalCertificatePrinter.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
     <Compile Include="Helpers\PatientFileHelper.cs" />
