@@ -180,6 +180,18 @@ namespace ENT_Clinic_System
             SalesReportForm salesReportForm = new SalesReportForm();
             salesReportForm.Show();
         }
+
+        private void stockOutButton_Click(object sender, EventArgs e)
+        {
+            InvoiceForm invoiceForm = new InvoiceForm();
+            invoiceForm.Show();
+        }
+
+        private void systemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SystemSettingsForm systemSettingsForm= new SystemSettingsForm();
+            systemSettingsForm.Show();
+        }
     }
 
 }

@@ -268,6 +268,108 @@ namespace ENT_Clinic_System.Helpers
                 return false;
             }
         }
+        public int AddInvoice(string customerName, DataTable items, decimal amountReceived)
+        {
+            try
+            {
+                using (MySqlConnection conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            decimal subtotal = 0, totalDiscount = 0, totalTax = 0, netTotal = 0;
+
+                            // 🔹 Step 1: Calculate totals
+                            foreach (DataRow row in items.Rows)
+                            {
+                                int itemId = Convert.ToInt32(row["item_id"]);
+                                int qty = Convert.ToInt32(row["quantity"]);
+                                decimal price = Convert.ToDecimal(row["unit_price"]);
+                                bool applyDiscount = Convert.ToBoolean(row["apply_discount"]);
+
+                                var priceDetails = CalculateFinalPrice(price, applyDiscount, qty);
+
+                                subtotal += priceDetails.BasePrice;
+                                totalDiscount += priceDetails.DiscountAmount;
+                                totalTax += priceDetails.TaxAmount;
+                                netTotal += priceDetails.FinalPrice;
+                            }
+
+                            // 🔹 Calculate change
+                            decimal changeDue = amountReceived - netTotal;
+                            if (changeDue < 0) changeDue = 0;
+
+                            // 🔹 Step 2: Insert invoice (header) with amount_received and change_due
+                            string invoiceQuery = @"INSERT INTO invoices 
+                    (customer_name, invoice_date, subtotal, discount_total, tax_total, net_total, amount_received, change_due)
+                    VALUES (@customer_name, NOW(), @subtotal, @discount_total, @tax_total, @net_total, @amount_received, @change_due);
+                    SELECT LAST_INSERT_ID();";
+
+                            int invoiceId;
+                            using (var cmd = new MySqlCommand(invoiceQuery, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@customer_name", customerName);
+                                cmd.Parameters.AddWithValue("@subtotal", subtotal);
+                                cmd.Parameters.AddWithValue("@discount_total", totalDiscount);
+                                cmd.Parameters.AddWithValue("@tax_total", totalTax);
+                                cmd.Parameters.AddWithValue("@net_total", netTotal);
+                                cmd.Parameters.AddWithValue("@amount_received", amountReceived);
+                                cmd.Parameters.AddWithValue("@change_due", changeDue);
+
+                                invoiceId = Convert.ToInt32(cmd.ExecuteScalar());
+                            }
+
+                            // 🔹 Step 3: Insert invoice items
+                            foreach (DataRow row in items.Rows)
+                            {
+                                int itemId = Convert.ToInt32(row["item_id"]);
+                                int qty = Convert.ToInt32(row["quantity"]);
+                                decimal price = Convert.ToDecimal(row["unit_price"]);
+                                bool applyDiscount = Convert.ToBoolean(row["apply_discount"]);
+
+                                var priceDetails = CalculateFinalPrice(price, applyDiscount, qty);
+
+                                string itemQuery = @"INSERT INTO invoice_items 
+                        (invoice_id, item_id, quantity, unit_price, discount_amount, tax_amount, total_price)
+                        VALUES (@invoice_id, @item_id, @quantity, @unit_price, @discount_amount, @tax_amount, @total_price)";
+
+                                using (var cmd = new MySqlCommand(itemQuery, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
+                                    cmd.Parameters.AddWithValue("@item_id", itemId);
+                                    cmd.Parameters.AddWithValue("@quantity", qty);
+                                    cmd.Parameters.AddWithValue("@unit_price", price);
+                                    cmd.Parameters.AddWithValue("@discount_amount", priceDetails.DiscountAmount);
+                                    cmd.Parameters.AddWithValue("@tax_amount", priceDetails.TaxAmount);
+                                    cmd.Parameters.AddWithValue("@total_price", priceDetails.FinalPrice);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                // 🔹 Step 4: Update stock and sales
+                                AddStockMovement(itemId, "OUT", qty, DateTime.Now, applyDiscount, false);
+                            }
+
+                            transaction.Commit();
+                            return invoiceId;
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("⚠️ Error creating invoice: " + ex.Message);
+                return -1;
+            }
+        }
+
+
 
         public bool DeleteItem(int itemId)
         {

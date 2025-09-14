@@ -10,7 +10,6 @@
         private System.Windows.Forms.TextBox sellingPriceTextBox;
         private System.Windows.Forms.Button btnAddItem;
         private System.Windows.Forms.Button btnUpdateItem;
-        private System.Windows.Forms.Button btnDeleteItem;
         private System.Windows.Forms.Label lblItemName;
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.Label lblCostPrice;
@@ -39,6 +38,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InventoryForm));
             this.dgvItems = new System.Windows.Forms.DataGridView();
             this.groupBoxItem = new System.Windows.Forms.GroupBox();
+            this.clearButton = new System.Windows.Forms.Button();
             this.addItemNameComboBox = new System.Windows.Forms.ComboBox();
             this.addCategoryComboBox = new System.Windows.Forms.ComboBox();
             this.addDescriptionComboBox = new System.Windows.Forms.ComboBox();
@@ -48,12 +48,14 @@
             this.lblCostPrice = new System.Windows.Forms.Label();
             this.lblSellingPrice = new System.Windows.Forms.Label();
             this.btnAddItem = new System.Windows.Forms.Button();
-            this.btnDeleteItem = new System.Windows.Forms.Button();
             this.btnUpdateItem = new System.Windows.Forms.Button();
             this.costPriceTextBox = new System.Windows.Forms.TextBox();
             this.sellingPriceTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxStock = new System.Windows.Forms.GroupBox();
+            this.expirationDateCheckBox = new System.Windows.Forms.CheckBox();
+            this.expirationDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.discountCheckBox = new System.Windows.Forms.CheckBox();
             this.lblQuantity = new System.Windows.Forms.Label();
             this.itemIdTextBox = new System.Windows.Forms.TextBox();
@@ -67,10 +69,7 @@
             this.searchItemsTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.categoryCombobox = new System.Windows.Forms.ComboBox();
-            this.clearButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.expirationDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.expirationDateCheckBox = new System.Windows.Forms.CheckBox();
+            this.btnDeleteItem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.groupBoxItem.SuspendLayout();
             this.groupBoxStock.SuspendLayout();
@@ -108,7 +107,6 @@
             this.groupBoxItem.Controls.Add(this.lblCostPrice);
             this.groupBoxItem.Controls.Add(this.lblSellingPrice);
             this.groupBoxItem.Controls.Add(this.btnAddItem);
-            this.groupBoxItem.Controls.Add(this.btnDeleteItem);
             this.groupBoxItem.Controls.Add(this.btnUpdateItem);
             this.groupBoxItem.Controls.Add(this.costPriceTextBox);
             this.groupBoxItem.Controls.Add(this.sellingPriceTextBox);
@@ -120,6 +118,16 @@
             this.groupBoxItem.TabIndex = 1;
             this.groupBoxItem.TabStop = false;
             this.groupBoxItem.Text = "Add / Update Item";
+            // 
+            // clearButton
+            // 
+            this.clearButton.Location = new System.Drawing.Point(299, 245);
+            this.clearButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(90, 34);
+            this.clearButton.TabIndex = 15;
+            this.clearButton.Text = "Clear";
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // addItemNameComboBox
             // 
@@ -203,7 +211,7 @@
             // 
             // btnAddItem
             // 
-            this.btnAddItem.Location = new System.Drawing.Point(10, 245);
+            this.btnAddItem.Location = new System.Drawing.Point(49, 245);
             this.btnAddItem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(90, 34);
@@ -211,18 +219,9 @@
             this.btnAddItem.Text = "Add Item";
             this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click_1);
             // 
-            // btnDeleteItem
-            // 
-            this.btnDeleteItem.Location = new System.Drawing.Point(206, 245);
-            this.btnDeleteItem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnDeleteItem.Name = "btnDeleteItem";
-            this.btnDeleteItem.Size = new System.Drawing.Size(90, 34);
-            this.btnDeleteItem.TabIndex = 10;
-            this.btnDeleteItem.Text = "Delete Item";
-            // 
             // btnUpdateItem
             // 
-            this.btnUpdateItem.Location = new System.Drawing.Point(108, 245);
+            this.btnUpdateItem.Location = new System.Drawing.Point(174, 245);
             this.btnUpdateItem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnUpdateItem.Name = "btnUpdateItem";
             this.btnUpdateItem.Size = new System.Drawing.Size(90, 34);
@@ -266,6 +265,28 @@
             this.groupBoxStock.TabStop = false;
             this.groupBoxStock.Text = "Stock In";
             // 
+            // expirationDateCheckBox
+            // 
+            this.expirationDateCheckBox.AutoSize = true;
+            this.expirationDateCheckBox.Checked = true;
+            this.expirationDateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.expirationDateCheckBox.Location = new System.Drawing.Point(119, 120);
+            this.expirationDateCheckBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.expirationDateCheckBox.Name = "expirationDateCheckBox";
+            this.expirationDateCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.expirationDateCheckBox.TabIndex = 24;
+            this.expirationDateCheckBox.UseVisualStyleBackColor = true;
+            this.expirationDateCheckBox.CheckedChanged += new System.EventHandler(this.expirationDateCheckBox_CheckedChanged);
+            // 
+            // expirationDateTimePicker
+            // 
+            this.expirationDateTimePicker.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.expirationDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.expirationDateTimePicker.Location = new System.Drawing.Point(141, 113);
+            this.expirationDateTimePicker.Name = "expirationDateTimePicker";
+            this.expirationDateTimePicker.Size = new System.Drawing.Size(214, 25);
+            this.expirationDateTimePicker.TabIndex = 17;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -275,6 +296,16 @@
             this.label7.Size = new System.Drawing.Size(49, 20);
             this.label7.TabIndex = 23;
             this.label7.Text = "Item Id:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 117);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(96, 20);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Expiration Date:";
             // 
             // discountCheckBox
             // 
@@ -425,64 +456,33 @@
             this.categoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(553, 31);
+            this.categoryCombobox.Location = new System.Drawing.Point(553, 24);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(192, 28);
             this.categoryCombobox.TabIndex = 4;
             this.categoryCombobox.SelectedIndexChanged += new System.EventHandler(this.categoryCombobox_SelectedIndexChanged);
             // 
-            // clearButton
+            // btnDeleteItem
             // 
-            this.clearButton.Location = new System.Drawing.Point(299, 245);
-            this.clearButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(90, 34);
-            this.clearButton.TabIndex = 15;
-            this.clearButton.Text = "Clear";
-            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 117);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 20);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "Expiration Date:";
-            // 
-            // expirationDateTimePicker
-            // 
-            this.expirationDateTimePicker.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.expirationDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.expirationDateTimePicker.Location = new System.Drawing.Point(141, 113);
-            this.expirationDateTimePicker.Name = "expirationDateTimePicker";
-            this.expirationDateTimePicker.Size = new System.Drawing.Size(214, 25);
-            this.expirationDateTimePicker.TabIndex = 17;
-            // 
-            // expirationDateCheckBox
-            // 
-            this.expirationDateCheckBox.AutoSize = true;
-            this.expirationDateCheckBox.Checked = true;
-            this.expirationDateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.expirationDateCheckBox.Location = new System.Drawing.Point(119, 120);
-            this.expirationDateCheckBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.expirationDateCheckBox.Name = "expirationDateCheckBox";
-            this.expirationDateCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.expirationDateCheckBox.TabIndex = 24;
-            this.expirationDateCheckBox.UseVisualStyleBackColor = true;
-            this.expirationDateCheckBox.CheckedChanged += new System.EventHandler(this.expirationDateCheckBox_CheckedChanged);
+            this.btnDeleteItem.Location = new System.Drawing.Point(269, 748);
+            this.btnDeleteItem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDeleteItem.Name = "btnDeleteItem";
+            this.btnDeleteItem.Size = new System.Drawing.Size(90, 34);
+            this.btnDeleteItem.TabIndex = 10;
+            this.btnDeleteItem.Text = "Delete Item";
+            this.btnDeleteItem.Visible = false;
             // 
             // InventoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(819, 737);
+            this.ClientSize = new System.Drawing.Size(819, 741);
             this.Controls.Add(this.groupBoxStock);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.dgvItems);
             this.Controls.Add(this.groupBoxItem);
+            this.Controls.Add(this.btnDeleteItem);
             this.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -521,5 +521,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker expirationDateTimePicker;
         private System.Windows.Forms.CheckBox expirationDateCheckBox;
+        private System.Windows.Forms.Button btnDeleteItem;
     }
 }

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormReceptionist));
             this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.salesReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockOutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.stockInButton = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,7 +55,7 @@
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.salesReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.systemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,11 +73,19 @@
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
             this.reportsToolStripMenuItem.Text = "Report";
             // 
+            // salesReportToolStripMenuItem
+            // 
+            this.salesReportToolStripMenuItem.Name = "salesReportToolStripMenuItem";
+            this.salesReportToolStripMenuItem.Size = new System.Drawing.Size(128, 30);
+            this.salesReportToolStripMenuItem.Text = "Sales";
+            this.salesReportToolStripMenuItem.Click += new System.EventHandler(this.salesReportToolStripMenuItem_Click);
+            // 
             // stockOutButton
             // 
             this.stockOutButton.Name = "stockOutButton";
             this.stockOutButton.Size = new System.Drawing.Size(161, 30);
             this.stockOutButton.Text = "Stock Out";
+            this.stockOutButton.Click += new System.EventHandler(this.stockOutButton_Click);
             // 
             // stockInButton
             // 
@@ -232,6 +241,7 @@
             // 
             this.accountToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.accountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.systemToolStripMenuItem,
             this.profileToolStripMenuItem,
             this.logoutToolStripMenuItem});
             this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
@@ -241,13 +251,13 @@
             // profileToolStripMenuItem
             // 
             this.profileToolStripMenuItem.Name = "profileToolStripMenuItem";
-            this.profileToolStripMenuItem.Size = new System.Drawing.Size(139, 30);
+            this.profileToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
             this.profileToolStripMenuItem.Text = "Profile";
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(139, 30);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
             this.logoutToolStripMenuItem.Text = "Logout";
             // 
             // MainPanel
@@ -263,12 +273,12 @@
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
             // 
-            // salesReportToolStripMenuItem
+            // systemToolStripMenuItem
             // 
-            this.salesReportToolStripMenuItem.Name = "salesReportToolStripMenuItem";
-            this.salesReportToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
-            this.salesReportToolStripMenuItem.Text = "Sales";
-            this.salesReportToolStripMenuItem.Click += new System.EventHandler(this.salesReportToolStripMenuItem_Click);
+            this.systemToolStripMenuItem.Name = "systemToolStripMenuItem";
+            this.systemToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.systemToolStripMenuItem.Text = "System";
+            this.systemToolStripMenuItem.Click += new System.EventHandler(this.systemToolStripMenuItem_Click);
             // 
             // MainFormReceptionist
             // 
@@ -323,5 +333,6 @@
         private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salesReportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem systemToolStripMenuItem;
     }
 }
