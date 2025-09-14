@@ -8,13 +8,18 @@ namespace ENT_Clinic_System.Helpers
 {
     public static class RichTextBulletAutocompleteHelper
     {
-        // Store autocomplete data from DB
+        // Autocomplete data from DB
         private static readonly Dictionary<string, List<string>> columnData = new Dictionary<string, List<string>>();
+
+        // Last suggestion per RichTextBox
         private static readonly Dictionary<RichTextBox, string> lastSuggestion = new Dictionary<RichTextBox, string>();
 
+        // Autocomplete state machine per RichTextBox
+        private enum AutoState { Normal, Suggesting, Accepted }
+        private static readonly Dictionary<RichTextBox, AutoState> state = new Dictionary<RichTextBox, AutoState>();
+
         /// <summary>
-        /// Loads autocomplete entries from the database for specified columns.
-        /// Call this once on Form Load.
+        /// Load autocomplete entries from DB once on Form Load
         /// </summary>
         public static void LoadColumnsData(string tableName, List<string> columns)
         {
@@ -26,7 +31,7 @@ namespace ENT_Clinic_System.Helpers
                 conn.Open();
                 foreach (var column in columns)
                 {
-                    string key = $"{tableName}.{column}";
+                    string key = tableName + "." + column;
                     if (!columnData.ContainsKey(key))
                         columnData[key] = new List<string>();
 
@@ -49,14 +54,14 @@ namespace ENT_Clinic_System.Helpers
         }
 
         /// <summary>
-        /// Enables both bulleting and autocomplete for a RichTextBox.
+        /// Enable bullets + autocomplete on a RichTextBox
         /// </summary>
         public static void Enable(RichTextBox rtb, string tableName, string columnName)
         {
             if (rtb == null || string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(columnName))
                 return;
 
-            string key = $"{tableName}.{columnName}";
+            string key = tableName + "." + columnName;
             if (!columnData.ContainsKey(key))
                 columnData[key] = new List<string>();
 
@@ -67,12 +72,13 @@ namespace ENT_Clinic_System.Helpers
                 rtb.SelectionStart = rtb.Text.Length;
             }
 
-            // --- ENTER HANDLING (reverse logic) ---
+            state[rtb] = AutoState.Normal;
+
+            // --- ENTER / BACKSPACE HANDLING ---
             rtb.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
-                    // If there is an active suggestion -> accept instead of newline
                     if (lastSuggestion.ContainsKey(rtb) && !string.IsNullOrEmpty(lastSuggestion[rtb]))
                     {
                         e.SuppressKeyPress = true;
@@ -80,22 +86,25 @@ namespace ENT_Clinic_System.Helpers
                         // Accept suggestion
                         rtb.SelectionStart += rtb.SelectionLength;
                         rtb.SelectionLength = 0;
-                        lastSuggestion[rtb] = null; // ✅ clear suggestion so Backspace works
-                    }
-                    else
-                    {
-                        // Let Enter insert newline, bullet is handled in KeyUp
-                        e.SuppressKeyPress = false;
+
+                        // Mark as accepted → stop suggesting until user types again
+                        state[rtb] = AutoState.Accepted;
+                        lastSuggestion[rtb] = null;
+                        return;
                     }
                 }
 
-                // ✅ Reset suggestion if user presses Backspace or Delete
                 if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
                 {
                     lastSuggestion[rtb] = null;
+
+                    // Allow clean deletion in Accepted state
+                    if (state[rtb] == AutoState.Accepted)
+                        return;
                 }
             };
 
+            // --- BULLET HANDLING ---
             rtb.KeyUp += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -111,7 +120,7 @@ namespace ENT_Clinic_System.Helpers
                             string prevText = GetLineText(rtb, prevLine).Trim();
                             if (prevText == "•" || prevText == "• ")
                             {
-                                // Remove the newline because prev line had only a bullet
+                                // Remove newline if prev line only has bullet
                                 int prevLineStart = rtb.GetFirstCharIndexFromLine(prevLine);
                                 int currLineStart = rtb.GetFirstCharIndexFromLine(currentLine);
                                 if (currLineStart > prevLineStart)
@@ -151,7 +160,7 @@ namespace ENT_Clinic_System.Helpers
                     }
                 }
 
-                // --- SAFEGUARD EMPTY TEXT (Ctrl+A + Delete) ---
+                // Safeguard when everything deleted
                 if (string.IsNullOrWhiteSpace(rtb.Text))
                 {
                     rtb.Text = "• ";
@@ -164,6 +173,10 @@ namespace ENT_Clinic_System.Helpers
             {
                 try
                 {
+                    // Skip autocomplete if in Accepted state
+                    if (state[rtb] == AutoState.Accepted)
+                        return;
+
                     int pos = rtb.SelectionStart;
                     if (pos <= 0 || pos > rtb.Text.Length) return;
 
@@ -176,11 +189,19 @@ namespace ENT_Clinic_System.Helpers
                     if (string.IsNullOrEmpty(currentWord))
                     {
                         lastSuggestion[rtb] = null;
+                        state[rtb] = AutoState.Normal;
                         return;
                     }
 
-                    string match = columnData[key]
-                        .FirstOrDefault(sug => sug.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase));
+                    string match = null;
+                    foreach (string sug in columnData[key])
+                    {
+                        if (sug.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase))
+                        {
+                            match = sug;
+                            break;
+                        }
+                    }
 
                     if (!string.IsNullOrEmpty(match) && match.Length > currentWord.Length)
                     {
@@ -190,20 +211,33 @@ namespace ENT_Clinic_System.Helpers
                         rtb.SelectionStart = pos;
                         rtb.SelectionLength = match.Length - currentWord.Length;
                         lastSuggestion[rtb] = match;
+
+                        // Now suggesting
+                        state[rtb] = AutoState.Suggesting;
                     }
                     else
                     {
                         lastSuggestion[rtb] = null;
+                        state[rtb] = AutoState.Normal;
                     }
                 }
                 catch
                 {
-                    // Fail-safe: restore at least one bullet
                     if (string.IsNullOrWhiteSpace(rtb.Text))
                     {
                         rtb.Text = "• ";
                         rtb.SelectionStart = rtb.Text.Length;
                     }
+                }
+            };
+
+            // --- Unlock autocomplete when user types ---
+            rtb.KeyPress += (s, e) =>
+            {
+                if (!char.IsControl(e.KeyChar))
+                {
+                    if (state[rtb] == AutoState.Accepted)
+                        state[rtb] = AutoState.Normal;
                 }
             };
         }
