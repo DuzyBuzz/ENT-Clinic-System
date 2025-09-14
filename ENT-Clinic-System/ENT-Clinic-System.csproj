@@ -183,6 +183,7 @@
     <Compile Include="Helpers\PrintHelper.cs" />
     <Compile Include="Helpers\RawPrinterHelper.cs" />
     <Compile Include="Helpers\RichTextAutocompleteHelper.cs" />
+    <Compile Include="Helpers\RichTextBulletDropdownHelper.cs" />
     <Compile Include="Helpers\SearchDGVHelper.cs" />
     <Compile Include="Helpers\UniqueHelper.cs" />
     <Compile Include="Helpers\UserCredentials.cs" />

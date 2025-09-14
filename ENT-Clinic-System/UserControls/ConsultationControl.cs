@@ -34,18 +34,18 @@ namespace ENT_Clinic_System.UserControls
         {
             followUpDateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm tt";
             videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
-            RichTextBulletAutocompleteHelper.LoadColumnsData(
+            RichTextBulletDropdownHelper.LoadColumnsData(
                 "consultation",
                 new List<string> { "chief_complaint", "history", "ear_exam", "nose_exam", "throat_exam", "diagnosis", "recommendations" }
             );
 
-            RichTextBulletAutocompleteHelper.Enable(complaintsRichTextBox, "consultation", "chief_complaint");
-            RichTextBulletAutocompleteHelper.Enable(illnessHistoryRichTextBox, "consultation", "history");
-            RichTextBulletAutocompleteHelper.Enable(earsRichTextBox, "consultation", "ear_exam");
-            RichTextBulletAutocompleteHelper.Enable(noseRichTextBox, "consultation", "nose_exam");
-            RichTextBulletAutocompleteHelper.Enable(throatRichTextBox, "consultation", "throat_exam");
-            RichTextBulletAutocompleteHelper.Enable(diagnosisRichTextBox, "consultation", "diagnosis");
-            RichTextBulletAutocompleteHelper.Enable(recommendationRichTextBox, "consultation", "recommendations");
+            RichTextBulletDropdownHelper.Enable(complaintsRichTextBox, "consultation", "chief_complaint");
+            RichTextBulletDropdownHelper.Enable(illnessHistoryRichTextBox, "consultation", "history");
+            RichTextBulletDropdownHelper.Enable(earsRichTextBox, "consultation", "ear_exam");
+            RichTextBulletDropdownHelper.Enable(noseRichTextBox, "consultation", "nose_exam");
+            RichTextBulletDropdownHelper.Enable(throatRichTextBox, "consultation", "throat_exam");
+            RichTextBulletDropdownHelper.Enable(diagnosisRichTextBox, "consultation", "diagnosis");
+            RichTextBulletDropdownHelper.Enable(recommendationRichTextBox, "consultation", "recommendations");
 
         }
 

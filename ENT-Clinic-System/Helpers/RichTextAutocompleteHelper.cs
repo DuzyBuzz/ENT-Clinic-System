@@ -6,21 +6,12 @@ using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Helpers
 {
-    public static class RichTextBulletAutocompleteHelper
+    internal static class RichTextBulletAutocompleteHelper
     {
-        // Autocomplete data from DB
         private static readonly Dictionary<string, List<string>> columnData = new Dictionary<string, List<string>>();
-
-        // Last suggestion per RichTextBox
         private static readonly Dictionary<RichTextBox, string> lastSuggestion = new Dictionary<RichTextBox, string>();
+        private static readonly Dictionary<RichTextBox, bool> suspendAutocomplete = new Dictionary<RichTextBox, bool>();
 
-        // Autocomplete state machine per RichTextBox
-        private enum AutoState { Normal, Suggesting, Accepted }
-        private static readonly Dictionary<RichTextBox, AutoState> state = new Dictionary<RichTextBox, AutoState>();
-
-        /// <summary>
-        /// Load autocomplete entries from DB once on Form Load
-        /// </summary>
         public static void LoadColumnsData(string tableName, List<string> columns)
         {
             if (string.IsNullOrEmpty(tableName) || columns == null || columns.Count == 0)
@@ -31,7 +22,7 @@ namespace ENT_Clinic_System.Helpers
                 conn.Open();
                 foreach (var column in columns)
                 {
-                    string key = tableName + "." + column;
+                    string key = $"{tableName}.{column}";
                     if (!columnData.ContainsKey(key))
                         columnData[key] = new List<string>();
 
@@ -53,17 +44,20 @@ namespace ENT_Clinic_System.Helpers
             }
         }
 
-        /// <summary>
-        /// Enable bullets + autocomplete on a RichTextBox
-        /// </summary>
         public static void Enable(RichTextBox rtb, string tableName, string columnName)
         {
             if (rtb == null || string.IsNullOrEmpty(tableName) || string.IsNullOrEmpty(columnName))
                 return;
 
-            string key = tableName + "." + columnName;
+            string key = $"{tableName}.{columnName}";
             if (!columnData.ContainsKey(key))
                 columnData[key] = new List<string>();
+
+            if (!suspendAutocomplete.ContainsKey(rtb))
+                suspendAutocomplete[rtb] = false;
+
+            if (!lastSuggestion.ContainsKey(rtb))
+                lastSuggestion[rtb] = null;
 
             // Ensure first bullet
             if (string.IsNullOrWhiteSpace(rtb.Text))
@@ -72,39 +66,26 @@ namespace ENT_Clinic_System.Helpers
                 rtb.SelectionStart = rtb.Text.Length;
             }
 
-            state[rtb] = AutoState.Normal;
-
-            // --- ENTER / BACKSPACE HANDLING ---
             rtb.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
-                    if (lastSuggestion.ContainsKey(rtb) && !string.IsNullOrEmpty(lastSuggestion[rtb]))
+                    if (!string.IsNullOrEmpty(lastSuggestion[rtb]))
                     {
+                        // Accept suggestion without inserting new bullet
                         e.SuppressKeyPress = true;
-
-                        // Accept suggestion
-                        rtb.SelectionStart += rtb.SelectionLength;
-                        rtb.SelectionLength = 0;
-
-                        // Mark as accepted → stop suggesting until user types again
-                        state[rtb] = AutoState.Accepted;
+                        suspendAutocomplete[rtb] = true;
                         lastSuggestion[rtb] = null;
-                        return;
+                        suspendAutocomplete[rtb] = false;
                     }
                 }
 
                 if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
                 {
-                    lastSuggestion[rtb] = null;
-
-                    // Allow clean deletion in Accepted state
-                    if (state[rtb] == AutoState.Accepted)
-                        return;
+                    lastSuggestion[rtb] = null; // clear suggestion to allow deletion
                 }
             };
 
-            // --- BULLET HANDLING ---
             rtb.KeyUp += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -114,13 +95,11 @@ namespace ENT_Clinic_System.Helpers
                         int currentLine = rtb.GetLineFromCharIndex(rtb.SelectionStart);
                         int prevLine = currentLine - 1;
 
-                        // Fix previous line
                         if (prevLine >= 0)
                         {
                             string prevText = GetLineText(rtb, prevLine).Trim();
                             if (prevText == "•" || prevText == "• ")
                             {
-                                // Remove newline if prev line only has bullet
                                 int prevLineStart = rtb.GetFirstCharIndexFromLine(prevLine);
                                 int currLineStart = rtb.GetFirstCharIndexFromLine(currentLine);
                                 if (currLineStart > prevLineStart)
@@ -160,7 +139,6 @@ namespace ENT_Clinic_System.Helpers
                     }
                 }
 
-                // Safeguard when everything deleted
                 if (string.IsNullOrWhiteSpace(rtb.Text))
                 {
                     rtb.Text = "• ";
@@ -168,15 +146,13 @@ namespace ENT_Clinic_System.Helpers
                 }
             };
 
-            // --- AUTOCOMPLETE HANDLING ---
             rtb.TextChanged += (s, e) =>
             {
+                if (suspendAutocomplete[rtb])
+                    return;
+
                 try
                 {
-                    // Skip autocomplete if in Accepted state
-                    if (state[rtb] == AutoState.Accepted)
-                        return;
-
                     int pos = rtb.SelectionStart;
                     if (pos <= 0 || pos > rtb.Text.Length) return;
 
@@ -189,36 +165,28 @@ namespace ENT_Clinic_System.Helpers
                     if (string.IsNullOrEmpty(currentWord))
                     {
                         lastSuggestion[rtb] = null;
-                        state[rtb] = AutoState.Normal;
                         return;
                     }
 
-                    string match = null;
-                    foreach (string sug in columnData[key])
-                    {
-                        if (sug.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase))
-                        {
-                            match = sug;
-                            break;
-                        }
-                    }
+                    string match = columnData[key]
+                        .FirstOrDefault(sug => sug.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase));
 
                     if (!string.IsNullOrEmpty(match) && match.Length > currentWord.Length)
                     {
+                        suspendAutocomplete[rtb] = true;
+
                         rtb.SelectionStart = pos;
                         rtb.SelectionLength = 0;
                         rtb.SelectedText = match.Substring(currentWord.Length);
                         rtb.SelectionStart = pos;
                         rtb.SelectionLength = match.Length - currentWord.Length;
-                        lastSuggestion[rtb] = match;
 
-                        // Now suggesting
-                        state[rtb] = AutoState.Suggesting;
+                        lastSuggestion[rtb] = match;
+                        suspendAutocomplete[rtb] = false;
                     }
                     else
                     {
                         lastSuggestion[rtb] = null;
-                        state[rtb] = AutoState.Normal;
                     }
                 }
                 catch
@@ -228,16 +196,6 @@ namespace ENT_Clinic_System.Helpers
                         rtb.Text = "• ";
                         rtb.SelectionStart = rtb.Text.Length;
                     }
-                }
-            };
-
-            // --- Unlock autocomplete when user types ---
-            rtb.KeyPress += (s, e) =>
-            {
-                if (!char.IsControl(e.KeyChar))
-                {
-                    if (state[rtb] == AutoState.Accepted)
-                        state[rtb] = AutoState.Normal;
                 }
             };
         }
