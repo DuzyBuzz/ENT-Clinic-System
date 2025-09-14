@@ -12,7 +12,7 @@ namespace ENT_Clinic_System.Helpers
     {
         // ⚠️ You can later move this into App.config for flexibility
         private static readonly string connectionString =
-            "server=localhost;port=8000;user=root;password=password;database=ent_clinic_db";
+            "server=localhost;port=3306;user=root;password=password;database=ent_clinic_db";
 
 
 

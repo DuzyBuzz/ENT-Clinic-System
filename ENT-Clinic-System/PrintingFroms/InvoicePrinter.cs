@@ -56,7 +56,7 @@ namespace ENT_Clinic_System.PrintingForms
         public void PrintReceipt()
         {
             PrintDocument pd = new PrintDocument();
-            pd.PrinterSettings.PrinterName = "XP-58 (copy 1)";
+            pd.PrinterSettings.PrinterName = "";
             pd.PrintPage += PrintPage;
             pd.Print();
         }
