@@ -158,8 +158,8 @@ namespace ENT_Clinic_System.PrintingForms
             // 🔹 Body of certificate
             string body =
                 $"To Whom it May Concern,\n\n" +
-                $"This is to certify that Mr./Ms./Mrs. {patientName} of {address} consulted me due to.\n\n" +
-                $"He/She was diagnosed and/or managed as a case of:\n" +
+                $"This is to certify that Mr./Ms./Mrs. {patientName} of {address} consulted me due to. " +
+                $"He/She was diagnosed and/or managed as a case of\n\n" +
                 $"{diagnosis}\n\n" +
                 $"He/She was advised: {recommendations}\n\n" +
                 $"This medical certificate is issued upon the request of {requester} " +
