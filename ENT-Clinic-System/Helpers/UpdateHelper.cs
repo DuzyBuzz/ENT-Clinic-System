@@ -25,7 +25,7 @@ namespace ENT_Clinic_System.Helpers
                 // GitHub URLs
                 string updateZipUrl = "https://github.com/DuzyBuzz/ENT-Clinic-System/releases/latest/download/ENT-Clinic-System.zip";
 
-                string versionUrl = "https://raw.githubusercontent.com/DuzyBuzz/ENT-Clinic-System/main/version.txt";
+                string versionUrl = "https://raw.githubusercontent.com/DuzyBuzz/ENT-Clinic-System/main/ENT-Clinic-System/version.txt";
 
                 // Check if updater exists
                 if (!File.Exists(updaterPath))
