@@ -40,8 +40,6 @@
             this.searchPatientNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.patientsDataGridView = new System.Windows.Forms.DataGridView();
-            this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addressColumnTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,6 +51,8 @@
             this.emergency_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emergency_contact_number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emergency_relationship = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).BeginInit();
@@ -214,20 +214,6 @@
             this.patientsDataGridView.TabIndex = 1;
             this.patientsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.patientsDataGridView_MouseDown);
             // 
-            // patientsContextMenuStrip
-            // 
-            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewConsultationToolStripMenuItem});
-            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(171, 26);
-            // 
-            // viewConsultationToolStripMenuItem
-            // 
-            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
-            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
-            // 
             // patient_id
             // 
             this.patient_id.DataPropertyName = "patient_id";
@@ -295,6 +281,20 @@
             this.emergency_relationship.DataPropertyName = "emergency_relationship";
             this.emergency_relationship.HeaderText = "Relationship";
             this.emergency_relationship.Name = "emergency_relationship";
+            // 
+            // patientsContextMenuStrip
+            // 
+            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewConsultationToolStripMenuItem});
+            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(171, 26);
+            // 
+            // viewConsultationToolStripMenuItem
+            // 
+            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
+            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
             // 
             // PatientListControl
             // 

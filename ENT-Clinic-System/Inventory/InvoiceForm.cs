@@ -1,6 +1,8 @@
 ﻿using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.PrintingForms;
+using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
@@ -11,7 +13,7 @@ namespace ENT_Clinic_System.Inventory
         private InventoryHelper helper;
         private DataTable selectedItems;
         private int currentInvoiceId;
-
+        private string customerName = string.Empty;
         public InvoiceForm()
         {
             InitializeComponent();
@@ -50,7 +52,7 @@ namespace ENT_Clinic_System.Inventory
             dgvSelectedItems.Columns["description"].ReadOnly = true;
             dgvSelectedItems.Columns["unit_price"].ReadOnly = true;
             dgvSelectedItems.Columns["quantity"].ReadOnly = false;
-
+            LoadPatientsFromPrescriptions();
             try
             {
                 dgvAvailableItems.Columns["created_at"].Visible = false;
@@ -59,6 +61,57 @@ namespace ENT_Clinic_System.Inventory
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading inventory: " + ex.Message);
+            }
+        }
+        private void LoadPatientsFromPrescriptions()
+        {
+            try
+            {
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    // 1️⃣ Get distinct patient_ids from prescription table
+                    string sqlPatientIds = "SELECT DISTINCT patient_id FROM prescription";
+                    List<int> patientIds = new List<int>();
+
+                    using (var cmd = new MySqlCommand(sqlPatientIds, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            patientIds.Add(reader.GetInt32("patient_id"));
+
+                        }
+                    }
+
+                    // 2️⃣ If there are patient IDs, load their details into dgvPatients
+                    if (patientIds.Count > 0)
+                    {
+                        // Combine IDs for a single query
+                        string idsString = string.Join(",", patientIds);
+
+                        // Columns we want to show
+                        var columns = new List<string> { "patient_id", "full_name" };
+
+                        // Use DGVViewHelper with a temporary filter column (we'll ignore it since we use IN clause)
+                        var dgvHelper = new DGVViewHelper(dgvPatients, "patients", columns, "patient_id");
+
+                        // Since your helper only supports single ID filter, we’ll bypass it here:
+                        string sqlPatients = $"SELECT patient_id, full_name FROM patients WHERE patient_id IN ({idsString}) ORDER BY full_name";
+                        using (var cmd = new MySqlCommand(sqlPatients, conn))
+                        using (var adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dtPatients = new DataTable();
+                            adapter.Fill(dtPatients);
+                            dgvPatients.DataSource = dtPatients;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load patients: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -79,6 +132,110 @@ namespace ENT_Clinic_System.Inventory
 
             btnSave.Click += BtnSave_Click;
             txtAmountReceived.TextChanged += TxtAmountReceived_TextChanged;
+            dgvPatients.CellClick += DgvPatients_CellClick;
+            dgvPrescriptions.CellDoubleClick += DgvPrescriptions_CellDoubleClick;
+
+        }
+        private void DgvPrescriptions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return; // Ignore header clicks
+
+            DataGridViewRow row = dgvPrescriptions.Rows[e.RowIndex];
+
+            int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
+            string itemName = row.Cells["item_name"].Value?.ToString() ?? "";
+            string category = row.Cells["category"].Value?.ToString() ?? "";
+            string description = row.Cells["description"].Value?.ToString() ?? "";
+            decimal price = row.Cells["selling_price"].Value is DBNull ? 0m : Convert.ToDecimal(row.Cells["selling_price"].Value);
+
+            int quantity = row.Cells["quantity"] != null ? Convert.ToInt32(row.Cells["quantity"].Value) : 1;
+
+            // Check if the item already exists in selectedItems
+            DataRow existingRow = null;
+            foreach (DataRow r in selectedItems.Rows)
+            {
+                if ((int)r["item_id"] == itemId)
+                {
+                    existingRow = r;
+                    break;
+                }
+            }
+
+            if (existingRow != null)
+            {
+                // Add quantity if already exists
+                existingRow["quantity"] = (int)existingRow["quantity"] + quantity;
+            }
+            else
+            {
+                // Forward all fields
+                selectedItems.Rows.Add(itemId, itemName, category, description, price, quantity, chkApplyDiscount.Checked);
+            }
+
+            CalculateTotals();
+        }
+
+
+
+        private void DgvPatients_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return; // Ignore header clicks
+
+            try
+            {
+                // Get selected patient ID
+                int patientId = Convert.ToInt32(dgvPatients.Rows[e.RowIndex].Cells["patient_id"].Value);
+                // Get patient full name from the same row
+                customerName = dgvPatients.Rows[e.RowIndex].Cells["full_name"].Value?.ToString();
+
+
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    // Load prescriptions for this patient, summing quantities if multiple
+                    string sql = @"
+                        SELECT 
+                            p.item_id, 
+                            i.item_name, 
+                            i.description,
+                            i.category,
+                            i.selling_price,
+                            SUM(p.quantity) AS quantity
+                        FROM prescription p
+                        INNER JOIN items i ON p.item_id = i.item_id
+                        WHERE p.patient_id = @patientId
+                        GROUP BY p.item_id, i.item_name, i.description, i.category, i.selling_price
+                        ";
+
+                    using (var cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@patientId", patientId);
+
+                        using (var adapter = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dtPrescriptions = new DataTable();
+                            adapter.Fill(dtPrescriptions);
+
+                            // Bind to dgvPrescription
+                            dgvPrescriptions.DataSource = dtPrescriptions;
+
+                            // Hide item_id if needed
+                            if (dgvPrescriptions.Columns.Contains("item_id"))
+                                dgvPrescriptions.Columns["item_id"].Visible = false;
+
+                            // Set headers
+                            dgvPrescriptions.Columns["item_name"].HeaderText = "Item Name";
+                            dgvPrescriptions.Columns["description"].HeaderText = "Description";
+                            dgvPrescriptions.Columns["quantity"].HeaderText = "Quantity";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load prescriptions: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // 🔹 Add item from inventory
@@ -217,10 +374,14 @@ namespace ENT_Clinic_System.Inventory
                 return;
             }
 
-            string customerName = "Walk-in";
 
-            // 🔹 Parse amount received safely
-            decimal amountReceived = 0;
+            if(customerName == string.Empty)
+            {
+                customerName = "Walk-in";
+            }
+
+                // 🔹 Parse amount received safely
+                decimal amountReceived = 0;
             if (!decimal.TryParse(txtAmountReceived.Text, out amountReceived))
             {
                 MessageBox.Show("Please enter a valid amount received.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);

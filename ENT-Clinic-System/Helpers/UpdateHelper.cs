@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,62 +12,94 @@ namespace ENT_Clinic_System.Helpers
     {
         /// <summary>
         /// Checks for updates and launches updater if a newer version exists.
+        /// Fail silently if update fails or no update is needed.
         /// </summary>
         public async Task CheckForUpdatesAsync()
         {
             try
             {
-                // Main app folder
                 string appFolder = AppDomain.CurrentDomain.BaseDirectory;
-
-                // Updater.exe must be in the same folder
                 string updaterPath = Path.Combine(appFolder, "Updater.exe");
 
-                // GitHub URLs
-                string updateZipUrl = "https://github.com/DuzyBuzz/ENT-Clinic-System/releases/latest/download/ENT-Clinic-System.zip";
-
-                string versionUrl = "https://raw.githubusercontent.com/DuzyBuzz/ENT-Clinic-System/main/ENT-Clinic-System/version.txt";
+                string versionUrl = "https://github.com/DuzyBuzz/ENT-Clinic-System/releases/latest/download/version.txt";
 
                 // Check if updater exists
                 if (!File.Exists(updaterPath))
                 {
-                    MessageBox.Show("Updater.exe not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Updater.exe not found! Skipping update check.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                // Current app version
-                Version currentVersion = new Version(Application.ProductVersion);
-
-                // Download latest version string
-                string latestVersionStr;
-                using (WebClient client = new WebClient())
+                // Check internet
+                if (!IsInternetAvailable())
                 {
-                    latestVersionStr = (await client.DownloadStringTaskAsync(versionUrl)).Trim();
+                    MessageBox.Show("No internet connection detected. Skipping update check.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                // Parse latest version
+                Version currentVersion = new Version(Application.ProductVersion);
+                string latestVersionStr;
+
+                using (WebClient client = new WebClient())
+                {
+                    try
+                    {
+                        latestVersionStr = (await client.DownloadStringTaskAsync(versionUrl)).Trim();
+                    }
+                    catch (WebException)
+                    {
+                        MessageBox.Show("Failed to reach update server. Skipping update check.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
                 if (!Version.TryParse(latestVersionStr, out Version latestVersion))
                 {
-                    MessageBox.Show("Invalid version format on server.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Invalid version format on server. Skipping update check.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 // Compare versions
                 if (currentVersion >= latestVersion)
                 {
-                    MessageBox.Show("You already have the latest version.", "No Update Needed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Current version ({currentVersion}) is up to date. No update needed.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                // Launch updater
-                Process.Start(updaterPath, $"\"{appFolder}\" \"{updateZipUrl}\"");
-
-                // Close current app
-                Application.Exit();
+                // Launch updater (no arguments needed)
+                MessageBox.Show($"Launching updater... Current version: {currentVersion}, Latest version: {latestVersion}", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    Process.Start(updaterPath);
+                    Application.Exit();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to launch updater: " + ex.Message, "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Update check failed:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Update check failed: " + ex.Message, "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Checks if internet is available by pinging a reliable host (Google DNS).
+        /// </summary>
+        private bool IsInternetAvailable()
+        {
+            try
+            {
+                using (Ping ping = new Ping())
+                {
+                    PingReply reply = ping.Send("8.8.8.8", 2000);
+                    return reply.Status == IPStatus.Success;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
     }

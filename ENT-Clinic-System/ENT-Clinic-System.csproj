@@ -181,6 +181,14 @@
     <Compile Include="Helpers\PurposeInputForm.Designer.cs">
       <DependentUpon>PurposeInputForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\UpdateHelper.cs" />
+    <Compile Include="Inventory\PrescriptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\PrescriptionForm.Designer.cs">
+      <DependentUpon>PrescriptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrintingFroms\MedicalCertificatePrinter.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
@@ -252,6 +260,12 @@
     <Compile Include="PrintingFroms\SalesReportForm .Designer.cs">
       <DependentUpon>SalesReportForm .cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\AppointmentsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\AppointmentsUserControl.Designer.cs">
+      <DependentUpon>AppointmentsUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ConsultationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -297,6 +311,9 @@
     <EmbeddedResource Include="Inventory\InvoiceForm.resx">
       <DependentUpon>InvoiceForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\PrescriptionForm.resx">
+      <DependentUpon>PrescriptionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Inventory\StockInForm.resx" />
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -309,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PrintingFroms\SalesReportForm .resx">
       <DependentUpon>SalesReportForm .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\AppointmentsUserControl.resx">
+      <DependentUpon>AppointmentsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ConsultationControl.resx">
       <DependentUpon>ConsultationControl.cs</DependentUpon>

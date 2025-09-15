@@ -46,23 +46,7 @@ namespace ENT_Clinic_System
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Optional: ask the user for confirmation
-            var result = MessageBox.Show(
-                "Are you sure you want to exit the application?",
-                "Confirm Exit",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
 
-            if (result == DialogResult.Yes)
-            {
-                // This will close all forms and exit the application
-                Application.Exit();
-            }
-            else
-            {
-                // Cancel the closing
-                e.Cancel = true;
-            }
         }
 
 
@@ -160,6 +144,11 @@ namespace ENT_Clinic_System
             }
 
             base.WndProc(ref m);
+        }
+
+        private void MainFormDoctor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 

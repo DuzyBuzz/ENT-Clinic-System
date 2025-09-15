@@ -649,6 +649,7 @@
             this.prescribeMedicineButton.TabIndex = 0;
             this.prescribeMedicineButton.Text = "Prescribe Medicine";
             this.prescribeMedicineButton.UseVisualStyleBackColor = true;
+            this.prescribeMedicineButton.Click += new System.EventHandler(this.prescribeMedicineButton_Click);
             // 
             // saveConsultationButton
             // 

@@ -268,8 +268,6 @@
             // expirationDateCheckBox
             // 
             this.expirationDateCheckBox.AutoSize = true;
-            this.expirationDateCheckBox.Checked = true;
-            this.expirationDateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.expirationDateCheckBox.Location = new System.Drawing.Point(119, 120);
             this.expirationDateCheckBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.expirationDateCheckBox.Name = "expirationDateCheckBox";
@@ -280,6 +278,7 @@
             // 
             // expirationDateTimePicker
             // 
+            this.expirationDateTimePicker.Enabled = false;
             this.expirationDateTimePicker.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.expirationDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.expirationDateTimePicker.Location = new System.Drawing.Point(141, 113);
@@ -317,6 +316,7 @@
             this.discountCheckBox.TabIndex = 6;
             this.discountCheckBox.Text = "discounted";
             this.discountCheckBox.UseVisualStyleBackColor = true;
+            this.discountCheckBox.Visible = false;
             // 
             // lblQuantity
             // 
@@ -362,6 +362,7 @@
             this.btnStockOut.Size = new System.Drawing.Size(120, 34);
             this.btnStockOut.TabIndex = 5;
             this.btnStockOut.Text = "Stock Out";
+            this.btnStockOut.Visible = false;
             this.btnStockOut.Click += new System.EventHandler(this.btnStockOut_Click_1);
             // 
             // tableLayoutPanel2

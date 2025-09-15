@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System
@@ -43,14 +44,18 @@ namespace ENT_Clinic_System
 
         private void UpdateUI(ConnectionStatusEventArgs e)
         {
+
+
             if (e.IsConnected)
             {
-                connectionStatusLabel.ForeColor = Color.Green;
-                connectionStatusLabel.Text = "Status: Database Connected";
+                connectionStatusLabel.Visible = false;
+
                 Debug.WriteLine("DB Connection OK: " + e.Message);
+
             }
             else
             {
+                connectionStatusLabel.Visible = true;
                 connectionStatusLabel.ForeColor = Color.Red;
                 connectionStatusLabel.Text = "❌ DB Connection Failed";
                 Debug.WriteLine("Database connection failed: " + e.Message);
@@ -70,6 +75,17 @@ namespace ENT_Clinic_System
             PlaceholderHelper.AddPlaceholder(userNameTextBox, "Username");
             PlaceholderHelper.AddPlaceholder(passwordTextBox, "Password");
             passwordTextBox.UseSystemPasswordChar = true;
+            // Get the version of the assembly
+            Version appVersion = Assembly.GetExecutingAssembly().GetName().Version;
+
+            // Display in the label
+            versionLabel.Text = $"Version: {appVersion.Major}.{appVersion.Minor}.{appVersion.Build}.{appVersion.Revision}";
+        }
+
+        private async void CheckUpdates()
+        {
+            UpdateHelper helper = new UpdateHelper();
+            await helper.CheckForUpdatesAsync();
         }
 
         private void loginButton_Click(object sender, EventArgs e)

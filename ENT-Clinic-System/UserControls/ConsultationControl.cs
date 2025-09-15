@@ -1,4 +1,5 @@
 ﻿using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.PrintingForms;
 using ENT_Clinic_System.PrintingFroms;
 using System;
@@ -387,5 +388,10 @@ namespace ENT_Clinic_System.UserControls
             }
         }
 
+        private void prescribeMedicineButton_Click(object sender, EventArgs e)
+        {
+            PrescriptionForm prescriptionForm = new PrescriptionForm(_patientId);
+            prescriptionForm.ShowDialog();
+        }
     }
 }

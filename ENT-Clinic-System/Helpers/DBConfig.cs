@@ -15,7 +15,7 @@ namespace ENT_Clinic_System.Helpers
             "server=localhost;port=8000;user=root;password=password;database=ent_clinic_db";
 
 
-
+         
         /// <summary> 1
         /// Returns a new MySQL connection object.
         /// </summary>

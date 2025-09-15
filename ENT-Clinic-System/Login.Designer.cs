@@ -34,6 +34,7 @@
             this.userNameTextBox = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.connectionStatusLabel = new System.Windows.Forms.Label();
+            this.versionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,11 +96,21 @@
             // connectionStatusLabel
             // 
             this.connectionStatusLabel.AutoSize = true;
-            this.connectionStatusLabel.Location = new System.Drawing.Point(0, 427);
+            this.connectionStatusLabel.Location = new System.Drawing.Point(263, 427);
             this.connectionStatusLabel.Name = "connectionStatusLabel";
             this.connectionStatusLabel.Size = new System.Drawing.Size(43, 20);
             this.connectionStatusLabel.TabIndex = 14;
             this.connectionStatusLabel.Text = "Status";
+            this.connectionStatusLabel.Visible = false;
+            // 
+            // versionLabel
+            // 
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Location = new System.Drawing.Point(3, 427);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(50, 20);
+            this.versionLabel.TabIndex = 15;
+            this.versionLabel.Text = "Version";
             // 
             // Login
             // 
@@ -107,6 +118,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(436, 448);
+            this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.connectionStatusLabel);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.passwordTextBox);
@@ -134,5 +146,6 @@
         private System.Windows.Forms.TextBox userNameTextBox;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label connectionStatusLabel;
+        private System.Windows.Forms.Label versionLabel;
     }
 }
