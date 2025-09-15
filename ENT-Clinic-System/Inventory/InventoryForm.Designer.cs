@@ -456,7 +456,7 @@
             this.categoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(553, 24);
+            this.categoryCombobox.Location = new System.Drawing.Point(553, 31);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(192, 28);

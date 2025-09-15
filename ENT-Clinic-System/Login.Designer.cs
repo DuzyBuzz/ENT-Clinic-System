@@ -95,7 +95,7 @@
             // connectionStatusLabel
             // 
             this.connectionStatusLabel.AutoSize = true;
-            this.connectionStatusLabel.Location = new System.Drawing.Point(0, 430);
+            this.connectionStatusLabel.Location = new System.Drawing.Point(0, 427);
             this.connectionStatusLabel.Name = "connectionStatusLabel";
             this.connectionStatusLabel.Size = new System.Drawing.Size(43, 20);
             this.connectionStatusLabel.TabIndex = 14;

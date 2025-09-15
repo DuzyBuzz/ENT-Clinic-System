@@ -1,11 +1,13 @@
 ﻿using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.Inventory;
-using ENT_Clinic_System.UserControls;
-using ENT_Clinic_System.PrintingFroms;
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using ENT_Clinic_System.PrintingForms;
+using ENT_Clinic_System.PrintingFroms;
+using ENT_Clinic_System.UserControls;
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace ENT_Clinic_System
 {
@@ -192,6 +194,15 @@ namespace ENT_Clinic_System
             SystemSettingsForm systemSettingsForm= new SystemSettingsForm();
             systemSettingsForm.Show();
         }
+        private async void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateHelper helper = new UpdateHelper();
+            await helper.CheckForUpdatesAsync();
+        }
+
+
+
+
     }
 
 }
