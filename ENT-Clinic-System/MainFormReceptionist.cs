@@ -1,4 +1,5 @@
 ﻿using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.InsertForms;
 using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.PrintingForms;
 using ENT_Clinic_System.PrintingFroms;
@@ -193,6 +194,18 @@ namespace ENT_Clinic_System
 
             AppointmentsUserControl appointmentsUserControl = new AppointmentsUserControl();
             LoadUserControl(appointmentsUserControl);
+        }
+
+        private void patientQueueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PatientsQueue patientsQueue = new PatientsQueue();
+            patientsQueue.Show();
+        }
+
+        private void doctorPatientsQueueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DoctorPatientQueue doctorPatientQueue = new DoctorPatientQueue();
+            doctorPatientQueue.Show();
         }
     }
 

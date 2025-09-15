@@ -183,6 +183,18 @@
     </Compile>
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\UpdateHelper.cs" />
+    <Compile Include="InsertForms\DoctorPatientQueue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertForms\DoctorPatientQueue.Designer.cs">
+      <DependentUpon>DoctorPatientQueue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InsertForms\PatientsQueue .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertForms\PatientsQueue .Designer.cs">
+      <DependentUpon>PatientsQueue .cs</DependentUpon>
+    </Compile>
     <Compile Include="Inventory\PrescriptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -304,6 +316,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InsertForms\PatientInfoForm.resx">
       <DependentUpon>PatientInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertForms\DoctorPatientQueue.resx">
+      <DependentUpon>DoctorPatientQueue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertForms\PatientsQueue .resx">
+      <DependentUpon>PatientsQueue .cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inventory\InventoryForm.resx">
       <DependentUpon>InventoryForm.cs</DependentUpon>

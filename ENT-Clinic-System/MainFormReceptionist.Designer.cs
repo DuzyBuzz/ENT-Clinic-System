@@ -57,6 +57,7 @@
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.doctorPatientsQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,14 +123,16 @@
             // patientQueueToolStripMenuItem
             // 
             this.patientQueueToolStripMenuItem.Name = "patientQueueToolStripMenuItem";
-            this.patientQueueToolStripMenuItem.Size = new System.Drawing.Size(197, 30);
+            this.patientQueueToolStripMenuItem.Size = new System.Drawing.Size(263, 30);
             this.patientQueueToolStripMenuItem.Text = "Patient Queue";
+            this.patientQueueToolStripMenuItem.Click += new System.EventHandler(this.patientQueueToolStripMenuItem_Click);
             // 
             // consultationsToolStripMenuItem
             // 
             this.consultationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.scheduleToolStripMenuItem,
-            this.patientQueueToolStripMenuItem});
+            this.patientQueueToolStripMenuItem,
+            this.doctorPatientsQueueToolStripMenuItem});
             this.consultationsToolStripMenuItem.Name = "consultationsToolStripMenuItem";
             this.consultationsToolStripMenuItem.Size = new System.Drawing.Size(123, 29);
             this.consultationsToolStripMenuItem.Text = "Appointment";
@@ -137,7 +140,7 @@
             // scheduleToolStripMenuItem
             // 
             this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
-            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(197, 30);
+            this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(263, 30);
             this.scheduleToolStripMenuItem.Text = "Schedule";
             this.scheduleToolStripMenuItem.Click += new System.EventHandler(this.scheduleToolStripMenuItem_Click);
             // 
@@ -290,6 +293,13 @@
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
             // 
+            // doctorPatientsQueueToolStripMenuItem
+            // 
+            this.doctorPatientsQueueToolStripMenuItem.Name = "doctorPatientsQueueToolStripMenuItem";
+            this.doctorPatientsQueueToolStripMenuItem.Size = new System.Drawing.Size(263, 30);
+            this.doctorPatientsQueueToolStripMenuItem.Text = "Doctor Patients Queue";
+            this.doctorPatientsQueueToolStripMenuItem.Click += new System.EventHandler(this.doctorPatientsQueueToolStripMenuItem_Click);
+            // 
             // MainFormReceptionist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -345,5 +355,6 @@
         private System.Windows.Forms.ToolStripMenuItem salesReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem systemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem doctorPatientsQueueToolStripMenuItem;
     }
 }
