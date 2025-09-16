@@ -366,6 +366,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\SystemSettingsForm.resx">
+      <DependentUpon>SystemSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -392,6 +395,7 @@
     <Content Include="Database\ent_clinic_db.sql" />
     <Content Include="Database\lanuser.txt" />
     <Content Include="ENT LOGO.ico" />
+    <Content Include="setups\structure only.sql" />
     <Content Include="SnapDll.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

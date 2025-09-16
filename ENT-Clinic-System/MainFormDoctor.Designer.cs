@@ -33,7 +33,6 @@
             this.registrationReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dailyPatientListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.issueMedicineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkStockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,19 +43,17 @@
             this.patientListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.printReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.closeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.maximizeMaximizeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.systemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.doctorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -88,23 +85,17 @@
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(86, 29);
             this.reportsToolStripMenuItem.Text = "Reports";
             // 
-            // issueMedicineToolStripMenuItem
-            // 
-            this.issueMedicineToolStripMenuItem.Name = "issueMedicineToolStripMenuItem";
-            this.issueMedicineToolStripMenuItem.Size = new System.Drawing.Size(203, 30);
-            this.issueMedicineToolStripMenuItem.Text = "Issue Medicine";
-            // 
             // checkStockToolStripMenuItem
             // 
             this.checkStockToolStripMenuItem.Name = "checkStockToolStripMenuItem";
-            this.checkStockToolStripMenuItem.Size = new System.Drawing.Size(203, 30);
+            this.checkStockToolStripMenuItem.Size = new System.Drawing.Size(183, 30);
             this.checkStockToolStripMenuItem.Text = "Check Stock";
+            this.checkStockToolStripMenuItem.Click += new System.EventHandler(this.checkStockToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkStockToolStripMenuItem,
-            this.issueMedicineToolStripMenuItem});
+            this.checkStockToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(97, 29);
             this.settingsToolStripMenuItem.Text = "Inventory";
@@ -129,6 +120,7 @@
             this.patientQueueToolStripMenuItem.Name = "patientQueueToolStripMenuItem";
             this.patientQueueToolStripMenuItem.Size = new System.Drawing.Size(262, 30);
             this.patientQueueToolStripMenuItem.Text = "Patient Queue";
+            this.patientQueueToolStripMenuItem.Click += new System.EventHandler(this.patientQueueToolStripMenuItem_Click);
             // 
             // consultationsToolStripMenuItem
             // 
@@ -144,6 +136,7 @@
             this.scheduleToolStripMenuItem.Name = "scheduleToolStripMenuItem";
             this.scheduleToolStripMenuItem.Size = new System.Drawing.Size(262, 30);
             this.scheduleToolStripMenuItem.Text = "Schedule Appointment";
+            this.scheduleToolStripMenuItem.Click += new System.EventHandler(this.scheduleToolStripMenuItem_Click);
             // 
             // patientListToolStripMenuItem
             // 
@@ -168,33 +161,11 @@
             this.patientsToolStripMenuItem.Size = new System.Drawing.Size(79, 29);
             this.patientsToolStripMenuItem.Text = "Patient";
             // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(260, 30);
-            this.exitToolStripMenuItem.Text = "Exit";
-            // 
-            // printReportToolStripMenuItem
-            // 
-            this.printReportToolStripMenuItem.Name = "printReportToolStripMenuItem";
-            this.printReportToolStripMenuItem.Size = new System.Drawing.Size(260, 30);
-            this.printReportToolStripMenuItem.Text = "Compare Consultation";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.printReportToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 29);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.fileToolStripMenuItem,
             this.patientsToolStripMenuItem,
             this.consultationsToolStripMenuItem,
             this.settingsToolStripMenuItem,
@@ -203,8 +174,8 @@
             this.closeButton,
             this.maximizeMaximizeButton,
             this.minimizeButton,
-            this.accountToolStripMenuItem,
-            this.doctorToolStripMenuItem});
+            this.doctorToolStripMenuItem,
+            this.toolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(13, 15);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 5, 0, 5);
@@ -244,40 +215,50 @@
             this.minimizeButton.Text = "━";
             this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
             // 
-            // accountToolStripMenuItem
-            // 
-            this.accountToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.accountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.systemToolStripMenuItem,
-            this.profileToolStripMenuItem,
-            this.logoutToolStripMenuItem});
-            this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
-            this.accountToolStripMenuItem.Size = new System.Drawing.Size(46, 29);
-            this.accountToolStripMenuItem.Text = "⚙️";
-            // 
-            // systemToolStripMenuItem
-            // 
-            this.systemToolStripMenuItem.Name = "systemToolStripMenuItem";
-            this.systemToolStripMenuItem.Size = new System.Drawing.Size(142, 30);
-            this.systemToolStripMenuItem.Text = "System";
-            // 
-            // profileToolStripMenuItem
-            // 
-            this.profileToolStripMenuItem.Name = "profileToolStripMenuItem";
-            this.profileToolStripMenuItem.Size = new System.Drawing.Size(142, 30);
-            this.profileToolStripMenuItem.Text = "Profile";
-            // 
-            // logoutToolStripMenuItem
-            // 
-            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(142, 30);
-            this.logoutToolStripMenuItem.Text = "Logout";
-            // 
             // doctorToolStripMenuItem
             // 
             this.doctorToolStripMenuItem.Name = "doctorToolStripMenuItem";
             this.doctorToolStripMenuItem.Size = new System.Drawing.Size(76, 29);
             this.doctorToolStripMenuItem.Text = "Doctor";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem5});
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(46, 29);
+            this.toolStripMenuItem2.Text = "⚙️";
+            // 
+            // updateToolStripMenuItem
+            // 
+            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.updateToolStripMenuItem.Text = "Update";
+            this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 30);
+            this.toolStripMenuItem3.Text = "System";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.systemToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 30);
+            this.toolStripMenuItem4.Text = "Profile";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 30);
+            this.toolStripMenuItem5.Text = "Logout";
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // MainPanel
             // 
@@ -323,7 +304,6 @@
         private System.Windows.Forms.ToolStripMenuItem registrationReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dailyPatientListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem issueMedicineToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkStockToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -334,19 +314,17 @@
         private System.Windows.Forms.ToolStripMenuItem patientListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewPatientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem patientsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem printReportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem closeButton;
         private System.Windows.Forms.ToolStripMenuItem maximizeMaximizeButton;
         private System.Windows.Forms.ToolStripMenuItem minimizeButton;
-        private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem systemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem doctorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
     }
 }

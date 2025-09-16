@@ -75,7 +75,7 @@ namespace ENT_Clinic_System.Helpers
         {
             try
             {
-                PatientAgeHelper.UpdatePatientAges();
+
                 currentPage = page;
 
                 // Count total rows
@@ -146,7 +146,6 @@ namespace ENT_Clinic_System.Helpers
                     {
                         UpdateCellValue(e.RowIndex, e.ColumnIndex);
                         MessageBox.Show("Updated successfully!");
-                        PatientAgeHelper.UpdatePatientAges();
                         LoadData(currentPage); // reload current page
                     }
                     catch (Exception ex)
@@ -195,7 +194,6 @@ namespace ENT_Clinic_System.Helpers
                 try
                 {
                     DeleteRow(id);
-                    PatientAgeHelper.UpdatePatientAges();
                     LoadData(currentPage);
                 }
                 catch (Exception ex)

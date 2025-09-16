@@ -175,7 +175,7 @@ namespace ENT_Clinic_System
 
         private void systemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SystemSettingsForm systemSettingsForm= new SystemSettingsForm();
+            SystemAdminForm systemSettingsForm = new SystemAdminForm();
             systemSettingsForm.Show();
         }
         private async void updateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -206,6 +206,13 @@ namespace ENT_Clinic_System
         {
             DoctorPatientQueue doctorPatientQueue = new DoctorPatientQueue();
             doctorPatientQueue.Show();
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.Show();
         }
     }
 

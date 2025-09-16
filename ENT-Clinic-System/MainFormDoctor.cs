@@ -1,4 +1,6 @@
 ﻿using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.InsertForms;
+using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.UserControls;
 using System;
 using System.Drawing;
@@ -149,6 +151,43 @@ namespace ENT_Clinic_System
         private void MainFormDoctor_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AppointmentsUserControl appointmentsUserControl = new AppointmentsUserControl();
+            LoadUserControl(appointmentsUserControl);
+        }
+
+        private void patientQueueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DoctorPatientQueue doctorPatientQueue = new DoctorPatientQueue();
+            doctorPatientQueue.Show();
+        }
+
+        private void checkStockToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InventoryForm inventoryForm = new InventoryForm();
+            inventoryForm.Show();
+        }
+
+        private async void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateHelper helper = new UpdateHelper();
+            await helper.CheckForUpdatesAsync();
+        }
+
+        private void systemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SystemAdminForm systemSettingsForm = new SystemAdminForm();
+            systemSettingsForm.Show();
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Login login = new Login();
+            login.Show();
         }
     }
 
