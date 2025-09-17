@@ -236,27 +236,27 @@
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(142, 30);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 30);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(142, 30);
             this.toolStripMenuItem3.Text = "System";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.systemToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 30);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(142, 30);
             this.toolStripMenuItem4.Text = "Profile";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 30);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(142, 30);
             this.toolStripMenuItem5.Text = "Logout";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 

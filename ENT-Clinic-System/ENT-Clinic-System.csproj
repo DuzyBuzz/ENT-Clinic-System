@@ -175,12 +175,26 @@
     <Compile Include="Helpers\ImageFolderHelper.cs" />
     <Compile Include="Helpers\InsertHelper.cs" />
     <Compile Include="Helpers\InventoryHelper.cs" />
+    <Compile Include="Helpers\PatientCamera.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helpers\PatientCamera.Designer.cs">
+      <DependentUpon>PatientCamera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\PurposeInputForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Helpers\PurposeInputForm.Designer.cs">
       <DependentUpon>PurposeInputForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ReportHelper.cs" />
+    <Compile Include="Helpers\SelectPhotoOptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helpers\SelectPhotoOptionForm.Designer.cs">
+      <DependentUpon>SelectPhotoOptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\UpdateHelper.cs" />
     <Compile Include="InsertForms\DoctorPatientQueue.cs">
@@ -194,6 +208,12 @@
     </Compile>
     <Compile Include="InsertForms\PatientsQueue .Designer.cs">
       <DependentUpon>PatientsQueue .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\PrescriptionNoteForm .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory\PrescriptionNoteForm .Designer.cs">
+      <DependentUpon>PrescriptionNoteForm .cs</DependentUpon>
     </Compile>
     <Compile Include="Inventory\PrescriptionForm.cs">
       <SubType>Form</SubType>
@@ -306,6 +326,9 @@
     </Compile>
     <EmbeddedResource Include="Helpers\ImageCameraUI.resx">
       <DependentUpon>ImageCameraUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Helpers\PatientCamera.resx">
+      <DependentUpon>PatientCamera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helpers\VideoCameraUI.resx" />
     <EmbeddedResource Include="Helpers\VideoRecorder.resx">

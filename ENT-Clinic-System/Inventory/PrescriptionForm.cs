@@ -1,7 +1,10 @@
 ﻿using ENT_Clinic_System.Helpers;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -128,7 +131,8 @@ namespace ENT_Clinic_System.Inventory
         // ================================
         // 🔹 Submit Prescription
         // ================================
-        private void BtnSubmit_Click(object sender, EventArgs e)
+
+    private void BtnSubmit_Click(object sender, EventArgs e)
         {
             if (dgvSelectedItems.Rows.Count == 0)
             {
@@ -136,6 +140,12 @@ namespace ENT_Clinic_System.Inventory
                 return;
             }
 
+            // 1️⃣ Prompt for notes
+            PrescriptionNoteForm noteForm = new PrescriptionNoteForm(dgvSelectedItems);
+            if (noteForm.ShowDialog() != DialogResult.OK) return;
+            var itemNotes = noteForm.ItemNotes;
+
+            // 2️⃣ Save prescription to database
             try
             {
                 using (MySqlConnection conn = DBConfig.GetConnection())
@@ -156,22 +166,21 @@ namespace ENT_Clinic_System.Inventory
                                     throw new Exception($"Invalid quantity for item ID {itemId}");
 
                                 string insertQuery = @"INSERT INTO prescription 
-                                                       (patient_id, item_id, quantity) 
-                                                       VALUES (@patient_id, @item_id, @quantity)";
+                                                   (patient_id, item_id, quantity, note) 
+                                                   VALUES (@patient_id, @item_id, @quantity, @note)";
 
                                 using (var cmd = new MySqlCommand(insertQuery, conn, transaction))
                                 {
                                     cmd.Parameters.AddWithValue("@patient_id", _patientId);
                                     cmd.Parameters.AddWithValue("@item_id", itemId);
                                     cmd.Parameters.AddWithValue("@quantity", qty);
+                                    cmd.Parameters.AddWithValue("@note", itemNotes.ContainsKey(itemId) ? itemNotes[itemId] : "");
                                     cmd.ExecuteNonQuery();
                                 }
                             }
 
                             transaction.Commit();
                             MessageBox.Show("Prescription submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            dgvSelectedItems.Rows.Clear();
-                            this.Close();
                         }
                         catch
                         {
@@ -184,7 +193,80 @@ namespace ENT_Clinic_System.Inventory
             catch (Exception ex)
             {
                 MessageBox.Show("Error submitting prescription: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+
+            // 3️⃣ Print prescription
+            PrintPrescription(itemNotes);
+
+            dgvSelectedItems.Rows.Clear();
+            this.Close();
         }
+
+    // ================================
+    // 🔹 Print Prescription
+    // ================================
+    private void PrintPrescription(Dictionary<int, string> itemNotes)
+    {
+        PrintDocument pd = new PrintDocument();
+        pd.DefaultPageSettings.Landscape = false;
+        pd.PrintPage += (sender, e) =>
+        {
+            int y = 50;
+            int lineHeight = 20;
+            Font headerFont = new Font("Segoe UI", 12, FontStyle.Bold);
+            Font normalFont = new Font("Segoe UI", 10);
+
+            // Clinic info from SettingsHelper
+            e.Graphics.DrawString(SettingsHelper.GetSetting("clinic_name"), headerFont, Brushes.Black, 100, y);
+            y += lineHeight;
+            e.Graphics.DrawString(SettingsHelper.GetSetting("clinic_address"), normalFont, Brushes.Black, 100, y);
+            y += lineHeight;
+            e.Graphics.DrawString($"Tel: {SettingsHelper.GetSetting("clinic_tel")} | Mobile: {SettingsHelper.GetSetting("clinic_mobile")}", normalFont, Brushes.Black, 100, y);
+            y += lineHeight * 2;
+
+            // Patient info
+            string patientName = PatientDataHelper.GetPatientValue(_patientId, "full_name");
+            e.Graphics.DrawString($"Patient Name: {patientName}        Date: {DateTime.Now:yyyy-MM-dd}", normalFont, Brushes.Black, 50, y);
+            y += lineHeight * 2;
+
+            // Header for items
+            e.Graphics.DrawString("Item Name               Qty      Description", normalFont, Brushes.Black, 50, y);
+            y += lineHeight;
+            e.Graphics.DrawLine(Pens.Black, 50, y, e.PageBounds.Width - 50, y);
+            y += lineHeight;
+
+            // Items with notes
+            foreach (DataGridViewRow row in dgvSelectedItems.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                string itemName = row.Cells["item_name"].Value.ToString();
+                int qty = Convert.ToInt32(row.Cells["quantity"].Value);
+                string description = row.Cells["description"].Value.ToString();
+                int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
+                string note = itemNotes.ContainsKey(itemId) ? itemNotes[itemId] : "";
+
+                e.Graphics.DrawString($"{itemName,-22} {qty,-7} {description}", normalFont, Brushes.Black, 50, y);
+                y += lineHeight;
+
+                if (!string.IsNullOrEmpty(note))
+                {
+                    e.Graphics.DrawString($"- {note}", normalFont, Brushes.Black, 60, y);
+                    y += lineHeight + 5;
+                }
+            }
+
+            y += lineHeight;
+            e.Graphics.DrawLine(Pens.Black, 50, y, e.PageBounds.Width - 50, y);
+            y += lineHeight;
+            e.Graphics.DrawString("MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS: _____________________    LICENSE # 99566", normalFont, Brushes.Black, 50, y);
+        };
+
+        PrintPreviewDialog preview = new PrintPreviewDialog { Document = pd, Width = 800, Height = 600 };
+        preview.ShowDialog();
     }
+
+
+}
 }

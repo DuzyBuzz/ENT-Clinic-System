@@ -71,8 +71,8 @@ namespace ENT_Clinic_System.Inventory
                 {
                     conn.Open();
 
-                    // 1️⃣ Get distinct patient_ids from prescription table
-                    string sqlPatientIds = "SELECT DISTINCT patient_id FROM prescription";
+                    // 1️⃣ Get distinct patient_ids from prescription table **for today only**
+                    string sqlPatientIds = "SELECT DISTINCT patient_id FROM prescription WHERE DATE(created_at) = CURDATE()";
                     List<int> patientIds = new List<int>();
 
                     using (var cmd = new MySqlCommand(sqlPatientIds, conn))
@@ -81,23 +81,15 @@ namespace ENT_Clinic_System.Inventory
                         while (reader.Read())
                         {
                             patientIds.Add(reader.GetInt32("patient_id"));
-
                         }
                     }
 
                     // 2️⃣ If there are patient IDs, load their details into dgvPatients
                     if (patientIds.Count > 0)
                     {
-                        // Combine IDs for a single query
                         string idsString = string.Join(",", patientIds);
 
-                        // Columns we want to show
-                        var columns = new List<string> { "patient_id", "full_name" };
-
-                        // Use DGVViewHelper with a temporary filter column (we'll ignore it since we use IN clause)
-                        var dgvHelper = new DGVViewHelper(dgvPatients, "patients", columns, "patient_id");
-
-                        // Since your helper only supports single ID filter, we’ll bypass it here:
+                        // Query patients table for these IDs
                         string sqlPatients = $"SELECT patient_id, full_name FROM patients WHERE patient_id IN ({idsString}) ORDER BY full_name";
                         using (var cmd = new MySqlCommand(sqlPatients, conn))
                         using (var adapter = new MySqlDataAdapter(cmd))
@@ -107,6 +99,10 @@ namespace ENT_Clinic_System.Inventory
                             dgvPatients.DataSource = dtPatients;
                         }
                     }
+                    else
+                    {
+                        dgvPatients.DataSource = null; // clear dgv if no patients today
+                    }
                 }
             }
             catch (Exception ex)
@@ -114,6 +110,7 @@ namespace ENT_Clinic_System.Inventory
                 MessageBox.Show("Failed to load patients: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         // 🔹 Load inventory items
@@ -128,7 +125,7 @@ namespace ENT_Clinic_System.Inventory
             dgvAvailableItems.CellDoubleClick += DgvAvailableItems_CellDoubleClick;
             dgvSelectedItems.CellEndEdit += DgvSelectedItems_CellEndEdit;
             dgvSelectedItems.KeyDown += DgvSelectedItems_KeyDown;
-            chkApplyDiscount.CheckedChanged += (s, e) => CalculateTotals();
+            chekApplyDiscount.CheckedChanged += (s, e) => CalculateTotals();
 
             btnSave.Click += BtnSave_Click;
             txtAmountReceived.TextChanged += TxtAmountReceived_TextChanged;
@@ -169,7 +166,7 @@ namespace ENT_Clinic_System.Inventory
             else
             {
                 // Forward all fields
-                selectedItems.Rows.Add(itemId, itemName, category, description, price, quantity, chkApplyDiscount.Checked);
+                selectedItems.Rows.Add(itemId, itemName, category, description, price, quantity, chekApplyDiscount.Checked);
             }
 
             CalculateTotals();
@@ -270,7 +267,7 @@ namespace ENT_Clinic_System.Inventory
                 }
                 else
                 {
-                    selectedItems.Rows.Add(itemId, itemName, category, description, price, 1, chkApplyDiscount.Checked);
+                    selectedItems.Rows.Add(itemId, itemName, category, description, price, 1, chekApplyDiscount.Checked);
                 }
 
                 CalculateTotals();
@@ -320,31 +317,52 @@ namespace ENT_Clinic_System.Inventory
         // 🔹 Calculate totals
         private void CalculateTotals()
         {
-            decimal subtotal = 0, discountTotal = 0, taxTotal = 0, netTotal = 0;
-
+            // 🔹 Step 1: Calculate subtotal (sum of all item prices × quantity)
+            decimal subtotal = 0;
             foreach (DataRow row in selectedItems.Rows)
             {
                 int qty = Convert.ToInt32(row["quantity"]);
                 decimal price = Convert.ToDecimal(row["unit_price"]);
-                bool applyDiscount = chkApplyDiscount.Checked;
-
-                row["apply_discount"] = applyDiscount;
-
-                var calc = helper.CalculateFinalPrice(price, applyDiscount, qty);
-
-                subtotal += calc.BasePrice;
-                discountTotal += calc.DiscountAmount;
-                taxTotal += calc.TaxAmount;
-                netTotal += calc.FinalPrice;
+                subtotal += price * qty;
             }
 
+            // 🔹 Step 2: Calculate discount
+            decimal discountAmount = 0;
+            if (isManualDiscount && decimal.TryParse(txtDiscount.Text, out decimal manualDiscount))
+            {
+                // Manual discount entered by user
+                discountAmount = manualDiscount;
+            }
+            else if (chekApplyDiscount.Checked)
+            {
+                // Automatic discount from system setting
+                decimal discountPercent = decimal.Parse(SettingsHelper.GetSetting("discount_percentage"));
+                discountAmount = subtotal * (discountPercent / 100);
+            }
+
+            // Ensure discount is not more than subtotal
+            if (discountAmount > subtotal) discountAmount = subtotal;
+
+            // 🔹 Step 3: Calculate price after discount
+            decimal priceAfterDiscount = subtotal - discountAmount;
+
+            // 🔹 Step 4: Calculate tax based on discounted subtotal
+            decimal taxPercent = decimal.Parse(SettingsHelper.GetSetting("tax_percentage"));
+            decimal taxAmount = priceAfterDiscount * (taxPercent / 100);
+
+            // 🔹 Step 5: Calculate net total
+            decimal netTotal = priceAfterDiscount + taxAmount;
+
+            // 🔹 Step 6: Update UI
             txtSubtotal.Text = subtotal.ToString("N2");
-            txtDiscount.Text = discountTotal.ToString("N2");
-            txtTax.Text = taxTotal.ToString("N2");
+            txtDiscount.Text = discountAmount.ToString("N2");
+            txtTax.Text = taxAmount.ToString("N2");
             txtNetTotal.Text = netTotal.ToString("N2");
 
+            // 🔹 Step 7: Update change
             UpdateChangeDue();
         }
+
 
         private void TxtAmountReceived_TextChanged(object sender, EventArgs e)
         {
@@ -357,11 +375,11 @@ namespace ENT_Clinic_System.Inventory
                 decimal.TryParse(txtNetTotal.Text, System.Globalization.NumberStyles.Currency, null, out decimal total))
             {
                 decimal change = received - total;
-                txtChange.Text = change >= 0 ? change.ToString("N2") : "₱0.00";
+                txtChange.Text = change >= 0 ? change.ToString("N2") : "0.00";
             }
             else
             {
-                txtChange.Text = "₱0.00";
+                txtChange.Text = "0.00";
             }
         }
 
@@ -380,13 +398,37 @@ namespace ENT_Clinic_System.Inventory
                 customerName = "Walk-in";
             }
 
-                // 🔹 Parse amount received safely
-                decimal amountReceived = 0;
+            decimal amountReceived = 0;
+
+            // Check if the amount received is a valid decimal
             if (!decimal.TryParse(txtAmountReceived.Text, out amountReceived))
             {
                 MessageBox.Show("Please enter a valid amount received.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // Check if the amount is greater than zero
+            if (amountReceived <= 0)
+            {
+                MessageBox.Show("Amount received must be greater than zero.", "Invalid Amount", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Parse net total
+            if (!decimal.TryParse(txtNetTotal.Text, System.Globalization.NumberStyles.Currency, null, out decimal netTotal))
+            {
+                MessageBox.Show("Cannot read total amount. Please check items.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Check if the amount received is sufficient
+            if (amountReceived < netTotal)
+            {
+                MessageBox.Show($"The amount received (₱{amountReceived:N2}) is less than the total amount due (₱{netTotal:N2}). Please enter the correct amount.",
+                                "Insufficient Amount", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
 
             // 🔹 Save invoice with amount received
             currentInvoiceId = helper.AddInvoice(customerName, selectedItems, amountReceived);
@@ -430,5 +472,54 @@ namespace ENT_Clinic_System.Inventory
             InvoicePrinter printer = new InvoicePrinter(currentInvoiceId);
             printer.PrintReceipt();
         }
+
+        private void InvoiceForm_Load(object sender, EventArgs e)
+        {
+            string taxPercent = SettingsHelper.GetSetting("tax_percentage");
+            string discountPercent = SettingsHelper.GetSetting("discount_percentage");
+            chekApplyDiscount.Text = $"({discountPercent}%)Discount ";
+            lblTax.Text = $"Tax ({taxPercent}%)";
+
+        }
+        private bool isManualDiscount = false;
+        private void txtDiscount_TextChanged(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(txtDiscount.Text, out decimal manualDiscount))
+            {
+                isManualDiscount = true;
+                CalculateTotals(); // Recalculate totals using manual discount
+            }
+            else if (!string.IsNullOrEmpty(txtDiscount.Text))
+            {
+                MessageBox.Show("Please enter a valid discount amount.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDiscount.Text = "0.00";
+                CalculateTotals();
+            }
+        }
+
+        private void panelTotals_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void chekApplyDiscount_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chekApplyDiscount.Checked)
+            {
+                // 🔹 Automatic discount mode
+                txtDiscount.ReadOnly = true;     // Disable manual editing
+                isManualDiscount = false;        // Reset manual discount
+                CalculateTotals();               // Recalculate using automatic discount
+            }
+            else
+            {
+                // 🔹 Manual discount mode
+                txtDiscount.ReadOnly = false;    // Allow user to type their discount
+                txtDiscount.Text = "0.00";          // Reset to zero
+                isManualDiscount = true;         // User can now manually enter discount
+                CalculateTotals();               // Recalculate totals with manual discount
+            }
+        }
+
     }
 }

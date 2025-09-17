@@ -4,6 +4,7 @@ using ENT_Clinic_System.PrintingForms;
 using ENT_Clinic_System.PrintingFroms;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -135,7 +136,13 @@ namespace ENT_Clinic_System.UserControls
             emergencyNameLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_name");
             emergencyContactNumberLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_contact_number");
             emergencyRelationshipLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_relationship");
+
+            // Load photo
+            Image photo = PatientDataHelper.GetPatientPhoto(patientId);
+            if (photo != null)
+                patientProfilePictureBox.Image = photo;
         }
+
 
 
         private void openRecorderButton_Click(object sender, EventArgs e)
@@ -392,6 +399,11 @@ namespace ENT_Clinic_System.UserControls
         {
             PrescriptionForm prescriptionForm = new PrescriptionForm(_patientId);
             prescriptionForm.ShowDialog();
+        }
+
+        private void fullNameLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

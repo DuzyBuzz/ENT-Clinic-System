@@ -20,7 +20,7 @@
             this.groupBoxAvailable = new System.Windows.Forms.GroupBox();
             this.groupBoxSelected = new System.Windows.Forms.GroupBox();
             this.panelTotals = new System.Windows.Forms.Panel();
-            this.chkApplyDiscount = new System.Windows.Forms.CheckBox();
+            this.chekApplyDiscount = new System.Windows.Forms.CheckBox();
             this.lblSubtotal = new System.Windows.Forms.Label();
             this.txtSubtotal = new System.Windows.Forms.TextBox();
             this.lblDiscount = new System.Windows.Forms.Label();
@@ -105,7 +105,7 @@
             // panelTotals
             // 
             this.panelTotals.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelTotals.Controls.Add(this.chkApplyDiscount);
+            this.panelTotals.Controls.Add(this.chekApplyDiscount);
             this.panelTotals.Controls.Add(this.lblSubtotal);
             this.panelTotals.Controls.Add(this.txtSubtotal);
             this.panelTotals.Controls.Add(this.lblDiscount);
@@ -123,20 +123,24 @@
             this.panelTotals.Name = "panelTotals";
             this.panelTotals.Size = new System.Drawing.Size(503, 210);
             this.panelTotals.TabIndex = 2;
+            this.panelTotals.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTotals_Paint);
             // 
-            // chkApplyDiscount
+            // chekApplyDiscount
             // 
-            this.chkApplyDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkApplyDiscount.AutoSize = true;
-            this.chkApplyDiscount.Location = new System.Drawing.Point(227, 107);
-            this.chkApplyDiscount.Name = "chkApplyDiscount";
-            this.chkApplyDiscount.Size = new System.Drawing.Size(86, 19);
-            this.chkApplyDiscount.TabIndex = 0;
-            this.chkApplyDiscount.Text = "Discounted";
+            this.chekApplyDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chekApplyDiscount.AutoSize = true;
+            this.chekApplyDiscount.Location = new System.Drawing.Point(227, 107);
+            this.chekApplyDiscount.Name = "chekApplyDiscount";
+            this.chekApplyDiscount.Size = new System.Drawing.Size(86, 19);
+            this.chekApplyDiscount.TabIndex = 0;
+            this.chekApplyDiscount.Text = "Discounted";
+            this.chekApplyDiscount.CheckedChanged += new System.EventHandler(this.chekApplyDiscount_CheckedChanged);
             // 
             // lblSubtotal
             // 
-            this.lblSubtotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSubtotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSubtotal.AutoSize = true;
             this.lblSubtotal.Location = new System.Drawing.Point(14, 34);
             this.lblSubtotal.Name = "lblSubtotal";
@@ -146,7 +150,8 @@
             // 
             // txtSubtotal
             // 
-            this.txtSubtotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSubtotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSubtotal.Location = new System.Drawing.Point(84, 31);
             this.txtSubtotal.Name = "txtSubtotal";
             this.txtSubtotal.ReadOnly = true;
@@ -155,7 +160,8 @@
             // 
             // lblDiscount
             // 
-            this.lblDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDiscount.AutoSize = true;
             this.lblDiscount.Location = new System.Drawing.Point(14, 64);
             this.lblDiscount.Name = "lblDiscount";
@@ -165,16 +171,18 @@
             // 
             // txtDiscount
             // 
-            this.txtDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDiscount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDiscount.Location = new System.Drawing.Point(84, 61);
             this.txtDiscount.Name = "txtDiscount";
-            this.txtDiscount.ReadOnly = true;
             this.txtDiscount.Size = new System.Drawing.Size(100, 23);
             this.txtDiscount.TabIndex = 4;
+            this.txtDiscount.TextChanged += new System.EventHandler(this.txtDiscount_TextChanged);
             // 
             // lblTax
             // 
-            this.lblTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTax.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTax.AutoSize = true;
             this.lblTax.Location = new System.Drawing.Point(14, 94);
             this.lblTax.Name = "lblTax";
@@ -184,7 +192,8 @@
             // 
             // txtTax
             // 
-            this.txtTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTax.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTax.Location = new System.Drawing.Point(84, 91);
             this.txtTax.Name = "txtTax";
             this.txtTax.ReadOnly = true;
@@ -193,7 +202,8 @@
             // 
             // lblNetTotal
             // 
-            this.lblNetTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNetTotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblNetTotal.AutoSize = true;
             this.lblNetTotal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblNetTotal.Location = new System.Drawing.Point(14, 124);
@@ -204,7 +214,8 @@
             // 
             // txtNetTotal
             // 
-            this.txtNetTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNetTotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNetTotal.Location = new System.Drawing.Point(84, 121);
             this.txtNetTotal.Name = "txtNetTotal";
             this.txtNetTotal.ReadOnly = true;
@@ -213,7 +224,8 @@
             // 
             // lblAmountReceived
             // 
-            this.lblAmountReceived.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAmountReceived.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblAmountReceived.AutoSize = true;
             this.lblAmountReceived.Location = new System.Drawing.Point(224, 34);
             this.lblAmountReceived.Name = "lblAmountReceived";
@@ -223,7 +235,8 @@
             // 
             // txtAmountReceived
             // 
-            this.txtAmountReceived.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAmountReceived.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAmountReceived.Location = new System.Drawing.Point(344, 31);
             this.txtAmountReceived.Name = "txtAmountReceived";
             this.txtAmountReceived.Size = new System.Drawing.Size(150, 23);
@@ -231,7 +244,8 @@
             // 
             // lblChange
             // 
-            this.lblChange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblChange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblChange.AutoSize = true;
             this.lblChange.Location = new System.Drawing.Point(224, 77);
             this.lblChange.Name = "lblChange";
@@ -241,7 +255,8 @@
             // 
             // txtChange
             // 
-            this.txtChange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtChange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtChange.Location = new System.Drawing.Point(344, 69);
             this.txtChange.Name = "txtChange";
             this.txtChange.ReadOnly = true;
@@ -331,6 +346,7 @@
             this.Name = "InvoiceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Invoice Manager";
+            this.Load += new System.EventHandler(this.InvoiceForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableItems)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedItems)).EndInit();
             this.groupBoxAvailable.ResumeLayout(false);
@@ -352,7 +368,7 @@
         private System.Windows.Forms.GroupBox groupBoxAvailable;
         private System.Windows.Forms.GroupBox groupBoxSelected;
         private System.Windows.Forms.Panel panelTotals;
-        private System.Windows.Forms.CheckBox chkApplyDiscount;
+        private System.Windows.Forms.CheckBox chekApplyDiscount;
         private System.Windows.Forms.Label lblSubtotal;
         private System.Windows.Forms.Label lblDiscount;
         private System.Windows.Forms.Label lblTax;

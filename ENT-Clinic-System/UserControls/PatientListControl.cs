@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace ENT_Clinic_System.UserControls
     public partial class PatientListControl : UserControl
     {
         private DGVCrudHelper patientCrud;
-
+        private int currentRow = 0;
         public PatientListControl()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace ENT_Clinic_System.UserControls
             List<string> columns = new List<string>
             {
                 "patient_id",
+                "photo",
                 "full_name",
                 "address",
                 "birth_date",
@@ -61,6 +63,9 @@ namespace ENT_Clinic_System.UserControls
             // Hide the primary key column
             if (patientsDataGridView.Columns.Contains("patient_id"))
                 patientsDataGridView.Columns["patient_id"].Visible = false;
+
+
+
 
         }
 
@@ -150,6 +155,47 @@ namespace ENT_Clinic_System.UserControls
                     patientsDataGridView.ClearSelection();
                     patientsDataGridView.Rows[hitTest.RowIndex].Selected = true;
                 }
+            }
+        }
+
+        private void searchPatientNameTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Prevent the 'ding' sound on Enter
+                e.SuppressKeyPress = true;
+
+                SearchHelper.Search(
+                    dgv: patientsDataGridView,
+                    tableName: "patients",
+                    columnNames: new string[] { "full_name" },
+                    filterControl: searchPatientNameTextBox
+                );
+
+
+                // Disable pagination buttons when searching
+                prevButton.Enabled = false;
+                nextButton.Enabled = false;
+                pageLabel.Text = "Search results";
+            }
+        }
+
+        private void patientsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+
+        private void PatientListControl_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void patientsDataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.P)
+            {
+                ReportHelper.PrintDataGridView(patientsDataGridView, "Patient List");
             }
         }
     }

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientListControl));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pageLabel = new System.Windows.Forms.Label();
@@ -40,7 +41,11 @@
             this.searchPatientNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.patientsDataGridView = new System.Windows.Forms.DataGridView();
+            this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.createdat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Photo = new System.Windows.Forms.DataGridViewImageColumn();
             this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addressColumnTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.birth_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,8 +56,6 @@
             this.emergency_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emergency_contact_number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emergency_relationship = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).BeginInit();
@@ -171,6 +174,7 @@
             this.searchPatientNameTextBox.Size = new System.Drawing.Size(439, 26);
             this.searchPatientNameTextBox.TabIndex = 1;
             this.searchPatientNameTextBox.TextChanged += new System.EventHandler(this.searchPatientNameTextBox_TextChanged);
+            this.searchPatientNameTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchPatientNameTextBox_KeyDown);
             // 
             // label1
             // 
@@ -195,6 +199,8 @@
             this.patientsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.patientsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.patient_id,
+            this.createdat,
+            this.Photo,
             this.full_name,
             this.addressColumnTextBox,
             this.birth_date,
@@ -212,7 +218,23 @@
             this.patientsDataGridView.Name = "patientsDataGridView";
             this.patientsDataGridView.Size = new System.Drawing.Size(1898, 946);
             this.patientsDataGridView.TabIndex = 1;
+            this.patientsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.patientsDataGridView_CellContentClick);
+            this.patientsDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.patientsDataGridView_KeyDown);
             this.patientsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.patientsDataGridView_MouseDown);
+            // 
+            // patientsContextMenuStrip
+            // 
+            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewConsultationToolStripMenuItem});
+            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(171, 26);
+            // 
+            // viewConsultationToolStripMenuItem
+            // 
+            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
+            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
             // 
             // patient_id
             // 
@@ -220,6 +242,24 @@
             this.patient_id.HeaderText = "Patient ID";
             this.patient_id.Name = "patient_id";
             this.patient_id.ReadOnly = true;
+            this.patient_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            // 
+            // createdat
+            // 
+            this.createdat.DataPropertyName = "created_at";
+            this.createdat.HeaderText = "DateCreated";
+            this.createdat.Name = "createdat";
+            this.createdat.Visible = false;
+            // 
+            // Photo
+            // 
+            this.Photo.DataPropertyName = "photo";
+            this.Photo.HeaderText = "Photo";
+            this.Photo.Image = ((System.Drawing.Image)(resources.GetObject("Photo.Image")));
+            this.Photo.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Photo.Name = "Photo";
+            this.Photo.ReadOnly = true;
+            this.Photo.Visible = false;
             // 
             // full_name
             // 
@@ -282,20 +322,6 @@
             this.emergency_relationship.HeaderText = "Relationship";
             this.emergency_relationship.Name = "emergency_relationship";
             // 
-            // patientsContextMenuStrip
-            // 
-            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewConsultationToolStripMenuItem});
-            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(171, 26);
-            // 
-            // viewConsultationToolStripMenuItem
-            // 
-            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
-            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
-            // 
             // PatientListControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
@@ -306,6 +332,7 @@
             this.Name = "PatientListControl";
             this.Size = new System.Drawing.Size(1904, 1010);
             this.Load += new System.EventHandler(this.PatientListControl_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PatientListControl_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -330,6 +357,8 @@
         private System.Windows.Forms.ContextMenuStrip patientsContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem viewConsultationToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn patient_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn createdat;
+        private System.Windows.Forms.DataGridViewImageColumn Photo;
         private System.Windows.Forms.DataGridViewTextBoxColumn full_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn addressColumnTextBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn birth_date;
