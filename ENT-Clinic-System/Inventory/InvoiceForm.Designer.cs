@@ -123,7 +123,6 @@
             this.panelTotals.Name = "panelTotals";
             this.panelTotals.Size = new System.Drawing.Size(503, 210);
             this.panelTotals.TabIndex = 2;
-            this.panelTotals.Paint += new System.Windows.Forms.PaintEventHandler(this.panelTotals_Paint);
             // 
             // chekApplyDiscount
             // 

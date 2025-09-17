@@ -111,6 +111,7 @@
             this.versionLabel.Size = new System.Drawing.Size(50, 20);
             this.versionLabel.TabIndex = 15;
             this.versionLabel.Text = "Version";
+            this.versionLabel.Click += new System.EventHandler(this.versionLabel_Click);
             // 
             // Login
             // 

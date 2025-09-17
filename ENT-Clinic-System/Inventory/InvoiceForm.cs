@@ -8,12 +8,15 @@ using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Inventory
 {
+
     public partial class InvoiceForm : Form
     {
         private InventoryHelper helper;
         private DataTable selectedItems;
         private int currentInvoiceId;
         private string customerName = string.Empty;
+        private bool isManualDiscount = false;
+
         public InvoiceForm()
         {
             InitializeComponent();
@@ -317,7 +320,7 @@ namespace ENT_Clinic_System.Inventory
         // 🔹 Calculate totals
         private void CalculateTotals()
         {
-            // 🔹 Step 1: Calculate subtotal (sum of all item prices × quantity)
+            // Step 1: Calculate subtotal (sum of all item prices × quantity)
             decimal subtotal = 0;
             foreach (DataRow row in selectedItems.Rows)
             {
@@ -326,42 +329,43 @@ namespace ENT_Clinic_System.Inventory
                 subtotal += price * qty;
             }
 
-            // 🔹 Step 2: Calculate discount
+            // Step 2: Calculate discount (automatic only)
             decimal discountAmount = 0;
-            if (isManualDiscount && decimal.TryParse(txtDiscount.Text, out decimal manualDiscount))
+            if (chekApplyDiscount.Checked)
             {
-                // Manual discount entered by user
-                discountAmount = manualDiscount;
-            }
-            else if (chekApplyDiscount.Checked)
-            {
-                // Automatic discount from system setting
-                decimal discountPercent = decimal.Parse(SettingsHelper.GetSetting("discount_percentage"));
-                discountAmount = subtotal * (discountPercent / 100);
+                if (decimal.TryParse(SettingsHelper.GetSetting("discount_percentage"), out decimal discountPercent))
+                {
+                    discountAmount = subtotal * (discountPercent / 100);
+                }
             }
 
-            // Ensure discount is not more than subtotal
+            // Ensure discount does not exceed subtotal
             if (discountAmount > subtotal) discountAmount = subtotal;
 
-            // 🔹 Step 3: Calculate price after discount
+            // Step 3: Calculate price after discount
             decimal priceAfterDiscount = subtotal - discountAmount;
 
-            // 🔹 Step 4: Calculate tax based on discounted subtotal
-            decimal taxPercent = decimal.Parse(SettingsHelper.GetSetting("tax_percentage"));
-            decimal taxAmount = priceAfterDiscount * (taxPercent / 100);
+            // Step 4: Calculate tax based on discounted subtotal
+            decimal taxAmount = 0;
+            if (decimal.TryParse(SettingsHelper.GetSetting("tax_percentage"), out decimal taxPercent))
+            {
+                taxAmount = priceAfterDiscount * (taxPercent / 100);
+            }
 
-            // 🔹 Step 5: Calculate net total
+            // Step 5: Calculate net total
             decimal netTotal = priceAfterDiscount + taxAmount;
 
-            // 🔹 Step 6: Update UI
+            // Step 6: Update UI
             txtSubtotal.Text = subtotal.ToString("N2");
             txtDiscount.Text = discountAmount.ToString("N2");
             txtTax.Text = taxAmount.ToString("N2");
             txtNetTotal.Text = netTotal.ToString("N2");
 
-            // 🔹 Step 7: Update change
+            // Step 7: Update change
             UpdateChangeDue();
         }
+
+
 
 
         private void TxtAmountReceived_TextChanged(object sender, EventArgs e)
@@ -481,44 +485,17 @@ namespace ENT_Clinic_System.Inventory
             lblTax.Text = $"Tax ({taxPercent}%)";
 
         }
-        private bool isManualDiscount = false;
         private void txtDiscount_TextChanged(object sender, EventArgs e)
         {
-            if (decimal.TryParse(txtDiscount.Text, out decimal manualDiscount))
-            {
-                isManualDiscount = true;
-                CalculateTotals(); // Recalculate totals using manual discount
-            }
-            else if (!string.IsNullOrEmpty(txtDiscount.Text))
-            {
-                MessageBox.Show("Please enter a valid discount amount.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtDiscount.Text = "0.00";
-                CalculateTotals();
-            }
-        }
-
-        private void panelTotals_Paint(object sender, PaintEventArgs e)
-        {
 
         }
+
 
         private void chekApplyDiscount_CheckedChanged(object sender, EventArgs e)
         {
-            if (chekApplyDiscount.Checked)
-            {
-                // 🔹 Automatic discount mode
-                txtDiscount.ReadOnly = true;     // Disable manual editing
-                isManualDiscount = false;        // Reset manual discount
-                CalculateTotals();               // Recalculate using automatic discount
-            }
-            else
-            {
-                // 🔹 Manual discount mode
-                txtDiscount.ReadOnly = false;    // Allow user to type their discount
-                txtDiscount.Text = "0.00";          // Reset to zero
-                isManualDiscount = true;         // User can now manually enter discount
-                CalculateTotals();               // Recalculate totals with manual discount
-            }
+            // Read-only always, discount applied only if checkbox is checked
+            txtDiscount.ReadOnly = true;
+            CalculateTotals();
         }
 
     }

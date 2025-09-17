@@ -75,13 +75,17 @@ namespace ENT_Clinic_System.PrintingForms
 
             // Invoice Info
             string invoiceNo = "", invoiceDate = "", customer = "";
-            decimal amountReceived = 0, changeDue = 0;
+            decimal amountReceived = 0, changeDue = 0, discountAmount = 0, taxAmount = 0, netTotal = 0;
 
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
-                string q = "SELECT invoice_id, invoice_date, customer_name, amount_received, change_due FROM invoices WHERE invoice_id=@id";
-                using (var cmd = new MySqlCommand(q, conn))
+
+                // Fetch invoice info (including invoice-level discount, tax, net total)
+                string qInvoice = @"SELECT invoice_id, invoice_date, customer_name, amount_received, change_due,
+                                    discount_total, tax_total, net_total
+                                    FROM invoices WHERE invoice_id=@id";
+                using (var cmd = new MySqlCommand(qInvoice, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", invoiceId);
                     using (var reader = cmd.ExecuteReader())
@@ -93,6 +97,9 @@ namespace ENT_Clinic_System.PrintingForms
                             customer = reader["customer_name"].ToString();
                             amountReceived = reader["amount_received"] != DBNull.Value ? Convert.ToDecimal(reader["amount_received"]) : 0;
                             changeDue = reader["change_due"] != DBNull.Value ? Convert.ToDecimal(reader["change_due"]) : 0;
+                            discountAmount = reader["discount_total"] != DBNull.Value ? Convert.ToDecimal(reader["discount_total"]) : 0;
+                            taxAmount = reader["tax_total"] != DBNull.Value ? Convert.ToDecimal(reader["tax_total"]) : 0;
+                            netTotal = reader["net_total"] != DBNull.Value ? Convert.ToDecimal(reader["net_total"]) : 0;
                         }
                     }
                 }
@@ -110,17 +117,17 @@ namespace ENT_Clinic_System.PrintingForms
             y += (3 * lineHeight);
 
             // Items
-            decimal subtotal = 0, discountTotal = 0, taxTotal = 0, netTotal = 0;
+            decimal subtotal = 0;
 
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
-                string q = @"SELECT ii.quantity, ii.unit_price, ii.discount_amount, ii.tax_amount, ii.total_price, 
-                            i.item_name, i.description, i.category
-                     FROM invoice_items ii
-                     JOIN items i ON ii.item_id = i.item_id
-                     WHERE ii.invoice_id=@id";
-                using (var cmd = new MySqlCommand(q, conn))
+                string qItems = @"SELECT ii.quantity, ii.unit_price, ii.total_price, 
+                                  i.item_name, i.description, i.category
+                                  FROM invoice_items ii
+                                  JOIN items i ON ii.item_id = i.item_id
+                                  WHERE ii.invoice_id=@id";
+                using (var cmd = new MySqlCommand(qItems, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", invoiceId);
                     using (var reader = cmd.ExecuteReader())
@@ -129,24 +136,18 @@ namespace ENT_Clinic_System.PrintingForms
                         {
                             string item = reader["item_name"].ToString();
                             string desc = reader["description"].ToString();
-                            string category = reader["category"].ToString();
                             int qty = Convert.ToInt32(reader["quantity"]);
                             decimal price = Convert.ToDecimal(reader["unit_price"]);
                             decimal total = Convert.ToDecimal(reader["total_price"]);
-                            decimal discount = Convert.ToDecimal(reader["discount_amount"]);
-                            decimal tax = Convert.ToDecimal(reader["tax_amount"]);
 
-                            subtotal += (price * qty);
-                            discountTotal += discount;
-                            taxTotal += tax;
-                            netTotal += total;
+                            subtotal += price * qty;
 
-                            // 🔹 First line: Item + Category + Description
+                            // First line: Item + Description
                             string fullItemLine = $"{item} {desc}";
                             e.Graphics.DrawString(fullItemLine, fontBold, Brushes.Black, leftMargin, y);
                             y += lineHeight;
 
-                            // 🔹 Second line: Qty / Price / Total
+                            // Second line: Qty / Price / Total
                             string qtyLine = $" {qty,2}  {currencySymbol}{price,5:F2}  {currencySymbol}{total,5:F2}";
                             e.Graphics.DrawString(qtyLine, fontRegular, Brushes.Black, leftMargin + 1, y);
                             y += lineHeight;
@@ -159,11 +160,12 @@ namespace ENT_Clinic_System.PrintingForms
 
             // Totals
             e.Graphics.DrawString($"Subtotal:      {currencySymbol}{subtotal:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString($"Discount:      {currencySymbol}{discountTotal:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString($"Tax:           {currencySymbol}{taxTotal:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString($"Discount:      {currencySymbol}{discountAmount:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString($"Tax:           {currencySymbol}{taxAmount:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Net Total:     {currencySymbol}{netTotal:F2}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            // Amount Received & Change
+
+            // Amount Paid & Change
             e.Graphics.DrawString($"Amount Paid:   {currencySymbol}{amountReceived:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Change:        {currencySymbol}{changeDue:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
@@ -174,11 +176,7 @@ namespace ENT_Clinic_System.PrintingForms
             {
                 e.Graphics.DrawString(reportFooter, fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
                 e.Graphics.DrawString(new string('-', 60), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-
             }
-            e.Graphics.DrawString(new string('-', 30), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-
         }
-
     }
 }

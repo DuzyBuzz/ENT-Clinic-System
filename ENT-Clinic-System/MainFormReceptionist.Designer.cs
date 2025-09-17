@@ -74,7 +74,7 @@
             // salesReportToolStripMenuItem
             // 
             this.salesReportToolStripMenuItem.Name = "salesReportToolStripMenuItem";
-            this.salesReportToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.salesReportToolStripMenuItem.Size = new System.Drawing.Size(128, 30);
             this.salesReportToolStripMenuItem.Text = "Sales";
             this.salesReportToolStripMenuItem.Click += new System.EventHandler(this.salesReportToolStripMenuItem_Click);
             // 
@@ -82,7 +82,7 @@
             // 
             this.stockOutButton.Name = "stockOutButton";
             this.stockOutButton.Size = new System.Drawing.Size(180, 30);
-            this.stockOutButton.Text = "Stock Out";
+            this.stockOutButton.Text = "Invoice";
             this.stockOutButton.Click += new System.EventHandler(this.stockOutButton_Click);
             // 
             // stockInButton
@@ -250,7 +250,7 @@
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(142, 30);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 

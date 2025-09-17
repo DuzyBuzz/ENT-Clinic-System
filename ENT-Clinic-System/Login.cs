@@ -166,5 +166,11 @@ namespace ENT_Clinic_System
         {
             VideoFolderHelper.DeleteAllVideos();
         }
+
+        private async void versionLabel_Click(object sender, EventArgs e)
+        {
+            UpdateHelper helper = new UpdateHelper();
+            await helper.CheckForUpdatesAsync();
+        }
     }
 }
