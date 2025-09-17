@@ -318,52 +318,61 @@ namespace ENT_Clinic_System.Inventory
         }
 
         // 🔹 Calculate totals
+        // 🔹 Calculate totals with proper discount handling
         private void CalculateTotals()
         {
-            // Step 1: Calculate subtotal (sum of all item prices × quantity)
             decimal subtotal = 0;
+            decimal totalDiscount = 0;
+            decimal totalTax = 0;
+            decimal netTotal = 0;
+
+            // Get system settings for discount and tax
+            decimal discountPercent = 0;
+            decimal taxPercent = 0;
+            decimal.TryParse(SettingsHelper.GetSetting("discount_percentage"), out discountPercent);
+            decimal.TryParse(SettingsHelper.GetSetting("tax_percentage"), out taxPercent);
+
             foreach (DataRow row in selectedItems.Rows)
             {
                 int qty = Convert.ToInt32(row["quantity"]);
                 decimal price = Convert.ToDecimal(row["unit_price"]);
-                subtotal += price * qty;
+                bool applyDiscount = Convert.ToBoolean(row["apply_discount"]);
+
+                // Step 1: Subtotal for this item
+                decimal itemSubtotal = price * qty;
+
+                // Step 2: Discount applied only if checkbox and item-level applyDiscount is true
+                decimal itemDiscount = (chekApplyDiscount.Checked && applyDiscount)
+                                       ? itemSubtotal * (discountPercent / 100)
+                                       : 0;
+
+                // Step 3: Price after discount
+                decimal priceAfterDiscount = itemSubtotal - itemDiscount;
+
+                // Step 4: Tax
+                decimal taxAmount = priceAfterDiscount * (taxPercent / 100);
+
+                // Step 5: Final price for this item
+                decimal finalPrice = priceAfterDiscount + taxAmount;
+
+                // Step 6: Add to totals
+                subtotal += itemSubtotal;
+                totalDiscount += itemDiscount;
+                totalTax += taxAmount;
+                netTotal += finalPrice;
             }
 
-            // Step 2: Calculate discount (automatic only)
-            decimal discountAmount = 0;
-            if (chekApplyDiscount.Checked)
-            {
-                if (decimal.TryParse(SettingsHelper.GetSetting("discount_percentage"), out decimal discountPercent))
-                {
-                    discountAmount = subtotal * (discountPercent / 100);
-                }
-            }
-
-            // Ensure discount does not exceed subtotal
-            if (discountAmount > subtotal) discountAmount = subtotal;
-
-            // Step 3: Calculate price after discount
-            decimal priceAfterDiscount = subtotal - discountAmount;
-
-            // Step 4: Calculate tax based on discounted subtotal
-            decimal taxAmount = 0;
-            if (decimal.TryParse(SettingsHelper.GetSetting("tax_percentage"), out decimal taxPercent))
-            {
-                taxAmount = priceAfterDiscount * (taxPercent / 100);
-            }
-
-            // Step 5: Calculate net total
-            decimal netTotal = priceAfterDiscount + taxAmount;
-
-            // Step 6: Update UI
+            // Step 7: Update UI
             txtSubtotal.Text = subtotal.ToString("N2");
-            txtDiscount.Text = discountAmount.ToString("N2");
-            txtTax.Text = taxAmount.ToString("N2");
+            txtDiscount.Text = totalDiscount.ToString("N2");
+            txtTax.Text = totalTax.ToString("N2");
             txtNetTotal.Text = netTotal.ToString("N2");
 
-            // Step 7: Update change
+            // Step 8: Update change due
             UpdateChangeDue();
         }
+
+
 
 
 
@@ -487,16 +496,22 @@ namespace ENT_Clinic_System.Inventory
         }
         private void txtDiscount_TextChanged(object sender, EventArgs e)
         {
-
+            CalculateTotals();
         }
 
 
         private void chekApplyDiscount_CheckedChanged(object sender, EventArgs e)
         {
-            // Read-only always, discount applied only if checkbox is checked
+            // Update all items' apply_discount column based on checkbox
+            foreach (DataRow row in selectedItems.Rows)
+            {
+                row["apply_discount"] = chekApplyDiscount.Checked;
+            }
+
             txtDiscount.ReadOnly = true;
             CalculateTotals();
         }
+
 
     }
 }

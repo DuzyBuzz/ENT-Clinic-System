@@ -289,23 +289,43 @@ namespace ENT_Clinic_System.Helpers
                                 decimal price = Convert.ToDecimal(row["unit_price"]);
                                 bool applyDiscount = Convert.ToBoolean(row["apply_discount"]);
 
-                                var priceDetails = CalculateFinalPrice(price, applyDiscount, qty);
+                                // Apply discount only if checkbox is checked
+                                decimal discountAmount = 0;
+                                if (applyDiscount)
+                                {
+                                    if (decimal.TryParse(SettingsHelper.GetSetting("discount_percentage"), out decimal discountPercent))
+                                    {
+                                        discountAmount = price * qty * (discountPercent / 100);
+                                    }
+                                }
 
-                                subtotal += priceDetails.BasePrice;
-                                totalDiscount += priceDetails.DiscountAmount;
-                                totalTax += priceDetails.TaxAmount;
-                                netTotal += priceDetails.FinalPrice;
+                                decimal priceAfterDiscount = (price * qty) - discountAmount;
+
+                                // Calculate tax
+                                decimal taxAmount = 0;
+                                if (decimal.TryParse(SettingsHelper.GetSetting("tax_percentage"), out decimal taxPercent))
+                                {
+                                    taxAmount = priceAfterDiscount * (taxPercent / 100);
+                                }
+
+                                decimal finalPrice = priceAfterDiscount + taxAmount;
+
+                                subtotal += price * qty;
+                                totalDiscount += discountAmount;
+                                totalTax += taxAmount;
+                                netTotal += finalPrice;
                             }
 
                             // 🔹 Calculate change
                             decimal changeDue = amountReceived - netTotal;
                             if (changeDue < 0) changeDue = 0;
 
-                            // 🔹 Step 2: Insert invoice (header) with amount_received and change_due
-                            string invoiceQuery = @"INSERT INTO invoices 
-                    (customer_name, invoice_date, subtotal, discount_total, tax_total, net_total, amount_received, change_due)
-                    VALUES (@customer_name, NOW(), @subtotal, @discount_total, @tax_total, @net_total, @amount_received, @change_due);
-                    SELECT LAST_INSERT_ID();";
+                            // 🔹 Step 2: Insert invoice header
+                            string invoiceQuery = @"
+                        INSERT INTO invoices 
+                        (customer_name, invoice_date, subtotal, discount_total, tax_total, net_total, amount_received, change_due)
+                        VALUES (@customer_name, NOW(), @subtotal, @discount_total, @tax_total, @net_total, @amount_received, @change_due);
+                        SELECT LAST_INSERT_ID();";
 
                             int invoiceId;
                             using (var cmd = new MySqlCommand(invoiceQuery, conn, transaction))
@@ -329,11 +349,29 @@ namespace ENT_Clinic_System.Helpers
                                 decimal price = Convert.ToDecimal(row["unit_price"]);
                                 bool applyDiscount = Convert.ToBoolean(row["apply_discount"]);
 
-                                var priceDetails = CalculateFinalPrice(price, applyDiscount, qty);
+                                decimal discountAmount = 0;
+                                if (applyDiscount)
+                                {
+                                    if (decimal.TryParse(SettingsHelper.GetSetting("discount_percentage"), out decimal discountPercent))
+                                    {
+                                        discountAmount = price * qty * (discountPercent / 100);
+                                    }
+                                }
 
-                                string itemQuery = @"INSERT INTO invoice_items 
-                        (invoice_id, item_id, quantity, unit_price, discount_amount, tax_amount, total_price)
-                        VALUES (@invoice_id, @item_id, @quantity, @unit_price, @discount_amount, @tax_amount, @total_price)";
+                                decimal priceAfterDiscount = (price * qty) - discountAmount;
+
+                                decimal taxAmount = 0;
+                                if (decimal.TryParse(SettingsHelper.GetSetting("tax_percentage"), out decimal taxPercent))
+                                {
+                                    taxAmount = priceAfterDiscount * (taxPercent / 100);
+                                }
+
+                                decimal finalPrice = priceAfterDiscount + taxAmount;
+
+                                string itemQuery = @"
+                            INSERT INTO invoice_items 
+                            (invoice_id, item_id, quantity, unit_price, discount_amount, tax_amount, total_price)
+                            VALUES (@invoice_id, @item_id, @quantity, @unit_price, @discount_amount, @tax_amount, @total_price)";
 
                                 using (var cmd = new MySqlCommand(itemQuery, conn, transaction))
                                 {
@@ -341,9 +379,9 @@ namespace ENT_Clinic_System.Helpers
                                     cmd.Parameters.AddWithValue("@item_id", itemId);
                                     cmd.Parameters.AddWithValue("@quantity", qty);
                                     cmd.Parameters.AddWithValue("@unit_price", price);
-                                    cmd.Parameters.AddWithValue("@discount_amount", priceDetails.DiscountAmount);
-                                    cmd.Parameters.AddWithValue("@tax_amount", priceDetails.TaxAmount);
-                                    cmd.Parameters.AddWithValue("@total_price", priceDetails.FinalPrice);
+                                    cmd.Parameters.AddWithValue("@discount_amount", discountAmount);
+                                    cmd.Parameters.AddWithValue("@tax_amount", taxAmount);
+                                    cmd.Parameters.AddWithValue("@total_price", finalPrice);
                                     cmd.ExecuteNonQuery();
                                 }
 
@@ -368,6 +406,7 @@ namespace ENT_Clinic_System.Helpers
                 return -1;
             }
         }
+
 
 
 
