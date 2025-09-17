@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.patientProfilePictureBox = new System.Windows.Forms.PictureBox();
             this.consultationDateDataGridView = new System.Windows.Forms.DataGridView();
             this.consultation_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -121,10 +122,10 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.patientProfilePictureBox = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.patientProfilePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).BeginInit();
             this.consultationHistoryContextMenuStrip.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
@@ -152,7 +153,6 @@
             this.tableLayoutPanel25.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.patientProfilePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -207,6 +207,18 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 835F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(164, 835);
             this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // patientProfilePictureBox
+            // 
+            this.patientProfilePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.patientProfilePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.patientProfilePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("patientProfilePictureBox.Image")));
+            this.patientProfilePictureBox.Location = new System.Drawing.Point(3, 3);
+            this.patientProfilePictureBox.Name = "patientProfilePictureBox";
+            this.patientProfilePictureBox.Size = new System.Drawing.Size(158, 158);
+            this.patientProfilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.patientProfilePictureBox.TabIndex = 61;
+            this.patientProfilePictureBox.TabStop = false;
             // 
             // consultationDateDataGridView
             // 
@@ -1288,18 +1300,6 @@
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-            // patientProfilePictureBox
-            // 
-            this.patientProfilePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.patientProfilePictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.patientProfilePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("patientProfilePictureBox.Image")));
-            this.patientProfilePictureBox.Location = new System.Drawing.Point(3, 3);
-            this.patientProfilePictureBox.Name = "patientProfilePictureBox";
-            this.patientProfilePictureBox.Size = new System.Drawing.Size(158, 158);
-            this.patientProfilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.patientProfilePictureBox.TabIndex = 61;
-            this.patientProfilePictureBox.TabStop = false;
-            // 
             // ConsultationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -1313,6 +1313,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.patientProfilePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).EndInit();
             this.consultationHistoryContextMenuStrip.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
@@ -1357,7 +1358,6 @@
             this.tableLayoutPanel25.PerformLayout();
             this.tableLayoutPanel18.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.patientProfilePictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }

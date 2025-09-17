@@ -41,6 +41,9 @@ namespace ENT_Clinic_System.Helpers
                 // 🔹 Setup Firefly helper
                 fireflyHelper = new FireflyHelper();
                 fireflyHelper.FireflyButtonPressed += FireflyHelper_FireflyButtonPressed;
+
+                // 🔹 Add camera selection change handler
+                cameraComboBox.SelectedIndexChanged += CameraComboBox_SelectedIndexChanged;
             }
             catch (Exception ex)
             {
@@ -348,6 +351,27 @@ namespace ENT_Clinic_System.Helpers
         private void CameraPreview_NewFrame(object sender, NewFrameEventArgs e)
         {
             VideoSource_NewFrame(sender, e);
+        }
+
+        private void CameraComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Stop current preview if running
+                if (videoSource != null && videoSource.IsRunning)
+                {
+                    videoSource.SignalToStop();
+                    videoSource.WaitForStop();
+                    videoSource.NewFrame -= CameraPreview_NewFrame;
+                    videoSource = null;
+                }
+                // Start preview for the newly selected camera
+                StartCameraPreview();
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error switching camera", ex);
+            }
         }
 
         private void ShowError(string title, Exception ex)
