@@ -156,6 +156,12 @@
     <Compile Include="Helpers\AgeCalculatorHelper.cs" />
     <Compile Include="Helpers\AutoCompleteHelper.cs" />
     <Compile Include="Helpers\CamelCaseHelper.cs" />
+    <Compile Include="Helpers\CameraConsultationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Helpers\CameraConsultationForm.Designer.cs">
+      <DependentUpon>CameraConsultationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DGVViewHelper.cs" />
     <Compile Include="Helpers\FireflyHelper.cs" />
     <Compile Include="Helpers\ImageCameraUI.cs">
@@ -236,12 +242,6 @@
     <Compile Include="Helpers\UserCredentials.cs" />
     <Compile Include="Helpers\VideoFlowHelper.cs" />
     <Compile Include="Helpers\VideoFolderHelper.cs" />
-    <Compile Include="Helpers\VideoRecorder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Helpers\VideoRecorder.Designer.cs">
-      <DependentUpon>VideoRecorder.cs</DependentUpon>
-    </Compile>
     <Compile Include="InsertForms\ConsultationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -324,6 +324,9 @@
     <Compile Include="UserControls\SystemSettingsForm.Designer.cs">
       <DependentUpon>SystemSettingsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Helpers\CameraConsultationForm.resx">
+      <DependentUpon>CameraConsultationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Helpers\ImageCameraUI.resx">
       <DependentUpon>ImageCameraUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -331,9 +334,6 @@
       <DependentUpon>PatientCamera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helpers\VideoCameraUI.resx" />
-    <EmbeddedResource Include="Helpers\VideoRecorder.resx">
-      <DependentUpon>VideoRecorder.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="InsertForms\ConsultationForm.resx">
       <DependentUpon>ConsultationForm.cs</DependentUpon>
     </EmbeddedResource>

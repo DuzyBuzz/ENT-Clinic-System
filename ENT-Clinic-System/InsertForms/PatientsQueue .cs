@@ -1,8 +1,9 @@
-﻿using MySql.Data.MySqlClient;
+﻿using ENT_Clinic_System.Helpers;
+using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
-using ENT_Clinic_System.Helpers;
 
 namespace ENT_Clinic_System.InsertForms
 {
@@ -27,7 +28,11 @@ namespace ENT_Clinic_System.InsertForms
         {
             LoadPatients();
             LoadQueue();
-
+            AutoCompleteHelper.SetupAutoComplete(
+                txtSearchPatient,
+                "patients",
+                new List<string> { "full_name" }
+            );
 
         }
 
@@ -264,6 +269,11 @@ namespace ENT_Clinic_System.InsertForms
         private void refreshButton_Click(object sender, EventArgs e)
         {
             LoadQueue();
+        }
+
+        private void txtSearchPatient_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

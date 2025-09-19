@@ -205,7 +205,7 @@ namespace ENT_Clinic_System.UserControls
                             // Highlight today
                             if (cellDate.Date == DateTime.Today)
                             {
-                                dayCell.BackColor = Color.FromArgb(245, 250, 255);
+                                dayCell.BackColor = Color.AntiqueWhite;
                             }
 
                             // Store the date in the panel tag for click handler

@@ -36,6 +36,13 @@
             this.label17 = new System.Windows.Forms.Label();
             this.patientContactNumberTextBox = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.contactLastNameTextBox = new System.Windows.Forms.TextBox();
+            this.contactMiddleNameTextBox = new System.Windows.Forms.TextBox();
+            this.contactsuffixComboBox = new System.Windows.Forms.ComboBox();
+            this.contactFistNameTextBox = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.relationshipComboBox = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -62,20 +69,15 @@
             this.firstNameTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.submitButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.contactLastNameTextBox = new System.Windows.Forms.TextBox();
-            this.contactMiddleNameTextBox = new System.Windows.Forms.TextBox();
-            this.contactsuffixComboBox = new System.Windows.Forms.ComboBox();
-            this.contactFistNameTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CaptureImagePictureBox)).BeginInit();
             this.panel4.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -101,13 +103,14 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 680F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(734, 680);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.label3);
+            this.panel3.Controls.Add(this.pictureBox1);
+            this.panel3.Controls.Add(this.label19);
             this.panel3.Controls.Add(this.CaptureImagePictureBox);
             this.panel3.Controls.Add(this.label17);
             this.panel3.Controls.Add(this.patientContactNumberTextBox);
@@ -142,7 +145,7 @@
             // 
             this.CaptureImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.CaptureImagePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("CaptureImagePictureBox.Image")));
-            this.CaptureImagePictureBox.Location = new System.Drawing.Point(510, 12);
+            this.CaptureImagePictureBox.Location = new System.Drawing.Point(510, 10);
             this.CaptureImagePictureBox.Name = "CaptureImagePictureBox";
             this.CaptureImagePictureBox.Size = new System.Drawing.Size(192, 192);
             this.CaptureImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -192,6 +195,93 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(726, 188);
             this.panel4.TabIndex = 54;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(609, 67);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(28, 20);
+            this.label1.TabIndex = 67;
+            this.label1.Text = "Sfx";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(371, 67);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 20);
+            this.label2.TabIndex = 66;
+            this.label2.Text = "Last Name";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(289, 67);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(23, 20);
+            this.label18.TabIndex = 65;
+            this.label18.Text = "MI";
+            // 
+            // contactLastNameTextBox
+            // 
+            this.contactLastNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contactLastNameTextBox.Location = new System.Drawing.Point(451, 61);
+            this.contactLastNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.contactLastNameTextBox.Name = "contactLastNameTextBox";
+            this.contactLastNameTextBox.Size = new System.Drawing.Size(150, 26);
+            this.contactLastNameTextBox.TabIndex = 64;
+            // 
+            // contactMiddleNameTextBox
+            // 
+            this.contactMiddleNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contactMiddleNameTextBox.Location = new System.Drawing.Point(327, 60);
+            this.contactMiddleNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.contactMiddleNameTextBox.MaxLength = 1;
+            this.contactMiddleNameTextBox.Name = "contactMiddleNameTextBox";
+            this.contactMiddleNameTextBox.Size = new System.Drawing.Size(36, 26);
+            this.contactMiddleNameTextBox.TabIndex = 63;
+            this.contactMiddleNameTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // contactsuffixComboBox
+            // 
+            this.contactsuffixComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.contactsuffixComboBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contactsuffixComboBox.FormattingEnabled = true;
+            this.contactsuffixComboBox.Items.AddRange(new object[] {
+            "",
+            "JR.",
+            "SR.",
+            "I",
+            "II",
+            "III",
+            "IV",
+            "V",
+            "VI",
+            "VII",
+            "VIII",
+            "IX",
+            "X"});
+            this.contactsuffixComboBox.Location = new System.Drawing.Point(646, 57);
+            this.contactsuffixComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.contactsuffixComboBox.Name = "contactsuffixComboBox";
+            this.contactsuffixComboBox.Size = new System.Drawing.Size(56, 28);
+            this.contactsuffixComboBox.TabIndex = 62;
+            // 
+            // contactFistNameTextBox
+            // 
+            this.contactFistNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contactFistNameTextBox.Location = new System.Drawing.Point(129, 60);
+            this.contactFistNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.contactFistNameTextBox.Name = "contactFistNameTextBox";
+            this.contactFistNameTextBox.Size = new System.Drawing.Size(150, 26);
+            this.contactFistNameTextBox.TabIndex = 61;
             // 
             // label16
             // 
@@ -501,104 +591,27 @@
             this.submitButton.UseVisualStyleBackColor = false;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
-            // label1
+            // label19
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(609, 67);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(28, 20);
-            this.label1.TabIndex = 67;
-            this.label1.Text = "Sfx";
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(19, 182);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(128, 20);
+            this.label19.TabIndex = 62;
+            this.label19.Text = "Patient Information";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label2
+            // pictureBox1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(371, 67);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 20);
-            this.label2.TabIndex = 66;
-            this.label2.Text = "Last Name";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(289, 67);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(23, 20);
-            this.label18.TabIndex = 65;
-            this.label18.Text = "MI";
-            // 
-            // contactLastNameTextBox
-            // 
-            this.contactLastNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contactLastNameTextBox.Location = new System.Drawing.Point(451, 61);
-            this.contactLastNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.contactLastNameTextBox.Name = "contactLastNameTextBox";
-            this.contactLastNameTextBox.Size = new System.Drawing.Size(150, 26);
-            this.contactLastNameTextBox.TabIndex = 64;
-            // 
-            // contactMiddleNameTextBox
-            // 
-            this.contactMiddleNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contactMiddleNameTextBox.Location = new System.Drawing.Point(327, 60);
-            this.contactMiddleNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.contactMiddleNameTextBox.MaxLength = 1;
-            this.contactMiddleNameTextBox.Name = "contactMiddleNameTextBox";
-            this.contactMiddleNameTextBox.Size = new System.Drawing.Size(36, 26);
-            this.contactMiddleNameTextBox.TabIndex = 63;
-            this.contactMiddleNameTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // contactsuffixComboBox
-            // 
-            this.contactsuffixComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.contactsuffixComboBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contactsuffixComboBox.FormattingEnabled = true;
-            this.contactsuffixComboBox.Items.AddRange(new object[] {
-            "",
-            "JR.",
-            "SR.",
-            "I",
-            "II",
-            "III",
-            "IV",
-            "V",
-            "VI",
-            "VII",
-            "VIII",
-            "IX",
-            "X"});
-            this.contactsuffixComboBox.Location = new System.Drawing.Point(646, 57);
-            this.contactsuffixComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.contactsuffixComboBox.Name = "contactsuffixComboBox";
-            this.contactsuffixComboBox.Size = new System.Drawing.Size(56, 28);
-            this.contactsuffixComboBox.TabIndex = 62;
-            // 
-            // contactFistNameTextBox
-            // 
-            this.contactFistNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contactFistNameTextBox.Location = new System.Drawing.Point(129, 60);
-            this.contactFistNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.contactFistNameTextBox.Name = "contactFistNameTextBox";
-            this.contactFistNameTextBox.Size = new System.Drawing.Size(150, 26);
-            this.contactFistNameTextBox.TabIndex = 61;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial Black", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(10, 12);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(445, 180);
-            this.label3.TabIndex = 61;
-            this.label3.Text = "Patient \r\nInformation";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(23, 10);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(470, 169);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 63;
+            this.pictureBox1.TabStop = false;
             // 
             // PatientInfoForm
             // 
@@ -626,6 +639,7 @@
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
     }
@@ -671,6 +685,7 @@
         private System.Windows.Forms.TextBox contactMiddleNameTextBox;
         private System.Windows.Forms.ComboBox contactsuffixComboBox;
         private System.Windows.Forms.TextBox contactFistNameTextBox;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

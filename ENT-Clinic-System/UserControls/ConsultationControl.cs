@@ -149,22 +149,7 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
-        private void openCameraButton_Click(object sender, EventArgs e)
-        {
-            ImageCameraUI camUI = new ImageCameraUI();
-            camUI.ImageCaptured += (s, bmp) =>
-            {
-                // Save Bitmap to temp file
-                string tempPath = Path.Combine(Path.GetTempPath(), $"image_{Guid.NewGuid()}.png");
-                bmp.Save(tempPath);
 
-                var container = imageHelper.AddImage(tempPath);
-                if (container != null)
-                    foreach (Control c in container.Controls)
-                        c.MouseDown += ImageControl_MouseDown;
-            };
-            camUI.ShowDialog();
-        }
 
         private void saveConsultationButton_Click(object sender, EventArgs e)
         {
@@ -219,11 +204,6 @@ namespace ENT_Clinic_System.UserControls
             }
         }
 
-        private void imageCaptureButton_Click(object sender, EventArgs e)
-        {
-            openCameraButton_Click(sender, e);
-        }
-
         private void uploadImageButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -244,18 +224,6 @@ namespace ENT_Clinic_System.UserControls
 
         private void openVideoButton_Click(object sender, EventArgs e)
         {
-            VideoRecorder recorder = new VideoRecorder();
-            recorder.VideoCaptured += (s, videoPath) =>
-            {
-                videoFlowLayoutPanel.Invoke((MethodInvoker)(() =>
-                {
-                    var container = videoHelper.AddVideo(videoPath);
-                    if (container != null)
-                        foreach (Control c in container.Controls)
-                            c.MouseDown += VideoControl_MouseDown;
-                }));
-            };
-            recorder.ShowDialog();
         }
 
         private void complaintsRichTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -402,6 +370,11 @@ namespace ENT_Clinic_System.UserControls
         }
 
         private void fullNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openCameraButton_Click(object sender, EventArgs e)
         {
 
         }

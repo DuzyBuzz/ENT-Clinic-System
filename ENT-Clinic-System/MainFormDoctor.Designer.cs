@@ -51,7 +51,6 @@
             this.doctorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
@@ -226,7 +225,6 @@
             this.toolStripMenuItem2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateToolStripMenuItem,
-            this.toolStripMenuItem3,
             this.toolStripMenuItem4,
             this.toolStripMenuItem5});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
@@ -236,27 +234,20 @@
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(142, 30);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(142, 30);
-            this.toolStripMenuItem3.Text = "System";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.systemToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(142, 30);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 30);
             this.toolStripMenuItem4.Text = "Profile";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(142, 30);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 30);
             this.toolStripMenuItem5.Text = "Logout";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
@@ -323,7 +314,6 @@
         private System.Windows.Forms.ToolStripMenuItem doctorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
     }

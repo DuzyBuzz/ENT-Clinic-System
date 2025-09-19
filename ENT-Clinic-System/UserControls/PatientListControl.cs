@@ -33,7 +33,6 @@ namespace ENT_Clinic_System.UserControls
             List<string> columns = new List<string>
             {
                 "patient_id",
-                "photo",
                 "full_name",
                 "address",
                 "birth_date",
@@ -43,7 +42,9 @@ namespace ENT_Clinic_System.UserControls
                 "patient_contact_number",
                 "emergency_name",
                 "emergency_contact_number",
-                "emergency_relationship"
+                "emergency_relationship",
+                "created_at",
+                "photo"
             };
 
             try

@@ -89,7 +89,7 @@
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.imageToolStrip = new System.Windows.Forms.ToolStrip();
-            this.imageCaptureButton = new System.Windows.Forms.ToolStripButton();
+            this.openCameraButton = new System.Windows.Forms.ToolStripButton();
             this.uploadImageButton = new System.Windows.Forms.ToolStripButton();
             this.imageFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
@@ -892,7 +892,7 @@
             // imageToolStrip
             // 
             this.imageToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.imageCaptureButton,
+            this.openCameraButton,
             this.uploadImageButton});
             this.imageToolStrip.Location = new System.Drawing.Point(243, 0);
             this.imageToolStrip.Name = "imageToolStrip";
@@ -900,15 +900,15 @@
             this.imageToolStrip.TabIndex = 3;
             this.imageToolStrip.Text = "toolStrip1";
             // 
-            // imageCaptureButton
+            // openCameraButton
             // 
-            this.imageCaptureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.imageCaptureButton.Image = ((System.Drawing.Image)(resources.GetObject("imageCaptureButton.Image")));
-            this.imageCaptureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.imageCaptureButton.Name = "imageCaptureButton";
-            this.imageCaptureButton.Size = new System.Drawing.Size(89, 21);
-            this.imageCaptureButton.Text = "Capture Image";
-            this.imageCaptureButton.Click += new System.EventHandler(this.imageCaptureButton_Click);
+            this.openCameraButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.openCameraButton.Image = ((System.Drawing.Image)(resources.GetObject("openCameraButton.Image")));
+            this.openCameraButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openCameraButton.Name = "openCameraButton";
+            this.openCameraButton.Size = new System.Drawing.Size(84, 21);
+            this.openCameraButton.Text = "Open Camera";
+            this.openCameraButton.Click += new System.EventHandler(this.openCameraButton_Click);
             // 
             // uploadImageButton
             // 
@@ -1442,7 +1442,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel21;
         private System.Windows.Forms.RichTextBox noseRichTextBox;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ToolStripButton imageCaptureButton;
+        private System.Windows.Forms.ToolStripButton openCameraButton;
         private System.Windows.Forms.ToolStripButton uploadImageButton;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton openVideoButton;

@@ -20,14 +20,28 @@ namespace ENT_Clinic_System.Helpers
         [DllImport("SnapDLL.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern void ReleaseButton();
 
-        private Timer checkTimer;
+        private readonly Timer checkTimer;
         private bool wasPressedLastTick = false;
+        private bool disposed = false;
 
         public event EventHandler FireflyButtonPressed;
 
-        public FireflyHelper(int intervalMs = 300)
+        public FireflyHelper(int intervalMs = 100)
         {
-            InitButton();
+            try
+            {
+                InitButton();
+            }
+            catch (DllNotFoundException ex)
+            {
+                MessageBox.Show($"SnapDLL.dll not found: {ex.Message}", "DLL Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing Firefly: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             checkTimer = new Timer();
             checkTimer.Interval = intervalMs;
@@ -38,7 +52,15 @@ namespace ENT_Clinic_System.Helpers
         private void CheckTimer_Tick(object sender, EventArgs e)
         {
             bool isPressed = false;
-            try { isPressed = IsButtonpress(); } catch { }
+
+            try
+            {
+                isPressed = IsButtonpress();
+            }
+            catch (Exception)
+            {
+                // ignore DLL call errors
+            }
 
             if (isPressed && !wasPressedLastTick)
             {
@@ -50,6 +72,8 @@ namespace ENT_Clinic_System.Helpers
 
         public void Dispose()
         {
+            if (disposed) return;
+
             try
             {
                 checkTimer?.Stop();
@@ -57,6 +81,8 @@ namespace ENT_Clinic_System.Helpers
                 ReleaseButton();
             }
             catch { }
+
+            disposed = true;
         }
     }
 }

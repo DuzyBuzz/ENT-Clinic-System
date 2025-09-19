@@ -69,6 +69,7 @@
             this.txtSearchPatient.Name = "txtSearchPatient";
             this.txtSearchPatient.Size = new System.Drawing.Size(280, 24);
             this.txtSearchPatient.TabIndex = 2;
+            this.txtSearchPatient.TextChanged += new System.EventHandler(this.txtSearchPatient_TextChanged);
             // 
             // btnSearchPatient
             // 

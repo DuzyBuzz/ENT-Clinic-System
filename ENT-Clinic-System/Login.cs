@@ -1,4 +1,5 @@
 ﻿using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.UserControls;
 using MySql.Data.MySqlClient;
 using System;
 using System.Diagnostics;
@@ -126,7 +127,7 @@ namespace ENT_Clinic_System
                                 UserCredentials.Role = role;
 
                                 // ✅ Open form based on role
-                                Form mainForm;
+                                Form mainForm = null;
                                 if (role.Equals("Doctor", StringComparison.OrdinalIgnoreCase))
                                 {
                                     mainForm = new MainFormDoctor();
@@ -134,6 +135,10 @@ namespace ENT_Clinic_System
                                 else if (role.Equals("Receptionist", StringComparison.OrdinalIgnoreCase))
                                 {
                                     mainForm = new MainFormReceptionist();
+                                }
+                                else if (role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    mainForm = new SystemAdminForm();
                                 }
                                 else
                                 {

@@ -86,7 +86,7 @@
             this.lblAvailableItems.Name = "lblAvailableItems";
             this.lblAvailableItems.Size = new System.Drawing.Size(403, 16);
             this.lblAvailableItems.TabIndex = 3;
-            this.lblAvailableItems.Text = "Available Inventory";
+            this.lblAvailableItems.Text = "Selected Items";
             this.lblAvailableItems.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblSelectedItems
@@ -98,7 +98,7 @@
             this.lblSelectedItems.Name = "lblSelectedItems";
             this.lblSelectedItems.Size = new System.Drawing.Size(403, 16);
             this.lblSelectedItems.TabIndex = 4;
-            this.lblSelectedItems.Text = "Selected Items";
+            this.lblSelectedItems.Text = "Available Items";
             this.lblSelectedItems.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel

@@ -1,9 +1,7 @@
-﻿using ENT_Clinic_System.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 
 public class VideoFlowHelper
@@ -35,12 +33,21 @@ public class VideoFlowHelper
             BorderStyle = BorderStyle.FixedSingle
         };
 
-        // ====== Video Thumbnail ======
-        VideoClipControl clip = new VideoClipControl(videoPath)
+        // Video thumbnail placeholder
+        Panel videoThumb = new Panel
         {
+            BackColor = Color.Black,
             Dock = DockStyle.Top,
             Height = 120
         };
+        Label lbl = new Label
+        {
+            Text = "Video",
+            ForeColor = Color.White,
+            Dock = DockStyle.Fill,
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+        videoThumb.Controls.Add(lbl);
 
         Label noteLabel = new Label
         {
@@ -48,7 +55,8 @@ public class VideoFlowHelper
             Dock = DockStyle.Bottom,
             Height = 40,
             TextAlign = ContentAlignment.MiddleCenter,
-            AutoEllipsis = true
+            AutoEllipsis = true,
+            Cursor = Cursors.Hand
         };
 
         Label categoryLabel = new Label
@@ -58,7 +66,8 @@ public class VideoFlowHelper
             Height = 20,
             TextAlign = ContentAlignment.MiddleCenter,
             Font = new Font("Segoe UI", 8, FontStyle.Italic),
-            ForeColor = Color.Gray
+            ForeColor = Color.Gray,
+            Cursor = Cursors.Hand
         };
 
         videoNotes[container] = (videoPath, noteLabel, categoryLabel, initialNote, initialCategory);
@@ -69,18 +78,17 @@ public class VideoFlowHelper
         deleteItem.Click += (s, e) => DeleteVideo(container);
         menu.Items.Add(deleteItem);
 
-        clip.ContextMenuStrip = menu;
+        videoThumb.ContextMenuStrip = menu;
         noteLabel.ContextMenuStrip = menu;
         categoryLabel.ContextMenuStrip = menu;
 
-        // Double-click to edit note/category
-        clip.DoubleClick += (s, e) => EditVideoNoteAndCategory(container);
+        videoThumb.DoubleClick += (s, e) => EditVideoNoteAndCategory(container);
         noteLabel.DoubleClick += (s, e) => EditVideoNoteAndCategory(container);
         categoryLabel.DoubleClick += (s, e) => EditVideoNoteAndCategory(container);
 
         container.Controls.Add(noteLabel);
         container.Controls.Add(categoryLabel);
-        container.Controls.Add(clip);
+        container.Controls.Add(videoThumb);
         panel.Controls.Add(container);
 
         return container;
@@ -95,93 +103,42 @@ public class VideoFlowHelper
         using (Form editForm = new Form())
         {
             editForm.Text = "Video Note & Category";
-            editForm.Size = new Size(700, 700);
+            editForm.Size = new Size(500, 400);
             editForm.StartPosition = FormStartPosition.CenterParent;
             editForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
 
             TableLayoutPanel layout = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                RowCount = 5,
+                RowCount = 4,
                 ColumnCount = 2,
                 Padding = new Padding(10),
                 AutoScroll = true
             };
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60));
 
-            // Column style: first auto, second takes remaining space
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-
-            // Row styles
-            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Thumbnail
-            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Note label
-            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 40)); // Note textbox
-            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Category inline
-            layout.RowStyles.Add(new RowStyle(SizeType.AutoSize)); // Save button
-
-            // ====== Thumbnail Preview (spans 2 columns) ======
-            PictureBox thumbnailPb = new PictureBox
-            {
-                Image = GenerateVideoThumbnail(data.VideoPath),
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Dock = DockStyle.Fill,
-                Height = 400
-            };
-            layout.Controls.Add(thumbnailPb, 0, 0);
-            layout.SetColumnSpan(thumbnailPb, 2);
-
-            // ====== Note Label (spans 2 columns, above textbox) ======
-            Label lblNote = new Label
-            {
-                Text = "Note:",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold)
-            };
-            layout.Controls.Add(lblNote, 0, 1);
+            Label lblNote = new Label { Text = "Note:", AutoSize = true, Anchor = AnchorStyles.Left };
+            layout.Controls.Add(lblNote, 0, 0);
             layout.SetColumnSpan(lblNote, 2);
 
-            // ====== Note Textbox (spans 2 columns) ======
-            TextBox tbNote = new TextBox
-            {
-                Multiline = true,
-                Text = data.Note,
-                Dock = DockStyle.Fill,
-                Height = 80
-            };
-            layout.Controls.Add(tbNote, 0, 2);
+            TextBox tbNote = new TextBox { Multiline = true, Text = data.Note, Dock = DockStyle.Fill };
+            layout.Controls.Add(tbNote, 0, 1);
             layout.SetColumnSpan(tbNote, 2);
 
-            // ====== Category Inline ======
-            Label lblCategory = new Label
-            {
-                Text = "Category:",
-                AutoSize = true,
-                Anchor = AnchorStyles.Left,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold)
-            };
-            layout.Controls.Add(lblCategory, 0, 3);
+            Label lblCategory = new Label { Text = "Category:", AutoSize = true, Anchor = AnchorStyles.Left };
+            layout.Controls.Add(lblCategory, 0, 2);
 
-            ComboBox cbCategory = new ComboBox
-            {
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Dock = DockStyle.Fill
-            };
-            cbCategory.Items.AddRange(new string[] { "Nose", "Ears", "Throat" });
-            cbCategory.SelectedItem = cbCategory.Items.Contains(data.Category) ? data.Category : "Nose";
-            layout.Controls.Add(cbCategory, 1, 3);
+            ComboBox cbCategory = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, Dock = DockStyle.Fill };
+            cbCategory.Items.AddRange(categories);
+            cbCategory.SelectedItem = cbCategory.Items.Contains(data.Category) ? data.Category : categories[0];
+            layout.Controls.Add(cbCategory, 1, 2);
 
-            // ====== Save Button (spans 2 columns) ======
-            Button saveBtn = new Button
-            {
-                Text = "Save",
-                Dock = DockStyle.Bottom,
-                Height = 35
-            };
+            Button saveBtn = new Button { Text = "Save", Dock = DockStyle.Bottom };
             saveBtn.Click += (s, e) =>
             {
                 string newNote = tbNote.Text;
-                string newCategory = cbCategory.SelectedItem?.ToString() ?? "Nose";
+                string newCategory = cbCategory.SelectedItem?.ToString() ?? categories[0];
 
                 videoNotes[container] = (data.VideoPath, data.NoteLabel, data.CategoryLabel, newNote, newCategory);
                 data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "(double-click to add note)" : newNote;
@@ -189,7 +146,7 @@ public class VideoFlowHelper
 
                 editForm.Close();
             };
-            layout.Controls.Add(saveBtn, 0, 4);
+            layout.Controls.Add(saveBtn, 0, 3);
             layout.SetColumnSpan(saveBtn, 2);
 
             editForm.Controls.Add(layout);
@@ -197,38 +154,10 @@ public class VideoFlowHelper
         }
     }
 
-    // Generate thumbnail helper
-    private Bitmap GenerateVideoThumbnail(string videoPath)
-    {
-        try
-        {
-            using (var reader = new Accord.Video.FFMPEG.VideoFileReader())
-            {
-                reader.Open(videoPath);
-                Bitmap frame = reader.ReadVideoFrame();
-                reader.Close();
-                return frame;
-            }
-        }
-        catch
-        {
-            Bitmap bmp = new Bitmap(150, 150);
-            using (Graphics g = Graphics.FromImage(bmp))
-            {
-                g.Clear(Color.Black);
-                g.DrawString("Video", new Font("Segoe UI", 14), Brushes.White, new PointF(20, 50));
-            }
-            return bmp;
-        }
-    }
-
-
-
     public void DeleteVideo(Panel container)
     {
         if (panel.Controls.Contains(container))
         {
-            var data = videoNotes[container];
             panel.Controls.Remove(container);
             container.Dispose();
             videoNotes.Remove(container);

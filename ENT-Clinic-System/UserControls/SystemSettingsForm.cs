@@ -95,7 +95,7 @@ namespace ENT_Clinic_System.UserControls
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT username, full_name, role FROM users ORDER BY username";
+                    string query = "SELECT username, full_name, role FROM user ORDER BY username";
                     using (var cmd = new MySqlCommand(query, conn))
                     using (var adapter = new MySqlDataAdapter(cmd))
                     {
@@ -132,7 +132,7 @@ namespace ENT_Clinic_System.UserControls
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = "INSERT INTO users (username, password, full_name, role) VALUES (@username, @password, @full_name, @role)";
+                    string query = "INSERT INTO user (username, password, full_name, role) VALUES (@username, @password, @full_name, @role)";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@username", txtUsername.Text.Trim());
@@ -169,7 +169,7 @@ namespace ENT_Clinic_System.UserControls
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = "UPDATE users SET full_name=@full_name, role=@role WHERE username=@username";
+                    string query = "UPDATE user SET full_name=@full_name, role=@role WHERE username=@username";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
@@ -206,7 +206,7 @@ namespace ENT_Clinic_System.UserControls
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = "DELETE FROM users WHERE username=@username";
+                    string query = "DELETE FROM user WHERE username=@username";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
@@ -235,5 +235,11 @@ namespace ENT_Clinic_System.UserControls
             cmbRole.SelectedIndex = -1;
         }
         #endregion
+
+        private void SystemAdminForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+        }
     }
 }
