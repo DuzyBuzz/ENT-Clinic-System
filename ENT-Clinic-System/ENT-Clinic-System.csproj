@@ -150,7 +150,6 @@
     <Compile Include="CustomUI\BaseForm .Designer.cs">
       <DependentUpon>BaseForm .cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomUI\cameraToolStrip.cs" />
     <Compile Include="CustomUI\CustomMenuRenderer.cs" />
     <Compile Include="CustomUI\textEditorToolStrip.cs" />
     <Compile Include="Helpers\AgeCalculatorHelper.cs" />
@@ -162,14 +161,9 @@
     <Compile Include="Helpers\CameraConsultationForm.Designer.cs">
       <DependentUpon>CameraConsultationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CleanupHelper.cs" />
     <Compile Include="Helpers\DGVViewHelper.cs" />
     <Compile Include="Helpers\FireflyHelper.cs" />
-    <Compile Include="Helpers\ImageCameraUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Helpers\ImageCameraUI.Designer.cs">
-      <DependentUpon>ImageCameraUI.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\ComboBoxCollectionHelper.cs" />
     <Compile Include="Helpers\ConsultationSaver.cs" />
     <Compile Include="Helpers\DBConfig.cs" />
@@ -326,9 +320,6 @@
     </Compile>
     <EmbeddedResource Include="Helpers\CameraConsultationForm.resx">
       <DependentUpon>CameraConsultationForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Helpers\ImageCameraUI.resx">
-      <DependentUpon>ImageCameraUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helpers\PatientCamera.resx">
       <DependentUpon>PatientCamera.cs</DependentUpon>

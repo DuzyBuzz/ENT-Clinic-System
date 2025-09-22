@@ -169,7 +169,7 @@ namespace ENT_Clinic_System
 
         private void Login_FormClosing(object sender, FormClosingEventArgs e)
         {
-            VideoFolderHelper.DeleteAllVideos();
+            CleanupHelper.DeleteImageAndVideoFolders();
         }
 
         private async void versionLabel_Click(object sender, EventArgs e)

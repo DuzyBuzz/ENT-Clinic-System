@@ -33,21 +33,44 @@ public class VideoFlowHelper
             BorderStyle = BorderStyle.FixedSingle
         };
 
-        // Video thumbnail placeholder
-        Panel videoThumb = new Panel
+        // 🔹 Use PictureBox for thumbnail instead of Panel
+        PictureBox videoThumb = new PictureBox
         {
-            BackColor = Color.Black,
             Dock = DockStyle.Top,
-            Height = 120
+            Height = 120,
+            SizeMode = PictureBoxSizeMode.Zoom,
+            BackColor = Color.Black,
+            Cursor = Cursors.Hand
         };
-        Label lbl = new Label
+
+        try
         {
-            Text = "Video",
-            ForeColor = Color.White,
-            Dock = DockStyle.Fill,
-            TextAlign = ContentAlignment.MiddleCenter
-        };
-        videoThumb.Controls.Add(lbl);
+            using (var reader = new Accord.Video.FFMPEG.VideoFileReader())
+            {
+                reader.Open(videoPath);
+                if (reader.IsOpen)
+                {
+                    Bitmap frame = reader.ReadVideoFrame(); // first frame
+                    if (frame != null)
+                    {
+                        videoThumb.Image = new Bitmap(frame);
+                        frame.Dispose();
+                    }
+                }
+                reader.Close();
+            }
+        }
+        catch
+        {
+            // fallback if thumbnail extraction fails
+            Bitmap bmp = new Bitmap(150, 120);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.Black);
+                g.DrawString("Video", new Font("Segoe UI", 10), Brushes.White, new PointF(30, 50));
+            }
+            videoThumb.Image = bmp;
+        }
 
         Label noteLabel = new Label
         {
@@ -82,9 +105,20 @@ public class VideoFlowHelper
         noteLabel.ContextMenuStrip = menu;
         categoryLabel.ContextMenuStrip = menu;
 
+        // Double click → edit note/category
         videoThumb.DoubleClick += (s, e) => EditVideoNoteAndCategory(container);
         noteLabel.DoubleClick += (s, e) => EditVideoNoteAndCategory(container);
         categoryLabel.DoubleClick += (s, e) => EditVideoNoteAndCategory(container);
+
+        // 🔹 Open video when clicked
+        videoThumb.Click += (s, e) =>
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = videoPath,
+                UseShellExecute = true
+            });
+        };
 
         container.Controls.Add(noteLabel);
         container.Controls.Add(categoryLabel);
@@ -93,6 +127,8 @@ public class VideoFlowHelper
 
         return container;
     }
+
+
 
     private void EditVideoNoteAndCategory(Panel container)
     {

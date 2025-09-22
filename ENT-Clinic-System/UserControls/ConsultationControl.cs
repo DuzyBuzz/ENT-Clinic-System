@@ -29,14 +29,14 @@ namespace ENT_Clinic_System.UserControls
             LoadPatientLabels(_patientId);
             InitializeVideoContextMenu();
             LoadConsultationDate(patientId);
-            // Initialize image helper (no tool strip)
-            imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
         }
 
         private void ConsultationControl_Load(object sender, EventArgs e)
         {
             followUpDateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm tt";
             videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
+            imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
+
             RichTextBulletDropdownHelper.LoadColumnsData(
                 "consultation",
                 new List<string> { "chief_complaint", "history", "ear_exam", "nose_exam", "throat_exam", "diagnosis", "recommendations" }
@@ -193,10 +193,16 @@ namespace ENT_Clinic_System.UserControls
                 videoFlowLayoutPanel.Controls.Clear();
                 imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
                 videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
-                if(this.Parent != null)
+                // Remove the user control from the main panel
+                if (this.Parent is Panel parentPanel)
                 {
-                    this.Parent.Controls.Remove(this);
+                    // Remove all controls inside this panel (including this control)
+                    parentPanel.Controls.Clear();
+
                 }
+
+                // Dispose this control to free resources
+                this.Dispose();
             }
             catch (Exception ex)
             {
@@ -373,10 +379,25 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
-
+        // Open Camera button
         private void openCameraButton_Click(object sender, EventArgs e)
         {
+            using (var cameraForm = new CameraConsultationForm())
+            {
+                var result = cameraForm.ShowDialog();
 
+                if (result == DialogResult.OK)
+                {
+                    // Transfer captured media into ConsultationControl
+                    foreach (var img in cameraForm.CapturedImages)
+                        imageHelper.AddImage(img);
+
+                    foreach (var vid in cameraForm.CapturedVideos)
+                        videoHelper.AddVideo(vid);
+                }
+            }
         }
+
+
     }
 }

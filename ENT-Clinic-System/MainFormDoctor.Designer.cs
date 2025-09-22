@@ -234,20 +234,20 @@
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(141, 30);
             this.updateToolStripMenuItem.Text = "Update";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(180, 30);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(141, 30);
             this.toolStripMenuItem4.Text = "Profile";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(180, 30);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(141, 30);
             this.toolStripMenuItem5.Text = "Logout";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
@@ -306,7 +306,6 @@
         private System.Windows.Forms.ToolStripMenuItem addNewPatientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem patientsToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem closeButton;
         private System.Windows.Forms.ToolStripMenuItem maximizeMaximizeButton;
@@ -316,5 +315,6 @@
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        public System.Windows.Forms.Panel MainPanel;
     }
 }

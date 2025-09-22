@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -83,8 +83,6 @@
             this.videoFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.openVideoButton = new System.Windows.Forms.ToolStripButton();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -145,7 +143,6 @@
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
             this.tableLayoutPanel17.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
             this.imageToolStrip.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
@@ -223,8 +220,8 @@
             // consultationDateDataGridView
             // 
             this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -811,11 +808,9 @@
             // 
             // tableLayoutPanel17
             // 
-            this.tableLayoutPanel17.ColumnCount = 2;
+            this.tableLayoutPanel17.ColumnCount = 1;
             this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.78712F));
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.21289F));
             this.tableLayoutPanel17.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutPanel17.Controls.Add(this.toolStrip1, 1, 0);
             this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel17.Location = new System.Drawing.Point(4, 565);
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
@@ -833,26 +828,6 @@
             this.label5.Size = new System.Drawing.Size(46, 22);
             this.label5.TabIndex = 2;
             this.label5.Text = "Video";
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openVideoButton});
-            this.toolStrip1.Location = new System.Drawing.Point(243, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(116, 25);
-            this.toolStrip1.TabIndex = 3;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // openVideoButton
-            // 
-            this.openVideoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.openVideoButton.Image = ((System.Drawing.Image)(resources.GetObject("openVideoButton.Image")));
-            this.openVideoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openVideoButton.Name = "openVideoButton";
-            this.openVideoButton.Size = new System.Drawing.Size(72, 22);
-            this.openVideoButton.Text = "Record Clip";
-            this.openVideoButton.Click += new System.EventHandler(this.openVideoButton_Click);
             // 
             // label1
             // 
@@ -1266,8 +1241,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1344,8 +1319,6 @@
             this.tableLayoutPanel13.PerformLayout();
             this.tableLayoutPanel17.ResumeLayout(false);
             this.tableLayoutPanel17.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.tableLayoutPanel14.ResumeLayout(false);
             this.tableLayoutPanel14.PerformLayout();
             this.imageToolStrip.ResumeLayout(false);
@@ -1444,8 +1417,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ToolStripButton openCameraButton;
         private System.Windows.Forms.ToolStripButton uploadImageButton;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton openVideoButton;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ContextMenuStrip consultationHistoryContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem printConsultationHistoryButton;

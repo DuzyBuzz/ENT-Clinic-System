@@ -11,9 +11,6 @@ namespace ENT_Clinic_System.Helpers
 {
     public static class ConsultationSaver
     {
-        // Base folder for storing patient files
-        private static readonly string BaseFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "ENTClinic");
-
         /// <summary>
         /// Saves a consultation with images and videos for a patient.
         /// Returns a list of saved files with type and path.
@@ -24,7 +21,7 @@ namespace ENT_Clinic_System.Helpers
             DateTime consultationDate,
             DateTime? followUpDate,
             ConsultationInputs inputs,
-            ImageFlowHelper imageHelper, // updated
+            ImageFlowHelper imageHelper,
             VideoFlowHelper videoHelper
         )
         {
@@ -34,28 +31,42 @@ namespace ENT_Clinic_System.Helpers
 
             List<(string Type, string Path)> savedFiles = new List<(string Type, string Path)>();
 
-            // 1️⃣ Save consultation
+            // Insert consultation record into DB
             int consultationId = InsertConsultation(patientId, doctorName, consultationDate, followUpDate, inputs);
-            // 2️⃣ Save Images
+
+            // Current date string for folder organization
+            string dateFolder = DateTime.Now.ToString("yyyy-MM-dd");
+
+            // Base path for attachments
+            string baseFolder = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                "ENT_CLINIC_Attachments",
+                patientId.ToString(),
+                dateFolder
+            );
+
+            // -----------------------
+            // Save Images
+            // -----------------------
             foreach (var (imagePath, note, category) in imageHelper.GetAllImages())
             {
                 try
                 {
                     if (!File.Exists(imagePath))
-                        continue; // skip missing files
+                        continue;
 
-                    // Create patient folder inside Documents/ENTClinic/PatientID/Images
-                    string folder = Path.Combine(
-                        BaseFolder,
-                        patientId.ToString(),
-                        "Images"
-                    );
+                    // Create folder: .../{patient_id}/{date}/Images
+                    string folder = Path.Combine(baseFolder, "Images");
                     Directory.CreateDirectory(folder);
 
-                    string destPath = Path.Combine(folder, Path.GetFileName(imagePath));
+                    // Append timestamp to file name to prevent overwriting
+                    string fileName = Path.GetFileNameWithoutExtension(imagePath);
+                    string extension = Path.GetExtension(imagePath);
+                    string timestamp = DateTime.Now.ToString("HHmmssfff"); // hours, minutes, seconds, milliseconds
+                    string destPath = Path.Combine(folder, $"{fileName}_{timestamp}{extension}");
+
                     File.Copy(imagePath, destPath, true);
 
-                    // Optional: insert attachment in DB if you track notes/categories
                     InsertAttachment(
                         consultationId,
                         patientId,
@@ -73,35 +84,35 @@ namespace ENT_Clinic_System.Helpers
                 }
             }
 
-
-
-            // 3️⃣ Save Videos
+            // -----------------------
+            // Save Videos
+            // -----------------------
             foreach (var (videoPath, note, category) in videoHelper.GetAllVideos())
             {
                 try
                 {
-                    string folder = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                        "ENTClinic",
-                        patientId.ToString(),
-                        "Videos"
-                    );
+                    // Create folder: .../{patient_id}/{date}/Videos
+                    string folder = Path.Combine(baseFolder, "Videos");
                     Directory.CreateDirectory(folder);
 
-                    string fileName = Path.GetFileName(videoPath);
-                    string savedPath = Path.Combine(folder, fileName);
-                    File.Copy(videoPath, savedPath, true);
+                    // Append timestamp to file name to prevent overwriting
+                    string fileName = Path.GetFileNameWithoutExtension(videoPath);
+                    string extension = Path.GetExtension(videoPath);
+                    string timestamp = DateTime.Now.ToString("HHmmssfff");
+                    string destPath = Path.Combine(folder, $"{fileName}_{timestamp}{extension}");
+
+                    File.Copy(videoPath, destPath, true);
 
                     InsertAttachment(
                         consultationId,
                         patientId,
                         "Video",
-                        savedPath,
+                        destPath,
                         string.IsNullOrWhiteSpace(category) ? "General" : category,
                         note ?? ""
                     );
 
-                    savedFiles.Add(("Video", savedPath));
+                    savedFiles.Add(("Video", destPath));
                 }
                 catch (Exception ex)
                 {
@@ -111,9 +122,6 @@ namespace ENT_Clinic_System.Helpers
 
             return savedFiles;
         }
-
-
-
 
         #region Database Helpers
 

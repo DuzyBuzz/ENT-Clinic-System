@@ -8,7 +8,7 @@ namespace ENT_Clinic_System.Helpers
     public static class ImageFolderHelper
     {
         // Path to the Images folder
-        public static readonly string ImageFolderPath = Path.Combine(Application.StartupPath, "Images");
+        public static readonly string ImageFolderPath = Path.Combine(Application.StartupPath, "Image");
 
         /// <summary>
         /// Deletes all images in the folder and shows a progress bar automatically.
