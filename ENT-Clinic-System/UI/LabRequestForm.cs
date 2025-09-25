@@ -271,61 +271,73 @@ namespace ENT_Clinic_System.UI
                 g.DrawString("Date: ", labelFont, Brushes.Black, x, y);
                 x += 40;
                 g.DrawString(datePicker.Value.ToShortDateString(), valueFont, Brushes.Black, x, y);
-                y += 30;
+                y += 40; // spacing before lab tests
             }
 
-            // 3. Lab Tests Grid (3 columns)
+            // 3. Lab Tests (redraw same layout as labTestsPanel)
             using (Font categoryFont = new Font("Segoe UI", 10, FontStyle.Bold))
             using (Font testFont = new Font("Segoe UI", 9))
             {
-                int columnWidth = (int)((e.PageBounds.Width - 2 * leftMargin) / 3);
-                int startX = leftMargin;
-                int startY = y;
-                int colIndex = 0;
+                int panelX = leftMargin;
+                int panelY = y;
+                int colWidth = 260;  // match your panel layout
                 int rowSpacing = 20;
-                int rowMaxY = startY;
+                int colIndex = 0;
+                int maxHeightInRow = 0;
 
-                foreach (var category in categoryCheckBoxes.Keys)
+                foreach (var cat in categoryCheckBoxes.Keys)
                 {
-                    int colX = startX + colIndex * columnWidth;
-                    int colY = startY;
+                    // Draw category label
+                    int catX = panelX + colIndex * colWidth;
+                    int catY = panelY;
+                    g.DrawString(cat, categoryFont, Brushes.Black, catX, catY);
 
-                    // Draw category title
-                    g.DrawString(category, categoryFont, Brushes.Black, colX, colY);
-                    colY += 20;
+                    int testYOffset = catY + 20;
 
-                    // Draw tests under the category
-                    foreach (var cb in categoryCheckBoxes[category])
+                    foreach (var cb in categoryCheckBoxes[cat])
                     {
-                        string text = cb.Checked ? "✔ " + cb.Text : cb.Text;
-                        g.DrawString(text, testFont, Brushes.Black, colX, colY);
-                        colY += 20;
+                        // Draw checkbox (vector, not bitmap)
+                        Rectangle boxRect = new Rectangle(catX, testYOffset, 14, 14);
+                        g.DrawRectangle(Pens.Black, boxRect);
+
+                        if (cb.Checked)
+                        {
+                            // Draw check mark inside box
+                            g.DrawLine(Pens.Black, boxRect.Left + 2, boxRect.Top + 7, boxRect.Left + 6, boxRect.Bottom - 2);
+                            g.DrawLine(Pens.Black, boxRect.Left + 6, boxRect.Bottom - 2, boxRect.Right - 2, boxRect.Top + 2);
+                        }
+
+                        // Draw test name
+                        g.DrawString(cb.Text, testFont, Brushes.Black, boxRect.Right + 5, testYOffset - 2);
+
+                        testYOffset += 25;
                     }
 
-                    // Update the maximum Y position for the current row
-                    rowMaxY = Math.Max(rowMaxY, colY);
+                    // Update row height
+                    maxHeightInRow = Math.Max(maxHeightInRow, testYOffset);
 
+                    // Next column
                     colIndex++;
-
-                    // If 3 columns filled, move to next row
                     if (colIndex >= 3)
                     {
                         colIndex = 0;
-                        startY = rowMaxY + rowSpacing;
-                        rowMaxY = startY;
+                        panelY = maxHeightInRow + rowSpacing;
+                        maxHeightInRow = 0;
                     }
                 }
 
-                // If last row has less than 3 columns, ensure proper spacing
+                // If last row not full, adjust Y
                 if (colIndex != 0)
-                    startY = rowMaxY + 40;
+                    panelY = maxHeightInRow + 40;
 
-                y = startY; // final y before footer
+                y = panelY;
             }
 
             // 4. Footer
             y = WaterMarkHelper.PrintFooter(g, leftMargin, y);
         }
+
+
 
 
 

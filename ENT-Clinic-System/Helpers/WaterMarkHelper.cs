@@ -36,7 +36,7 @@ namespace ENT_Clinic_System.Helpers
                 g.DrawString(clinicName, titleFont, Brushes.Black, titleX, y);
                 y += 20;
 
-                // 2. Subtitle (centered)
+                // 2. Subtitle (centered, multiple lines supported)
                 if (!string.IsNullOrWhiteSpace(clinicSubtitle))
                 {
                     string[] subtitleLines = clinicSubtitle.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -50,10 +50,14 @@ namespace ENT_Clinic_System.Helpers
                     y += 10; // spacing after subtitle
                 }
 
-                // 3. Column titles (left-aligned)
-                int col1X = leftMargin;
-                int col2X = leftMargin + 220;
-                int col3X = leftMargin + 440;
+                // 3. Column titles (left-aligned inside a centered block)
+                int colWidth = 220; // each column width
+                int blockWidth = colWidth * 3;
+                int blockStartX = (pageWidth - blockWidth) / 2;
+
+                int col1X = blockStartX;
+                int col2X = blockStartX + colWidth;
+                int col3X = blockStartX + colWidth * 2;
 
                 g.DrawString("CLINIC ADDRESS:", columnTitleFont, Brushes.Black, col1X, y);
                 g.DrawString("CLINIC HOURS:", columnTitleFont, Brushes.Black, col2X, y);
@@ -110,6 +114,7 @@ namespace ENT_Clinic_System.Helpers
 
             return y;
         }
+
 
 
 
