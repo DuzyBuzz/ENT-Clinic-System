@@ -397,7 +397,5 @@ namespace ENT_Clinic_System.UserControls
                 }
             }
         }
-
-
     }
 }

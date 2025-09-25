@@ -5,36 +5,38 @@ namespace ENT_Clinic_System.Helpers
 {
     internal static class DBConfig
     {
-        // Only use localhost connection
-        private static readonly string connectionString =
-            "server=localhost;port=3306;user=root;password=password;database=ent_clinic_db";
-
         /// <summary>
-        /// Returns a new MySQL connection (closed by default).
+        /// Returns a new MySQL connection using the current UserCredentials.ConnectionString.
         /// </summary>
         public static MySqlConnection GetConnection()
         {
-            return new MySqlConnection(connectionString);
+            // Safety check: must select role first
+            if (string.IsNullOrWhiteSpace(UserCredentials.ConnectionString))
+            {
+                throw new InvalidOperationException("❌ Connection string is not set. Please select a role (Doctor or Receptionist) first.");
+            }
+
+            return new MySqlConnection(UserCredentials.ConnectionString);
         }
 
         /// <summary>
-        /// Tests the database connection.
+        /// Tests the database connection. Returns true if connection succeeds, false otherwise.
         /// </summary>
         public static bool TestConnection(out string message)
         {
-            using (var conn = GetConnection())
+            try
             {
-                try
+                using (var conn = GetConnection())
                 {
-                    conn.Open(); // open only for testing
-                    message = "✅ Connection successful!";
+                    conn.Open(); // test the connection
+                    message = $"✅ Connection successful as {UserCredentials.Role}!";
                     return true;
                 }
-                catch (Exception ex)
-                {
-                    message = "❌ Connection failed: " + ex.Message;
-                    return false;
-                }
+            }
+            catch (Exception ex)
+            {
+                message = "❌ Connection failed: " + ex.Message;
+                return false;
             }
         }
     }

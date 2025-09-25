@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
 
@@ -57,3 +58,19 @@ namespace ENT_Clinic_System.Helpers
         }
     }
 }
+
+//INSERT INTO system_settings (setting_key, setting_value) VALUES
+//('allow_negative_stock', '0'),
+//('low_stock_threshold', '10'),
+//('clinic_name', 'MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS'),
+//('clinic_address', '388 E. Lopez St., Jaro, Iloilo City (Front of Robinsons Jaro)'),
+//('clinic_tel', '329-1796'),
+//('clinic_mobile', '0925-5000149'),
+//('clinic_hours', 'Monday, Tuesday, Thursday, Friday, Saturday 11:00 AM – 2:00 PM'),
+//('clinic_affiliations', 'St. Paul’s Hospital, Iloilo Doctors’ Hospital, Iloilo Mission Hospital, Western Visayas Medical Center, WVSU Med Center, Medicus Ambulatory, Metro Iloilo Hospital & Med. Center, Inc.'),
+//('report_header', 'ENT CLINIC - OFFICIAL REPORT'),
+//('report_footer', 'ENT Clinic System @2025'),
+//('date_format', 'yyyy-MM-dd'),
+//('time_format', 'hh:mm tt'),
+//('records_per_page', '20'),
+//('markup_percentage', '50');

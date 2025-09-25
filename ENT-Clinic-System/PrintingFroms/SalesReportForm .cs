@@ -177,10 +177,11 @@ namespace ENT_Clinic_System.PrintingForms
             using (PrintPreviewDialog preview = new PrintPreviewDialog())
             using (PrintDocument pd = new PrintDocument())
             {
-                pd.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169); // A4 in 1/100 inch
+                pd.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169);
                 pd.DefaultPageSettings.Landscape = true;
 
-                int currentRow = 0; // Track which row we're printing
+                int currentRow = 0;
+                int pageNumber = 1;
 
                 pd.PrintPage += (s, ev) =>
                 {
@@ -189,67 +190,67 @@ namespace ENT_Clinic_System.PrintingForms
                     int startY = ev.MarginBounds.Top;
                     int offsetY = 0;
 
-                    // ===============================
-                    // Header
-                    // ===============================
+                    Font clinicFont = new Font("Segoe UI", 12, FontStyle.Bold);
+                    Font subClinicFont = new Font("Segoe UI", 10, FontStyle.Regular);
+                    Font headerFont = new Font("Segoe UI", 10, FontStyle.Bold);
+                    Font bodyFont = new Font("Segoe UI", 9);
+                    Font footerFont = new Font("Segoe UI", 9, FontStyle.Italic);
+
                     string clinicName = GetSystemSetting("clinic_name");
                     string clinicAddress = GetSystemSetting("clinic_address");
                     string clinicTel = GetSystemSetting("clinic_tel");
                     string clinicMobile = GetSystemSetting("clinic_mobile");
                     string reportHeader = GetSystemSetting("report_header");
                     string reportFooter = GetSystemSetting("report_footer");
+                    string currency = GetSystemSetting("currency_symbol") ?? "₱";
 
-                    // Full width rectangle for centering
                     float headerWidth = ev.MarginBounds.Width;
 
-                    // Clinic Name
-                    g.DrawString(clinicName, new Font("Segoe UI", 14, FontStyle.Bold), Brushes.Black,
-                        new RectangleF(startX, startY, headerWidth, 25),
-                        new StringFormat() { Alignment = StringAlignment.Center });
+                    // -------------------------
+                    // Header
+                    // -------------------------
+                    g.DrawString(clinicName, clinicFont, Brushes.Black, new RectangleF(startX, startY + offsetY, headerWidth, 25), new StringFormat() { Alignment = StringAlignment.Center });
                     offsetY += 25;
 
-                    // Clinic Address
-                    g.DrawString(clinicAddress, new Font("Segoe UI", 10), Brushes.Black,
-                        new RectangleF(startX, startY + offsetY, headerWidth, 20),
-                        new StringFormat() { Alignment = StringAlignment.Center });
+                    g.DrawString(clinicAddress, subClinicFont, Brushes.Black, new RectangleF(startX, startY + offsetY, headerWidth, 20), new StringFormat() { Alignment = StringAlignment.Center });
                     offsetY += 20;
 
-                    // Contact Info
-                    g.DrawString($"Tel: {clinicTel} | Mobile: {clinicMobile}", new Font("Segoe UI", 10), Brushes.Black,
-                        new RectangleF(startX, startY + offsetY, headerWidth, 20),
-                        new StringFormat() { Alignment = StringAlignment.Center });
+                    g.DrawString($"Tel: {clinicTel} | Mobile: {clinicMobile}", subClinicFont, Brushes.Black, new RectangleF(startX, startY + offsetY, headerWidth, 20), new StringFormat() { Alignment = StringAlignment.Center });
                     offsetY += 25;
 
-                    // Report Header
-                    g.DrawString(reportHeader, new Font("Segoe UI", 12, FontStyle.Bold), Brushes.Black,
-                        new RectangleF(startX, startY + offsetY, headerWidth, 25),
-                        new StringFormat() { Alignment = StringAlignment.Center });
+                    g.DrawString(reportHeader, clinicFont, Brushes.Black, new RectangleF(startX, startY + offsetY, headerWidth, 25), new StringFormat() { Alignment = StringAlignment.Center });
                     offsetY += 25;
 
-                    // Report Type (Daily, Monthly, etc.)
-                    g.DrawString(reportType, new Font("Segoe UI", 10, FontStyle.Italic), Brushes.Black,
-                        new RectangleF(startX, startY + offsetY, headerWidth, 20),
-                        new StringFormat() { Alignment = StringAlignment.Center });
-                    offsetY += 30;
+                    g.DrawString(reportType, new Font("Segoe UI", 10, FontStyle.Italic), Brushes.Black, new RectangleF(startX, startY + offsetY, headerWidth, 20), new StringFormat() { Alignment = StringAlignment.Center });
+                    offsetY += 25;
 
+                    g.DrawLine(Pens.Black, startX, startY + offsetY, startX + ev.MarginBounds.Width, startY + offsetY);
+                    offsetY += 5;
 
-                    // ===============================
-                    // Column headers
-                    // ===============================
-                    int colCount = dgvReport.Columns.Count;
+                    // -------------------------
+                    // Column Headers
+                    // -------------------------
+                    string[] columns = { "Trans ID", "Date", "Item", "Description", "Category", "Qty", "Cost", "Selling", "Discount", "Tax", "Gross", "Net" };
+                    int colCount = columns.Length;
                     float colWidth = ev.MarginBounds.Width / colCount;
                     float[] colPositions = new float[colCount];
+
                     for (int i = 0; i < colCount; i++)
                     {
                         colPositions[i] = startX + i * colWidth;
-                        g.DrawString(dgvReport.Columns[i].HeaderText, new Font("Segoe UI", 9, FontStyle.Bold),
-                            Brushes.Black, colPositions[i], startY + offsetY);
+                        g.DrawString(columns[i], headerFont, Brushes.Black, colPositions[i], startY + offsetY);
                     }
-                    offsetY += 25;
+                    offsetY += 20;
 
-                    // ===============================
+                    g.DrawLine(Pens.Black, startX, startY + offsetY, startX + ev.MarginBounds.Width, startY + offsetY);
+                    offsetY += 5;
+
+                    // -------------------------
                     // Rows
-                    // ===============================
+                    // -------------------------
+                    decimal totalCost = 0, totalSelling = 0, totalDiscount = 0, totalTax = 0, totalGross = 0, totalNet = 0;
+                    int totalItems = 0;
+
                     while (currentRow < dgvReport.Rows.Count)
                     {
                         DataGridViewRow row = dgvReport.Rows[currentRow];
@@ -263,55 +264,73 @@ namespace ENT_Clinic_System.PrintingForms
                         {
                             object cellValue = row.Cells[j].Value;
                             string value = (cellValue is DateTime dt) ? dt.ToString("yyyy-MM-dd") : cellValue?.ToString() ?? "";
-                            g.DrawString(value, new Font("Segoe UI", 9), Brushes.Black, colPositions[j], startY + offsetY);
+
+                            // Format numbers with currency
+                            if (j >= 6) value = $"{currency} {Convert.ToDecimal(cellValue):N2}";
+
+                            g.DrawString(value, bodyFont, Brushes.Black, colPositions[j], startY + offsetY);
                         }
+
+                        // Accumulate totals
+                        totalCost += Convert.ToDecimal(row.Cells["Cost Price"].Value ?? 0);
+                        totalSelling += Convert.ToDecimal(row.Cells["Selling Price"].Value ?? 0);
+                        totalDiscount += Convert.ToDecimal(row.Cells["Discount"].Value ?? 0);
+                        totalTax += Convert.ToDecimal(row.Cells["Tax"].Value ?? 0);
+                        totalGross += Convert.ToDecimal(row.Cells["Gross Total"].Value ?? 0);
+                        totalNet += Convert.ToDecimal(row.Cells["Net Total"].Value ?? 0);
+                        totalItems += Convert.ToInt32(row.Cells["Qty"].Value ?? 0);
 
                         offsetY += 20;
 
-                        // Check if we need a new page
-                        if (startY + offsetY > ev.MarginBounds.Bottom - 100)
+                        // Check if page full
+                        if (startY + offsetY > ev.MarginBounds.Bottom - 60)
                         {
                             ev.HasMorePages = true;
-                            currentRow++; // Continue on next page
+                            pageNumber++;
+                            currentRow++;
                             return;
                         }
 
                         currentRow++;
                     }
 
-                    // ===============================
+                    // -------------------------
                     // Summary Section
-                    // ===============================
-                    decimal grossTotal = 0, netTotal = 0;
-                    foreach (DataGridViewRow row in dgvReport.Rows)
-                    {
-                        if (row.IsNewRow) continue;
-                        grossTotal += Convert.ToDecimal(row.Cells["Gross Total"].Value ?? 0);
-                        netTotal += Convert.ToDecimal(row.Cells["Net Total"].Value ?? 0);
-                    }
-
-                    offsetY += 20;
+                    // -------------------------
+                    offsetY += 10;
                     g.DrawLine(Pens.Black, startX, startY + offsetY, startX + ev.MarginBounds.Width, startY + offsetY);
                     offsetY += 5;
-                    g.DrawString($"Gross Total: {grossTotal:C}", new Font("Segoe UI", 10, FontStyle.Bold), Brushes.Black, startX, startY + offsetY);
-                    offsetY += 20;
-                    g.DrawString($"Net Total: {netTotal:C}", new Font("Segoe UI", 10, FontStyle.Bold), Brushes.Black, startX, startY + offsetY);
 
-                    // ===============================
+                    g.DrawString($"Total Items Sold: {totalItems}", headerFont, Brushes.Black, startX, startY + offsetY);
+                    offsetY += 20;
+                    g.DrawString($"Total Cost: {currency} {totalCost:N2}", headerFont, Brushes.Black, startX, startY + offsetY);
+                    offsetY += 20;
+                    g.DrawString($"Total Selling: {currency} {totalSelling:N2}", headerFont, Brushes.Black, startX, startY + offsetY);
+                    offsetY += 20;
+                    g.DrawString($"Total Discount: {currency} {totalDiscount:N2}", headerFont, Brushes.Black, startX, startY + offsetY);
+                    offsetY += 20;
+                    g.DrawString($"Total Tax: {currency} {totalTax:N2}", headerFont, Brushes.Black, startX, startY + offsetY);
+                    offsetY += 20;
+                    g.DrawString($"Total Gross: {currency} {totalGross:N2}", headerFont, Brushes.Black, startX, startY + offsetY);
+                    offsetY += 20;
+                    g.DrawString($"Total Net Revenue: {currency} {totalNet:N2}", headerFont, Brushes.Black, startX, startY + offsetY);
+
+                    // -------------------------
                     // Footer
-                    // ===============================
+                    // -------------------------
                     offsetY += 30;
-                    g.DrawString(reportFooter, new Font("Segoe UI", 10, FontStyle.Italic), Brushes.Black,
-                        new RectangleF(startX, startY + offsetY, ev.MarginBounds.Width, 25),
+                    g.DrawString($"{reportFooter} | Page {pageNumber}", footerFont, Brushes.Black,
+                        new RectangleF(startX, ev.MarginBounds.Bottom - 30, ev.MarginBounds.Width, 20),
                         new StringFormat() { Alignment = StringAlignment.Center });
 
-                    ev.HasMorePages = false; // Finished printing
+                    ev.HasMorePages = false;
                 };
 
                 preview.Document = pd;
                 preview.ShowDialog();
             }
         }
+
 
 
 

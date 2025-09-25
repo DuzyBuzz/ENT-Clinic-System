@@ -214,6 +214,17 @@ namespace ENT_Clinic_System
             Login login = new Login();
             login.Show();
         }
+
+        private void returnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReturnForm returnForm = new ReturnForm();
+            returnForm.Show();
+        }
+
+        private void stocToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StockReportPrinter.ShowPrintPreview();
+        }
     }
 
 }
