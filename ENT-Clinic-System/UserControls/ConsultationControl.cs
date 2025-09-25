@@ -1,9 +1,11 @@
-﻿using ENT_Clinic_System.Helpers;
+﻿using ENT_Clinic_System.Consultation;
+using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.PrintingForms;
-using ENT_Clinic_System.PrintingFroms;
+using Syncfusion.Collections;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -166,7 +168,8 @@ namespace ENT_Clinic_System.UserControls
                     RecommendationRichText = recommendationRichTextBox,
                     NoteRichText = noteRichTextBox,
                     ImageFlowLayout = imageFlowLayoutPanel,
-                    VideoFlowLayout = videoFlowLayoutPanel
+                    VideoFlowLayout = videoFlowLayoutPanel,
+                    
                 };
 
                 DateTime? followUpDate = followUpDateTimePicker.Checked
@@ -187,22 +190,42 @@ namespace ENT_Clinic_System.UserControls
                 //    message += $"{type}: {path}\n";
                 string message = "Consultation saved successfully!";
                 MessageBox.Show(message, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                int latestConsultationId = LatestIdHelper.GetLatestId("consultation", "consultation_id");
+                Debug.WriteLine($"Latest Consultation ID: {latestConsultationId}");
+                BillingForm billingForm = new BillingForm(latestConsultationId);
+                billingForm.ShowDialog();
 
                 // Reset UI
                 imageFlowLayoutPanel.Controls.Clear();
                 videoFlowLayoutPanel.Controls.Clear();
                 imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
                 videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
-                // Remove the user control from the main panel
-                if (this.Parent is Panel parentPanel)
-                {
-                    // Remove all controls inside this panel (including this control)
-                    parentPanel.Controls.Clear();
 
+
+
+
+                if (this.ParentForm != null)
+                {
+                    Form parentForm = this.ParentForm;
+
+                    string formName = parentForm.Name;
+
+                    // Close the current form
+                    parentForm.Hide();
+
+                    // Re-open a fresh instance
+                    Form newForm = (Form)Activator.CreateInstance(parentForm.GetType());
+                    newForm.Show();
+
+                    // Dispose this one completely
+                    parentForm.Dispose();
                 }
 
-                // Dispose this control to free resources
-                this.Dispose();
+
+
+
+
+
             }
             catch (Exception ex)
             {
@@ -315,7 +338,7 @@ namespace ENT_Clinic_System.UserControls
                     string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
 
                     // Open the PrintConsultationHistory form and pass the IDs
-                    PrintAttachments printForm = new PrintAttachments(consultationId, patientId, fullNameLabel.Text, consultationDate);
+                    PrintAttachments printForm = new PrintAttachments(consultationId);
                     printForm.Show();
 
                 }
@@ -396,6 +419,12 @@ namespace ENT_Clinic_System.UserControls
                         videoHelper.AddVideo(vid);
                 }
             }
+        }
+
+        private void labRequestButton_Click(object sender, EventArgs e)
+        {
+
+
         }
     }
 }

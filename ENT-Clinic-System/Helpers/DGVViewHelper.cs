@@ -42,16 +42,28 @@ namespace ENT_Clinic_System.Helpers
                 string columnsString = string.Join(",", columns);
                 string sql = $"SELECT {columnsString} FROM {tableName} WHERE {filterColumn}=@filterValue";
 
+                // DEBUG: show the SQL and filter value
+                Console.WriteLine("SQL Query: " + sql);
+                Console.WriteLine("Filter Value: " + filterValue + " (Type: " + filterValue.GetType() + ")");
+
                 using (var conn = DBConfig.GetConnection())
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@filterValue", filterValue);
+                    // Ensure correct data type
+                    cmd.Parameters.Add("@filterValue", MySqlDbType.Int32).Value = Convert.ToInt32(filterValue);
                     using (var adapter = new MySqlDataAdapter(cmd))
                     {
                         DataTable dt = new DataTable();
                         adapter.Fill(dt);
+
+                        // DEBUG: show how many rows were returned
+                        Console.WriteLine("From DGVViewHelper ---- Rows returned: " + dt.Rows.Count);
+
+                        // ✅ Ensure columns are auto-generated
+                        dgv.AutoGenerateColumns = true;
                         dgv.DataSource = dt;
                     }
+
                 }
             }
             catch (Exception ex)
@@ -59,5 +71,6 @@ namespace ENT_Clinic_System.Helpers
                 MessageBox.Show("Failed to load data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

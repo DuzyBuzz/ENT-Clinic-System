@@ -40,8 +40,6 @@
             this.searchPatientNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.patientsDataGridView = new System.Windows.Forms.DataGridView();
-            this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addressColumnTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,10 +53,18 @@
             this.emergency_relationship = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.createdat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.photo = new System.Windows.Forms.DataGridViewImageColumn();
+            this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultationHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.printAttachmentButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.printMedicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).BeginInit();
             this.patientsContextMenuStrip.SuspendLayout();
+            this.consultationHistoryContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -221,20 +227,6 @@
             this.patientsDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.patientsDataGridView_KeyDown);
             this.patientsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.patientsDataGridView_MouseDown);
             // 
-            // patientsContextMenuStrip
-            // 
-            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewConsultationToolStripMenuItem});
-            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(171, 26);
-            // 
-            // viewConsultationToolStripMenuItem
-            // 
-            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
-            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
-            // 
             // patient_id
             // 
             this.patient_id.DataPropertyName = "patient_id";
@@ -320,6 +312,56 @@
             this.photo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.photo.Visible = false;
             // 
+            // patientsContextMenuStrip
+            // 
+            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewConsultationToolStripMenuItem,
+            this.consultationHistoryToolStripMenuItem});
+            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(184, 70);
+            // 
+            // viewConsultationToolStripMenuItem
+            // 
+            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
+            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
+            // 
+            // consultationHistoryToolStripMenuItem
+            // 
+            this.consultationHistoryToolStripMenuItem.Name = "consultationHistoryToolStripMenuItem";
+            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.consultationHistoryToolStripMenuItem.Text = "Consultation History";
+            this.consultationHistoryToolStripMenuItem.Click += new System.EventHandler(this.consultationHistoryToolStripMenuItem_Click);
+            // 
+            // consultationHistoryContextMenuStrip
+            // 
+            this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printConsultationHistoryButton,
+            this.printAttachmentButton,
+            this.printMedicalCertificateToolStripMenuItem});
+            this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
+            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 70);
+            // 
+            // printConsultationHistoryButton
+            // 
+            this.printConsultationHistoryButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.printConsultationHistoryButton.Name = "printConsultationHistoryButton";
+            this.printConsultationHistoryButton.Size = new System.Drawing.Size(215, 22);
+            this.printConsultationHistoryButton.Text = "Show Consultation History";
+            // 
+            // printAttachmentButton
+            // 
+            this.printAttachmentButton.Name = "printAttachmentButton";
+            this.printAttachmentButton.Size = new System.Drawing.Size(215, 22);
+            this.printAttachmentButton.Text = "Show Attachments";
+            // 
+            // printMedicalCertificateToolStripMenuItem
+            // 
+            this.printMedicalCertificateToolStripMenuItem.Name = "printMedicalCertificateToolStripMenuItem";
+            this.printMedicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.printMedicalCertificateToolStripMenuItem.Text = "Print Medical Certificate";
+            // 
             // PatientListControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
@@ -336,6 +378,7 @@
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).EndInit();
             this.patientsContextMenuStrip.ResumeLayout(false);
+            this.consultationHistoryContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -367,5 +410,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn emergency_relationship;
         private System.Windows.Forms.DataGridViewTextBoxColumn createdat;
         private System.Windows.Forms.DataGridViewImageColumn photo;
+        private System.Windows.Forms.ToolStripMenuItem consultationHistoryToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip consultationHistoryContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem printConsultationHistoryButton;
+        private System.Windows.Forms.ToolStripMenuItem printAttachmentButton;
+        private System.Windows.Forms.ToolStripMenuItem printMedicalCertificateToolStripMenuItem;
     }
 }

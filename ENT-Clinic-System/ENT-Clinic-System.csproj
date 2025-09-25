@@ -156,6 +156,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consultation\BillingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consultation\BillingForm.Designer.cs">
+      <DependentUpon>BillingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Consultation\ConsultationHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consultation\ConsultationHistoryForm.Designer.cs">
+      <DependentUpon>ConsultationHistoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomUI\BaseForm .cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +199,7 @@
     <Compile Include="Helpers\ImageFolderHelper.cs" />
     <Compile Include="Helpers\InsertHelper.cs" />
     <Compile Include="Helpers\InventoryHelper.cs" />
+    <Compile Include="Helpers\LatestIdHelper.cs" />
     <Compile Include="Helpers\PatientCamera.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -306,10 +319,10 @@
     <Compile Include="PrintingFroms\SalesReportForm .Designer.cs">
       <DependentUpon>SalesReportForm .cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\LabRequestForm.cs">
+    <Compile Include="Consultation\LabRequestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\LabRequestForm.Designer.cs">
+    <Compile Include="Consultation\LabRequestForm.Designer.cs">
       <DependentUpon>LabRequestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\UserLoginForm.cs">
@@ -336,6 +349,12 @@
     <Compile Include="MainFormReceptionist.Designer.cs">
       <DependentUpon>MainFormReceptionist.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DefaultControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DefaultControl.Designer.cs">
+      <DependentUpon>DefaultControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PatientListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -344,12 +363,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserControls\SystemSettingsForm.cs">
+    <Compile Include="UI\SystemSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserControls\SystemSettingsForm.Designer.cs">
+    <Compile Include="UI\SystemSettingsForm.Designer.cs">
       <DependentUpon>SystemSettingsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Consultation\BillingForm.resx">
+      <DependentUpon>BillingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Consultation\ConsultationHistoryForm.resx">
+      <DependentUpon>ConsultationHistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Helpers\CameraConsultationForm.resx">
       <DependentUpon>CameraConsultationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -391,7 +416,7 @@
     <EmbeddedResource Include="PrintingFroms\SalesReportForm .resx">
       <DependentUpon>SalesReportForm .cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\LabRequestForm.resx">
+    <EmbeddedResource Include="Consultation\LabRequestForm.resx">
       <DependentUpon>LabRequestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\AppointmentsUserControl.resx">
@@ -415,7 +440,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UserControls\SystemSettingsForm.resx">
+    <EmbeddedResource Include="UI\SystemSettingsForm.resx">
       <DependentUpon>SystemSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -434,6 +459,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="obj\" />
+    <Folder Include="Patient\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\icon\ent_logo.ico" />

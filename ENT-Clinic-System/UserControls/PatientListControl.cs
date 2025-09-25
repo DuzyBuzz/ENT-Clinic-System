@@ -1,4 +1,5 @@
-﻿using ENT_Clinic_System.Helpers;
+﻿using ENT_Clinic_System.Consultation;
+using ENT_Clinic_System.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,7 @@ namespace ENT_Clinic_System.UserControls
         public PatientListControl()
         {
             InitializeComponent();
-            this.Load += PatientListControl_Load;
+
         }
 
         private void PatientListControl_Load(object sender, EventArgs e)
@@ -29,6 +30,9 @@ namespace ENT_Clinic_System.UserControls
                 "patients",
                 new List<string> { "full_name" } 
             );
+
+
+
             // Columns to allow editing
             List<string> columns = new List<string>
             {
@@ -199,5 +203,20 @@ namespace ENT_Clinic_System.UserControls
                 ReportHelper.PrintDataGridView(patientsDataGridView, "Patient List");
             }
         }
+
+        private void consultationHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int patientId = GetSelectedPatientId();
+            if (patientId > 0)
+            {
+                ConsultationHistoryForm historyForm = new ConsultationHistoryForm(patientId);
+                historyForm.ShowDialog();
+            }
+        }
+
+
+
+
+
     }
 }

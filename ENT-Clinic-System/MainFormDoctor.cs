@@ -1,4 +1,5 @@
-﻿using ENT_Clinic_System.Helpers;
+﻿using ENT_Clinic_System.Consultation;
+using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.InsertForms;
 using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.UI;
@@ -193,8 +194,7 @@ namespace ENT_Clinic_System
 
         private void labRequestFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LabRequestForm labRequestForm = new LabRequestForm();
-            labRequestForm.Show();
+
         }
     }
 

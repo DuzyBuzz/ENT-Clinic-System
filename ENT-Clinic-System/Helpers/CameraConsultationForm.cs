@@ -68,7 +68,7 @@ namespace ENT_Clinic_System.UserControls
             {
                 fireflyHelper = new FireflyHelper();
                 fireflyHelper.FireflySingleClick += (s, ev) => { InvokeIfRequired(() => captureImageButton.PerformClick()); };
-                fireflyHelper.FireflyDoubleClick += (s, ev) => { InvokeIfRequired(() => captureVideoButton.PerformClick()); };
+                fireflyHelper.FireflyLongPress += (s, ev) => { InvokeIfRequired(() => captureVideoButton.PerformClick()); };
             }
             catch
             {

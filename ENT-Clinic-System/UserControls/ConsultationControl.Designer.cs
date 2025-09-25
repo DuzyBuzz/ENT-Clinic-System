@@ -69,7 +69,7 @@
             this.followUpDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label13 = new System.Windows.Forms.Label();
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.labRequestButton = new System.Windows.Forms.Button();
             this.prescribeMedicineButton = new System.Windows.Forms.Button();
             this.saveConsultationButton = new System.Windows.Forms.Button();
             this.noteRichTextBox = new System.Windows.Forms.RichTextBox();
@@ -646,7 +646,7 @@
             this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel16.Controls.Add(this.button1, 2, 0);
+            this.tableLayoutPanel16.Controls.Add(this.labRequestButton, 2, 0);
             this.tableLayoutPanel16.Controls.Add(this.prescribeMedicineButton, 0, 0);
             this.tableLayoutPanel16.Controls.Add(this.saveConsultationButton, 1, 0);
             this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -657,15 +657,16 @@
             this.tableLayoutPanel16.Size = new System.Drawing.Size(420, 46);
             this.tableLayoutPanel16.TabIndex = 8;
             // 
-            // button1
+            // labRequestButton
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(283, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 40);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Create Lab Request";
-            this.button1.UseVisualStyleBackColor = true;
+            this.labRequestButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labRequestButton.Location = new System.Drawing.Point(283, 3);
+            this.labRequestButton.Name = "labRequestButton";
+            this.labRequestButton.Size = new System.Drawing.Size(134, 40);
+            this.labRequestButton.TabIndex = 2;
+            this.labRequestButton.Text = "Lab Request";
+            this.labRequestButton.UseVisualStyleBackColor = true;
+            this.labRequestButton.Click += new System.EventHandler(this.labRequestButton_Click);
             // 
             // prescribeMedicineButton
             // 
@@ -1369,7 +1370,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.DataGridView consultationDateDataGridView;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.RichTextBox complaintsRichTextBox;
@@ -1455,6 +1455,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button labRequestButton;
+        public System.Windows.Forms.DataGridView consultationDateDataGridView;
     }
 }

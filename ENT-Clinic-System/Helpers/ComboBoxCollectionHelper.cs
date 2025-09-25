@@ -1,9 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Helpers
@@ -11,7 +8,8 @@ namespace ENT_Clinic_System.Helpers
     internal class ComboBoxCollectionHelper
     {
         /// <summary>
-        /// Populates a ComboBox with distinct values from a database column.
+        /// Populates a ComboBox with distinct values from any database column.
+        /// Works with string, int, decimal, date, etc.
         /// </summary>
         /// <param name="comboBox">The ComboBox to populate.</param>
         /// <param name="tableName">Database table name.</param>
@@ -20,7 +18,7 @@ namespace ENT_Clinic_System.Helpers
         {
             try
             {
-                List<string> items = new List<string>();
+                List<object> items = new List<object>(); // use object to support all data types
                 string sql = $"SELECT DISTINCT {columnName} FROM {tableName} ORDER BY {columnName}";
 
                 using (var conn = DBConfig.GetConnection())
@@ -32,13 +30,15 @@ namespace ENT_Clinic_System.Helpers
                         while (reader.Read())
                         {
                             if (!reader.IsDBNull(0))
-                                items.Add(reader.GetString(0));
+                                items.Add(reader.GetValue(0));
+                            // ✅ GetValue works for ANY SQL data type (int, decimal, string, date, etc.)
                         }
                     }
                 }
 
                 comboBox.Items.Clear();
                 comboBox.Items.AddRange(items.ToArray());
+                // ✅ Items can now be int, decimal, string, etc.
             }
             catch (Exception ex)
             {

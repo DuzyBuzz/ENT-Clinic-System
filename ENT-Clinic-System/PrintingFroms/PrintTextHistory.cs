@@ -8,7 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 using WMPLib;
 
-namespace ENT_Clinic_System.PrintingFroms
+namespace ENT_Clinic_System.PrintingForms
 {
     internal class PrintTextHistory
     {

@@ -54,8 +54,6 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labRequestFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -167,7 +165,6 @@
             this.menuStrip1.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.fileToolStripMenuItem,
             this.patientsToolStripMenuItem,
             this.consultationsToolStripMenuItem,
             this.settingsToolStripMenuItem,
@@ -267,21 +264,6 @@
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
             // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.labRequestFormToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 29);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // labRequestFormToolStripMenuItem
-            // 
-            this.labRequestFormToolStripMenuItem.Name = "labRequestFormToolStripMenuItem";
-            this.labRequestFormToolStripMenuItem.Size = new System.Drawing.Size(231, 30);
-            this.labRequestFormToolStripMenuItem.Text = "Lab Request Form";
-            this.labRequestFormToolStripMenuItem.Click += new System.EventHandler(this.labRequestFormToolStripMenuItem_Click);
-            // 
             // MainFormDoctor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -334,7 +316,5 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         public System.Windows.Forms.Panel MainPanel;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem labRequestFormToolStripMenuItem;
     }
 }

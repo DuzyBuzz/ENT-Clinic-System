@@ -7,7 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using ENT_Clinic_System.Helpers;
 
-namespace ENT_Clinic_System.PrintingFroms
+namespace ENT_Clinic_System.Consultation
 {
     public partial class PrintAttachments : Form
     {
@@ -18,24 +18,71 @@ namespace ENT_Clinic_System.PrintingFroms
 
         private ImageFlowHelper imageHelper;
         private VideoFlowHelper videoHelper;
-
         private List<Image> imagesToPrint = new List<Image>();
 
         // Keep this field at class-level so pagination works
         private int currentImageIndex = 0;
 
-        public PrintAttachments(int consultationId, int patientId, string fullName, string consultationDate)
+        public PrintAttachments(int consultationId)
         {
             InitializeComponent();
             this.consultationId = consultationId;
-            this.patientId = patientId;
-            this.fullName = fullName;
-            this.consultationDate = consultationDate;
+
+            // Load patient info automatically from DB
+            LoadPatientInfo();
 
             imageHelper = new ImageFlowHelper(imagesPanel);
             videoHelper = new VideoFlowHelper(videosPanel);
 
             LoadAttachmentsFromDatabase();
+        }
+
+        /// <summary>
+        /// Queries the database to get the patient's full name and consultation date
+        /// </summary>
+        private void LoadPatientInfo()
+        {
+            try
+            {
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+                        SELECT c.consultation_date, p.full_name, p.patient_id
+                        FROM consultation c
+                        INNER JOIN patients p ON c.patient_id = p.patient_id
+                        WHERE c.consultation_id = @consultationId
+                        LIMIT 1";
+
+                    using (var cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@consultationId", consultationId);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                consultationDate = reader["consultation_date"]?.ToString() ?? "";
+                                fullName = reader["full_name"]?.ToString() ?? "";
+                                patientId = Convert.ToInt32(reader["patient_id"]);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Consultation not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                this.Close();
+                            }
+                        }
+                    }
+                }
+
+                // Update form title
+                this.Text = $"{fullName} - {consultationDate}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading patient info: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
         }
 
         /// <summary>
@@ -70,7 +117,6 @@ namespace ENT_Clinic_System.PrintingFroms
 
                                 if (type == "Image")
                                 {
-                                    // Add to UI and prepare for printing
                                     imageHelper.AddImage(path, note, category);
                                     imagesToPrint.Add(Image.FromFile(path));
                                 }
@@ -125,22 +171,11 @@ namespace ENT_Clinic_System.PrintingFroms
 
             Graphics g = e.Graphics;
 
-            // ✅ Collect images from imagesPanel if not already collected
-            if (imagesToPrint.Count == 0)
-            {
-                foreach (Control ctrl in imagesPanel.Controls)
-                {
-                    if (ctrl is PictureBox pb && pb.Image != null)
-                        imagesToPrint.Add(pb.Image);
-                }
-            }
-
             using (Font headerFont = new Font("Arial", 14, FontStyle.Bold))
             {
-                // Print "Attachments" title only once at the start of the print job
                 if (currentImageIndex == 0)
                 {
-                    string attachTitle = "Attachments";
+                    string attachTitle = $"Attachments - {fullName} ({consultationDate})";
                     SizeF headerSize = g.MeasureString(attachTitle, headerFont);
 
                     g.DrawString(
@@ -151,16 +186,14 @@ namespace ENT_Clinic_System.PrintingFroms
                         y
                     );
 
-                    y += headerSize.Height + 20; // add spacing after title
+                    y += headerSize.Height + 20;
                 }
             }
 
-            // ✅ Print images one by one with pagination
             while (currentImageIndex < imagesToPrint.Count)
             {
                 Image img = imagesToPrint[currentImageIndex];
 
-                // Scale image to fit inside page bounds while maintaining aspect ratio
                 float ratio = Math.Min(
                     contentWidth / img.Width,
                     (e.MarginBounds.Height - (y - e.MarginBounds.Top)) / (float)img.Height
@@ -169,29 +202,25 @@ namespace ENT_Clinic_System.PrintingFroms
                 int drawWidth = (int)(img.Width * ratio);
                 int drawHeight = (int)(img.Height * ratio);
 
-                // Check if image fits in current page, else go to next
                 if (y + drawHeight > pageBottom)
                 {
                     e.HasMorePages = true;
-                    return; // keep currentImageIndex unchanged → continue next page
+                    return;
                 }
 
-                // Center the image horizontally
                 float drawX = x + (contentWidth - drawWidth) / 2;
                 g.DrawImage(img, new RectangleF(drawX, y, drawWidth, drawHeight));
 
-                y += drawHeight + 25; // spacing between images
+                y += drawHeight + 25;
                 currentImageIndex++;
             }
 
-            // ✅ No more pages → reset index
             e.HasMorePages = false;
             currentImageIndex = 0;
         }
 
         private void PrintAttachments_Load(object sender, EventArgs e)
         {
-            this.Text = $"{fullName} - {consultationDate}";
         }
     }
 }

@@ -9,14 +9,15 @@ using System.Text.Json;
 using System.Windows.Forms;
 
 
-namespace ENT_Clinic_System.UI
+namespace ENT_Clinic_System.Consultation
 {
     public partial class LabRequestForm : Form
     {
         private Dictionary<string, List<CheckBox>> categoryCheckBoxes = new Dictionary<string, List<CheckBox>>();
         private DGVCrudHelper crudHelper;
+        private int patientId; // TODO: replace with actual patient ID lookup
 
-        public LabRequestForm()
+        public LabRequestForm(int patientId)
         {
             InitializeComponent();
 
@@ -34,8 +35,18 @@ namespace ENT_Clinic_System.UI
             saveRequestButton.Click += SaveRequestButton_Click;
             nextPageButton.Click += (s, e) => crudHelper.NextPage();
             prevPageButton.Click += (s, e) => crudHelper.PreviousPage();
+            this.patientId = patientId;
+            LoadPatientLabels(patientId);
         }
 
+        private void LoadPatientLabels(int patientId)
+        {
+            patientNameTextBox.Text = PatientDataHelper.GetPatientValue(patientId, "full_name");
+            addressTextBox.Text = PatientDataHelper.GetPatientValue(patientId, "address");
+            ageTextBox.Text = PatientDataHelper.GetPatientValue(patientId, "age");
+            genderTextBox.Text = PatientDataHelper.GetPatientValue(patientId, "sex");
+
+        }
         private void LoadLabTests()
         {
             labTestsPanel.Controls.Clear();
@@ -175,7 +186,7 @@ namespace ENT_Clinic_System.UI
         {
             // 1. Validate inputs
             string category = categoryComboBox.Text.Trim();
-            string testName = testNameComboBox.Text.Trim();
+            string testName = testNameTextBox.Text.Trim();
 
             if (string.IsNullOrEmpty(category))
             {
@@ -248,7 +259,7 @@ namespace ENT_Clinic_System.UI
             int leftMargin = 20;
             int y = 20; // starting Y position
 
-            // 1. Header
+            // 1. Header (centered columns but left-aligned text)
             y = WaterMarkHelper.PrintHeader(g, leftMargin, y, e.PageBounds.Width);
 
             // 2. Patient Info in one line (bold labels)
@@ -260,13 +271,15 @@ namespace ENT_Clinic_System.UI
                 x += 60;
                 g.DrawString(patientNameTextBox.Text, valueFont, Brushes.Black, x, y);
                 x += 150;
+                g.DrawString(addressTextBox.Text, valueFont, Brushes.Black, x, y);
+                x += 150;
                 g.DrawString("Age: ", labelFont, Brushes.Black, x, y);
                 x += 35;
                 g.DrawString(ageTextBox.Text, valueFont, Brushes.Black, x, y);
                 x += 50;
                 g.DrawString("Gender: ", labelFont, Brushes.Black, x, y);
                 x += 55;
-                g.DrawString(genderComboBox.Text, valueFont, Brushes.Black, x, y);
+                g.DrawString(genderTextBox.Text, valueFont, Brushes.Black, x, y);
                 x += 80;
                 g.DrawString("Date: ", labelFont, Brushes.Black, x, y);
                 x += 40;
@@ -274,13 +287,18 @@ namespace ENT_Clinic_System.UI
                 y += 40; // spacing before lab tests
             }
 
-            // 3. Lab Tests (redraw same layout as labTestsPanel)
+            // 3. Lab Tests (center columns, but keep text left-aligned)
             using (Font categoryFont = new Font("Segoe UI", 10, FontStyle.Bold))
             using (Font testFont = new Font("Segoe UI", 9))
             {
-                int panelX = leftMargin;
                 int panelY = y;
-                int colWidth = 260;  // match your panel layout
+                int colCount = 3; // number of lab test columns
+                int colWidth = 260; // width for each column
+                int totalColsWidth = colCount * colWidth;
+                int pageWidth = e.PageBounds.Width;
+
+                // Center the group of columns
+                int panelX = (pageWidth - totalColsWidth) / 2;
                 int rowSpacing = 20;
                 int colIndex = 0;
                 int maxHeightInRow = 0;
@@ -296,7 +314,7 @@ namespace ENT_Clinic_System.UI
 
                     foreach (var cb in categoryCheckBoxes[cat])
                     {
-                        // Draw checkbox (vector, not bitmap)
+                        // Draw checkbox (simple rectangle, not bitmap)
                         Rectangle boxRect = new Rectangle(catX, testYOffset, 14, 14);
                         g.DrawRectangle(Pens.Black, boxRect);
 
@@ -307,7 +325,7 @@ namespace ENT_Clinic_System.UI
                             g.DrawLine(Pens.Black, boxRect.Left + 6, boxRect.Bottom - 2, boxRect.Right - 2, boxRect.Top + 2);
                         }
 
-                        // Draw test name
+                        // Draw test name (left-aligned relative to box)
                         g.DrawString(cb.Text, testFont, Brushes.Black, boxRect.Right + 5, testYOffset - 2);
 
                         testYOffset += 25;
@@ -318,7 +336,7 @@ namespace ENT_Clinic_System.UI
 
                     // Next column
                     colIndex++;
-                    if (colIndex >= 3)
+                    if (colIndex >= colCount)
                     {
                         colIndex = 0;
                         panelY = maxHeightInRow + rowSpacing;
@@ -337,13 +355,9 @@ namespace ENT_Clinic_System.UI
             y = WaterMarkHelper.PrintFooter(g, leftMargin, y);
         }
 
-
-
-
-
-
-
-
-
+        private void LabRequestForm_Load(object sender, EventArgs e)
+        {
+            ComboBoxCollectionHelper.PopulateComboBox(categoryComboBox, "lab_tests", "category");
+        }
     }
 }

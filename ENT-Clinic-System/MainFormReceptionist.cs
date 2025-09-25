@@ -2,7 +2,7 @@
 using ENT_Clinic_System.InsertForms;
 using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.PrintingForms;
-using ENT_Clinic_System.PrintingFroms;
+using ENT_Clinic_System.UI;
 using ENT_Clinic_System.UserControls;
 using System;
 using System.Diagnostics;

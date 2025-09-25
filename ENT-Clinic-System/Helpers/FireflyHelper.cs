@@ -6,7 +6,7 @@ namespace ENT_Clinic_System.Helpers
 {
     /// <summary>
     /// Helper to detect Firefly hardware button presses.
-    /// Supports single click (capture image) and double click (start/stop recording).
+    /// Supports single click (short press), long press, pressed, and released events.
     /// </summary>
     public class FireflyHelper : IDisposable
     {
@@ -30,21 +30,32 @@ namespace ENT_Clinic_System.Helpers
         private bool wasPressedLastTick = false;
         private bool disposed = false;
 
-        private DateTime lastPressTime = DateTime.MinValue;
-        private readonly int doubleClickThresholdMs = 400; // adjust if needed
+        private DateTime pressStartTime = DateTime.MinValue;
+        private readonly int longPressThresholdMs = 1000; // 1 seconds
+        private bool longPressFired = false;
 
         // -------------------------------
         // Events
         // -------------------------------
         /// <summary>
-        /// Raised when Firefly button is pressed once (single click).
+        /// Raised immediately when button is pressed down.
+        /// </summary>
+        public event EventHandler FireflyPressed;
+
+        /// <summary>
+        /// Raised immediately when button is released (after short or long press).
+        /// </summary>
+        public event EventHandler FireflyReleased;
+
+        /// <summary>
+        /// Raised when Firefly button is short-pressed (tap).
         /// </summary>
         public event EventHandler FireflySingleClick;
 
         /// <summary>
-        /// Raised when Firefly button is double-pressed quickly (double click).
+        /// Raised when Firefly button is held down long enough.
         /// </summary>
-        public event EventHandler FireflyDoubleClick;
+        public event EventHandler FireflyLongPress;
 
         // -------------------------------
         // Constructor
@@ -92,20 +103,32 @@ namespace ENT_Clinic_System.Helpers
 
             if (isPressed && !wasPressedLastTick)
             {
-                DateTime now = DateTime.Now;
-
-                if ((now - lastPressTime).TotalMilliseconds <= doubleClickThresholdMs)
+                // Button just pressed
+                pressStartTime = DateTime.Now;
+                longPressFired = false;
+                FireflyPressed?.Invoke(this, EventArgs.Empty);
+            }
+            else if (isPressed && wasPressedLastTick)
+            {
+                // Button still held
+                if (!longPressFired &&
+                    (DateTime.Now - pressStartTime).TotalMilliseconds >= longPressThresholdMs)
                 {
-                    // Double click detected
-                    FireflyDoubleClick?.Invoke(this, EventArgs.Empty);
+                    // Long press detected
+                    FireflyLongPress?.Invoke(this, EventArgs.Empty);
+                    longPressFired = true;
                 }
-                else
+            }
+            else if (!isPressed && wasPressedLastTick)
+            {
+                // Button just released
+                FireflyReleased?.Invoke(this, EventArgs.Empty);
+
+                if (!longPressFired)
                 {
-                    // Single click detected
+                    // Short press → Single click
                     FireflySingleClick?.Invoke(this, EventArgs.Empty);
                 }
-
-                lastPressTime = now;
             }
 
             wasPressedLastTick = isPressed;

@@ -1,4 +1,4 @@
-﻿namespace ENT_Clinic_System.UserControls
+﻿namespace ENT_Clinic_System.UI
 {
     partial class SystemAdminForm
     {

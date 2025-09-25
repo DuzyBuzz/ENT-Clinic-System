@@ -5,7 +5,7 @@ using System.Data;
 using System.Runtime;
 using System.Windows.Forms;
 
-namespace ENT_Clinic_System.UserControls
+namespace ENT_Clinic_System.UI
 {
     public partial class SystemAdminForm : Form
     {
