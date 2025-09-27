@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -14,11 +15,11 @@ namespace ENT_Clinic_System.PrintingForms
         private int consultationId;
 
         // Patient info
-        private string patientName, patientSex, address;
+        private string patientName, patientSex, patientAddress, patientCivilStatus;
         private int patientAge;
 
         // Consultation info
-        private string diagnosis, recommendations, requester;
+        private string diagnosis, recommendations, chief_complaint, requester;
 
         private PrintDocument printDocument;
 
@@ -63,7 +64,7 @@ namespace ENT_Clinic_System.PrintingForms
 
                 // 🔹 Load patient
                 string patientSql = @"
-                    SELECT full_name, sex, age, address
+                    SELECT full_name, sex, civil_status, age, address
                     FROM patients WHERE patient_id = @patient_id";
 
                 using (var cmd = new MySqlCommand(patientSql, conn))
@@ -73,9 +74,18 @@ namespace ENT_Clinic_System.PrintingForms
                     {
                         if (reader.Read())
                         {
-                            patientName = reader["full_name"]?.ToString() ?? "";
-                            patientSex = reader["sex"]?.ToString() ?? "";
-                            address = reader["address"]?.ToString() ?? "";
+                            patientSex = reader["sex"]?.ToString() ?? "Male";
+                            patientCivilStatus = reader["civil_status"]?.ToString() ?? "Single";
+
+                            // Determine salutation
+                            string salutation = "Mr.";
+                            if (patientCivilStatus.ToLower() == "married")
+                                salutation = (patientSex.ToLower() == "female") ? "Mrs." : "Mr.";
+                            else
+                                salutation = (patientSex.ToLower() == "female") ? "Ms." : "Mr.";
+
+                            patientName = salutation + " " + reader["full_name"]?.ToString() ?? "";
+                            patientAddress = reader["address"]?.ToString() ?? "";
                             int.TryParse(reader["age"]?.ToString(), out patientAge);
                         }
                     }
@@ -83,7 +93,7 @@ namespace ENT_Clinic_System.PrintingForms
 
                 // 🔹 Load consultation
                 string consultSql = @"
-                    SELECT diagnosis, recommendations
+                    SELECT diagnosis, recommendations, chief_complaint
                     FROM consultation 
                     WHERE consultation_id = @consultation_id";
 
@@ -96,6 +106,7 @@ namespace ENT_Clinic_System.PrintingForms
                         {
                             diagnosis = CleanBullets(reader["diagnosis"]?.ToString());
                             recommendations = CleanBullets(reader["recommendations"]?.ToString());
+                            chief_complaint = CleanBullets(reader["chief_complaint"]?.ToString());
                         }
                     }
                 }
@@ -104,79 +115,132 @@ namespace ENT_Clinic_System.PrintingForms
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            // Define fonts
-            Font headerFont = new Font("Arial", 14, FontStyle.Bold);
-            Font subHeaderFont = new Font("Arial", 12, FontStyle.Regular);
-            Font bodyFont = new Font("Arial", 11, FontStyle.Regular);
-            Font footerFont = new Font("Arial", 10, FontStyle.Italic);
-            Font clinicInfoFont = new Font("Arial", 9);
-
-            // Define margins and drawing area
-            float contentWidth = e.MarginBounds.Width;
-            float leftMargin = e.MarginBounds.Left;
-            float rightMargin = e.MarginBounds.Right;
-            float y = e.MarginBounds.Top;
-
             Graphics g = e.Graphics;
-            StringFormat center = new StringFormat() { Alignment = StringAlignment.Center };
 
-            // 🔹 Header (Doctor’s Info)
-            g.DrawString("MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS",
-                headerFont, Brushes.Black, new RectangleF(leftMargin, y, contentWidth, 30), center);
+            // ===========================
+            // PAGE SETUP
+            // ===========================
+            float leftMargin = 50;  // 50px from left
+            float rightMargin = 50; // 50px from right
+            float contentWidth = e.PageBounds.Width - leftMargin - rightMargin;
+            float y = 50; // initial top margin
+
+            // ===========================
+            // FONTS & STYLES
+            // ===========================
+            Font titleFont = new Font("Arial", 14, FontStyle.Bold);
+            Font bodyFont = new Font("Arial", 11, FontStyle.Regular);
+            Font highlightFont = new Font("Arial", 11, FontStyle.Bold);
+            Brush highlightBrush = Brushes.Black;
+
+            // Centered text format
+            StringFormat centerFormat = new StringFormat() { Alignment = StringAlignment.Center };
+
+            // Wrap format to prevent word splitting
+            StringFormat wrapFormat = new StringFormat()
+            {
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Near,
+                FormatFlags = StringFormatFlags.LineLimit,
+                Trimming = StringTrimming.Word
+            };
+
+            // ===========================
+            // HEADER
+            // ===========================
+            y = WaterMarkHelper.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
+
+            // Date top-right
+            g.DrawString($"{DateTime.Now:MMMM dd, yyyy}", bodyFont, Brushes.Black, e.PageBounds.Width - rightMargin - 150, y);
+
+            // Title
+            g.DrawString("MEDICAL CERTIFICATE", titleFont, Brushes.Black, new RectangleF(leftMargin, y, contentWidth, 30), centerFormat);
+            y += 50;
+
+            // ===========================
+            // SALUTATION / PRONOUNS
+            // ===========================
+            string salutation = "Mr./Ms.";
+            string pronounSubject = "He/She";
+            string pronounObject = "him/her";
+
+            if (!string.IsNullOrEmpty(patientSex))
+            {
+                if (patientSex.ToLower() == "male")
+                {
+                    salutation = "Mr.";
+                    pronounSubject = "He";
+                    pronounObject = "him";
+                }
+                else if (patientSex.ToLower() == "female")
+                {
+                    salutation = (patientCivilStatus?.ToLower() == "married") ? "Mrs." : "Ms.";
+                    pronounSubject = "She";
+                    pronounObject = "her";
+                }
+            }
+
+            // ===========================
+            // BODY
+            // ===========================
+            // Greeting
+            g.DrawString("To Whom It May Concern,", bodyFont, Brushes.Black, leftMargin, y);
             y += 25;
 
-            g.DrawString("Fellow, Phil. Society of Otolaryngology, Head & Neck Surgery",
-                subHeaderFont, Brushes.Black, new RectangleF(leftMargin, y, contentWidth, 20), center);
+            // Patient Info
+            g.DrawString($"This is to certify that {salutation} {patientName}", highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, 50), wrapFormat);
+            y += 25;
+
+            g.DrawString($"of {patientAddress},", highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, 50), wrapFormat);
+            y += 30;
+
+            // Consultation reason
+            g.DrawString("consulted my clinic due to:", bodyFont, Brushes.Black, leftMargin, y);
             y += 20;
 
-            string clinicInfo =
-                "Clinic Address: 388 E. Lopez St., Jaro, Iloilo City (Front of Robinsons Jaro)\n" +
-                "Tel: 329-1796   Mobile: 0925-5000149\n" +
-                "Clinic Hours: Mon, Tue, Thu, Fri, Sat  11:00 AM – 2:00 PM\n" +
-                "Hospital Affiliations: St. Paul’s Hospital, Iloilo Doctors’ Hospital, Iloilo Mission Hospital,\n" +
-                "Western Visayas Medical Center, WVSU Med Center, Medicus Ambulatory, Metro Iloilo Hospital";
+            SizeF diagSize = g.MeasureString(diagnosis, highlightFont, (int)contentWidth, wrapFormat);
+            g.DrawString(diagnosis, highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, diagSize.Height), wrapFormat);
+            y += diagSize.Height + 10;
 
-            g.DrawString(clinicInfo, clinicInfoFont, Brushes.Black, new RectangleF(leftMargin, y, contentWidth, 80));
-            y += 85;
-
-            // 🔹 Divider line
-            g.DrawLine(Pens.Black, leftMargin, y, leftMargin + contentWidth, y);
-            y += 10;
-
-            // 🔹 Title
-            g.DrawString("Medical Certificate", new Font("Arial", 12, FontStyle.Bold),
-                Brushes.Black, new RectangleF(leftMargin, y, contentWidth, 25), center);
-
+            // Diagnosis
+            g.DrawString($"{pronounSubject} was diagnosed and/or managed as a case of:", bodyFont, Brushes.Black, leftMargin, y);
             y += 20;
 
+            SizeF diag2Size = g.MeasureString(diagnosis, highlightFont, (int)contentWidth, wrapFormat);
+            g.DrawString(diagnosis, highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, diag2Size.Height), wrapFormat);
+            y += diag2Size.Height + 10;
+
+            // Recommendations
+            g.DrawString($"{pronounSubject} was advised to:", bodyFont, Brushes.Black, leftMargin, y);
+            y += 20;
+
+            SizeF recSize = g.MeasureString(recommendations, highlightFont, (int)contentWidth, wrapFormat);
+            g.DrawString(recommendations, highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, recSize.Height), wrapFormat);
+            y += recSize.Height + 10;
+
+            // Requester
+            g.DrawString("This certificate is issued upon the request of:", bodyFont, Brushes.Black, leftMargin, y);
+            g.DrawString(requester, highlightFont, highlightBrush, leftMargin + 310, y);
+            y += 30;
+
+            // Closing statement
+            g.DrawString($"Serve {pronounObject} best.", bodyFont, Brushes.Black, leftMargin, y);
+            y += 30;
 
 
-            // 🔹 Date
-            g.DrawString($"{DateTime.Now:MMMM dd, yyyy}", subHeaderFont, Brushes.Black, leftMargin + 450, y);
-            y += 60;
+            // General statement
+            g.DrawString("For whatever purpose it may serve.", bodyFont, Brushes.Black, leftMargin, y);
+            y += 50;
 
-            // 🔹 Body of certificate
-            string body =
-                $"To Whom it May Concern,\n\n" +
-                $"This is to certify that Mr./Ms./Mrs. {patientName} of {address} consulted me due to. " +
-                $"He/She was diagnosed and/or managed as a case of\n\n" +
-                $"{diagnosis}\n\n" +
-                $"He/She was advised: {recommendations}\n\n" +
-                $"This medical certificate is issued upon the request of {requester} " +
-                $"for whatever legal purpose it may serve him/her best.\n\n" +
-                $"Thank you.";
-
-            g.DrawString(body, bodyFont, Brushes.Black,
-                new RectangleF(leftMargin, y, rightMargin - leftMargin, e.MarginBounds.Height - 200));
-            y += 200;
-
-            // 🔹 Footer (Doctor Signature & License)
-            float footerY = e.MarginBounds.Bottom - 80;
-            g.DrawString("MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS",
-                bodyFont, Brushes.Black, leftMargin + 200, footerY);
-            footerY += 20;
-            g.DrawString("LICENSE # 99566", footerFont, Brushes.Black, leftMargin + 400, footerY);
+            // ===========================
+            // FOOTER
+            // ===========================
+            WaterMarkHelper.PrintFooter(g, (int)leftMargin, (int)(e.PageBounds.Bottom - 80));
         }
+
+
+
+
 
         public void ShowPreview()
         {
@@ -186,7 +250,53 @@ namespace ENT_Clinic_System.PrintingForms
                 Width = 1000,
                 Height = 700
             };
+
+            preview.Shown += (s, e) =>
+            {
+                foreach (Control ctrl in preview.Controls)
+                {
+                    if (ctrl is ToolStrip toolStrip)
+                    {
+                        foreach (ToolStripItem item in toolStrip.Items)
+                        {
+                            if (item is ToolStripButton btn && btn.ToolTipText.ToLower().Contains("print"))
+                            {
+                                btn.Visible = false; // hide default Print button
+                            }
+                        }
+                    }
+                }
+
+                // Add a custom Print button to the ToolStrip
+                ToolStrip tool = preview.Controls.OfType<ToolStrip>().FirstOrDefault();
+                if (tool != null)
+                {
+                    ToolStripButton customPrint = new ToolStripButton("Print");
+                    customPrint.Click += (sender, args) =>
+                    {
+                        using (PrintDialog printDialog = new PrintDialog())
+                        {
+                            printDialog.Document = printDocument;
+                            printDialog.AllowSomePages = true;
+                            printDialog.AllowSelection = true;
+
+                            if (printDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                printDocument.Print();
+                            }
+                        }
+                    };
+                    // Insert at the left-most position
+                    tool.Items.Insert(0, customPrint);
+                }
+            };
+
             preview.ShowDialog();
         }
+
+
+
+
+
     }
 }

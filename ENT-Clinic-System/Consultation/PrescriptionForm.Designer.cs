@@ -1,4 +1,4 @@
-﻿namespace ENT_Clinic_System.Inventory
+﻿namespace ENT_Clinic_System.Consultation
 {
     partial class PrescriptionForm
     {
@@ -70,7 +70,7 @@
             // btnSubmit
             // 
             this.btnSubmit.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnSubmit.Location = new System.Drawing.Point(707, 445);
+            this.btnSubmit.Location = new System.Drawing.Point(707, 487);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(120, 38);
             this.btnSubmit.TabIndex = 2;
@@ -122,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 487);
+            this.ClientSize = new System.Drawing.Size(842, 529);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.btnSubmit);
             this.Font = new System.Drawing.Font("Arial Narrow", 11.25F);

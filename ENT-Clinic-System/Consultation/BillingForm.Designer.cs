@@ -77,7 +77,7 @@
             // 
             this.fullDiscountCheckBox.AutoSize = true;
             this.fullDiscountCheckBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.fullDiscountCheckBox.ForeColor = System.Drawing.Color.DarkRed;
+            this.fullDiscountCheckBox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.fullDiscountCheckBox.Location = new System.Drawing.Point(129, 143);
             this.fullDiscountCheckBox.Name = "fullDiscountCheckBox";
             this.fullDiscountCheckBox.Size = new System.Drawing.Size(109, 19);
@@ -91,15 +91,15 @@
             this.labelFinal.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.labelFinal.Location = new System.Drawing.Point(26, 179);
             this.labelFinal.Name = "labelFinal";
-            this.labelFinal.Size = new System.Drawing.Size(101, 19);
+            this.labelFinal.Size = new System.Drawing.Size(103, 19);
             this.labelFinal.TabIndex = 6;
-            this.labelFinal.Text = "Final Amount:";
+            this.labelFinal.Text = "Total Amount:";
             // 
             // finalAmountLabel
             // 
             this.finalAmountLabel.AutoSize = true;
             this.finalAmountLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.finalAmountLabel.ForeColor = System.Drawing.Color.DarkGreen;
+            this.finalAmountLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.finalAmountLabel.Location = new System.Drawing.Point(129, 179);
             this.finalAmountLabel.Name = "finalAmountLabel";
             this.finalAmountLabel.Size = new System.Drawing.Size(46, 19);
@@ -118,10 +118,10 @@
             // 
             // saveButton
             // 
-            this.saveButton.BackColor = System.Drawing.Color.SteelBlue;
+            this.saveButton.BackColor = System.Drawing.SystemColors.Control;
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveButton.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.saveButton.ForeColor = System.Drawing.Color.White;
+            this.saveButton.ForeColor = System.Drawing.SystemColors.ControlText;
             this.saveButton.Location = new System.Drawing.Point(129, 259);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(86, 30);
@@ -166,7 +166,7 @@
             // 
             this.discountAmountLabel.AutoSize = true;
             this.discountAmountLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
-            this.discountAmountLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this.discountAmountLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.discountAmountLabel.Location = new System.Drawing.Point(238, 116);
             this.discountAmountLabel.Name = "discountAmountLabel";
             this.discountAmountLabel.Size = new System.Drawing.Size(35, 15);
@@ -177,7 +177,7 @@
             // 
             this.titleLabel.AutoSize = true;
             this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.titleLabel.ForeColor = System.Drawing.Color.White;
+            this.titleLabel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.titleLabel.Location = new System.Drawing.Point(10, 13);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(119, 21);
@@ -186,7 +186,7 @@
             // 
             // headerPanel
             // 
-            this.headerPanel.BackColor = System.Drawing.Color.SteelBlue;
+            this.headerPanel.BackColor = System.Drawing.SystemColors.Control;
             this.headerPanel.Controls.Add(this.titleLabel);
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.headerPanel.Location = new System.Drawing.Point(0, 0);
@@ -214,6 +214,7 @@
             this.Controls.Add(this.labelDiscount);
             this.Controls.Add(this.labelFee);
             this.Controls.Add(this.headerPanel);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

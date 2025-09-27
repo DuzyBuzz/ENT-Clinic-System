@@ -54,6 +54,7 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.prescriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -165,6 +166,7 @@
             this.menuStrip1.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
+            this.doctorToolStripMenuItem,
             this.patientsToolStripMenuItem,
             this.consultationsToolStripMenuItem,
             this.settingsToolStripMenuItem,
@@ -173,7 +175,6 @@
             this.closeButton,
             this.maximizeMaximizeButton,
             this.minimizeButton,
-            this.doctorToolStripMenuItem,
             this.toolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(13, 15);
             this.menuStrip1.Name = "menuStrip1";
@@ -216,9 +217,11 @@
             // 
             // doctorToolStripMenuItem
             // 
+            this.doctorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.prescriptionsToolStripMenuItem});
             this.doctorToolStripMenuItem.Name = "doctorToolStripMenuItem";
-            this.doctorToolStripMenuItem.Size = new System.Drawing.Size(76, 29);
-            this.doctorToolStripMenuItem.Text = "Doctor";
+            this.doctorToolStripMenuItem.Size = new System.Drawing.Size(53, 29);
+            this.doctorToolStripMenuItem.Text = "File";
             // 
             // toolStripMenuItem2
             // 
@@ -263,6 +266,12 @@
             this.MainPanel.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
+            // 
+            // prescriptionsToolStripMenuItem
+            // 
+            this.prescriptionsToolStripMenuItem.Name = "prescriptionsToolStripMenuItem";
+            this.prescriptionsToolStripMenuItem.Size = new System.Drawing.Size(187, 30);
+            this.prescriptionsToolStripMenuItem.Text = "Prescriptions";
             // 
             // MainFormDoctor
             // 
@@ -316,5 +325,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         public System.Windows.Forms.Panel MainPanel;
+        private System.Windows.Forms.ToolStripMenuItem prescriptionsToolStripMenuItem;
     }
 }

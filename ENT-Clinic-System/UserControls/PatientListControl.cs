@@ -1,5 +1,6 @@
 ﻿using ENT_Clinic_System.Consultation;
 using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.PrintingForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -203,18 +204,146 @@ namespace ENT_Clinic_System.UserControls
                 ReportHelper.PrintDataGridView(patientsDataGridView, "Patient List");
             }
         }
-
         private void consultationHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int patientId = GetSelectedPatientId();
-            if (patientId > 0)
-            {
-                ConsultationHistoryForm historyForm = new ConsultationHistoryForm(patientId);
-                historyForm.ShowDialog();
-            }
+
         }
 
 
+
+
+
+
+
+        private void printConsultationHistoryButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void patientsContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void createUntrackedLabRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void printConsultationHistoryButton_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void consultationHistoryToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            int patientId = GetSelectedPatientId();
+            if (patientId <= 0) return;
+
+            // 1️⃣ Show "Loading..." immediately
+            consultationHistoryToolStripMenuItem.DropDownItems.Clear();
+            var loadingItem = new ToolStripMenuItem("Loading...");
+            consultationHistoryToolStripMenuItem.DropDownItems.Add(loadingItem);
+            Application.DoEvents(); // Forces UI to update so "Loading..." is visible
+
+            // 2️⃣ Define actions - mixed simple and nested submenus
+            var actions = new Dictionary<string, object>()
+    {
+        { "Print Consultation History", new Action<int>(consultationId =>
+            {
+                try
+                {
+                    PrintTextHistory printer = new PrintTextHistory(patientId, consultationId);
+                    MultiPrintPreviewDialog previewDialog = new MultiPrintPreviewDialog
+                    {
+                        Document = printer.Document,
+                        StartPosition = FormStartPosition.CenterScreen,
+                        ShowInTaskbar = true,
+                        Text = $"Patient {patientId} - Consultation {consultationId}"
+                    };
+                    previewDialog.Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error printing consultation history: " + ex.Message);
+                }
+            })
+        },
+        { "Print Attachments", new Action<int>(consultationId =>
+            {
+                try
+                {
+                    PrintAttachments printForm = new PrintAttachments(consultationId);
+                    printForm.Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error printing attachments: " + ex.Message);
+                }
+            })
+        },
+        { "Print Medical Certificate", new Action<int>(consultationId =>
+            {
+                try
+                {
+                    using (var inputForm = new PurposeInputForm())
+                    {
+                        if (inputForm.ShowDialog() == DialogResult.OK)
+                        {
+                            string requestName = inputForm.PurposeText;
+                            var printer = new MedicalCertificatePrinter(patientId, consultationId, requestName);
+                            printer.ShowPreview();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error printing medical certificate: " + ex.Message);
+                }
+            })
+        },
+        { "Show Prescriptions", new Action<int>(consultationId =>
+            {
+                MessageBox.Show($"Prescription clicked for consultation {consultationId}");
+            })
+        },
+        // ✅ Laboratory Request nested submenu
+        { "Laboratory Request", new Func<int, ToolStripMenuItem>(consultationId =>
+            {
+                var labMenu = new ToolStripMenuItem("Laboratory Request");
+
+                // Submenu: Create Lab Request
+                var createLab = new ToolStripMenuItem("Create Lab Request");
+                createLab.Click += (s, args) =>
+                {
+                    LabRequestForm labForm = new LabRequestForm(patientId, consultationId);
+                    labForm.ShowDialog();
+                };
+                labMenu.DropDownItems.Add(createLab);
+
+                // Submenu: Show Laboratory Requests
+                var showLab = new ToolStripMenuItem("Show Laboratory Requests");
+                showLab.Click += (s, args) =>
+                {
+                    MessageBox.Show($"Lab Requests clicked for consultation {consultationId}");
+                };
+                labMenu.DropDownItems.Add(showLab);
+
+                return labMenu;
+            })
+        }
+    };
+
+            // 3️⃣ Populate all consultation rows dynamically using the updated helper
+            DynamicToolStripMenuItemHelper.PopulateSubMenu(
+                parentMenu: consultationHistoryToolStripMenuItem.DropDown, // DropDown of the parent item
+                tableName: "consultation",
+                idColumn: "consultation_id",
+                displayColumns: new string[] { "consultation_date" },
+                whereClause: $"patient_id = {patientId}",
+                subMenuActions: actions // now accepts both Action<int> and Func<int, ToolStripMenuItem>
+            );
+        }
 
 
 

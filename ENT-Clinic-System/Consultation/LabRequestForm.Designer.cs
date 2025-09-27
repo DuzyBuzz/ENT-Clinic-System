@@ -41,6 +41,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LabRequestForm));
             this.patientNameLabel = new System.Windows.Forms.Label();
             this.patientNameTextBox = new System.Windows.Forms.TextBox();
             this.ageLabel = new System.Windows.Forms.Label();
@@ -53,9 +54,6 @@
             this.deselectAllButton = new System.Windows.Forms.Button();
             this.printButton = new System.Windows.Forms.Button();
             this.labTestsDGV = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Category = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TestName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.prevPageButton = new System.Windows.Forms.Button();
             this.nextPageButton = new System.Windows.Forms.Button();
             this.pageInfoLabel = new System.Windows.Forms.Label();
@@ -68,6 +66,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.genderTextBox = new System.Windows.Forms.TextBox();
+            this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.test_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.labTestsDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -162,7 +162,6 @@
             this.printButton.Size = new System.Drawing.Size(120, 23);
             this.printButton.TabIndex = 11;
             this.printButton.Text = "Print";
-            this.printButton.Click += new System.EventHandler(this.printButton_Click);
             // 
             // labTestsDGV
             // 
@@ -173,33 +172,13 @@
             this.labTestsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.labTestsDGV.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.labTestsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
-            this.Category,
-            this.TestName});
+            this.category,
+            this.test_name});
             this.labTestsDGV.Location = new System.Drawing.Point(860, 62);
             this.labTestsDGV.Name = "labTestsDGV";
             this.labTestsDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.labTestsDGV.Size = new System.Drawing.Size(320, 538);
             this.labTestsDGV.TabIndex = 12;
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.Visible = false;
-            // 
-            // Category
-            // 
-            this.Category.DataPropertyName = "category";
-            this.Category.HeaderText = "Category";
-            this.Category.Name = "Category";
-            // 
-            // TestName
-            // 
-            this.TestName.DataPropertyName = "test_name";
-            this.TestName.HeaderText = "Test Name";
-            this.TestName.Name = "TestName";
             // 
             // prevPageButton
             // 
@@ -244,7 +223,6 @@
             this.addTestsButton.Size = new System.Drawing.Size(100, 23);
             this.addTestsButton.TabIndex = 17;
             this.addTestsButton.Text = "Add";
-            this.addTestsButton.Click += new System.EventHandler(this.addTestsButton_Click);
             // 
             // categoryComboBox
             // 
@@ -307,6 +285,18 @@
             this.genderTextBox.Size = new System.Drawing.Size(50, 20);
             this.genderTextBox.TabIndex = 25;
             // 
+            // category
+            // 
+            this.category.DataPropertyName = "category";
+            this.category.HeaderText = "Category";
+            this.category.Name = "category";
+            // 
+            // test_name
+            // 
+            this.test_name.DataPropertyName = "test_name";
+            this.test_name.HeaderText = "Test Name";
+            this.test_name.Name = "test_name";
+            // 
             // LabRequestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -336,6 +326,7 @@
             this.Controls.Add(this.pageInfoLabel);
             this.Controls.Add(this.saveRequestButton);
             this.Controls.Add(this.addTestsButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LabRequestForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Laborator Request";
@@ -351,12 +342,11 @@
         private System.Windows.Forms.ComboBox categoryComboBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox addressTextBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Category;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TestName;
         private System.Windows.Forms.TextBox testNameTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox genderTextBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn category;
+        private System.Windows.Forms.DataGridViewTextBoxColumn test_name;
     }
 }

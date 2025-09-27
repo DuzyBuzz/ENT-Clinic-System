@@ -203,7 +203,7 @@ namespace ENT_Clinic_System.Helpers
         // ================================
         // 🔹 Item Management
         // ================================
-        public bool AddItem(string itemName, string description, string category, decimal costPrice, decimal sellingPrice, bool applyDiscount = false)
+        public bool AddItem(string itemName, string description, string category, decimal costPrice, decimal sellingPrice)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace ENT_Clinic_System.Helpers
             }
         }
 
-        public bool UpdateItem(int itemId, string itemName, string description, string category, decimal costPrice, decimal sellingPrice, bool applyDiscount = false)
+        public bool UpdateItem(int itemId, string itemName, string description, string category, decimal costPrice, decimal sellingPrice)
         {
             try
             {
@@ -268,7 +268,7 @@ namespace ENT_Clinic_System.Helpers
                 return false;
             }
         }
-        public int AddInvoice(string customerName, DataTable items, decimal amountReceived)
+        public int AddInvoice(string customerName, DataTable items, decimal amountReceived, string discountPercentText, string note, string invoiceType)
         {
             try
             {
@@ -279,52 +279,37 @@ namespace ENT_Clinic_System.Helpers
                     {
                         try
                         {
-                            decimal subtotal = 0, totalDiscount = 0, totalTax = 0, netTotal = 0;
-
-                            // 🔹 Step 1: Calculate totals
+                            // 🔹 Step 1: Calculate subtotal
+                            decimal subtotal = 0;
                             foreach (DataRow row in items.Rows)
                             {
-                                int itemId = Convert.ToInt32(row["item_id"]);
                                 int qty = Convert.ToInt32(row["quantity"]);
                                 decimal price = Convert.ToDecimal(row["unit_price"]);
-                                bool applyDiscount = Convert.ToBoolean(row["apply_discount"]);
-
-                                // Apply discount only if checkbox is checked
-                                decimal discountAmount = 0;
-                                if (applyDiscount)
-                                {
-                                    if (decimal.TryParse(SettingsHelper.GetSetting("discount_percentage"), out decimal discountPercent))
-                                    {
-                                        discountAmount = price * qty * (discountPercent / 100);
-                                    }
-                                }
-
-                                decimal priceAfterDiscount = (price * qty) - discountAmount;
-
-                                // Calculate tax
-                                decimal taxAmount = 0;
-                                if (decimal.TryParse(SettingsHelper.GetSetting("tax_percentage"), out decimal taxPercent))
-                                {
-                                    taxAmount = priceAfterDiscount * (taxPercent / 100);
-                                }
-
-                                decimal finalPrice = priceAfterDiscount + taxAmount;
-
                                 subtotal += price * qty;
-                                totalDiscount += discountAmount;
-                                totalTax += taxAmount;
-                                netTotal += finalPrice;
                             }
 
-                            // 🔹 Calculate change
+                            // 🔹 Step 2: Calculate discount + tax
+                            decimal discountPercent = 0;
+                            decimal.TryParse(discountPercentText, out discountPercent);
+
+                            decimal discountAmount = subtotal * (discountPercent / 100);
+
+                            // If you want tax → pull from system_settings
+                            decimal taxPercent = GetSettingValue("tax_percentage");
+                            decimal taxTotal = (subtotal - discountAmount) * (taxPercent / 100);
+
+                            decimal netTotal = subtotal - discountAmount + taxTotal;
+
                             decimal changeDue = amountReceived - netTotal;
                             if (changeDue < 0) changeDue = 0;
 
-                            // 🔹 Step 2: Insert invoice header
+                            // 🔹 Step 3: Insert invoice header (✅ correct columns)
                             string invoiceQuery = @"
                         INSERT INTO invoices 
-                        (customer_name, invoice_date, subtotal, discount_total, tax_total, net_total, amount_received, change_due)
-                        VALUES (@customer_name, NOW(), @subtotal, @discount_total, @tax_total, @net_total, @amount_received, @change_due);
+                        (customer_name, invoice_date, subtotal, discount_amount, tax_total, net_total, 
+                         amount_received, change_due, invoice_type, note, discount_percent)
+                        VALUES (@customer_name, NOW(), @subtotal, @discount_amount, @tax_total, @net_total, 
+                                @amount_received, @change_due, @invoice_type, @note, @discount_percent);
                         SELECT LAST_INSERT_ID();";
 
                             int invoiceId;
@@ -332,61 +317,51 @@ namespace ENT_Clinic_System.Helpers
                             {
                                 cmd.Parameters.AddWithValue("@customer_name", customerName);
                                 cmd.Parameters.AddWithValue("@subtotal", subtotal);
-                                cmd.Parameters.AddWithValue("@discount_total", totalDiscount);
-                                cmd.Parameters.AddWithValue("@tax_total", totalTax);
+                                cmd.Parameters.AddWithValue("@discount_amount", discountAmount);
+                                cmd.Parameters.AddWithValue("@tax_total", taxTotal);
                                 cmd.Parameters.AddWithValue("@net_total", netTotal);
                                 cmd.Parameters.AddWithValue("@amount_received", amountReceived);
                                 cmd.Parameters.AddWithValue("@change_due", changeDue);
+                                cmd.Parameters.AddWithValue("@invoice_type", invoiceType);
+                                cmd.Parameters.AddWithValue("@note", note ?? "");
+                                cmd.Parameters.AddWithValue("@discount_percent", discountPercent);
 
                                 invoiceId = Convert.ToInt32(cmd.ExecuteScalar());
                             }
 
-                            // 🔹 Step 3: Insert invoice items
-                            foreach (DataRow row in items.Rows)
+                            // 🔹 Step 4: Insert items if invoice type is ITEMS
+                            if (invoiceType == "ITEMS")
                             {
-                                int itemId = Convert.ToInt32(row["item_id"]);
-                                int qty = Convert.ToInt32(row["quantity"]);
-                                decimal price = Convert.ToDecimal(row["unit_price"]);
-                                bool applyDiscount = Convert.ToBoolean(row["apply_discount"]);
-
-                                decimal discountAmount = 0;
-                                if (applyDiscount)
+                                foreach (DataRow row in items.Rows)
                                 {
-                                    if (decimal.TryParse(SettingsHelper.GetSetting("discount_percentage"), out decimal discountPercent))
+                                    int itemId = Convert.ToInt32(row["item_id"]);
+                                    int qty = Convert.ToInt32(row["quantity"]);
+                                    decimal price = Convert.ToDecimal(row["unit_price"]);
+                                    decimal itemTotal = price * qty;
+
+                                    string itemQuery = @"
+                                INSERT INTO invoice_items 
+                                (invoice_id, item_id, quantity, unit_price, total_price)
+                                VALUES (@invoice_id, @item_id, @quantity, @unit_price, @total_price)";
+
+                                    using (var cmd = new MySqlCommand(itemQuery, conn, transaction))
                                     {
-                                        discountAmount = price * qty * (discountPercent / 100);
+                                        cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
+                                        cmd.Parameters.AddWithValue("@item_id", itemId);
+                                        cmd.Parameters.AddWithValue("@quantity", qty);
+                                        cmd.Parameters.AddWithValue("@unit_price", price);
+                                        cmd.Parameters.AddWithValue("@total_price", itemTotal);
+                                        cmd.ExecuteNonQuery();
                                     }
+
+                                    // 🔹 Update stock
+                                    AddStockMovement(itemId, "OUT", qty, DateTime.Now, false, false);
                                 }
-
-                                decimal priceAfterDiscount = (price * qty) - discountAmount;
-
-                                decimal taxAmount = 0;
-                                if (decimal.TryParse(SettingsHelper.GetSetting("tax_percentage"), out decimal taxPercent))
-                                {
-                                    taxAmount = priceAfterDiscount * (taxPercent / 100);
-                                }
-
-                                decimal finalPrice = priceAfterDiscount + taxAmount;
-
-                                string itemQuery = @"
-                            INSERT INTO invoice_items 
-                            (invoice_id, item_id, quantity, unit_price, discount_amount, tax_amount, total_price)
-                            VALUES (@invoice_id, @item_id, @quantity, @unit_price, @discount_amount, @tax_amount, @total_price)";
-
-                                using (var cmd = new MySqlCommand(itemQuery, conn, transaction))
-                                {
-                                    cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
-                                    cmd.Parameters.AddWithValue("@item_id", itemId);
-                                    cmd.Parameters.AddWithValue("@quantity", qty);
-                                    cmd.Parameters.AddWithValue("@unit_price", price);
-                                    cmd.Parameters.AddWithValue("@discount_amount", discountAmount);
-                                    cmd.Parameters.AddWithValue("@tax_amount", taxAmount);
-                                    cmd.Parameters.AddWithValue("@total_price", finalPrice);
-                                    cmd.ExecuteNonQuery();
-                                }
-
-                                // 🔹 Step 4: Update stock and sales
-                                AddStockMovement(itemId, "OUT", qty, DateTime.Now, applyDiscount, false);
+                            }
+                            else
+                            {
+                                // For consultation bills only
+                                MessageBox.Show("This is a billing-only invoice (no items).");
                             }
 
                             transaction.Commit();
@@ -406,6 +381,9 @@ namespace ENT_Clinic_System.Helpers
                 return -1;
             }
         }
+
+
+
 
 
 

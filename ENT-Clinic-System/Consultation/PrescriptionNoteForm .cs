@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ENT_Clinic_System.Inventory
+namespace ENT_Clinic_System.Consultation
 {
     public partial class PrescriptionNoteForm : Form
     {

@@ -56,10 +56,15 @@
             this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.createUntrackedLabRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
             this.printAttachmentButton = new System.Windows.Forms.ToolStripMenuItem();
             this.printMedicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createLaboratoryRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createLabRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showLaboratoryRequesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showPrescriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).BeginInit();
@@ -316,32 +321,33 @@
             // 
             this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewConsultationToolStripMenuItem,
-            this.consultationHistoryToolStripMenuItem});
+            this.consultationHistoryToolStripMenuItem,
+            this.createUntrackedLabRequestToolStripMenuItem});
             this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(184, 70);
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(233, 92);
+            this.patientsContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.patientsContextMenuStrip_Opening);
             // 
             // viewConsultationToolStripMenuItem
             // 
             this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.viewConsultationToolStripMenuItem.Text = "New Consultation";
             this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
             // 
             // consultationHistoryToolStripMenuItem
             // 
             this.consultationHistoryToolStripMenuItem.Name = "consultationHistoryToolStripMenuItem";
-            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.consultationHistoryToolStripMenuItem.Text = "Consultation History";
             this.consultationHistoryToolStripMenuItem.Click += new System.EventHandler(this.consultationHistoryToolStripMenuItem_Click);
+            this.consultationHistoryToolStripMenuItem.MouseEnter += new System.EventHandler(this.consultationHistoryToolStripMenuItem_MouseEnter);
             // 
-            // consultationHistoryContextMenuStrip
+            // createUntrackedLabRequestToolStripMenuItem
             // 
-            this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.printConsultationHistoryButton,
-            this.printAttachmentButton,
-            this.printMedicalCertificateToolStripMenuItem});
-            this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
-            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 70);
+            this.createUntrackedLabRequestToolStripMenuItem.Name = "createUntrackedLabRequestToolStripMenuItem";
+            this.createUntrackedLabRequestToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.createUntrackedLabRequestToolStripMenuItem.Text = "Create Untracked Lab Request";
+            this.createUntrackedLabRequestToolStripMenuItem.Click += new System.EventHandler(this.createUntrackedLabRequestToolStripMenuItem_Click);
             // 
             // printConsultationHistoryButton
             // 
@@ -349,6 +355,7 @@
             this.printConsultationHistoryButton.Name = "printConsultationHistoryButton";
             this.printConsultationHistoryButton.Size = new System.Drawing.Size(215, 22);
             this.printConsultationHistoryButton.Text = "Show Consultation History";
+            this.printConsultationHistoryButton.Click += new System.EventHandler(this.printConsultationHistoryButton_Click_1);
             // 
             // printAttachmentButton
             // 
@@ -361,6 +368,44 @@
             this.printMedicalCertificateToolStripMenuItem.Name = "printMedicalCertificateToolStripMenuItem";
             this.printMedicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.printMedicalCertificateToolStripMenuItem.Text = "Print Medical Certificate";
+            // 
+            // createLaboratoryRequestToolStripMenuItem
+            // 
+            this.createLaboratoryRequestToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createLabRequestToolStripMenuItem,
+            this.showLaboratoryRequesToolStripMenuItem});
+            this.createLaboratoryRequestToolStripMenuItem.Name = "createLaboratoryRequestToolStripMenuItem";
+            this.createLaboratoryRequestToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.createLaboratoryRequestToolStripMenuItem.Text = "Laboratory Requests";
+            // 
+            // createLabRequestToolStripMenuItem
+            // 
+            this.createLabRequestToolStripMenuItem.Name = "createLabRequestToolStripMenuItem";
+            this.createLabRequestToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.createLabRequestToolStripMenuItem.Text = "Create Lab Request";
+            // 
+            // showLaboratoryRequesToolStripMenuItem
+            // 
+            this.showLaboratoryRequesToolStripMenuItem.Name = "showLaboratoryRequesToolStripMenuItem";
+            this.showLaboratoryRequesToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.showLaboratoryRequesToolStripMenuItem.Text = "Show Laboratory Requests";
+            // 
+            // showPrescriptionsToolStripMenuItem
+            // 
+            this.showPrescriptionsToolStripMenuItem.Name = "showPrescriptionsToolStripMenuItem";
+            this.showPrescriptionsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.showPrescriptionsToolStripMenuItem.Text = "Show Prescriptions";
+            // 
+            // consultationHistoryContextMenuStrip
+            // 
+            this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printConsultationHistoryButton,
+            this.printAttachmentButton,
+            this.printMedicalCertificateToolStripMenuItem,
+            this.createLaboratoryRequestToolStripMenuItem,
+            this.showPrescriptionsToolStripMenuItem});
+            this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
+            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 114);
             // 
             // PatientListControl
             // 
@@ -411,9 +456,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn createdat;
         private System.Windows.Forms.DataGridViewImageColumn photo;
         private System.Windows.Forms.ToolStripMenuItem consultationHistoryToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip consultationHistoryContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem createUntrackedLabRequestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem printConsultationHistoryButton;
         private System.Windows.Forms.ToolStripMenuItem printAttachmentButton;
         private System.Windows.Forms.ToolStripMenuItem printMedicalCertificateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createLaboratoryRequestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createLabRequestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showLaboratoryRequesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showPrescriptionsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip consultationHistoryContextMenuStrip;
     }
 }

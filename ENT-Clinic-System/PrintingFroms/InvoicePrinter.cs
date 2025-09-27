@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Windows.Forms;
 
 namespace ENT_Clinic_System.PrintingForms
 {
@@ -55,11 +56,105 @@ namespace ENT_Clinic_System.PrintingForms
 
         public void PrintReceipt()
         {
-            PrintDocument pd = new PrintDocument();
-            pd.PrinterSettings.PrinterName = "Thermal Printer";
-            pd.PrintPage += PrintPage;
-            pd.Print();
+            try
+            {
+                string printerName = SettingsHelper.GetSetting("printer_name");
+
+                // 🔹 Check if saved printer is valid
+                if (string.IsNullOrEmpty(printerName) || !PrinterExists(printerName))
+                {
+                    if (!AskAndSetPrinter(out printerName))
+                        return; // user canceled
+                }
+
+                // 🔹 Initialize PrintDocument
+                PrintDocument pd = new PrintDocument();
+                pd.PrinterSettings.PrinterName = printerName;
+                pd.PrintPage += PrintPage;
+
+                try
+                {
+                    pd.Print(); // attempt to print
+                }
+                catch (Exception ex)
+                {
+                    // 🔹 Handle printer failure
+                    DialogResult retryChoice = MessageBox.Show(
+                        $"Printing failed with printer '{printerName}'.\n\nError: {ex.Message}\n\nWould you like to choose another printer?",
+                        "Print Error",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Error
+                    );
+
+                    if (retryChoice == DialogResult.Yes)
+                    {
+                        if (AskAndSetPrinter(out printerName))
+                        {
+                            // 🔹 Retry with new printer
+                            PrintDocument retryPd = new PrintDocument();
+                            retryPd.PrinterSettings.PrinterName = printerName;
+                            retryPd.PrintPage += PrintPage;
+                            retryPd.Print();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unexpected error while printing: " + ex.Message,
+                                "Print Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        /// <summary>
+        /// Check if printer is installed
+        /// </summary>
+        private bool PrinterExists(string printerName)
+        {
+            foreach (string installedPrinter in PrinterSettings.InstalledPrinters)
+            {
+                if (installedPrinter.Equals(printerName, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Ask user to select a printer, save to settings, return true if success
+        /// </summary>
+        private bool AskAndSetPrinter(out string printerName)
+        {
+            printerName = null;
+
+            using (PrintDialog printDialog = new PrintDialog())
+            {
+                printDialog.AllowSomePages = false;
+                printDialog.ShowHelp = false;
+                printDialog.UseEXDialog = true;
+
+                if (printDialog.ShowDialog() == DialogResult.OK)
+                {
+                    printerName = printDialog.PrinterSettings.PrinterName;
+
+                    // ✅ Save selected printer
+                    SettingsHelper.UpdateSetting("printer_name", printerName);
+
+                    MessageBox.Show($"Printer saved: {printerName}",
+                                    "Printer Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("No printer selected. Printing canceled.",
+                                    "Print Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return false;
+                }
+            }
+        }
+
+
+
 
         private void PrintPage(object sender, PrintPageEventArgs e)
         {
@@ -67,24 +162,24 @@ namespace ENT_Clinic_System.PrintingForms
             float leftMargin = 5;
             float lineHeight = fontRegular.GetHeight(e.Graphics);
 
-            // Header
+            // 🔹 Header
             e.Graphics.DrawString(clinicName, fontHeader, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(clinicAddress, fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Tel: {clinicTel}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(new string('=', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // Invoice Info
+            // 🔹 Invoice Info
             string invoiceNo = "", invoiceDate = "", customer = "";
             decimal amountReceived = 0, changeDue = 0, discountAmount = 0, taxAmount = 0, netTotal = 0;
 
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
-
-                // Fetch invoice info (including invoice-level discount, tax, net total)
-                string qInvoice = @"SELECT invoice_id, invoice_date, customer_name, amount_received, change_due,
-                                    discount_total, tax_total, net_total
-                                    FROM invoices WHERE invoice_id=@id";
+                string qInvoice = @"SELECT invoice_id, invoice_date, customer_name, 
+                                   amount_received, change_due,
+                                   discount_amount, tax_total, net_total
+                            FROM invoices 
+                            WHERE invoice_id=@id";
                 using (var cmd = new MySqlCommand(qInvoice, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", invoiceId);
@@ -97,7 +192,7 @@ namespace ENT_Clinic_System.PrintingForms
                             customer = reader["customer_name"].ToString();
                             amountReceived = reader["amount_received"] != DBNull.Value ? Convert.ToDecimal(reader["amount_received"]) : 0;
                             changeDue = reader["change_due"] != DBNull.Value ? Convert.ToDecimal(reader["change_due"]) : 0;
-                            discountAmount = reader["discount_total"] != DBNull.Value ? Convert.ToDecimal(reader["discount_total"]) : 0;
+                            discountAmount = reader["discount_amount"] != DBNull.Value ? Convert.ToDecimal(reader["discount_amount"]) : 0;
                             taxAmount = reader["tax_total"] != DBNull.Value ? Convert.ToDecimal(reader["tax_total"]) : 0;
                             netTotal = reader["net_total"] != DBNull.Value ? Convert.ToDecimal(reader["net_total"]) : 0;
                         }
@@ -110,23 +205,25 @@ namespace ENT_Clinic_System.PrintingForms
             e.Graphics.DrawString($"Customer: {customer}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // Item Header
+            // 🔹 Item Header
             e.Graphics.DrawString("Item", fontBold, Brushes.Black, leftMargin, y);
-            e.Graphics.DrawString("Qty  Price  Total", fontBold, Brushes.Black, leftMargin, y + lineHeight);
-            e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y + (2 * lineHeight));
-            y += (3 * lineHeight);
+            e.Graphics.DrawString("Qty", fontBold, Brushes.Black, leftMargin + 120, y);
+            e.Graphics.DrawString("Price", fontBold, Brushes.Black, leftMargin + 170, y);
+            e.Graphics.DrawString("Total", fontBold, Brushes.Black, leftMargin + 240, y);
+            y += lineHeight;
 
-            // Items
+            e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+
+            // 🔹 Items
             decimal subtotal = 0;
-
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
                 string qItems = @"SELECT ii.quantity, ii.unit_price, ii.total_price, 
-                                  i.item_name, i.description, i.category
-                                  FROM invoice_items ii
-                                  JOIN items i ON ii.item_id = i.item_id
-                                  WHERE ii.invoice_id=@id";
+                                 i.item_name, i.description
+                          FROM invoice_items ii
+                          JOIN items i ON ii.item_id = i.item_id
+                          WHERE ii.invoice_id=@id";
                 using (var cmd = new MySqlCommand(qItems, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", invoiceId);
@@ -140,16 +237,17 @@ namespace ENT_Clinic_System.PrintingForms
                             decimal price = Convert.ToDecimal(reader["unit_price"]);
                             decimal total = Convert.ToDecimal(reader["total_price"]);
 
-                            subtotal += price * qty;
+                            subtotal += total;
 
-                            // First line: Item + Description
+                            // Item line
                             string fullItemLine = $"{item} {desc}";
-                            e.Graphics.DrawString(fullItemLine, fontBold, Brushes.Black, leftMargin, y);
+                            e.Graphics.DrawString(fullItemLine, fontRegular, Brushes.Black, leftMargin, y);
                             y += lineHeight;
 
-                            // Second line: Qty / Price / Total
-                            string qtyLine = $" {qty,2}  {currencySymbol}{price,5:F2}  {currencySymbol}{total,5:F2}";
-                            e.Graphics.DrawString(qtyLine, fontRegular, Brushes.Black, leftMargin + 1, y);
+                            // Qty / Price / Total line
+                            e.Graphics.DrawString(qty.ToString(), fontRegular, Brushes.Black, leftMargin + 120, y);
+                            e.Graphics.DrawString($"{currencySymbol}{price:F2}", fontRegular, Brushes.Black, leftMargin + 170, y);
+                            e.Graphics.DrawString($"{currencySymbol}{total:F2}", fontRegular, Brushes.Black, leftMargin + 240, y);
                             y += lineHeight;
                         }
                     }
@@ -158,25 +256,25 @@ namespace ENT_Clinic_System.PrintingForms
 
             e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // Totals
+            // 🔹 Totals
             e.Graphics.DrawString($"Subtotal:      {currencySymbol}{subtotal:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Discount:      {currencySymbol}{discountAmount:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Tax:           {currencySymbol}{taxAmount:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Net Total:     {currencySymbol}{netTotal:F2}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // Amount Paid & Change
+            // 🔹 Payment
             e.Graphics.DrawString($"Amount Paid:   {currencySymbol}{amountReceived:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Change:        {currencySymbol}{changeDue:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-
             e.Graphics.DrawString(new string('=', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // Footer
+            // 🔹 Footer
             if (!string.IsNullOrEmpty(reportFooter))
             {
                 e.Graphics.DrawString(reportFooter, fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-                e.Graphics.DrawString(new string('-', 60), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+                e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             }
         }
+
     }
 }

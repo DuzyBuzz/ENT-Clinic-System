@@ -162,12 +162,6 @@
     <Compile Include="Consultation\BillingForm.Designer.cs">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Consultation\ConsultationHistoryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Consultation\ConsultationHistoryForm.Designer.cs">
-      <DependentUpon>ConsultationHistoryForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="CustomUI\BaseForm .cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +181,7 @@
     </Compile>
     <Compile Include="Helpers\CleanupHelper.cs" />
     <Compile Include="Helpers\DGVViewHelper.cs" />
+    <Compile Include="Helpers\DynamicToolStripMenuItemHelper.cs" />
     <Compile Include="Helpers\FireflyHelper.cs" />
     <Compile Include="Helpers\ComboBoxCollectionHelper.cs" />
     <Compile Include="Helpers\ConsultationSaver.cs" />
@@ -235,16 +230,16 @@
     <Compile Include="InsertForms\PatientsQueue .Designer.cs">
       <DependentUpon>PatientsQueue .cs</DependentUpon>
     </Compile>
-    <Compile Include="Inventory\PrescriptionNoteForm .cs">
+    <Compile Include="Consultation\PrescriptionNoteForm .cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inventory\PrescriptionNoteForm .Designer.cs">
+    <Compile Include="Consultation\PrescriptionNoteForm .Designer.cs">
       <DependentUpon>PrescriptionNoteForm .cs</DependentUpon>
     </Compile>
-    <Compile Include="Inventory\PrescriptionForm.cs">
+    <Compile Include="Consultation\PrescriptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inventory\PrescriptionForm.Designer.cs">
+    <Compile Include="Consultation\PrescriptionForm.Designer.cs">
       <DependentUpon>PrescriptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Inventory\ReturnForm.cs">
@@ -254,6 +249,12 @@
       <DependentUpon>ReturnForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Inventory\StockReportPrinter.cs" />
+    <Compile Include="Payments\BillingInvoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payments\BillingInvoiceForm.Designer.cs">
+      <DependentUpon>BillingInvoiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrintingFroms\MedicalCertificatePrinter.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
@@ -287,10 +288,10 @@
     <Compile Include="Inventory\InventoryForm.Designer.cs">
       <DependentUpon>InventoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inventory\InvoiceForm.cs">
+    <Compile Include="Payments\InvoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inventory\InvoiceForm.Designer.cs">
+    <Compile Include="Payments\InvoiceForm.Designer.cs">
       <DependentUpon>InvoiceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
@@ -372,9 +373,6 @@
     <EmbeddedResource Include="Consultation\BillingForm.resx">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Consultation\ConsultationHistoryForm.resx">
-      <DependentUpon>ConsultationHistoryForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Helpers\CameraConsultationForm.resx">
       <DependentUpon>CameraConsultationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -397,10 +395,13 @@
     <EmbeddedResource Include="Inventory\InventoryForm.resx">
       <DependentUpon>InventoryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Inventory\InvoiceForm.resx">
+    <EmbeddedResource Include="Payments\BillingInvoiceForm.resx">
+      <DependentUpon>BillingInvoiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payments\InvoiceForm.resx">
       <DependentUpon>InvoiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Inventory\PrescriptionForm.resx">
+    <EmbeddedResource Include="Consultation\PrescriptionForm.resx">
       <DependentUpon>PrescriptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inventory\StockInForm.resx" />

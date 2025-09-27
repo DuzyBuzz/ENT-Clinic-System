@@ -124,15 +124,26 @@ namespace ENT_Clinic_System.Helpers
         public static int PrintFooter(Graphics g, int leftMargin, int startY)
         {
             int y = startY;
-            string reportFooter = SettingsHelper.GetSetting("report_footer") ?? "ENT Clinic System @2025";
 
+            // Fetch the dynamic settings for clinic name and license number
+            string clinicName = SettingsHelper.GetSetting("clinic_name") ?? "Unknown Clinic Name";
+            string licenseNumber = SettingsHelper.GetSetting("license_number") ?? "Unknown License Number";
+
+            // Fonts
             using (Font footerFont = new Font("Segoe UI", 9))
+            using (Font bodyFont = new Font("Segoe UI", 10, FontStyle.Bold))
             {
-                g.DrawString(reportFooter, footerFont, Brushes.Black, leftMargin, y);
+                // Clinic Name (bold and positioned dynamically)
+                g.DrawString(clinicName, bodyFont, Brushes.Black, leftMargin + 350, y);
+                y += 20;
+
+                // License Number
+                g.DrawString(licenseNumber, footerFont, Brushes.Black, leftMargin + 500, y);
                 y += 20;
             }
 
             return y;
         }
+
     }
 }

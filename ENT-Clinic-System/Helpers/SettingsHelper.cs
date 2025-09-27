@@ -56,6 +56,28 @@ namespace ENT_Clinic_System.Helpers
                 }
             }
         }
+        /// <summary>
+        /// Update or insert a system setting value.
+        /// </summary>
+        public static void UpdateSetting(string key, string value)
+        {
+            using (var conn = DBConfig.GetConnection())
+            using (var cmd = new MySqlCommand(@"
+        INSERT INTO system_settings (setting_key, setting_value)
+        VALUES (@key, @value)
+        ON DUPLICATE KEY UPDATE setting_value = @value;", conn))
+            {
+                conn.Open();
+                cmd.Parameters.AddWithValue("@key", key);
+                cmd.Parameters.AddWithValue("@value", value);
+                cmd.ExecuteNonQuery();
+            }
+
+            // 🔹 Refresh cache immediately so new value is returned
+            LoadSettings();
+        }
+
+
     }
 }
 

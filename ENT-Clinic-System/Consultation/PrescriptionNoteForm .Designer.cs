@@ -1,4 +1,4 @@
-﻿namespace ENT_Clinic_System.Inventory
+﻿namespace ENT_Clinic_System.Consultation
 {
     partial class PrescriptionNoteForm
     {

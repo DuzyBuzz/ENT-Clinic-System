@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Text.Json;
 using System.Windows.Forms;
-
 
 namespace ENT_Clinic_System.Consultation
 {
@@ -15,27 +15,35 @@ namespace ENT_Clinic_System.Consultation
     {
         private Dictionary<string, List<CheckBox>> categoryCheckBoxes = new Dictionary<string, List<CheckBox>>();
         private DGVCrudHelper crudHelper;
-        private int patientId; // TODO: replace with actual patient ID lookup
+        private int patientId;
+        private int consultationId;
+        private PrintDocument printDocument;
 
-        public LabRequestForm(int patientId)
+        public LabRequestForm(int patientId, int consultationId)
         {
             InitializeComponent();
 
-            // Initialize CRUD helper
-            crudHelper = new DGVCrudHelper(labTestsDGV, "lab_tests", new List<string> { "id", "category", "test_name" }, "id");
+            crudHelper = new DGVCrudHelper(labTestsDGV, "lab_tests", new List<string> { "category", "test_name" }, "id");
             crudHelper.SetPageInfoLabel(pageInfoLabel);
             crudHelper.LoadData();
             labTestsDGV.Columns["id"].Visible = false;
 
             LoadLabTests();
 
-            // Event handlers
             selectAllButton.Click += (s, e) => SetAllCheckBoxes(true);
             deselectAllButton.Click += (s, e) => SetAllCheckBoxes(false);
-            saveRequestButton.Click += SaveRequestButton_Click;
+            saveRequestButton.Click += (s, e) => SaveRequest();
             nextPageButton.Click += (s, e) => crudHelper.NextPage();
             prevPageButton.Click += (s, e) => crudHelper.PreviousPage();
+            addTestsButton.Click += (s, e) => AddTests();
+            printButton.Click += (s, e) => ShowPreview();
+
             this.patientId = patientId;
+            this.consultationId = consultationId;
+
+            printDocument = new PrintDocument();
+            printDocument.PrintPage += PrintDocument_PrintPage;
+
             LoadPatientLabels(patientId);
         }
 
@@ -45,8 +53,8 @@ namespace ENT_Clinic_System.Consultation
             addressTextBox.Text = PatientDataHelper.GetPatientValue(patientId, "address");
             ageTextBox.Text = PatientDataHelper.GetPatientValue(patientId, "age");
             genderTextBox.Text = PatientDataHelper.GetPatientValue(patientId, "sex");
-
         }
+
         private void LoadLabTests()
         {
             labTestsPanel.Controls.Clear();
@@ -119,7 +127,7 @@ namespace ENT_Clinic_System.Consultation
                     cb.Checked = value;
         }
 
-        private void SaveRequestButton_Click(object sender, EventArgs e)
+        private void SaveRequest()
         {
             if (string.IsNullOrWhiteSpace(patientNameTextBox.Text))
             {
@@ -127,14 +135,39 @@ namespace ENT_Clinic_System.Consultation
                 return;
             }
 
-            // Collect selected test IDs
-            List<int> selectedTestIds = new List<int>();
+            List<int> selectedTestIds = GetSelectedTestIds();
+            if (selectedTestIds.Count == 0)
+            {
+                MessageBox.Show("Please select at least one lab test.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
+                string jsonTestIds = JsonSerializer.Serialize(selectedTestIds);
 
-                // Get all lab tests to map name -> ID
+                using (var cmd = new MySqlCommand(
+                    "INSERT INTO lab_requests (patient_id, consultation_id, test_ids, request_date) VALUES (@patient, @consultation, @tests, @date)", conn))
+                {
+                    cmd.Parameters.AddWithValue("@patient", patientId);
+                    cmd.Parameters.AddWithValue("@consultation", consultationId);
+                    cmd.Parameters.AddWithValue("@tests", jsonTestIds);
+                    cmd.Parameters.AddWithValue("@date", datePicker.Value.Date);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            MessageBox.Show("Lab request saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            crudHelper.LoadData();
+        }
+
+        private List<int> GetSelectedTestIds()
+        {
+            List<int> selectedTestIds = new List<int>();
+            using (var conn = DBConfig.GetConnection())
+            {
+                conn.Open();
                 var testNameToId = new Dictionary<string, int>();
                 using (var cmd = new MySqlCommand("SELECT id, test_name FROM lab_tests", conn))
                 using (var reader = cmd.ExecuteReader())
@@ -143,48 +176,16 @@ namespace ENT_Clinic_System.Consultation
                         testNameToId[reader.GetString("test_name")] = reader.GetInt32("id");
                 }
 
-                // Collect selected test IDs from checkboxes
                 foreach (var cat in categoryCheckBoxes.Keys)
-                {
                     foreach (var cb in categoryCheckBoxes[cat])
-                    {
                         if (cb.Checked && testNameToId.ContainsKey(cb.Text))
                             selectedTestIds.Add(testNameToId[cb.Text]);
-                    }
-                }
-
-                if (selectedTestIds.Count == 0)
-                {
-                    MessageBox.Show("Please select at least one lab test.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Insert a single lab request with JSON array of test IDs
-                string jsonTestIds = JsonSerializer.Serialize(selectedTestIds);
-
-
-                using (var cmd = new MySqlCommand(
-                    "INSERT INTO lab_requests (patient_id, test_ids, request_date) VALUES (@patient, @tests, @date)", conn))
-                {
-                    // TODO: replace with actual patient ID lookup
-                    int patientId = 2;
-
-                    cmd.Parameters.AddWithValue("@patient", patientId);
-                    cmd.Parameters.AddWithValue("@tests", jsonTestIds);
-                    cmd.Parameters.AddWithValue("@date", datePicker.Value.Date);
-                    cmd.ExecuteNonQuery();
-                }
             }
-
-            MessageBox.Show("Lab request saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Optionally, refresh your CRUD DataGridView if you want
-            crudHelper.LoadData();
+            return selectedTestIds;
         }
 
-        private void addTestsButton_Click(object sender, EventArgs e)
+        private void AddTests()
         {
-            // 1. Validate inputs
             string category = categoryComboBox.Text.Trim();
             string testName = testNameTextBox.Text.Trim();
 
@@ -206,12 +207,10 @@ namespace ENT_Clinic_System.Consultation
                 {
                     conn.Open();
 
-                    // 2. Check if this test already exists in the same category
                     using (var checkCmd = new MySqlCommand("SELECT COUNT(*) FROM lab_tests WHERE category=@category AND test_name=@test", conn))
                     {
                         checkCmd.Parameters.AddWithValue("@category", category);
                         checkCmd.Parameters.AddWithValue("@test", testName);
-
                         int exists = Convert.ToInt32(checkCmd.ExecuteScalar());
                         if (exists > 0)
                         {
@@ -220,21 +219,17 @@ namespace ENT_Clinic_System.Consultation
                         }
                     }
 
-                    // 3. Insert new test
                     using (var insertCmd = new MySqlCommand("INSERT INTO lab_tests (category, test_name) VALUES (@category, @test)", conn))
                     {
                         insertCmd.Parameters.AddWithValue("@category", category);
                         insertCmd.Parameters.AddWithValue("@test", testName);
-
                         insertCmd.ExecuteNonQuery();
                     }
                 }
 
                 MessageBox.Show("Lab test added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // 4. Optional: refresh the lab test DataGridView / panel
-                crudHelper.LoadData();   // if using your DGVCrudHelper
-                LoadLabTests();          // reload dynamic checkboxes panel
+                crudHelper.LoadData();
+                LoadLabTests();
             }
             catch (Exception ex)
             {
@@ -242,27 +237,22 @@ namespace ENT_Clinic_System.Consultation
             }
         }
 
-
-    private void printButton_Click(object sender, EventArgs e)
-    {
-        PrintDocument printDoc = new PrintDocument();
-        printDoc.PrintPage += PrintDoc_PrintPage;
-
-        PrintPreviewDialog preview = new PrintPreviewDialog();
-        preview.Document = printDoc;
-        preview.ShowDialog();
-    }
-
-        private void PrintDoc_PrintPage(object sender, PrintPageEventArgs e)
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
             int leftMargin = 20;
-            int y = 20; // starting Y position
+            int y = 20;
 
-            // 1. Header (centered columns but left-aligned text)
             y = WaterMarkHelper.PrintHeader(g, leftMargin, y, e.PageBounds.Width);
 
-            // 2. Patient Info in one line (bold labels)
+            DrawPatientInfo(g, leftMargin, ref y);
+            DrawLabTests(g, y, e.PageBounds.Width, 3, 260);
+
+            WaterMarkHelper.PrintFooter(g, (int)leftMargin, (int)(e.PageBounds.Bottom - 80));
+        }
+
+        private void DrawPatientInfo(Graphics g, int leftMargin, ref int y)
+        {
             using (Font labelFont = new Font("Segoe UI", 9, FontStyle.Bold))
             using (Font valueFont = new Font("Segoe UI", 9))
             {
@@ -284,20 +274,17 @@ namespace ENT_Clinic_System.Consultation
                 g.DrawString("Date: ", labelFont, Brushes.Black, x, y);
                 x += 40;
                 g.DrawString(datePicker.Value.ToShortDateString(), valueFont, Brushes.Black, x, y);
-                y += 40; // spacing before lab tests
+                y += 40;
             }
+        }
 
-            // 3. Lab Tests (center columns, but keep text left-aligned)
+        private void DrawLabTests(Graphics g, int yStart, int pageWidth, int colCount, int colWidth)
+        {
             using (Font categoryFont = new Font("Segoe UI", 10, FontStyle.Bold))
             using (Font testFont = new Font("Segoe UI", 9))
             {
-                int panelY = y;
-                int colCount = 3; // number of lab test columns
-                int colWidth = 260; // width for each column
+                int panelY = yStart;
                 int totalColsWidth = colCount * colWidth;
-                int pageWidth = e.PageBounds.Width;
-
-                // Center the group of columns
                 int panelX = (pageWidth - totalColsWidth) / 2;
                 int rowSpacing = 20;
                 int colIndex = 0;
@@ -305,36 +292,27 @@ namespace ENT_Clinic_System.Consultation
 
                 foreach (var cat in categoryCheckBoxes.Keys)
                 {
-                    // Draw category label
                     int catX = panelX + colIndex * colWidth;
                     int catY = panelY;
                     g.DrawString(cat, categoryFont, Brushes.Black, catX, catY);
 
                     int testYOffset = catY + 20;
-
                     foreach (var cb in categoryCheckBoxes[cat])
                     {
-                        // Draw checkbox (simple rectangle, not bitmap)
                         Rectangle boxRect = new Rectangle(catX, testYOffset, 14, 14);
                         g.DrawRectangle(Pens.Black, boxRect);
 
                         if (cb.Checked)
                         {
-                            // Draw check mark inside box
                             g.DrawLine(Pens.Black, boxRect.Left + 2, boxRect.Top + 7, boxRect.Left + 6, boxRect.Bottom - 2);
                             g.DrawLine(Pens.Black, boxRect.Left + 6, boxRect.Bottom - 2, boxRect.Right - 2, boxRect.Top + 2);
                         }
 
-                        // Draw test name (left-aligned relative to box)
                         g.DrawString(cb.Text, testFont, Brushes.Black, boxRect.Right + 5, testYOffset - 2);
-
                         testYOffset += 25;
                     }
 
-                    // Update row height
                     maxHeightInRow = Math.Max(maxHeightInRow, testYOffset);
-
-                    // Next column
                     colIndex++;
                     if (colIndex >= colCount)
                     {
@@ -344,15 +322,48 @@ namespace ENT_Clinic_System.Consultation
                     }
                 }
 
-                // If last row not full, adjust Y
                 if (colIndex != 0)
                     panelY = maxHeightInRow + 40;
-
-                y = panelY;
             }
+        }
 
-            // 4. Footer
-            y = WaterMarkHelper.PrintFooter(g, leftMargin, y);
+        public void ShowPreview()
+        {
+            PrintPreviewDialog preview = new PrintPreviewDialog
+            {
+                Document = printDocument,
+                Width = 1000,
+                Height = 700
+            };
+
+            preview.Shown += delegate
+            {
+                ToolStrip tool = preview.Controls.OfType<ToolStrip>().FirstOrDefault();
+                if (tool != null)
+                {
+                    // hide default print button
+                    foreach (ToolStripItem item in tool.Items)
+                        if (item is ToolStripButton btn && btn.ToolTipText.ToLower().Contains("print"))
+                            btn.Visible = false;
+
+                    ToolStripButton customPrint = new ToolStripButton("Print");
+                    customPrint.Click += delegate
+                    {
+                        PrintDialog printDialog = new PrintDialog();
+                        printDialog.Document = printDocument;
+                        printDialog.AllowSomePages = true;
+                        printDialog.AllowSelection = true;
+
+                        if (printDialog.ShowDialog() == DialogResult.OK)
+                            printDocument.Print();
+
+                        printDialog.Dispose();
+                    };
+                    tool.Items.Insert(0, customPrint);
+                }
+            };
+
+            preview.ShowDialog();
         }
 
         private void LabRequestForm_Load(object sender, EventArgs e)
