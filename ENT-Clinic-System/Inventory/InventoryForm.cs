@@ -225,7 +225,7 @@ namespace ENT_Clinic_System.Inventory
                 // ==========================
                 // 4️⃣ Attempt to Add Stock Movement
                 // ==========================
-                bool success = _inventoryHelper.AddStockMovement(itemId, "IN", quantity, expirationDate, discount, hasExpiration);
+                bool success = _inventoryHelper.AddStockMovement(itemId, "IN", quantity, expirationDate, hasExpiration);
 
                 if (success)
                 {
@@ -245,35 +245,35 @@ namespace ENT_Clinic_System.Inventory
         }
 
 
-        // ==========================
-        // Stock Out
-        // ==========================
-        private void btnStockOut_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int itemId = Convert.ToInt32(itemIdTextBox.Text.Trim());
-                int quantity = (int)quantityNumericUpDown.Value;
-                bool hasExpiration = false; // Stock out usually doesn't require expiration
-                DateTime expirationDate = DateTime.Now; // Placeholder
-                bool applyDiscount = discountCheckBox.Checked;
+        //// ==========================
+        //// Stock Out
+        //// ==========================
+        //private void btnStockOut_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int itemId = Convert.ToInt32(itemIdTextBox.Text.Trim());
+        //        int quantity = (int)quantityNumericUpDown.Value;
+        //        bool hasExpiration = false; // Stock out usually doesn't require expiration
+        //        DateTime expirationDate = DateTime.Now; // Placeholder
+        //        bool applyDiscount = discountCheckBox.Checked;
 
-                bool success = _inventoryHelper.AddStockMovement(itemId, "OUT", quantity, expirationDate, applyDiscount, hasExpiration);
-                if (success)
-                {
-                    MessageBox.Show(" Stock out successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadInventory();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to stock out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error stocking out: " + ex.Message, "Stock Out Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        //        bool success = _inventoryHelper.AddStockMovement(itemId, "OUT", quantity, expirationDate, applyDiscount, hasExpiration);
+        //        if (success)
+        //        {
+        //            MessageBox.Show(" Stock out successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //            LoadInventory();
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Failed to stock out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error stocking out: " + ex.Message, "Stock Out Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
         // ==========================
         // DataGridView Item Selection

@@ -1,6 +1,7 @@
 ﻿using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.InsertForms;
 using ENT_Clinic_System.Inventory;
+using ENT_Clinic_System.Payments;
 using ENT_Clinic_System.PrintingForms;
 using ENT_Clinic_System.UI;
 using ENT_Clinic_System.UserControls;
@@ -169,8 +170,7 @@ namespace ENT_Clinic_System
 
         private void stockOutButton_Click(object sender, EventArgs e)
         {
-            InvoiceForm invoiceForm = new InvoiceForm();
-            invoiceForm.Show();
+
         }
 
         private void systemToolStripMenuItem_Click(object sender, EventArgs e)
@@ -224,6 +224,18 @@ namespace ENT_Clinic_System
         private void stocToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StockReportPrinter.ShowPrintPreview();
+        }
+
+        private void itemsDispensingPaymentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InvoiceForm invoiceForm = new InvoiceForm();
+            invoiceForm.Show();
+        }
+
+        private void billingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BillingInvoiceForm billingInvoiceForm = new BillingInvoiceForm();
+            billingInvoiceForm.Show();
         }
     }
 

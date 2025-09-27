@@ -8,8 +8,9 @@ namespace ENT_Clinic_System.Consultation
     public partial class BillingForm : Form
     {
         private readonly int _consultationId;
+        private readonly int _patientId;
 
-        public BillingForm(int consultationId)
+        public BillingForm(int consultationId, int patientId)
         {
             InitializeComponent();
             _consultationId = consultationId;
@@ -18,6 +19,7 @@ namespace ENT_Clinic_System.Consultation
             feeComboBox.TextChanged += RecalculateFinalAmount;
             discountComboBox.TextChanged += RecalculateFinalAmount; // ✅ use TextChanged instead
             fullDiscountCheckBox.CheckedChanged += FullDiscountCheckBox_CheckedChanged;
+            _patientId = patientId;
         }
 
         // ------------------------------
@@ -103,17 +105,18 @@ namespace ENT_Clinic_System.Consultation
 
                     string sql = @"
                         INSERT INTO billing 
-                            (consultation_id, fee, discount_percent, discount_amount, final_amount, note, created_at) 
+                            (consultation_id, patient_id, fee, discount_percent, discount_amount, total_amount, note, created_at) 
                         VALUES 
-                            (@consultation_id, @fee, @discount_percent, @discount_amount, @final_amount, @note, NOW())";
+                            (@consultation_id, @patient_id, @fee, @discount_percent, @discount_amount, @total_amount, @note, NOW())";
 
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@consultation_id", _consultationId);
+                        cmd.Parameters.AddWithValue("@patient_id", _patientId);
                         cmd.Parameters.AddWithValue("@fee", fee);
                         cmd.Parameters.AddWithValue("@discount_percent", discountPercent);
                         cmd.Parameters.AddWithValue("@discount_amount", discountAmount);
-                        cmd.Parameters.AddWithValue("@final_amount", finalAmount);
+                        cmd.Parameters.AddWithValue("@total_amount", finalAmount);
                         cmd.Parameters.AddWithValue("@note", string.IsNullOrWhiteSpace(note) ? "" : note);
 
                         cmd.ExecuteNonQuery();

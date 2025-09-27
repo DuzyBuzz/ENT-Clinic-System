@@ -21,6 +21,7 @@
             this.groupBoxAvailable = new System.Windows.Forms.GroupBox();
             this.groupBoxSelected = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.noteComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -30,7 +31,6 @@
             this.subTotalTextBox = new System.Windows.Forms.TextBox();
             this.lblChange = new System.Windows.Forms.Label();
             this.lblDiscount = new System.Windows.Forms.Label();
-            this.itemsAmountRecievedTextBox = new System.Windows.Forms.TextBox();
             this.discountTextBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.lblAmountReceived = new System.Windows.Forms.Label();
@@ -40,7 +40,7 @@
             this.prescriptionDataGridView = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.patientsDataGridView = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
+            this.itemsAmountRecievedNumericUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.availableItemsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedItemsDataGridView)).BeginInit();
             this.groupBoxAvailable.SuspendLayout();
@@ -50,6 +50,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.prescriptionDataGridView)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemsAmountRecievedNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // availableItemsDataGridView
@@ -107,6 +108,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.itemsAmountRecievedNumericUpDown);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.noteComboBox);
@@ -117,7 +119,6 @@
             this.groupBox3.Controls.Add(this.subTotalTextBox);
             this.groupBox3.Controls.Add(this.lblChange);
             this.groupBox3.Controls.Add(this.lblDiscount);
-            this.groupBox3.Controls.Add(this.itemsAmountRecievedTextBox);
             this.groupBox3.Controls.Add(this.discountTextBox);
             this.groupBox3.Controls.Add(this.saveButton);
             this.groupBox3.Controls.Add(this.lblAmountReceived);
@@ -130,6 +131,17 @@
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Payment";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(183, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(17, 15);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "%";
             // 
             // label5
             // 
@@ -221,15 +233,6 @@
             this.lblDiscount.Size = new System.Drawing.Size(107, 15);
             this.lblDiscount.TabIndex = 3;
             this.lblDiscount.Text = "Discount Amount:";
-            // 
-            // itemsAmountRecievedTextBox
-            // 
-            this.itemsAmountRecievedTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.itemsAmountRecievedTextBox.Location = new System.Drawing.Point(374, 26);
-            this.itemsAmountRecievedTextBox.Name = "itemsAmountRecievedTextBox";
-            this.itemsAmountRecievedTextBox.Size = new System.Drawing.Size(120, 23);
-            this.itemsAmountRecievedTextBox.TabIndex = 10;
             // 
             // discountTextBox
             // 
@@ -339,16 +342,17 @@
             this.patientsDataGridView.Size = new System.Drawing.Size(278, 212);
             this.patientsDataGridView.TabIndex = 0;
             // 
-            // label1
+            // itemsAmountRecievedNumericUpDown
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(183, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(17, 15);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "%";
+            this.itemsAmountRecievedNumericUpDown.Location = new System.Drawing.Point(374, 32);
+            this.itemsAmountRecievedNumericUpDown.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.itemsAmountRecievedNumericUpDown.Name = "itemsAmountRecievedNumericUpDown";
+            this.itemsAmountRecievedNumericUpDown.Size = new System.Drawing.Size(120, 23);
+            this.itemsAmountRecievedNumericUpDown.TabIndex = 19;
             // 
             // InvoiceForm
             // 
@@ -367,7 +371,8 @@
             this.MaximizeBox = false;
             this.Name = "InvoiceForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Items Invoice Manager";
+            this.Text = "Items Dispensing & Payment";
+            this.Load += new System.EventHandler(this.InvoiceForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.availableItemsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedItemsDataGridView)).EndInit();
             this.groupBoxAvailable.ResumeLayout(false);
@@ -378,6 +383,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.prescriptionDataGridView)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemsAmountRecievedNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -395,7 +401,6 @@
         private System.Windows.Forms.TextBox discountTextBox;
         private System.Windows.Forms.TextBox totalAmountTextBox;
         private System.Windows.Forms.Label lblAmountReceived;
-        private System.Windows.Forms.TextBox itemsAmountRecievedTextBox;
         private System.Windows.Forms.Label lblChange;
         private System.Windows.Forms.TextBox changeTextBox;
         private System.Windows.Forms.Button saveButton;
@@ -409,5 +414,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox discountPercentComboBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown itemsAmountRecievedNumericUpDown;
     }
 }

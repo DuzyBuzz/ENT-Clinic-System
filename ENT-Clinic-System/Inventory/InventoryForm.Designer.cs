@@ -187,7 +187,7 @@
             this.categoryCombobox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(579, 13);
+            this.categoryCombobox.Location = new System.Drawing.Point(579, 6);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(204, 28);

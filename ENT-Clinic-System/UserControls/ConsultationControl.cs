@@ -192,7 +192,7 @@ namespace ENT_Clinic_System.UserControls
                 MessageBox.Show(message, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 int latestConsultationId = LatestIdHelper.GetLatestId("consultation", "consultation_id");
                 Debug.WriteLine($"Latest Consultation ID: {latestConsultationId}");
-                BillingForm billingForm = new BillingForm(latestConsultationId);
+                BillingForm billingForm = new BillingForm(latestConsultationId, _patientId);
                 billingForm.ShowDialog();
 
                 // Reset UI

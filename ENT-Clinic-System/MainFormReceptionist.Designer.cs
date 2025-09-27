@@ -32,9 +32,11 @@
             this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockOutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.stockInButton = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.returnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutENTSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patientQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,8 +55,8 @@
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.returnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemsDispensingPaymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,12 +78,22 @@
             // salesReportToolStripMenuItem
             // 
             this.salesReportToolStripMenuItem.Name = "salesReportToolStripMenuItem";
-            this.salesReportToolStripMenuItem.Size = new System.Drawing.Size(128, 30);
+            this.salesReportToolStripMenuItem.Size = new System.Drawing.Size(137, 30);
             this.salesReportToolStripMenuItem.Text = "Sales";
             this.salesReportToolStripMenuItem.Click += new System.EventHandler(this.salesReportToolStripMenuItem_Click);
             // 
+            // stocToolStripMenuItem
+            // 
+            this.stocToolStripMenuItem.Name = "stocToolStripMenuItem";
+            this.stocToolStripMenuItem.Size = new System.Drawing.Size(137, 30);
+            this.stocToolStripMenuItem.Text = "Stocks";
+            this.stocToolStripMenuItem.Click += new System.EventHandler(this.stocToolStripMenuItem_Click);
+            // 
             // stockOutButton
             // 
+            this.stockOutButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.billingToolStripMenuItem,
+            this.itemsDispensingPaymentToolStripMenuItem});
             this.stockOutButton.Name = "stockOutButton";
             this.stockOutButton.Size = new System.Drawing.Size(180, 30);
             this.stockOutButton.Text = "Invoice";
@@ -103,6 +115,13 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(97, 29);
             this.settingsToolStripMenuItem.Text = "Inventory";
+            // 
+            // returnToolStripMenuItem
+            // 
+            this.returnToolStripMenuItem.Name = "returnToolStripMenuItem";
+            this.returnToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.returnToolStripMenuItem.Text = "Return";
+            this.returnToolStripMenuItem.Click += new System.EventHandler(this.returnToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -262,19 +281,19 @@
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
             // 
-            // returnToolStripMenuItem
+            // billingToolStripMenuItem
             // 
-            this.returnToolStripMenuItem.Name = "returnToolStripMenuItem";
-            this.returnToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
-            this.returnToolStripMenuItem.Text = "Return";
-            this.returnToolStripMenuItem.Click += new System.EventHandler(this.returnToolStripMenuItem_Click);
+            this.billingToolStripMenuItem.Name = "billingToolStripMenuItem";
+            this.billingToolStripMenuItem.Size = new System.Drawing.Size(298, 30);
+            this.billingToolStripMenuItem.Text = "Billing";
+            this.billingToolStripMenuItem.Click += new System.EventHandler(this.billingToolStripMenuItem_Click);
             // 
-            // stocToolStripMenuItem
+            // itemsDispensingPaymentToolStripMenuItem
             // 
-            this.stocToolStripMenuItem.Name = "stocToolStripMenuItem";
-            this.stocToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
-            this.stocToolStripMenuItem.Text = "Stocks";
-            this.stocToolStripMenuItem.Click += new System.EventHandler(this.stocToolStripMenuItem_Click);
+            this.itemsDispensingPaymentToolStripMenuItem.Name = "itemsDispensingPaymentToolStripMenuItem";
+            this.itemsDispensingPaymentToolStripMenuItem.Size = new System.Drawing.Size(298, 30);
+            this.itemsDispensingPaymentToolStripMenuItem.Text = "Items Dispensing & Payment";
+            this.itemsDispensingPaymentToolStripMenuItem.Click += new System.EventHandler(this.itemsDispensingPaymentToolStripMenuItem_Click);
             // 
             // MainFormReceptionist
             // 
@@ -329,5 +348,7 @@
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem returnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stocToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem itemsDispensingPaymentToolStripMenuItem;
     }
 }

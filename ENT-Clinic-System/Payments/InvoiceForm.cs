@@ -130,7 +130,7 @@ namespace ENT_Clinic_System.Inventory
             selectedItemsDataGridView.KeyDown += DgvSelectedItems_KeyDown;
 
             saveButton.Click += BtnSave_Click;
-            itemsAmountRecievedTextBox.TextChanged += (s, e) => UpdateChangeDue();
+            itemsAmountRecievedNumericUpDown.TextChanged += (s, e) => UpdateChangeDue();
             patientsDataGridView.CellClick += DgvPatients_CellClick;
             prescriptionDataGridView.CellDoubleClick += DgvPrescriptions_CellDoubleClick;
 
@@ -308,7 +308,7 @@ namespace ENT_Clinic_System.Inventory
         // ================================
         private void UpdateChangeDue()
         {
-            if (decimal.TryParse(itemsAmountRecievedTextBox.Text, out decimal received) &&
+            if (decimal.TryParse(itemsAmountRecievedNumericUpDown.Text, out decimal received) &&
                 decimal.TryParse(totalAmountTextBox.Text, out decimal total))
             {
                 decimal change = received - total;
@@ -337,7 +337,7 @@ namespace ENT_Clinic_System.Inventory
                 customerName = "Walk-in";
 
             // 3. Parse amount received
-            if (!decimal.TryParse(itemsAmountRecievedTextBox.Text, out decimal amountReceived) || amountReceived <= 0)
+            if (!decimal.TryParse(itemsAmountRecievedNumericUpDown.Text, out decimal amountReceived) || amountReceived <= 0)
             {
                 MessageBox.Show("Enter valid amount received.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -418,5 +418,20 @@ namespace ENT_Clinic_System.Inventory
             }
         }
 
+        private void InvoiceForm_Load(object sender, EventArgs e)
+        {
+            // Populate combobox items from the same column
+            ComboBoxCollectionHelper.PopulateComboBox(
+                discountPercentComboBox,
+                "invoices",
+                "discount_percent"
+            );
+            // Populate combobox items from the same column
+            ComboBoxCollectionHelper.PopulateComboBox(
+                noteComboBox,
+                "invoices",
+                "note"
+            );
+        }
     }
 }

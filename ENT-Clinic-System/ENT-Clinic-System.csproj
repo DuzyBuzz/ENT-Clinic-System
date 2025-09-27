@@ -255,6 +255,7 @@
     <Compile Include="Payments\BillingInvoiceForm.Designer.cs">
       <DependentUpon>BillingInvoiceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PrintingFroms\BillingPrinter.cs" />
     <Compile Include="PrintingFroms\MedicalCertificatePrinter.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
