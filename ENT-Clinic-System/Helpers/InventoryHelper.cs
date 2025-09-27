@@ -38,41 +38,41 @@ namespace ENT_Clinic_System.Helpers
             return 0; // default if not found
         }
 
-        // ================================
-        // 🔹 Smart Price Calculation
-        // ================================
-        public (decimal BasePrice, decimal DiscountAmount, decimal PriceAfterDiscount,
-                decimal TaxAmount, decimal FinalPrice) CalculateFinalPrice(decimal sellingPrice, bool applyDiscount, int quantity = 1)
-        {
-            decimal discountPercent = applyDiscount ? GetSettingValue("discount_percentage") : 0;
-            decimal taxPercent = GetSettingValue("tax_percentage");
-            //decimal markupPercent = GetSettingValue("markup_percentage");
+        //// ================================
+        //// 🔹 Smart Price Calculation
+        //// ================================
+        //public (decimal BasePrice, decimal DiscountAmount, decimal PriceAfterDiscount,
+        //        decimal TaxAmount, decimal FinalPrice) CalculateFinalPrice(decimal sellingPrice, bool applyDiscount, int quantity = 1)
+        //{
+        //    decimal discountPercent = applyDiscount ? GetSettingValue("discount_percentage") : 0;
+        //    decimal taxPercent = GetSettingValue("tax_percentage");
+        //    //decimal markupPercent = GetSettingValue("markup_percentage");
 
 
-            //// Step 1: Compute base selling price = cost + markup
-            //decimal sellingPrice = costPrice * (1 + markupPercent / 100);
+        //    //// Step 1: Compute base selling price = cost + markup
+        //    //decimal sellingPrice = costPrice * (1 + markupPercent / 100);
 
-            // Step 2: Multiply by quantity
-            decimal basePrice = sellingPrice * quantity;
+        //    // Step 2: Multiply by quantity
+        //    decimal basePrice = sellingPrice * quantity;
 
-            // Step 3: Apply discount first
-            decimal discountAmount = basePrice * (discountPercent / 100);
-            decimal priceAfterDiscount = basePrice - discountAmount;
+        //    // Step 3: Apply discount first
+        //    decimal discountAmount = basePrice * (discountPercent / 100);
+        //    decimal priceAfterDiscount = basePrice - discountAmount;
 
-            // Step 4: Apply tax after discount
-            decimal taxAmount = priceAfterDiscount * (taxPercent / 100);
+        //    // Step 4: Apply tax after discount
+        //    decimal taxAmount = priceAfterDiscount * (taxPercent / 100);
 
-            // Step 5: Final price
-            decimal finalPrice = priceAfterDiscount + taxAmount;
+        //    // Step 5: Final price
+        //    decimal finalPrice = priceAfterDiscount + taxAmount;
 
-            return (basePrice, discountAmount, priceAfterDiscount, taxAmount, finalPrice);
-        }
+        //    return (basePrice, discountAmount, priceAfterDiscount, taxAmount, finalPrice);
+        //}
 
 
         // ================================
         // 🔹 Stock Movements (insert + sales tracking)
         // ================================
-        public bool AddStockMovement(int itemId, string movementType, int quantity, DateTime expirationDate, bool applyDiscount, bool hasExpiration)
+        public bool AddStockMovement(int itemId, string movementType, int quantity, DateTime expirationDate, bool hasExpiration)
         {
             try
             {
@@ -90,21 +90,17 @@ namespace ENT_Clinic_System.Helpers
                         if (result != null) sellingPrice = Convert.ToDecimal(result);
                     }
 
-                    // 🔹 Step 2: Calculate price details
-                    var priceDetails = CalculateFinalPrice(sellingPrice, applyDiscount, quantity);
-
-                    // 🔹 Step 3: Insert into stock_movements
+                    // 🔹 Step 2: Insert into stock_movements
                     string movementQuery = @"INSERT INTO stock_movements 
-                (item_id, movement_type, quantity, discount_amount, tax_amount, expiration_date)
-                VALUES (@itemId, @movementType, @quantity, @discount_amount, @tax_amount, @expiration_date)";
+                (item_id, movement_type, quantity, unit_price, expiration_date)
+                VALUES (@itemId, @movementType, @quantity, @unit_price, @expiration_date)";
 
                     using (var cmd = new MySqlCommand(movementQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@itemId", itemId);
                         cmd.Parameters.AddWithValue("@movementType", movementType);
                         cmd.Parameters.AddWithValue("@quantity", quantity);
-                        cmd.Parameters.AddWithValue("@discount_amount", priceDetails.DiscountAmount);
-                        cmd.Parameters.AddWithValue("@tax_amount", priceDetails.TaxAmount);
+                        cmd.Parameters.AddWithValue("@unit_price", sellingPrice);
 
                         if (hasExpiration)
                             cmd.Parameters.AddWithValue("@expiration_date", expirationDate);
@@ -114,34 +110,16 @@ namespace ENT_Clinic_System.Helpers
                         cmd.ExecuteNonQuery();
                     }
 
-                    // 🔹 Step 4: If Stock OUT, also insert into sales
-                    if (movementType.Equals("OUT", StringComparison.OrdinalIgnoreCase))
-                    {
-                        string salesQuery = @"INSERT INTO sales 
-                  (item_id, quantity, unit_price, discount_amount, tax_amount, total_price)
-                  VALUES (@itemId, @quantity, @unit_price, @discount_amount, @tax_amount, @total_price)";
-
-                        using (var cmd = new MySqlCommand(salesQuery, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@itemId", itemId);
-                            cmd.Parameters.AddWithValue("@quantity", quantity);
-                            cmd.Parameters.AddWithValue("@unit_price", sellingPrice); // ✅ unit price only
-                            cmd.Parameters.AddWithValue("@discount_amount", priceDetails.DiscountAmount);
-                            cmd.Parameters.AddWithValue("@tax_amount", priceDetails.TaxAmount);
-                            cmd.Parameters.AddWithValue("@total_price", priceDetails.FinalPrice);
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error in stock movement/sales: " + ex.Message);
+                MessageBox.Show("Error in stock movement: " + ex.Message);
                 return false;
             }
         }
+
 
 
 
@@ -268,7 +246,17 @@ namespace ENT_Clinic_System.Helpers
                 return false;
             }
         }
-        public int AddInvoice(string customerName, DataTable items, decimal amountReceived, string discountPercentText, string note, string invoiceType)
+        public int AddInvoice(
+            string customerName,
+            DataTable items,
+            decimal subtotal,
+            decimal discountAmount,
+            decimal netTotal,
+            decimal amountReceived,
+            decimal changeDue,
+            string discountPercentText,
+            string note,
+            string invoiceType)
         {
             try
             {
@@ -279,36 +267,16 @@ namespace ENT_Clinic_System.Helpers
                     {
                         try
                         {
-                            // 🔹 Step 1: Calculate subtotal
-                            decimal subtotal = 0;
-                            foreach (DataRow row in items.Rows)
-                            {
-                                int qty = Convert.ToInt32(row["quantity"]);
-                                decimal price = Convert.ToDecimal(row["unit_price"]);
-                                subtotal += price * qty;
-                            }
-
-                            // 🔹 Step 2: Calculate discount + tax
+                            // 🔹 Parse discount percent
                             decimal discountPercent = 0;
                             decimal.TryParse(discountPercentText, out discountPercent);
 
-                            decimal discountAmount = subtotal * (discountPercent / 100);
-
-                            // If you want tax → pull from system_settings
-                            decimal taxPercent = GetSettingValue("tax_percentage");
-                            decimal taxTotal = (subtotal - discountAmount) * (taxPercent / 100);
-
-                            decimal netTotal = subtotal - discountAmount + taxTotal;
-
-                            decimal changeDue = amountReceived - netTotal;
-                            if (changeDue < 0) changeDue = 0;
-
-                            // 🔹 Step 3: Insert invoice header (✅ correct columns)
+                            // 🔹 Step 1: Insert invoice header (no more calculations here)
                             string invoiceQuery = @"
                         INSERT INTO invoices 
-                        (customer_name, invoice_date, subtotal, discount_amount, tax_total, net_total, 
+                        (customer_name, invoice_date, subtotal, discount_amount, net_total, 
                          amount_received, change_due, invoice_type, note, discount_percent)
-                        VALUES (@customer_name, NOW(), @subtotal, @discount_amount, @tax_total, @net_total, 
+                        VALUES (@customer_name, NOW(), @subtotal, @discount_amount, @net_total, 
                                 @amount_received, @change_due, @invoice_type, @note, @discount_percent);
                         SELECT LAST_INSERT_ID();";
 
@@ -318,7 +286,6 @@ namespace ENT_Clinic_System.Helpers
                                 cmd.Parameters.AddWithValue("@customer_name", customerName);
                                 cmd.Parameters.AddWithValue("@subtotal", subtotal);
                                 cmd.Parameters.AddWithValue("@discount_amount", discountAmount);
-                                cmd.Parameters.AddWithValue("@tax_total", taxTotal);
                                 cmd.Parameters.AddWithValue("@net_total", netTotal);
                                 cmd.Parameters.AddWithValue("@amount_received", amountReceived);
                                 cmd.Parameters.AddWithValue("@change_due", changeDue);
@@ -329,39 +296,41 @@ namespace ENT_Clinic_System.Helpers
                                 invoiceId = Convert.ToInt32(cmd.ExecuteScalar());
                             }
 
-                            // 🔹 Step 4: Insert items if invoice type is ITEMS
-                            if (invoiceType == "ITEMS")
+                            // 🔹 Step 2: Insert invoice items
+                            foreach (DataRow row in items.Rows)
                             {
-                                foreach (DataRow row in items.Rows)
+                                int itemId = Convert.ToInt32(row["item_id"]);
+                                int qty = Convert.ToInt32(row["quantity"]);
+                                decimal price = Convert.ToDecimal(row["unit_price"]);
+                                decimal itemTotal = price * qty;
+
+                                // 🔹 NEW: Handle prescription_id if available
+                                int prescriptionId = row.Table.Columns.Contains("prescription_id")
+                                    ? Convert.ToInt32(row["prescription_id"])
+                                    : 0;
+
+                                string itemQuery = @"
+                            INSERT INTO invoice_items 
+                            (invoice_id, item_id, quantity, unit_price, total_price, prescription_id)
+                            VALUES (@invoice_id, @item_id, @quantity, @unit_price, @total_price, @prescription_id)";
+
+                                using (var cmd = new MySqlCommand(itemQuery, conn, transaction))
                                 {
-                                    int itemId = Convert.ToInt32(row["item_id"]);
-                                    int qty = Convert.ToInt32(row["quantity"]);
-                                    decimal price = Convert.ToDecimal(row["unit_price"]);
-                                    decimal itemTotal = price * qty;
+                                    cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
+                                    cmd.Parameters.AddWithValue("@item_id", itemId);
+                                    cmd.Parameters.AddWithValue("@quantity", qty);
+                                    cmd.Parameters.AddWithValue("@unit_price", price);
+                                    cmd.Parameters.AddWithValue("@total_price", itemTotal);
+                                    cmd.Parameters.AddWithValue("@prescription_id", prescriptionId > 0 ? (object)prescriptionId : DBNull.Value);
 
-                                    string itemQuery = @"
-                                INSERT INTO invoice_items 
-                                (invoice_id, item_id, quantity, unit_price, total_price)
-                                VALUES (@invoice_id, @item_id, @quantity, @unit_price, @total_price)";
-
-                                    using (var cmd = new MySqlCommand(itemQuery, conn, transaction))
-                                    {
-                                        cmd.Parameters.AddWithValue("@invoice_id", invoiceId);
-                                        cmd.Parameters.AddWithValue("@item_id", itemId);
-                                        cmd.Parameters.AddWithValue("@quantity", qty);
-                                        cmd.Parameters.AddWithValue("@unit_price", price);
-                                        cmd.Parameters.AddWithValue("@total_price", itemTotal);
-                                        cmd.ExecuteNonQuery();
-                                    }
-
-                                    // 🔹 Update stock
-                                    AddStockMovement(itemId, "OUT", qty, DateTime.Now, false, false);
+                                    cmd.ExecuteNonQuery();
                                 }
-                            }
-                            else
-                            {
-                                // For consultation bills only
-                                MessageBox.Show("This is a billing-only invoice (no items).");
+
+                                // 🔹 Update stock only for ITEMS
+                                if (invoiceType == "ITEMS")
+                                {
+                                    AddStockMovement(itemId, "OUT", qty, DateTime.Now, false);
+                                }
                             }
 
                             transaction.Commit();
@@ -381,6 +350,9 @@ namespace ENT_Clinic_System.Helpers
                 return -1;
             }
         }
+
+
+
 
 
 
