@@ -1,6 +1,7 @@
 ﻿using ENT_Clinic_System.Helpers;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
@@ -144,26 +145,31 @@ namespace ENT_Clinic_System.PrintingForms
             float leftMargin = 5;
             float lineHeight = fontRegular.GetHeight(e.Graphics);
 
-            // Header
+            // ================= HEADER =================
             e.Graphics.DrawString(clinicName, fontHeader, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(clinicAddress, fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Tel: {clinicTel}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString(new string('=', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString(new string('=', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // Billing Info
-            string patient = "", billingDate = "";
-            decimal totalFee = 0, discountAmount = 0, netTotal = 0, amountReceived = 0, changeDue = 0;
+            // ================= VARIABLES =================
+            string patient = "", billingDate = "", paymentStatus = "";
+            decimal totalFee = 0, discountAmount = 0, netTotal = 0, amountReceived = 0, balance = 0, changeDue = 0;
+
+            List<(DateTime date, decimal amount, decimal balance, decimal changeDue, string note)> payments
+                = new List<(DateTime, decimal, decimal, decimal, string)>();
 
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
 
-                string qBilling = @"SELECT b.billing_id, b.consultation_id, p.full_name, b.fee, 
-                                    b.discount_percent, b.discount_amount, b.total_amount, 
-                                    b.amount_paid, b.change_due, b.note, b.created_at
-                                    FROM billing b
-                                    JOIN patients p ON b.patient_id = p.patient_id
-                                    WHERE b.billing_id=@id";
+                // --- Get billing summary ---
+                string qBilling = @"SELECT b.billing_id, p.full_name, b.fee, 
+                                   b.discount_amount, b.total_amount, 
+                                   b.amount_paid, b.balance, 
+                                   b.payment_status, b.created_at
+                            FROM billing b
+                            JOIN patients p ON b.patient_id = p.patient_id
+                            WHERE b.billing_id=@id";
                 using (var cmd = new MySqlCommand(qBilling, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", billingId);
@@ -177,34 +183,100 @@ namespace ENT_Clinic_System.PrintingForms
                             discountAmount = reader["discount_amount"] != DBNull.Value ? Convert.ToDecimal(reader["discount_amount"]) : 0;
                             netTotal = reader["total_amount"] != DBNull.Value ? Convert.ToDecimal(reader["total_amount"]) : 0;
                             amountReceived = reader["amount_paid"] != DBNull.Value ? Convert.ToDecimal(reader["amount_paid"]) : 0;
-                            changeDue = reader["change_due"] != DBNull.Value ? Convert.ToDecimal(reader["change_due"]) : 0;
+                            balance = reader["balance"] != DBNull.Value ? Convert.ToDecimal(reader["balance"]) : 0;
+                            paymentStatus = reader["payment_status"].ToString();
+                        }
+                    }
+                }
+
+                // --- Get payments history ---
+                string qPayments = @"SELECT payment_date, amount, balance, change_due, note
+                             FROM billing_payments
+                             WHERE billing_id=@id
+                             ORDER BY payment_date ASC";
+                using (var cmd = new MySqlCommand(qPayments, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", billingId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime date = reader["payment_date"] != DBNull.Value ? Convert.ToDateTime(reader["payment_date"]) : DateTime.Now;
+                            decimal amt = reader["amount"] != DBNull.Value ? Convert.ToDecimal(reader["amount"]) : 0;
+                            decimal bal = reader["balance"] != DBNull.Value ? Convert.ToDecimal(reader["balance"]) : 0;
+                            decimal chg = reader["change_due"] != DBNull.Value ? Convert.ToDecimal(reader["change_due"]) : 0;
+                            string note = reader["note"].ToString();
+                            payments.Add((date, amt, bal, chg, note));
                         }
                     }
                 }
             }
 
-            e.Graphics.DrawString($"Billing ID: {billingId}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            // ================= BILLING INFO =================
+            string invoiceNo = "INV-" + billingId.ToString("D6");
+            e.Graphics.DrawString($"Invoice No: {invoiceNo}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
+
             e.Graphics.DrawString($"Patient: {patient}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Date: {billingDate}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // Fees
+            // ================= FEES =================
             e.Graphics.DrawString($"Fee: {currencySymbol}{totalFee:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Discount: {currencySymbol}{discountAmount:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Net Total: {currencySymbol}{netTotal:F2}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // Payment
-            e.Graphics.DrawString($"Amount Paid: {currencySymbol}{amountReceived:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString($"Change:      {currencySymbol}{changeDue:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString(new string('=', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            // ================= PAYMENTS HISTORY =================
+            e.Graphics.DrawString("Payments:", fontBold, Brushes.Black, leftMargin, y);
+            y += lineHeight;
 
-            // Footer
+            foreach (var p in payments)
+            {
+                // Show payment date
+                e.Graphics.DrawString($"{p.date:MM/dd HH:mm}", fontRegular, Brushes.Black, leftMargin, y);
+                y += lineHeight;
+
+                // Amount
+                e.Graphics.DrawString($"  Amount: {currencySymbol}{p.amount:F2}", fontRegular, Brushes.Black, leftMargin, y);
+                y += lineHeight;
+
+                // Balance
+                e.Graphics.DrawString($"  Balance: {currencySymbol}{p.balance:F2}", fontRegular, Brushes.Black, leftMargin, y);
+                y += lineHeight;
+
+                // Change
+                e.Graphics.DrawString($"  Change: {currencySymbol}{p.changeDue:F2}", fontRegular, Brushes.Black, leftMargin, y);
+                y += lineHeight;
+
+                // Note (if available)
+                if (!string.IsNullOrEmpty(p.note))
+                {
+                    e.Graphics.DrawString($"  Note: {p.note}", fontRegular, Brushes.Black, leftMargin, y);
+                    y += lineHeight;
+                }
+
+                // Separator line
+                e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y);
+                y += lineHeight;
+            }
+
+
+
+
+            // ================= SUMMARY =================
+            e.Graphics.DrawString($"Total Paid: {currencySymbol}{amountReceived:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString($"Balance:    {currencySymbol}{balance:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString($"Status:     {paymentStatus}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString(new string('=', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+
+            // ================= FOOTER =================
             if (!string.IsNullOrEmpty(reportFooter))
             {
                 e.Graphics.DrawString(reportFooter, fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-                e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+                e.Graphics.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             }
         }
+
+
     }
 }

@@ -174,7 +174,7 @@
             // 
             this.searchItemsTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchItemsTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchItemsTextBox.ForeColor = System.Drawing.Color.White;
+            this.searchItemsTextBox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.searchItemsTextBox.Location = new System.Drawing.Point(136, 11);
             this.searchItemsTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchItemsTextBox.Name = "searchItemsTextBox";
@@ -187,7 +187,7 @@
             this.categoryCombobox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(579, 6);
+            this.categoryCombobox.Location = new System.Drawing.Point(579, 13);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(204, 28);
