@@ -433,5 +433,20 @@ namespace ENT_Clinic_System.Inventory
                 "note"
             );
         }
+
+        private void searchItemtButton_Click(object sender, EventArgs e)
+        {
+            SearchHelper.Search(
+                dgv: availableItemsDataGridView,
+                tableName: "items",
+                columnNames: new string[] { "item_name", "description" },
+                filterControl: searchItemsTextBox
+            );
+        }
+
+        private void refreshPatientsButton_Click(object sender, EventArgs e)
+        {
+            LoadAvailableItems();
+        }
     }
 }

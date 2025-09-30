@@ -33,7 +33,6 @@
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stockOutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.stockInButton = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.returnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,8 +54,9 @@
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.billingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.itemsDispensingPaymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dispensingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,16 +89,6 @@
             this.stocToolStripMenuItem.Text = "Stocks";
             this.stocToolStripMenuItem.Click += new System.EventHandler(this.stocToolStripMenuItem_Click);
             // 
-            // stockOutButton
-            // 
-            this.stockOutButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.billingToolStripMenuItem,
-            this.itemsDispensingPaymentToolStripMenuItem});
-            this.stockOutButton.Name = "stockOutButton";
-            this.stockOutButton.Size = new System.Drawing.Size(180, 30);
-            this.stockOutButton.Text = "Invoice";
-            this.stockOutButton.Click += new System.EventHandler(this.stockOutButton_Click);
-            // 
             // stockInButton
             // 
             this.stockInButton.Name = "stockInButton";
@@ -110,7 +100,6 @@
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stockInButton,
-            this.stockOutButton,
             this.returnToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(97, 29);
@@ -192,6 +181,7 @@
             this.patientsToolStripMenuItem,
             this.consultationsToolStripMenuItem,
             this.settingsToolStripMenuItem,
+            this.paymentToolStripMenuItem,
             this.reportsToolStripMenuItem,
             this.helpToolStripMenuItem,
             this.closeButton,
@@ -281,19 +271,29 @@
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
             // 
-            // billingToolStripMenuItem
+            // paymentToolStripMenuItem
             // 
-            this.billingToolStripMenuItem.Name = "billingToolStripMenuItem";
-            this.billingToolStripMenuItem.Size = new System.Drawing.Size(298, 30);
-            this.billingToolStripMenuItem.Text = "Billing";
-            this.billingToolStripMenuItem.Click += new System.EventHandler(this.billingToolStripMenuItem_Click);
+            this.paymentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.billingToolStripMenuItem1,
+            this.dispensingToolStripMenuItem});
+            this.paymentToolStripMenuItem.Name = "paymentToolStripMenuItem";
+            this.paymentToolStripMenuItem.Size = new System.Drawing.Size(93, 29);
+            this.paymentToolStripMenuItem.Text = "Payment";
+            this.paymentToolStripMenuItem.Click += new System.EventHandler(this.paymentToolStripMenuItem_Click);
             // 
-            // itemsDispensingPaymentToolStripMenuItem
+            // billingToolStripMenuItem1
             // 
-            this.itemsDispensingPaymentToolStripMenuItem.Name = "itemsDispensingPaymentToolStripMenuItem";
-            this.itemsDispensingPaymentToolStripMenuItem.Size = new System.Drawing.Size(298, 30);
-            this.itemsDispensingPaymentToolStripMenuItem.Text = "Items Dispensing & Payment";
-            this.itemsDispensingPaymentToolStripMenuItem.Click += new System.EventHandler(this.itemsDispensingPaymentToolStripMenuItem_Click);
+            this.billingToolStripMenuItem1.Name = "billingToolStripMenuItem1";
+            this.billingToolStripMenuItem1.Size = new System.Drawing.Size(180, 30);
+            this.billingToolStripMenuItem1.Text = "Billing";
+            this.billingToolStripMenuItem1.Click += new System.EventHandler(this.billingToolStripMenuItem_Click);
+            // 
+            // dispensingToolStripMenuItem
+            // 
+            this.dispensingToolStripMenuItem.Name = "dispensingToolStripMenuItem";
+            this.dispensingToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.dispensingToolStripMenuItem.Text = "Dispensing";
+            this.dispensingToolStripMenuItem.Click += new System.EventHandler(this.itemsDispensingPaymentToolStripMenuItem_Click);
             // 
             // MainFormReceptionist
             // 
@@ -324,7 +324,6 @@
 
         private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem stockOutButton;
         private System.Windows.Forms.ToolStripMenuItem stockInButton;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -348,7 +347,8 @@
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem returnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stocToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem itemsDispensingPaymentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem paymentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem dispensingToolStripMenuItem;
     }
 }

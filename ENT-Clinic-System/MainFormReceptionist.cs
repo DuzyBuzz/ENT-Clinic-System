@@ -237,6 +237,11 @@ namespace ENT_Clinic_System
             BillingInvoiceForm billingInvoiceForm = new BillingInvoiceForm();
             billingInvoiceForm.Show();
         }
+
+        private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

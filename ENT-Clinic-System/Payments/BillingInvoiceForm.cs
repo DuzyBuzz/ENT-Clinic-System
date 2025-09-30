@@ -353,6 +353,12 @@ namespace ENT_Clinic_System.Payments
 
         private void searchPatientButton_Click(object sender, EventArgs e)
         {
+            SearchHelper.Search(
+                dgv: billingDataGridView,
+                tableName: "billing_with_patient",
+                columnNames: new string[] { "patient_name" },
+                filterControl: searchPatientTextBox
+            );
 
 
 
@@ -383,6 +389,23 @@ namespace ENT_Clinic_System.Payments
         private void labelRemainingBalance_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void refreshPatientsButton_Click(object sender, EventArgs e)
+        {
+            SortBillingDate();
+            billingDateFromDateTimePicker.Value = DateTime.Now.AddMonths(-1);
+            billingtDateToDateTimePicker.Value = DateTime.Now;
+        }
+
+        private void billingDateFromDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            SortBillingDate();
+        }
+
+        private void billingtDateToDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            SortBillingDate();
         }
     }
 }

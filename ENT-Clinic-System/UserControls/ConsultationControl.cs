@@ -192,6 +192,8 @@ namespace ENT_Clinic_System.UserControls
                 MessageBox.Show(message, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 int latestConsultationId = LatestIdHelper.GetLatestId("consultation", "consultation_id");
                 Debug.WriteLine($"Latest Consultation ID: {latestConsultationId}");
+                PrescriptionForm prescriptionForm = new PrescriptionForm(_patientId, latestConsultationId);
+                prescriptionForm.ShowDialog();
                 BillingForm billingForm = new BillingForm(latestConsultationId, _patientId);
                 billingForm.ShowDialog();
 
@@ -394,8 +396,8 @@ namespace ENT_Clinic_System.UserControls
 
         private void prescribeMedicineButton_Click(object sender, EventArgs e)
         {
-            PrescriptionForm prescriptionForm = new PrescriptionForm(_patientId);
-            prescriptionForm.ShowDialog();
+
+
         }
 
         private void fullNameLabel_Click(object sender, EventArgs e)

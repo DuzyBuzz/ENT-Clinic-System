@@ -37,7 +37,6 @@ namespace ENT_Clinic_System.UserControls
             // Columns to allow editing
             List<string> columns = new List<string>
             {
-                "patient_id",
                 "full_name",
                 "address",
                 "birth_date",
@@ -65,10 +64,6 @@ namespace ENT_Clinic_System.UserControls
             {
                 MessageBox.Show("Failed to load patient list: " + ex.Message);
             }
-
-            // Hide the primary key column
-            if (patientsDataGridView.Columns.Contains("patient_id"))
-                patientsDataGridView.Columns["patient_id"].Visible = false;
 
 
 
@@ -304,7 +299,9 @@ namespace ENT_Clinic_System.UserControls
         },
         { "Show Prescriptions", new Action<int>(consultationId =>
             {
-                MessageBox.Show($"Prescription clicked for consultation {consultationId}");
+                var printer = new PrescriptionPrintHelper(consultationId);
+                printer.ShowPreview();
+
             })
         },
         // ✅ Laboratory Request nested submenu
@@ -325,7 +322,8 @@ namespace ENT_Clinic_System.UserControls
                 var showLab = new ToolStripMenuItem("Show Laboratory Requests");
                 showLab.Click += (s, args) =>
                 {
-                    MessageBox.Show($"Lab Requests clicked for consultation {consultationId}");
+                    var helper = new LabRequestPrintHelper(consultationId);
+                    helper.ShowPreview();
                 };
                 labMenu.DropDownItems.Add(showLab);
 
@@ -346,6 +344,9 @@ namespace ENT_Clinic_System.UserControls
         }
 
 
-
+        private void PrescriptionForm_Load(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

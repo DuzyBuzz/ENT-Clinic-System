@@ -161,91 +161,95 @@ namespace ENT_Clinic_System.PrintingForms
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            float x = e.MarginBounds.Left;
-            float y = e.MarginBounds.Top;
-            float contentWidth = e.MarginBounds.Width;
+            Graphics g = e.Graphics;
+
+            // ===========================
+            // PAGE SETUP
+            // ===========================
+            float leftMargin = 50;
+            float rightMargin = 50;
+            float contentWidth = e.PageBounds.Width - leftMargin - rightMargin;
+            float y = 50; // start margin
             float pageBottom = e.MarginBounds.Bottom;
 
-            using (Font clinicNameFont = new Font("Arial", 14, FontStyle.Bold))
-            using (Font subTitleFont = new Font("Arial", 10, FontStyle.Italic))
-            using (Font clinicInfoFont = new Font("Arial", 9))
-            using (Font docTitleFont = new Font("Arial", 12, FontStyle.Bold))
-            using (Font headerFont = new Font("Arial", 11, FontStyle.Bold))
-            using (Font bodyFont = new Font("Arial", 11))
+            // ===========================
+            // FONTS & STYLES
+            // ===========================
+            Font titleFont = new Font("Arial", 14, FontStyle.Bold);
+            Font headerFont = new Font("Arial", 11, FontStyle.Bold);
+            Font bodyFont = new Font("Arial", 11, FontStyle.Regular);
+
+            // Centered text format
+            StringFormat centerFormat = new StringFormat() { Alignment = StringAlignment.Center };
+
+            // Wrap text format
+            StringFormat wrapFormat = new StringFormat()
             {
-                Graphics g = e.Graphics;
-                StringFormat center = new StringFormat() { Alignment = StringAlignment.Center };
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Near,
+                FormatFlags = StringFormatFlags.LineLimit,
+                Trimming = StringTrimming.Word
+            };
 
-                if (currentSectionIndex == 0)
+            // ===========================
+            // HEADER (same style as certificate)
+            // ===========================
+            y = WaterMarkHelper.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
+
+            // Title
+            g.DrawString("CONSULTATION HISTORY", titleFont, Brushes.Black,
+                new RectangleF(leftMargin, y, contentWidth, 30), centerFormat);
+            y += 50;
+
+            // ===========================
+            // BODY CONTENT
+            // ===========================
+            bool patientInfoDone = false; // Add line after patient info
+
+            while (currentSectionIndex < printSections.Count)
+            {
+                var (label, value) = printSections[currentSectionIndex];
+
+                // Draw a separator line after patient info (after Emergency line, index 5)
+                if (!patientInfoDone && currentSectionIndex >= 5)
                 {
-                    g.DrawString("MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS",
-                        clinicNameFont, Brushes.Black, new RectangleF(x, y, contentWidth, 30), center);
-                    y += 25;
-
-                    g.DrawString("Fellow, Phil. Society of Otolaryngology, Head & Neck Surgery",
-                        subTitleFont, Brushes.Black, new RectangleF(x, y, contentWidth, 20), center);
-                    y += 20;
-
-                    string clinicInfo =
-                        "Clinic Address: 388 E. Lopez St., Jaro, Iloilo City (Front of Robinsons Jaro)\n" +
-                        "Tel: 329-1796   Mobile: 0925-5000149\n" +
-                        "Clinic Hours: Mon, Tue, Thu, Fri, Sat  11:00 AM – 2:00 PM\n" +
-                        "Hospital Affiliations: St. Paul’s Hospital, Iloilo Doctors’ Hospital, Iloilo Mission Hospital,\n" +
-                        "Western Visayas Medical Center, WVSU Med Center, Medicus Ambulatory, Metro Iloilo Hospital";
-
-                    g.DrawString(clinicInfo, clinicInfoFont, Brushes.Black, new RectangleF(x, y, contentWidth, 80));
-                    y += 75;
-
-                    g.DrawLine(Pens.Black, x, y, x + contentWidth, y);
-                    y += 0;
-
-                    g.DrawString("CONSULTATION HISTORY", docTitleFont, Brushes.Black,
-                        new RectangleF(x, y, contentWidth, 25), center);
-                    y += 20;
-
-                    g.DrawLine(Pens.Black, x, y, x + contentWidth, y);
-                    y += 0;
-                    g.DrawString("", docTitleFont, Brushes.Black,
-                        new RectangleF(x, y, contentWidth, 25), center);
-                    y += 0;
-                }
-                bool patientInfoDone = false; // To add line after patient info
-
-                while (currentSectionIndex < printSections.Count)
-                {
-
-                    var (label, value) = printSections[currentSectionIndex];
-
-                    // Draw a line separator after patient info
-                    if (!patientInfoDone && currentSectionIndex >= 5) // after Emergency line
-                    {
-                        g.DrawLine(Pens.Black, x, y, x + contentWidth, y); // separator line
-                        y += 0;
-                        patientInfoDone = true;
-                    }
-
-                    SizeF labelSize = g.MeasureString(label + ":", headerFont);
-                    SizeF valueSize = g.MeasureString(value, bodyFont, new SizeF(contentWidth - 150, float.MaxValue));
-
-                    if (y + Math.Max(labelSize.Height, valueSize.Height) > pageBottom)
-                    {
-                        e.HasMorePages = true;
-                        return;
-                    }
-
-                    g.DrawString(label + ":", headerFont, Brushes.Black, x, y);
-
-                    g.DrawString(value, bodyFont, Brushes.Black, new RectangleF(x + 150, y, contentWidth - 150, valueSize.Height));
-
-
-                    y += Math.Max(labelSize.Height, valueSize.Height) + 5;
-                    currentSectionIndex++;
+                    g.DrawLine(Pens.Black, leftMargin, y, leftMargin + contentWidth, y);
+                    y += 10;
+                    patientInfoDone = true;
                 }
 
-                e.HasMorePages = false;
-                currentSectionIndex = 5;
+                // Measure sizes
+                SizeF labelSize = g.MeasureString(label + ":", headerFont);
+                SizeF valueSize = g.MeasureString(value, bodyFont, new SizeF(contentWidth - 150, float.MaxValue), wrapFormat);
+
+                // Page-break check (reserve space for footer)
+                if (y + Math.Max(labelSize.Height, valueSize.Height) > pageBottom - 80)
+                {
+                    e.HasMorePages = true;
+                    return;
+                }
+
+                // Draw label
+                g.DrawString(label + ":", headerFont, Brushes.Black, leftMargin, y);
+
+                // Draw value (with wrapping support)
+                g.DrawString(value, bodyFont, Brushes.Black,
+                    new RectangleF(leftMargin + 150, y, contentWidth - 150, valueSize.Height), wrapFormat);
+
+                y += Math.Max(labelSize.Height, valueSize.Height) + 5;
+                currentSectionIndex++;
             }
+
+            // ===========================
+            // FOOTER (same style as certificate)
+            // ===========================
+            WaterMarkHelper.PrintFooter(g, (int)leftMargin, (int)(e.PageBounds.Bottom - 80));
+
+            // Reset for next print
+            e.HasMorePages = false;
+            currentSectionIndex = 5;
         }
+
     }
 
     // Multi-print preview dialog for multiple non-modal previews

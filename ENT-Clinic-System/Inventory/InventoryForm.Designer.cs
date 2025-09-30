@@ -183,6 +183,7 @@
             // 
             // categoryCombobox
             // 
+            this.categoryCombobox.BackColor = System.Drawing.SystemColors.Control;
             this.categoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.categoryCombobox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;

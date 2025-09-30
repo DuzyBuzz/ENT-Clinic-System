@@ -32,11 +32,10 @@ namespace ENT_Clinic_System.Consultation
 
             selectAllButton.Click += (s, e) => SetAllCheckBoxes(true);
             deselectAllButton.Click += (s, e) => SetAllCheckBoxes(false);
-            saveRequestButton.Click += (s, e) => SaveRequest();
             nextPageButton.Click += (s, e) => crudHelper.NextPage();
             prevPageButton.Click += (s, e) => crudHelper.PreviousPage();
             addTestsButton.Click += (s, e) => AddTests();
-            printButton.Click += (s, e) => ShowPreview();
+            printButton.Click += (s, e) => LoadLabTests();
 
             this.patientId = patientId;
             this.consultationId = consultationId;
@@ -99,12 +98,23 @@ namespace ENT_Clinic_System.Consultation
                             CheckBox cb = new CheckBox
                             {
                                 Text = test,
-                                AutoSize = true,
+                                AutoSize = false, // disable autosize
+                                Width = colWidth - 20, // fit inside the column width
+                                Height = 40, // give more height for wrapping
                                 Location = new Point(panelX + colIndex * colWidth, testYOffset)
                             };
+
+                            // enable word wrap by setting MaximumSize
+                            cb.MaximumSize = new Size(colWidth - 20, 0);
+                            cb.AutoEllipsis = false;
+
+                            // let checkbox adjust height based on wrapped text
+                            cb.Height = TextRenderer.MeasureText(cb.Text, cb.Font, cb.MaximumSize, TextFormatFlags.WordBreak).Height + 10;
+
                             labTestsPanel.Controls.Add(cb);
                             categoryCheckBoxes[cat].Add(cb);
-                            testYOffset += 25;
+                            testYOffset += cb.Height + 5;
+
                         }
 
                         maxHeightInRow = Math.Max(maxHeightInRow, testYOffset);
@@ -160,6 +170,8 @@ namespace ENT_Clinic_System.Consultation
 
             MessageBox.Show("Lab request saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             crudHelper.LoadData();
+            ShowPreview();
+
         }
 
         private List<int> GetSelectedTestIds()
@@ -261,6 +273,8 @@ namespace ENT_Clinic_System.Consultation
                 x += 60;
                 g.DrawString(patientNameTextBox.Text, valueFont, Brushes.Black, x, y);
                 x += 150;
+                g.DrawString("Address: ", labelFont, Brushes.Black, x, y);
+                x += 60;
                 g.DrawString(addressTextBox.Text, valueFont, Brushes.Black, x, y);
                 x += 150;
                 g.DrawString("Age: ", labelFont, Brushes.Black, x, y);
@@ -294,26 +308,57 @@ namespace ENT_Clinic_System.Consultation
                 {
                     int catX = panelX + colIndex * colWidth;
                     int catY = panelY;
+
+                    // Draw category name
                     g.DrawString(cat, categoryFont, Brushes.Black, catX, catY);
 
                     int testYOffset = catY + 20;
+
                     foreach (var cb in categoryCheckBoxes[cat])
                     {
+                        // Checkbox box
                         Rectangle boxRect = new Rectangle(catX, testYOffset, 14, 14);
                         g.DrawRectangle(Pens.Black, boxRect);
 
                         if (cb.Checked)
                         {
-                            g.DrawLine(Pens.Black, boxRect.Left + 2, boxRect.Top + 7, boxRect.Left + 6, boxRect.Bottom - 2);
-                            g.DrawLine(Pens.Black, boxRect.Left + 6, boxRect.Bottom - 2, boxRect.Right - 2, boxRect.Top + 2);
+                            g.DrawLine(Pens.Black, boxRect.Left + 2, boxRect.Top + 7,
+                                boxRect.Left + 6, boxRect.Bottom - 2);
+                            g.DrawLine(Pens.Black, boxRect.Left + 6, boxRect.Bottom - 2,
+                                boxRect.Right - 2, boxRect.Top + 2);
                         }
 
-                        g.DrawString(cb.Text, testFont, Brushes.Black, boxRect.Right + 5, testYOffset - 2);
-                        testYOffset += 25;
+                        // Text wrapping rectangle (beside checkbox, fits in column width)
+                        RectangleF textRect = new RectangleF(
+                            boxRect.Right + 5,
+                            testYOffset - 2,
+                            colWidth - 25,  // leave margin inside column
+                            100             // max height allowed per test
+                        );
+
+                        // Word wrapping format
+                        using (StringFormat sf = new StringFormat())
+                        {
+                            sf.Alignment = StringAlignment.Near;
+                            sf.LineAlignment = StringAlignment.Near;
+                            sf.Trimming = StringTrimming.Word;
+                            sf.FormatFlags = StringFormatFlags.LineLimit;
+
+                            g.DrawString(cb.Text, testFont, Brushes.Black, textRect, sf);
+                        }
+
+                        // Measure text height to move Y properly
+                        SizeF textSize = g.MeasureString(cb.Text, testFont, (int)textRect.Width);
+                        int textHeight = (int)Math.Ceiling(textSize.Height);
+
+                        // Move Y based on text height (minimum 25 to align boxes nicely)
+                        testYOffset += Math.Max(25, textHeight + 5);
                     }
 
                     maxHeightInRow = Math.Max(maxHeightInRow, testYOffset);
                     colIndex++;
+
+                    // Move to next row if max columns reached
                     if (colIndex >= colCount)
                     {
                         colIndex = 0;
@@ -326,6 +371,7 @@ namespace ENT_Clinic_System.Consultation
                     panelY = maxHeightInRow + 40;
             }
         }
+
 
         public void ShowPreview()
         {
@@ -369,6 +415,16 @@ namespace ENT_Clinic_System.Consultation
         private void LabRequestForm_Load(object sender, EventArgs e)
         {
             ComboBoxCollectionHelper.PopulateComboBox(categoryComboBox, "lab_tests", "category");
+        }
+
+        private void groupBoxAvailable_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveRequestButton_Click(object sender, EventArgs e)
+        {
+            SaveRequest();
         }
     }
 }

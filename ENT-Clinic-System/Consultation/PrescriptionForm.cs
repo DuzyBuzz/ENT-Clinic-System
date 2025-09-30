@@ -13,13 +13,15 @@ namespace ENT_Clinic_System.Consultation
     public partial class PrescriptionForm : Form
     {
         private readonly int _patientId;
+        private readonly int _consultationId;
         private readonly InventoryHelper _inventoryHelper;
         private DataTable _availableItemsTable;
 
-        public PrescriptionForm(int patientId)
+        public PrescriptionForm(int patientId, int consultationId)
         {
             InitializeComponent();
             _patientId = patientId;
+            _consultationId = consultationId;
             _inventoryHelper = new InventoryHelper();
 
             SetupSelectedDgvColumns(); // Ensure columns exist
@@ -29,9 +31,9 @@ namespace ENT_Clinic_System.Consultation
             btnSubmit.Click += BtnSubmit_Click;
         }
 
-        // ================================
-        // 🔹 Setup Selected Items Columns
-        // ================================
+        // =========================
+        // Setup Selected Items Columns
+        // =========================
         private void SetupSelectedDgvColumns()
         {
             if (dgvSelectedItems.Columns.Count == 0)
@@ -40,7 +42,7 @@ namespace ENT_Clinic_System.Consultation
                 {
                     Name = "item_id",
                     HeaderText = "Item ID",
-                    Visible = false // hide ID from user
+                    Visible = false
                 });
 
                 dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn
@@ -67,9 +69,9 @@ namespace ENT_Clinic_System.Consultation
             }
         }
 
-        // ================================
-        // 🔹 Load Inventory Items
-        // ================================
+        // =========================
+        // Load Available Inventory Items
+        // =========================
         private void LoadAvailableItems()
         {
             try
@@ -77,11 +79,10 @@ namespace ENT_Clinic_System.Consultation
                 _availableItemsTable = _inventoryHelper.GetAllItems();
                 dgvAvailableItems.DataSource = _availableItemsTable;
 
-                // Hide unnecessary columns for prescription
-                dgvAvailableItems.Columns["cost_price"].Visible = false;
-                dgvAvailableItems.Columns["selling_price"].Visible = false;
-                dgvAvailableItems.Columns["created_at"].Visible = false;
-                dgvAvailableItems.Columns["updated_at"].Visible = false;
+                // Hide unnecessary columns
+                foreach (var col in new[] { "cost_price", "selling_price", "created_at", "updated_at" })
+                    if (dgvAvailableItems.Columns.Contains(col))
+                        dgvAvailableItems.Columns[col].Visible = false;
             }
             catch (Exception ex)
             {
@@ -89,50 +90,41 @@ namespace ENT_Clinic_System.Consultation
             }
         }
 
-        // ================================
-        // 🔹 Add Selected Item on Double Click
-        // ================================
+        // =========================
+        // Add Item on Double Click
+        // =========================
         private void DgvAvailableItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            try
+            var row = dgvAvailableItems.Rows[e.RowIndex];
+            int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
+            string itemName = row.Cells["item_name"].Value.ToString();
+            string description = row.Cells["description"].Value.ToString();
+
+            // Check if already added
+            var existingRow = dgvSelectedItems.Rows
+                .Cast<DataGridViewRow>()
+                .FirstOrDefault(r => Convert.ToInt32(r.Cells["item_id"].Value) == itemId);
+
+            if (existingRow != null)
             {
-                DataGridViewRow row = dgvAvailableItems.Rows[e.RowIndex];
-                int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-                string itemName = row.Cells["item_name"].Value.ToString();
-                string description = row.Cells["description"].Value.ToString();
-
-                // Check if item already exists in selected dgv
-                var existingRow = dgvSelectedItems.Rows
-                    .Cast<DataGridViewRow>()
-                    .FirstOrDefault(r => Convert.ToInt32(r.Cells["item_id"].Value) == itemId);
-
-                if (existingRow != null)
-                {
-                    int currentQty = Convert.ToInt32(existingRow.Cells["quantity"].Value);
-                    existingRow.Cells["quantity"].Value = currentQty + 1;
-                }
-                else
-                {
-                    int newIndex = dgvSelectedItems.Rows.Add();
-                    dgvSelectedItems.Rows[newIndex].Cells["item_id"].Value = itemId;
-                    dgvSelectedItems.Rows[newIndex].Cells["item_name"].Value = itemName;
-                    dgvSelectedItems.Rows[newIndex].Cells["description"].Value = description;
-                    dgvSelectedItems.Rows[newIndex].Cells["quantity"].Value = 1;
-                }
+                existingRow.Cells["quantity"].Value = Convert.ToInt32(existingRow.Cells["quantity"].Value) + 1;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Error adding item: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                int newIndex = dgvSelectedItems.Rows.Add();
+                dgvSelectedItems.Rows[newIndex].Cells["item_id"].Value = itemId;
+                dgvSelectedItems.Rows[newIndex].Cells["item_name"].Value = itemName;
+                dgvSelectedItems.Rows[newIndex].Cells["description"].Value = description;
+                dgvSelectedItems.Rows[newIndex].Cells["quantity"].Value = 1;
             }
         }
 
-        // ================================
-        // 🔹 Submit Prescription
-        // ================================
-
-    private void BtnSubmit_Click(object sender, EventArgs e)
+        // =========================
+        // Submit Prescription
+        // =========================
+        private void BtnSubmit_Click(object sender, EventArgs e)
         {
             if (dgvSelectedItems.Rows.Count == 0)
             {
@@ -140,54 +132,50 @@ namespace ENT_Clinic_System.Consultation
                 return;
             }
 
-            // 1️⃣ Prompt for notes
+            // Prompt notes for items
             PrescriptionNoteForm noteForm = new PrescriptionNoteForm(dgvSelectedItems);
             if (noteForm.ShowDialog() != DialogResult.OK) return;
             var itemNotes = noteForm.ItemNotes;
 
-            // 2️⃣ Save prescription to database
+            // Save to database
             try
             {
-                using (MySqlConnection conn = DBConfig.GetConnection())
+                var conn = DBConfig.GetConnection();
+                conn.Open();
+                var transaction = conn.BeginTransaction();
+
+                try
                 {
-                    conn.Open();
-                    using (var transaction = conn.BeginTransaction())
+                    foreach (DataGridViewRow row in dgvSelectedItems.Rows)
                     {
-                        try
-                        {
-                            foreach (DataGridViewRow row in dgvSelectedItems.Rows)
-                            {
-                                if (row.IsNewRow) continue;
+                        if (row.IsNewRow) continue;
 
-                                int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-                                int qty = Convert.ToInt32(row.Cells["quantity"].Value);
+                        int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
+                        int qty = Convert.ToInt32(row.Cells["quantity"].Value);
 
-                                if (qty <= 0)
-                                    throw new Exception($"Invalid quantity for item ID {itemId}");
+                        if (qty <= 0)
+                            throw new Exception($"Invalid quantity for item ID {itemId}");
 
-                                string insertQuery = @"INSERT INTO prescription 
-                                                   (patient_id, item_id, quantity, note) 
-                                                   VALUES (@patient_id, @item_id, @quantity, @note)";
+                        string insertQuery = @"
+                            INSERT INTO prescription (patient_id, item_id, consultation_id, quantity, note)
+                            VALUES (@patient_id, @item_id, @consultation_id, @quantity, @note)";
 
-                                using (var cmd = new MySqlCommand(insertQuery, conn, transaction))
-                                {
-                                    cmd.Parameters.AddWithValue("@patient_id", _patientId);
-                                    cmd.Parameters.AddWithValue("@item_id", itemId);
-                                    cmd.Parameters.AddWithValue("@quantity", qty);
-                                    cmd.Parameters.AddWithValue("@note", itemNotes.ContainsKey(itemId) ? itemNotes[itemId] : "");
-                                    cmd.ExecuteNonQuery();
-                                }
-                            }
-
-                            transaction.Commit();
-                            MessageBox.Show("Prescription submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        catch
-                        {
-                            transaction.Rollback();
-                            throw;
-                        }
+                        var cmd = new MySqlCommand(insertQuery, conn, transaction);
+                        cmd.Parameters.AddWithValue("@patient_id", _patientId);
+                        cmd.Parameters.AddWithValue("@item_id", itemId);
+                        cmd.Parameters.AddWithValue("@consultation_id", _consultationId);
+                        cmd.Parameters.AddWithValue("@quantity", qty);
+                        cmd.Parameters.AddWithValue("@note", itemNotes.ContainsKey(itemId) ? itemNotes[itemId] : "");
+                        cmd.ExecuteNonQuery();
                     }
+
+                    transaction.Commit();
+                    MessageBox.Show("Prescription submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
                 }
             }
             catch (Exception ex)
@@ -196,77 +184,28 @@ namespace ENT_Clinic_System.Consultation
                 return;
             }
 
-            // 3️⃣ Print prescription
-            PrintPrescription(itemNotes);
+            // Print prescription using the helper (clean layout, notes included)
+            var printer = new PrintingForms.PrescriptionPrintHelper(_consultationId);
+            printer.ShowPreview();
 
             dgvSelectedItems.Rows.Clear();
             this.Close();
         }
 
-    // ================================
-    // 🔹 Print Prescription
-    // ================================
-    private void PrintPrescription(Dictionary<int, string> itemNotes)
-    {
-        PrintDocument pd = new PrintDocument();
-        pd.DefaultPageSettings.Landscape = false;
-        pd.PrintPage += (sender, e) =>
+        // =========================
+        // Search Items
+        // =========================
+        private void searchItemtButton_Click(object sender, EventArgs e)
         {
-            int y = 50;
-            int lineHeight = 20;
-            Font headerFont = new Font("Segoe UI", 12, FontStyle.Bold);
-            Font normalFont = new Font("Segoe UI", 10);
-
-            // Clinic info from SettingsHelper
-            e.Graphics.DrawString(SettingsHelper.GetSetting("clinic_name"), headerFont, Brushes.Black, 100, y);
-            y += lineHeight;
-            e.Graphics.DrawString(SettingsHelper.GetSetting("clinic_address"), normalFont, Brushes.Black, 100, y);
-            y += lineHeight;
-            e.Graphics.DrawString($"Tel: {SettingsHelper.GetSetting("clinic_tel")} | Mobile: {SettingsHelper.GetSetting("clinic_mobile")}", normalFont, Brushes.Black, 100, y);
-            y += lineHeight * 2;
-
-            // Patient info
-            string patientName = PatientDataHelper.GetPatientValue(_patientId, "full_name");
-            e.Graphics.DrawString($"Patient Name: {patientName}        Date: {DateTime.Now:yyyy-MM-dd}", normalFont, Brushes.Black, 50, y);
-            y += lineHeight * 2;
-
-            // Header for items
-            e.Graphics.DrawString("Item Name               Qty      Description", normalFont, Brushes.Black, 50, y);
-            y += lineHeight;
-            e.Graphics.DrawLine(Pens.Black, 50, y, e.PageBounds.Width - 50, y);
-            y += lineHeight;
-
-            // Items with notes
-            foreach (DataGridViewRow row in dgvSelectedItems.Rows)
-            {
-                if (row.IsNewRow) continue;
-
-                string itemName = row.Cells["item_name"].Value.ToString();
-                int qty = Convert.ToInt32(row.Cells["quantity"].Value);
-                string description = row.Cells["description"].Value.ToString();
-                int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-                string note = itemNotes.ContainsKey(itemId) ? itemNotes[itemId] : "";
-
-                e.Graphics.DrawString($"{itemName,-22} {qty,-7} {description}", normalFont, Brushes.Black, 50, y);
-                y += lineHeight;
-
-                if (!string.IsNullOrEmpty(note))
-                {
-                    e.Graphics.DrawString($"- {note}", normalFont, Brushes.Black, 60, y);
-                    y += lineHeight + 5;
-                }
-            }
-
-            y += lineHeight;
-            e.Graphics.DrawLine(Pens.Black, 50, y, e.PageBounds.Width - 50, y);
-            y += lineHeight;
-            e.Graphics.DrawString("MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS: _____________________    LICENSE # 99566", normalFont, Brushes.Black, 50, y);
-        };
-
-        PrintPreviewDialog preview = new PrintPreviewDialog { Document = pd, Width = 800, Height = 600 };
-        preview.ShowDialog();
+            SearchHelper.Search(
+                dgv: dgvAvailableItems,
+                tableName: "items",
+                columnNames: new string[] { "item_name", "description" },
+                filterControl: searchItemsTextBox
+            );
+        }
+        private void PrescriptionForm_Load(object sender, EventArgs e)
+        {
+        }
     }
-
-
-}
 }

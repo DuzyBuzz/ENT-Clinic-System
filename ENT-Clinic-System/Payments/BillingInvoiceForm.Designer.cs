@@ -55,6 +55,18 @@ namespace ENT_Clinic_System.Payments
             this.label1 = new System.Windows.Forms.Label();
             this.labelRemainingBalance = new System.Windows.Forms.Label();
             this.remainingBalanceTextBox = new System.Windows.Forms.TextBox();
+            this.billing_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fee = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discount_percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discount_amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total_amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.payment_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.amount_paid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.updated_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -85,8 +97,8 @@ namespace ENT_Clinic_System.Payments
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel4);
-            this.splitContainer1.Size = new System.Drawing.Size(1557, 763);
-            this.splitContainer1.SplitterDistance = 1209;
+            this.splitContainer1.Size = new System.Drawing.Size(1557, 961);
+            this.splitContainer1.SplitterDistance = 1140;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -98,7 +110,7 @@ namespace ENT_Clinic_System.Payments
             this.groupBoxRecords.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBoxRecords.Location = new System.Drawing.Point(0, 0);
             this.groupBoxRecords.Name = "groupBoxRecords";
-            this.groupBoxRecords.Size = new System.Drawing.Size(1209, 763);
+            this.groupBoxRecords.Size = new System.Drawing.Size(1140, 961);
             this.groupBoxRecords.TabIndex = 0;
             this.groupBoxRecords.TabStop = false;
             this.groupBoxRecords.Text = "Billing Records";
@@ -110,13 +122,26 @@ namespace ENT_Clinic_System.Payments
             this.billingDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.billingDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.billingDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.billingDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.billing_id,
+            this.patient_name,
+            this.fee,
+            this.discount_percent,
+            this.discount_amount,
+            this.total_amount,
+            this.note,
+            this.payment_status,
+            this.amount_paid,
+            this.balance,
+            this.updated_at,
+            this.consultation_id});
             this.billingDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.billingDataGridView.Location = new System.Drawing.Point(3, 72);
             this.billingDataGridView.MultiSelect = false;
             this.billingDataGridView.Name = "billingDataGridView";
             this.billingDataGridView.ReadOnly = true;
             this.billingDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.billingDataGridView.Size = new System.Drawing.Size(1203, 688);
+            this.billingDataGridView.Size = new System.Drawing.Size(1134, 886);
             this.billingDataGridView.TabIndex = 7;
             // 
             // tableLayoutPanel1
@@ -131,7 +156,7 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1203, 53);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1134, 53);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // tableLayoutPanel3
@@ -151,12 +176,12 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel3.Controls.Add(this.billingtDateToDateTimePicker, 3, 0);
             this.tableLayoutPanel3.Controls.Add(this.billingDateFromDateTimePicker, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(607, 8);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(573, 8);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(590, 37);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(555, 37);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // label11
@@ -165,10 +190,10 @@ namespace ENT_Clinic_System.Payments
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label11.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label11.Location = new System.Drawing.Point(321, 0);
+            this.label11.Location = new System.Drawing.Point(302, 0);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(85, 37);
+            this.label11.Size = new System.Drawing.Size(79, 37);
             this.label11.TabIndex = 14;
             this.label11.Text = "Date To:";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -182,7 +207,7 @@ namespace ENT_Clinic_System.Payments
             this.label2.Location = new System.Drawing.Point(4, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 37);
+            this.label2.Size = new System.Drawing.Size(117, 37);
             this.label2.TabIndex = 13;
             this.label2.Text = "Date From:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -191,21 +216,23 @@ namespace ENT_Clinic_System.Payments
             // 
             this.billingtDateToDateTimePicker.Dock = System.Windows.Forms.DockStyle.Left;
             this.billingtDateToDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.billingtDateToDateTimePicker.Location = new System.Drawing.Point(420, 10);
+            this.billingtDateToDateTimePicker.Location = new System.Drawing.Point(395, 10);
             this.billingtDateToDateTimePicker.Margin = new System.Windows.Forms.Padding(10);
             this.billingtDateToDateTimePicker.Name = "billingtDateToDateTimePicker";
             this.billingtDateToDateTimePicker.Size = new System.Drawing.Size(110, 23);
             this.billingtDateToDateTimePicker.TabIndex = 6;
+            this.billingtDateToDateTimePicker.ValueChanged += new System.EventHandler(this.billingtDateToDateTimePicker_ValueChanged);
             // 
             // billingDateFromDateTimePicker
             // 
             this.billingDateFromDateTimePicker.Dock = System.Windows.Forms.DockStyle.Left;
             this.billingDateFromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.billingDateFromDateTimePicker.Location = new System.Drawing.Point(143, 10);
+            this.billingDateFromDateTimePicker.Location = new System.Drawing.Point(135, 10);
             this.billingDateFromDateTimePicker.Margin = new System.Windows.Forms.Padding(10);
             this.billingDateFromDateTimePicker.Name = "billingDateFromDateTimePicker";
             this.billingDateFromDateTimePicker.Size = new System.Drawing.Size(110, 23);
             this.billingDateFromDateTimePicker.TabIndex = 8;
+            this.billingDateFromDateTimePicker.ValueChanged += new System.EventHandler(this.billingDateFromDateTimePicker_ValueChanged);
             // 
             // tableLayoutPanel2
             // 
@@ -225,7 +252,7 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(589, 37);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(555, 37);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // refreshPatientsButton
@@ -235,13 +262,14 @@ namespace ENT_Clinic_System.Payments
             this.refreshPatientsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.refreshPatientsButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.refreshPatientsButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.refreshPatientsButton.Location = new System.Drawing.Point(535, 5);
+            this.refreshPatientsButton.Location = new System.Drawing.Point(504, 5);
             this.refreshPatientsButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.refreshPatientsButton.Name = "refreshPatientsButton";
-            this.refreshPatientsButton.Size = new System.Drawing.Size(50, 27);
+            this.refreshPatientsButton.Size = new System.Drawing.Size(47, 27);
             this.refreshPatientsButton.TabIndex = 3;
             this.refreshPatientsButton.Text = "⟳";
             this.refreshPatientsButton.UseVisualStyleBackColor = false;
+            this.refreshPatientsButton.Click += new System.EventHandler(this.refreshPatientsButton_Click);
             // 
             // searchPatientButton
             // 
@@ -250,10 +278,10 @@ namespace ENT_Clinic_System.Payments
             this.searchPatientButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.searchPatientButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchPatientButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchPatientButton.Location = new System.Drawing.Point(482, 5);
+            this.searchPatientButton.Location = new System.Drawing.Point(454, 5);
             this.searchPatientButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchPatientButton.Name = "searchPatientButton";
-            this.searchPatientButton.Size = new System.Drawing.Size(45, 27);
+            this.searchPatientButton.Size = new System.Drawing.Size(42, 27);
             this.searchPatientButton.TabIndex = 0;
             this.searchPatientButton.Text = "🔎";
             this.searchPatientButton.UseVisualStyleBackColor = false;
@@ -264,10 +292,10 @@ namespace ENT_Clinic_System.Payments
             this.searchPatientTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchPatientTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchPatientTextBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchPatientTextBox.Location = new System.Drawing.Point(161, 6);
+            this.searchPatientTextBox.Location = new System.Drawing.Point(152, 6);
             this.searchPatientTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchPatientTextBox.Name = "searchPatientTextBox";
-            this.searchPatientTextBox.Size = new System.Drawing.Size(313, 26);
+            this.searchPatientTextBox.Size = new System.Drawing.Size(294, 26);
             this.searchPatientTextBox.TabIndex = 1;
             // 
             // label8
@@ -279,7 +307,7 @@ namespace ENT_Clinic_System.Payments
             this.label8.Location = new System.Drawing.Point(4, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(149, 37);
+            this.label8.Size = new System.Drawing.Size(140, 37);
             this.label8.TabIndex = 2;
             this.label8.Text = "Search Patient:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -294,9 +322,9 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 44.29882F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.70118F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(345, 763);
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 56.91988F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.08012F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(414, 961);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
             // paymentHistoryDataGridView
@@ -312,7 +340,7 @@ namespace ENT_Clinic_System.Payments
             this.paymentHistoryDataGridView.Name = "paymentHistoryDataGridView";
             this.paymentHistoryDataGridView.ReadOnly = true;
             this.paymentHistoryDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.paymentHistoryDataGridView.Size = new System.Drawing.Size(339, 332);
+            this.paymentHistoryDataGridView.Size = new System.Drawing.Size(408, 541);
             this.paymentHistoryDataGridView.TabIndex = 8;
             // 
             // panelRight
@@ -320,9 +348,9 @@ namespace ENT_Clinic_System.Payments
             this.panelRight.Controls.Add(this.groupBoxPayment);
             this.panelRight.Controls.Add(this.groupBoxSummary);
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRight.Location = new System.Drawing.Point(3, 341);
+            this.panelRight.Location = new System.Drawing.Point(3, 550);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(339, 419);
+            this.panelRight.Size = new System.Drawing.Size(408, 408);
             this.panelRight.TabIndex = 0;
             // 
             // groupBoxPayment
@@ -338,14 +366,14 @@ namespace ENT_Clinic_System.Payments
             this.groupBoxPayment.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBoxPayment.Location = new System.Drawing.Point(0, 225);
             this.groupBoxPayment.Name = "groupBoxPayment";
-            this.groupBoxPayment.Size = new System.Drawing.Size(339, 194);
+            this.groupBoxPayment.Size = new System.Drawing.Size(408, 183);
             this.groupBoxPayment.TabIndex = 1;
             this.groupBoxPayment.TabStop = false;
             this.groupBoxPayment.Text = "Payment Entry";
             // 
             // balanceTextBox
             // 
-            this.balanceTextBox.Location = new System.Drawing.Point(158, 95);
+            this.balanceTextBox.Location = new System.Drawing.Point(224, 95);
             this.balanceTextBox.Name = "balanceTextBox";
             this.balanceTextBox.ReadOnly = true;
             this.balanceTextBox.Size = new System.Drawing.Size(150, 23);
@@ -362,7 +390,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // amountRecievedNumericUpDown
             // 
-            this.amountRecievedNumericUpDown.Location = new System.Drawing.Point(159, 31);
+            this.amountRecievedNumericUpDown.Location = new System.Drawing.Point(225, 31);
             this.amountRecievedNumericUpDown.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -376,7 +404,7 @@ namespace ENT_Clinic_System.Payments
             // 
             this.saveButton.BackColor = System.Drawing.SystemColors.Control;
             this.saveButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.saveButton.Location = new System.Drawing.Point(196, 135);
+            this.saveButton.Location = new System.Drawing.Point(262, 144);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(112, 30);
             this.saveButton.TabIndex = 28;
@@ -386,7 +414,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // changeTextBox
             // 
-            this.changeTextBox.Location = new System.Drawing.Point(159, 65);
+            this.changeTextBox.Location = new System.Drawing.Point(225, 65);
             this.changeTextBox.Name = "changeTextBox";
             this.changeTextBox.ReadOnly = true;
             this.changeTextBox.Size = new System.Drawing.Size(150, 23);
@@ -428,7 +456,7 @@ namespace ENT_Clinic_System.Payments
             this.groupBoxSummary.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBoxSummary.Location = new System.Drawing.Point(0, 0);
             this.groupBoxSummary.Name = "groupBoxSummary";
-            this.groupBoxSummary.Size = new System.Drawing.Size(339, 225);
+            this.groupBoxSummary.Size = new System.Drawing.Size(408, 225);
             this.groupBoxSummary.TabIndex = 0;
             this.groupBoxSummary.TabStop = false;
             this.groupBoxSummary.Text = "Billing Summary";
@@ -437,7 +465,7 @@ namespace ENT_Clinic_System.Payments
             // 
             this.paymentStatusLabel.AutoSize = true;
             this.paymentStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.paymentStatusLabel.Location = new System.Drawing.Point(156, 155);
+            this.paymentStatusLabel.Location = new System.Drawing.Point(222, 157);
             this.paymentStatusLabel.Name = "paymentStatusLabel";
             this.paymentStatusLabel.Size = new System.Drawing.Size(29, 15);
             this.paymentStatusLabel.TabIndex = 10;
@@ -454,7 +482,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // noteTextBox
             // 
-            this.noteTextBox.Location = new System.Drawing.Point(158, 121);
+            this.noteTextBox.Location = new System.Drawing.Point(224, 123);
             this.noteTextBox.Name = "noteTextBox";
             this.noteTextBox.ReadOnly = true;
             this.noteTextBox.Size = new System.Drawing.Size(150, 23);
@@ -471,7 +499,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // totalBillTextBox
             // 
-            this.totalBillTextBox.Location = new System.Drawing.Point(158, 91);
+            this.totalBillTextBox.Location = new System.Drawing.Point(224, 93);
             this.totalBillTextBox.Name = "totalBillTextBox";
             this.totalBillTextBox.ReadOnly = true;
             this.totalBillTextBox.Size = new System.Drawing.Size(150, 23);
@@ -488,7 +516,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // discountAmountTextBox
             // 
-            this.discountAmountTextBox.Location = new System.Drawing.Point(158, 60);
+            this.discountAmountTextBox.Location = new System.Drawing.Point(224, 62);
             this.discountAmountTextBox.Name = "discountAmountTextBox";
             this.discountAmountTextBox.ReadOnly = true;
             this.discountAmountTextBox.Size = new System.Drawing.Size(150, 23);
@@ -505,7 +533,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // doctorsFeeTextBox
             // 
-            this.doctorsFeeTextBox.Location = new System.Drawing.Point(159, 31);
+            this.doctorsFeeTextBox.Location = new System.Drawing.Point(225, 33);
             this.doctorsFeeTextBox.Name = "doctorsFeeTextBox";
             this.doctorsFeeTextBox.ReadOnly = true;
             this.doctorsFeeTextBox.Size = new System.Drawing.Size(150, 23);
@@ -533,18 +561,103 @@ namespace ENT_Clinic_System.Payments
             // 
             // remainingBalanceTextBox
             // 
-            this.remainingBalanceTextBox.Location = new System.Drawing.Point(158, 184);
+            this.remainingBalanceTextBox.Location = new System.Drawing.Point(224, 186);
             this.remainingBalanceTextBox.Name = "remainingBalanceTextBox";
             this.remainingBalanceTextBox.ReadOnly = true;
             this.remainingBalanceTextBox.Size = new System.Drawing.Size(150, 23);
             this.remainingBalanceTextBox.TabIndex = 12;
             this.remainingBalanceTextBox.Visible = false;
             // 
+            // billing_id
+            // 
+            this.billing_id.DataPropertyName = "billing_id";
+            this.billing_id.HeaderText = "Billing ID";
+            this.billing_id.Name = "billing_id";
+            this.billing_id.ReadOnly = true;
+            // 
+            // patient_name
+            // 
+            this.patient_name.DataPropertyName = "patient_name";
+            this.patient_name.HeaderText = "Patient Name";
+            this.patient_name.Name = "patient_name";
+            this.patient_name.ReadOnly = true;
+            // 
+            // fee
+            // 
+            this.fee.DataPropertyName = "fee";
+            this.fee.HeaderText = "Doctors Fee";
+            this.fee.Name = "fee";
+            this.fee.ReadOnly = true;
+            // 
+            // discount_percent
+            // 
+            this.discount_percent.DataPropertyName = "discount_percent";
+            this.discount_percent.HeaderText = "Discount (%)";
+            this.discount_percent.Name = "discount_percent";
+            this.discount_percent.ReadOnly = true;
+            // 
+            // discount_amount
+            // 
+            this.discount_amount.DataPropertyName = "discount_amount";
+            this.discount_amount.HeaderText = "Discount Amount";
+            this.discount_amount.Name = "discount_amount";
+            this.discount_amount.ReadOnly = true;
+            // 
+            // total_amount
+            // 
+            this.total_amount.DataPropertyName = "total_amount";
+            this.total_amount.HeaderText = "Total Amount";
+            this.total_amount.Name = "total_amount";
+            this.total_amount.ReadOnly = true;
+            // 
+            // note
+            // 
+            this.note.DataPropertyName = "note";
+            this.note.HeaderText = "Note";
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            // 
+            // payment_status
+            // 
+            this.payment_status.DataPropertyName = "payment_status";
+            this.payment_status.HeaderText = "Payment Status";
+            this.payment_status.Name = "payment_status";
+            this.payment_status.ReadOnly = true;
+            // 
+            // amount_paid
+            // 
+            this.amount_paid.DataPropertyName = "amount_paid";
+            this.amount_paid.HeaderText = "Amount Paid";
+            this.amount_paid.Name = "amount_paid";
+            this.amount_paid.ReadOnly = true;
+            // 
+            // balance
+            // 
+            this.balance.DataPropertyName = "balance";
+            this.balance.HeaderText = "Balance";
+            this.balance.Name = "balance";
+            this.balance.ReadOnly = true;
+            // 
+            // updated_at
+            // 
+            this.updated_at.DataPropertyName = "updated_at";
+            this.updated_at.HeaderText = "Payment Date";
+            this.updated_at.Name = "updated_at";
+            this.updated_at.ReadOnly = true;
+            // 
+            // consultation_id
+            // 
+            this.consultation_id.DataPropertyName = "consultation_id";
+            this.consultation_id.HeaderText = "Consultation ID";
+            this.consultation_id.Name = "consultation_id";
+            this.consultation_id.ReadOnly = true;
+            this.consultation_id.Visible = false;
+            // 
             // BillingInvoiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1557, 763);
+            this.ClientSize = new System.Drawing.Size(1557, 961);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BillingInvoiceForm";
@@ -614,5 +727,17 @@ namespace ENT_Clinic_System.Payments
         private System.Windows.Forms.DataGridView paymentHistoryDataGridView;
         private Label labelRemainingBalance;
         private TextBox remainingBalanceTextBox;
+        private DataGridViewTextBoxColumn billing_id;
+        private DataGridViewTextBoxColumn patient_name;
+        private DataGridViewTextBoxColumn fee;
+        private DataGridViewTextBoxColumn discount_percent;
+        private DataGridViewTextBoxColumn discount_amount;
+        private DataGridViewTextBoxColumn total_amount;
+        private DataGridViewTextBoxColumn note;
+        private DataGridViewTextBoxColumn payment_status;
+        private DataGridViewTextBoxColumn amount_paid;
+        private DataGridViewTextBoxColumn balance;
+        private DataGridViewTextBoxColumn updated_at;
+        private DataGridViewTextBoxColumn consultation_id;
     }
 }

@@ -256,6 +256,7 @@
       <DependentUpon>BillingInvoiceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PrintingFroms\BillingPrinter.cs" />
+    <Compile Include="PrintingFroms\LabRequestPrintHelper.cs" />
     <Compile Include="PrintingFroms\MedicalCertificatePrinter.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
@@ -308,6 +309,7 @@
       <DependentUpon>MainFormDoctor.cs</DependentUpon>
     </Compile>
     <Compile Include="PrintingFroms\InvoicePrinter.cs" />
+    <Compile Include="PrintingFroms\PrescriptionPrintHelper.cs" />
     <Compile Include="PrintingFroms\PrintAttachments.cs">
       <SubType>Form</SubType>
     </Compile>

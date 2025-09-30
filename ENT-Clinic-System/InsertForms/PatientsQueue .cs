@@ -41,7 +41,7 @@ namespace ENT_Clinic_System.InsertForms
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
-                string sql = "SELECT patient_id, full_name, age, sex FROM patients";
+                string sql = "SELECT patient_id, full_name FROM patients";
                 var adapter = new MySqlDataAdapter(sql, conn);
                 patientsTable = new DataTable();
                 adapter.Fill(patientsTable);
@@ -52,10 +52,7 @@ namespace ENT_Clinic_System.InsertForms
                 dgvPatients.Columns["patient_id"].HeaderText = "Patient ID";
             if (dgvPatients.Columns.Contains("full_name"))
                 dgvPatients.Columns["full_name"].HeaderText = "Full Name";
-            if (dgvPatients.Columns.Contains("age"))
-                dgvPatients.Columns["age"].HeaderText = "Age";
-            if (dgvPatients.Columns.Contains("sex"))
-                dgvPatients.Columns["sex"].HeaderText = "Sex";
+
         }
 
         private void LoadQueue()
