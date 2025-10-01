@@ -445,5 +445,11 @@ namespace ENT_Clinic_System.Inventory
                 MessageBox.Show("Decimal values are not allowed. Please enter a whole number.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void writeOffButton_Click(object sender, EventArgs e)
+        {
+            WriteOffForm writeOffForm = new WriteOffForm();
+            writeOffForm.ShowDialog();
+        }
     }
 }
