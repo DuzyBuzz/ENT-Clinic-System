@@ -78,11 +78,22 @@ namespace ENT_Clinic_System
         {
             // Get the version of the assembly
             Version appVersion = Assembly.GetExecutingAssembly().GetName().Version;
-
+            this.KeyPreview = true; // ensures form receives key events
+            this.KeyDown += Login_KeyDown_Secret;
             // Display in the label
             versionLabel.Text = $"Version: {appVersion.Major}.{appVersion.Minor}.{appVersion.Build}.{appVersion.Revision}";
         }
-
+        private void Login_KeyDown_Secret(object sender, KeyEventArgs e)
+        {
+            // Secret combo: Ctrl + Shift + Enter
+            if (e.Control && e.Shift && e.KeyCode == Keys.Enter)
+            {
+                // Optional: log attempt, show a toast, etc.
+                Debug.WriteLine("Secret key combo used to open admin login");
+                OpenAdminLogin(); // show admin login (still validates credentials)
+                e.Handled = true;
+            }
+        }
         private void Login_FormClosing(object sender, FormClosingEventArgs e)
         {
             CleanupHelper.DeleteImageAndVideoFolders();
@@ -142,11 +153,7 @@ namespace ENT_Clinic_System
 
         private void Login_KeyDown(object sender, KeyEventArgs e)
         {
-            // Check for Ctrl + Enter
-            if (e.Control && e.KeyCode == Keys.Enter)
-            {
-                OpenAdminLogin();
-            }
+
         }
 
         private void OpenAdminLogin()
@@ -162,7 +169,6 @@ namespace ENT_Clinic_System
                         // Open the System Admin Form
                         SystemAdminForm adminForm = new SystemAdminForm();
                         adminForm.Show();
-                        this.Hide(); // hide login
                     }
                     else
                     {
@@ -172,6 +178,13 @@ namespace ENT_Clinic_System
             }
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+        }
 
+        private void Login_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
     }
 }

@@ -83,6 +83,7 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.9, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.9\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MySql.Data, Version=9.4.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.9.4.0\lib\net48\MySql.Data.dll</HintPath>
     </Reference>
@@ -142,6 +143,7 @@
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -242,13 +244,13 @@
     <Compile Include="Consultation\PrescriptionForm.Designer.cs">
       <DependentUpon>PrescriptionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inventory\ReturnForm.cs">
+    <Compile Include="Inventory\StockReportPrinter.cs" />
+    <Compile Include="Inventory\WriteOffForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inventory\ReturnForm.Designer.cs">
-      <DependentUpon>ReturnForm.cs</DependentUpon>
+    <Compile Include="Inventory\WriteOffForm.Designer.cs">
+      <DependentUpon>WriteOffForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inventory\StockReportPrinter.cs" />
     <Compile Include="Payments\BillingInvoiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -329,6 +331,43 @@
     <Compile Include="Consultation\LabRequestForm.Designer.cs">
       <DependentUpon>LabRequestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\BillingReport.cs" />
+    <Compile Include="Reports\DispensingReport.cs" />
+    <Compile Include="Reports\ExpiryReport.cs" />
+    <Compile Include="Reports\LowStockReport.cs" />
+    <Compile Include="Reports\ParamsForm\BillingParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\BillingParamsForm.Designer.cs">
+      <DependentUpon>BillingParamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\DispenseParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\DispenseParamsForm.Designer.cs">
+      <DependentUpon>DispenseParamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\RevenueParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\RevenueParamsForm.Designer.cs">
+      <DependentUpon>RevenueParamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\SalesParamsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\SalesParamsForm.Designer.cs">
+      <DependentUpon>SalesParamsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\StockOnHandReportForm .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ParamsForm\StockOnHandReportForm .Designer.cs">
+      <DependentUpon>StockOnHandReportForm .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RevenueReport.cs" />
+    <Compile Include="Reports\SalesReport.cs" />
+    <Compile Include="Reports\StockOnHandReport.cs" />
     <Compile Include="UI\SystemAdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -358,6 +397,12 @@
     </Compile>
     <Compile Include="MainFormReceptionist.Designer.cs">
       <DependentUpon>MainFormReceptionist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DashboardUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DashboardUserControl.Designer.cs">
+      <DependentUpon>DashboardUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\DefaultControl.cs">
       <SubType>UserControl</SubType>
@@ -398,6 +443,9 @@
     <EmbeddedResource Include="Inventory\InventoryForm.resx">
       <DependentUpon>InventoryForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Inventory\WriteOffForm.resx">
+      <DependentUpon>WriteOffForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Payments\BillingInvoiceForm.resx">
       <DependentUpon>BillingInvoiceForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -423,6 +471,15 @@
     <EmbeddedResource Include="Consultation\LabRequestForm.resx">
       <DependentUpon>LabRequestForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ParamsForm\DispenseParamsForm.resx">
+      <DependentUpon>DispenseParamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ParamsForm\RevenueParamsForm.resx">
+      <DependentUpon>RevenueParamsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ParamsForm\StockOnHandReportForm .resx">
+      <DependentUpon>StockOnHandReportForm .cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\SystemAdminForm.resx">
       <DependentUpon>SystemAdminForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -434,6 +491,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainFormReceptionist.resx">
       <DependentUpon>MainFormReceptionist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DashboardUserControl.resx">
+      <DependentUpon>DashboardUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DefaultControl.resx">
+      <DependentUpon>DefaultControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\PatientListControl.resx">
       <DependentUpon>PatientListControl.cs</DependentUpon>
@@ -497,6 +560,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

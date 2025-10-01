@@ -16,8 +16,8 @@ namespace ENT_Clinic_System.UI
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            EnteredUsername = usernameTextBox.Text.Trim();
-            EnteredPassword = passwordTextBox.Text.Trim();
+            EnteredUsername = usernameTextBox.Text;
+            EnteredPassword = passwordTextBox.Text;
 
             if (string.IsNullOrEmpty(EnteredUsername) || string.IsNullOrEmpty(EnteredPassword))
             {

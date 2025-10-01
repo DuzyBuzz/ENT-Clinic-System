@@ -1,4 +1,4 @@
-﻿namespace ENT_Clinic_System.Inventory
+﻿namespace ENT_Clinic_System.Payments
 {
     partial class InvoiceForm
     {
@@ -243,6 +243,7 @@
             this.saveButton.TabIndex = 13;
             this.saveButton.Text = "Submit";
             this.saveButton.UseVisualStyleBackColor = false;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // lblAmountReceived
             // 
@@ -472,7 +473,7 @@
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(725, 11);
+            this.categoryCombobox.Location = new System.Drawing.Point(725, 13);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(261, 23);

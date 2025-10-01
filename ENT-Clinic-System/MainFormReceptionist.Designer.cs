@@ -31,8 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormReceptionist));
             this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.salesReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.salesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dispensingReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.expiryReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stockOnHandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wastageDamagedItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockInButton = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.returnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,25 +74,65 @@
             // reportsToolStripMenuItem
             // 
             this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.salesReportToolStripMenuItem,
-            this.stocToolStripMenuItem});
+            this.salesToolStripMenuItem,
+            this.billingToolStripMenuItem,
+            this.dispensingReportToolStripMenuItem,
+            this.expiryReportToolStripMenuItem,
+            this.stockOnHandToolStripMenuItem,
+            this.stocToolStripMenuItem,
+            this.wastageDamagedItemsToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
             this.reportsToolStripMenuItem.Text = "Report";
             // 
-            // salesReportToolStripMenuItem
+            // billingToolStripMenuItem
             // 
-            this.salesReportToolStripMenuItem.Name = "salesReportToolStripMenuItem";
-            this.salesReportToolStripMenuItem.Size = new System.Drawing.Size(137, 30);
-            this.salesReportToolStripMenuItem.Text = "Sales";
-            this.salesReportToolStripMenuItem.Click += new System.EventHandler(this.salesReportToolStripMenuItem_Click);
+            this.billingToolStripMenuItem.Name = "billingToolStripMenuItem";
+            this.billingToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.billingToolStripMenuItem.Text = "Billing";
+            this.billingToolStripMenuItem.Click += new System.EventHandler(this.billingToolStripMenuItem_Click_1);
+            // 
+            // salesToolStripMenuItem
+            // 
+            this.salesToolStripMenuItem.Name = "salesToolStripMenuItem";
+            this.salesToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.salesToolStripMenuItem.Text = "Sales";
+            this.salesToolStripMenuItem.Click += new System.EventHandler(this.salesToolStripMenuItem_Click);
+            // 
+            // dispensingReportToolStripMenuItem
+            // 
+            this.dispensingReportToolStripMenuItem.Name = "dispensingReportToolStripMenuItem";
+            this.dispensingReportToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.dispensingReportToolStripMenuItem.Text = "Dispensing";
+            this.dispensingReportToolStripMenuItem.Click += new System.EventHandler(this.dispensingReportToolStripMenuItem_Click);
+            // 
+            // expiryReportToolStripMenuItem
+            // 
+            this.expiryReportToolStripMenuItem.Name = "expiryReportToolStripMenuItem";
+            this.expiryReportToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.expiryReportToolStripMenuItem.Text = "Expiry Report";
+            this.expiryReportToolStripMenuItem.Click += new System.EventHandler(this.expiryReportToolStripMenuItem_Click);
+            // 
+            // stockOnHandToolStripMenuItem
+            // 
+            this.stockOnHandToolStripMenuItem.Name = "stockOnHandToolStripMenuItem";
+            this.stockOnHandToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.stockOnHandToolStripMenuItem.Text = "Stock On Hand";
+            this.stockOnHandToolStripMenuItem.Click += new System.EventHandler(this.stockOnHandToolStripMenuItem_Click);
             // 
             // stocToolStripMenuItem
             // 
             this.stocToolStripMenuItem.Name = "stocToolStripMenuItem";
-            this.stocToolStripMenuItem.Size = new System.Drawing.Size(137, 30);
-            this.stocToolStripMenuItem.Text = "Stocks";
+            this.stocToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.stocToolStripMenuItem.Text = "Low Stock / Reorder";
             this.stocToolStripMenuItem.Click += new System.EventHandler(this.stocToolStripMenuItem_Click);
+            // 
+            // wastageDamagedItemsToolStripMenuItem
+            // 
+            this.wastageDamagedItemsToolStripMenuItem.Name = "wastageDamagedItemsToolStripMenuItem";
+            this.wastageDamagedItemsToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.wastageDamagedItemsToolStripMenuItem.Text = "Wastage / Damaged Items";
+            this.wastageDamagedItemsToolStripMenuItem.Click += new System.EventHandler(this.wastageDamagedItemsToolStripMenuItem_Click);
             // 
             // stockInButton
             // 
@@ -310,7 +355,7 @@
             this.Name = "MainFormReceptionist";
             this.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ENT Clinic System || Receptionist";
+            this.Text = "ENT Clinic System";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormReceptionist_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -343,12 +388,17 @@
         private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem salesReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem returnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stocToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paymentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem dispensingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem expiryReportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dispensingReportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wastageDamagedItemsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem salesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stockOnHandToolStripMenuItem;
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 
-namespace ENT_Clinic_System.Inventory
+namespace ENT_Clinic_System.Payments
 {
     public partial class InvoiceForm : Form
     {
@@ -447,6 +447,11 @@ namespace ENT_Clinic_System.Inventory
         private void refreshPatientsButton_Click(object sender, EventArgs e)
         {
             LoadAvailableItems();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

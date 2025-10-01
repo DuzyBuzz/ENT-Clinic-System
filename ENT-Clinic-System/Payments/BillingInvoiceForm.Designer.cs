@@ -67,6 +67,7 @@ namespace ENT_Clinic_System.Payments
             this.label1 = new System.Windows.Forms.Label();
             this.labelRemainingBalance = new System.Windows.Forms.Label();
             this.remainingBalanceTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -82,6 +83,7 @@ namespace ENT_Clinic_System.Payments
             this.groupBoxPayment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.amountRecievedNumericUpDown)).BeginInit();
             this.groupBoxSummary.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -401,7 +403,7 @@ namespace ENT_Clinic_System.Payments
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.paymentHistoryDataGridView, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.panelRight, 0, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
@@ -420,12 +422,12 @@ namespace ENT_Clinic_System.Payments
             this.paymentHistoryDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.paymentHistoryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.paymentHistoryDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentHistoryDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.paymentHistoryDataGridView.Location = new System.Drawing.Point(3, 19);
             this.paymentHistoryDataGridView.MultiSelect = false;
             this.paymentHistoryDataGridView.Name = "paymentHistoryDataGridView";
             this.paymentHistoryDataGridView.ReadOnly = true;
             this.paymentHistoryDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.paymentHistoryDataGridView.Size = new System.Drawing.Size(408, 541);
+            this.paymentHistoryDataGridView.Size = new System.Drawing.Size(402, 519);
             this.paymentHistoryDataGridView.TabIndex = 8;
             // 
             // panelRight
@@ -653,6 +655,18 @@ namespace ENT_Clinic_System.Payments
             this.remainingBalanceTextBox.TabIndex = 12;
             this.remainingBalanceTextBox.Visible = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.paymentHistoryDataGridView);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(408, 541);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Payment History";
+            // 
             // BillingInvoiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -683,6 +697,7 @@ namespace ENT_Clinic_System.Payments
             ((System.ComponentModel.ISupportInitialize)(this.amountRecievedNumericUpDown)).EndInit();
             this.groupBoxSummary.ResumeLayout(false);
             this.groupBoxSummary.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -739,5 +754,6 @@ namespace ENT_Clinic_System.Payments
         private DataGridViewTextBoxColumn balance;
         private DataGridViewTextBoxColumn updated_at;
         private DataGridViewTextBoxColumn consultation_id;
+        private GroupBox groupBox1;
     }
 }

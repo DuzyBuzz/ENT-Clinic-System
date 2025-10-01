@@ -3,6 +3,8 @@ using ENT_Clinic_System.InsertForms;
 using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.Payments;
 using ENT_Clinic_System.PrintingForms;
+using ENT_Clinic_System.Reports;
+using ENT_Clinic_System.Reports.ParamsForm;
 using ENT_Clinic_System.UI;
 using ENT_Clinic_System.UserControls;
 using System;
@@ -86,8 +88,23 @@ namespace ENT_Clinic_System
 
         private void closeButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            // Show a MessageBox with Yes and No buttons
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to exit?", // Message text
+                "Confirm Exit",                  // Title of the message box
+                MessageBoxButtons.YesNo,         // Buttons to display
+                MessageBoxIcon.Question          // Icon type
+            );
+
+            // Check the user's choice
+            if (result == DialogResult.Yes)
+            {
+                // Exit the application
+                this.Close();
+            }
+            // If No, do nothing, the form stays open
         }
+
         private void maximizeMaximizeButton_Click(object sender, EventArgs e)
         {
             if (this.Bounds != Screen.FromControl(this).WorkingArea)
@@ -164,8 +181,7 @@ namespace ENT_Clinic_System
 
         private void salesReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SalesReportForm salesReportForm = new SalesReportForm();
-            salesReportForm.Show();
+
         }
 
         private void stockOutButton_Click(object sender, EventArgs e)
@@ -186,25 +202,8 @@ namespace ENT_Clinic_System
 
         private void MainFormReceptionist_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Show a MessageBox with Yes and No buttons
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to exit?", // Message text
-                "Confirm Exit",                  // Title of the message box
-                MessageBoxButtons.YesNo,         // Buttons to display
-                MessageBoxIcon.Question          // Icon type
-            );
+            Application.Exit();
 
-            // Check the user's choice
-            if (result == DialogResult.No)
-            {
-                // Cancel the form closing if user clicked "No"
-                e.Cancel = true;
-            }
-            else
-            {
-                // Otherwise, exit the application
-                Application.Exit();
-            }
         }
 
 
@@ -236,14 +235,27 @@ namespace ENT_Clinic_System
 
         private void returnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReturnForm returnForm = new ReturnForm();
-            returnForm.Show();
+            WriteOffForm writeOffForm = new WriteOffForm();
+            writeOffForm.Show();
         }
 
         private void stocToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StockReportPrinter.ShowPrintPreview();
+            try
+            {
+                // Create the report instance
+                var report = new Reports.LowStockReport();
+
+                // Show the print preview
+                report.ShowPreview();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to generate Low Stock Report: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void itemsDispensingPaymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -260,6 +272,121 @@ namespace ENT_Clinic_System
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void billingToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            using (var paramForm = new Reports.ParamsForm.BillingParamsForm())
+            {
+                if (paramForm.ShowDialog() == DialogResult.OK)
+                {
+                    string patient = paramForm.SelectedPatient;
+                    DateTime fromDate = paramForm.FromDate;
+                    DateTime toDate = paramForm.ToDate;
+
+                    var report = new Reports.BillingReport(patient, fromDate, toDate);
+                    report.ShowPreview();
+                }
+            }
+        }
+
+
+        private void revenueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void dispensingReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Open the parameters form
+            using (var paramForm = new Reports.ParamsForm.DispenseParamsForm())
+            {
+                if (paramForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Get all selected parameters
+                    string patient = paramForm.SelectedPatient;
+                    string category = paramForm.SelectedCategory;
+                    string itemName = paramForm.SelectedItemName;
+                    string description = paramForm.SelectedDescription;
+                    DateTime fromDate = paramForm.FromDate;
+                    DateTime toDate = paramForm.ToDate;
+
+                    // Pass all parameters to the report
+                    var report = new Reports.DispensingReport(patient, category, itemName, description, fromDate, toDate);
+                    report.ShowPreview();
+                }
+            }
+        }
+
+
+
+
+
+
+        private void expiryReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Create an instance of the report
+                var report = new Reports.ExpiryReport();
+
+                // Show print preview
+                report.ShowPreview();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error generating expiry report: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void wastageDamagedItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void salesReportToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void stockOnHandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 1️⃣ Open the parameter form
+                using (var paramForm = new StockOnHandReportForm())
+                {
+                    if (paramForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // 2️⃣ Get the selected parameters
+                        string category = paramForm.SelectedCategory;
+                        DateTime asOfDate = paramForm.AsOfDate;
+
+                        // 3️⃣ Create the report
+                        StockOnHandReport report = new StockOnHandReport(category, asOfDate);
+
+                        // 4️⃣ Show the preview
+                        report.ShowPreview();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening Stock On Hand report: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void salesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var paramForm = new Reports.ParamsForm.SalesParamsForm())
+            {
+                if (paramForm.ShowDialog() == DialogResult.OK)
+                {
+                    var report = new Reports.SalesReport(paramForm.FromDate, paramForm.ToDate);
+                    report.ShowPreview();
+                }
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Diagnostics;
 
 namespace ENT_Clinic_System.Helpers
 {
@@ -59,6 +60,8 @@ namespace ENT_Clinic_System.Helpers
                                 Role = reader.GetString("role");
 
                                 message = $"✅ Login successful. Welcome {Fullname}!";
+                                Debug.WriteLine(message);
+
                                 return true;
                             }
                             else

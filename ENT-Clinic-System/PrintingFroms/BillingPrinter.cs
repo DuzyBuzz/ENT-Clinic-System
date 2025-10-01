@@ -144,12 +144,37 @@ namespace ENT_Clinic_System.PrintingForms
             float y = 0;
             float leftMargin = 5;
             float lineHeight = fontRegular.GetHeight(e.Graphics);
+            // 58mm printer: usually about 180-200 pixels wide depending on DPI
+            int printerWidth = 180; // adjust according to your printer's actual DPI width
+
+            StringFormat format = new StringFormat();
+            format.Alignment = StringAlignment.Near; // left align
+            format.FormatFlags = StringFormatFlags.LineLimit; // ensures line wraps
+            format.Trimming = StringTrimming.Word; // trim by word if too long
 
             // ================= HEADER =================
-            e.Graphics.DrawString(clinicName, fontHeader, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString(clinicAddress, fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString($"Tel: {clinicTel}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString(new string('=', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            // Clinic Name (wrapped automatically if too long)
+            RectangleF rectClinicName = new RectangleF(leftMargin, y, printerWidth, 1000); // height large enough to accommodate multiple lines
+            e.Graphics.DrawString(clinicName, fontHeader, Brushes.Black, rectClinicName, format);
+
+            // Move y to the next line after the wrapped text
+            y += e.Graphics.MeasureString(clinicName, fontHeader, printerWidth).Height;
+
+            // Clinic Address
+            RectangleF rectClinicAddress = new RectangleF(leftMargin, y, printerWidth, 1000);
+            e.Graphics.DrawString(clinicAddress, fontRegular, Brushes.Black, rectClinicAddress, format);
+            y += e.Graphics.MeasureString(clinicAddress, fontRegular, printerWidth).Height;
+
+            // Clinic Tel
+            RectangleF rectClinicTel = new RectangleF(leftMargin, y, printerWidth, 1000);
+            e.Graphics.DrawString($"Tel: {clinicTel}", fontRegular, Brushes.Black, rectClinicTel, format);
+            y += e.Graphics.MeasureString($"Tel: {clinicTel}", fontRegular, printerWidth).Height;
+
+            // Separator
+            RectangleF rectSeparator = new RectangleF(leftMargin, y, printerWidth, 1000);
+            e.Graphics.DrawString(new string('=', 40), fontRegular, Brushes.Black, rectSeparator, format);
+            y += e.Graphics.MeasureString(new string('=', 40), fontRegular, printerWidth).Height;
+
 
             // ================= VARIABLES =================
             string patient = "", billingDate = "", paymentStatus = "";
@@ -213,8 +238,8 @@ namespace ENT_Clinic_System.PrintingForms
             }
 
             // ================= BILLING INFO =================
-            string invoiceNo = "INV-" + billingId.ToString("D6");
-            e.Graphics.DrawString($"Invoice No: {invoiceNo}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
+            string invoiceNo = "BILL-" + billingId.ToString("D6");
+            e.Graphics.DrawString($"Bill No: {invoiceNo}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
 
             e.Graphics.DrawString($"Patient: {patient}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Date: {billingDate}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;

@@ -12,6 +12,7 @@
         private System.Windows.Forms.Button btnSaveSettings;
         private System.Windows.Forms.Button btnRefreshSettings;
         private System.Windows.Forms.TextBox txtSearchSettings;
+        private System.Windows.Forms.Label lblSearchSettings;
 
         // Users controls
         private System.Windows.Forms.DataGridView dgvUsers;
@@ -25,6 +26,11 @@
         private System.Windows.Forms.Button btnDeleteUser;
         private System.Windows.Forms.Button btnRefreshUsers;
         private System.Windows.Forms.TextBox txtSearchUsers;
+        private System.Windows.Forms.Label lblSearchUsers;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.Label lblFullName;
+        private System.Windows.Forms.Label lblRole;
 
         protected override void Dispose(bool disposing)
         {
@@ -36,13 +42,14 @@
         {
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabUsers = new System.Windows.Forms.TabPage();
+            this.lblSearchUsers = new System.Windows.Forms.Label();
             this.txtSearchUsers = new System.Windows.Forms.TextBox();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
             this.panelUserControls = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.lblFullName = new System.Windows.Forms.Label();
+            this.lblRole = new System.Windows.Forms.Label();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtFullName = new System.Windows.Forms.TextBox();
@@ -52,12 +59,20 @@
             this.btnDeleteUser = new System.Windows.Forms.Button();
             this.btnRefreshUsers = new System.Windows.Forms.Button();
             this.tabSettings = new System.Windows.Forms.TabPage();
+            this.lblSearchSettings = new System.Windows.Forms.Label();
             this.txtSearchSettings = new System.Windows.Forms.TextBox();
             this.dgvSettings = new System.Windows.Forms.DataGridView();
             this.btnSaveSettings = new System.Windows.Forms.Button();
             this.btnRefreshSettings = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.role = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.setting_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.setting_key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.setting_value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControlMain.SuspendLayout();
             this.tabUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
@@ -79,7 +94,7 @@
             // 
             // tabUsers
             // 
-            this.tabUsers.Controls.Add(this.label5);
+            this.tabUsers.Controls.Add(this.lblSearchUsers);
             this.tabUsers.Controls.Add(this.txtSearchUsers);
             this.tabUsers.Controls.Add(this.dgvUsers);
             this.tabUsers.Controls.Add(this.panelUserControls);
@@ -90,6 +105,15 @@
             this.tabUsers.Text = "Users Management";
             this.tabUsers.UseVisualStyleBackColor = true;
             // 
+            // lblSearchUsers
+            // 
+            this.lblSearchUsers.AutoSize = true;
+            this.lblSearchUsers.Location = new System.Drawing.Point(17, 18);
+            this.lblSearchUsers.Name = "lblSearchUsers";
+            this.lblSearchUsers.Size = new System.Drawing.Size(44, 13);
+            this.lblSearchUsers.TabIndex = 0;
+            this.lblSearchUsers.Text = "Search:";
+            // 
             // txtSearchUsers
             // 
             this.txtSearchUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -97,28 +121,36 @@
             this.txtSearchUsers.Location = new System.Drawing.Point(103, 15);
             this.txtSearchUsers.Name = "txtSearchUsers";
             this.txtSearchUsers.Size = new System.Drawing.Size(467, 20);
-            this.txtSearchUsers.TabIndex = 0;
+            this.txtSearchUsers.TabIndex = 1;
             // 
             // dgvUsers
             // 
+            this.dgvUsers.AllowUserToAddRows = false;
+            this.dgvUsers.AllowUserToDeleteRows = false;
             this.dgvUsers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.user_id,
+            this.username,
+            this.password,
+            this.full_name,
+            this.role});
             this.dgvUsers.Location = new System.Drawing.Point(20, 45);
             this.dgvUsers.MultiSelect = false;
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsers.Size = new System.Drawing.Size(550, 450);
-            this.dgvUsers.TabIndex = 1;
+            this.dgvUsers.TabIndex = 2;
             // 
             // panelUserControls
             // 
             this.panelUserControls.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panelUserControls.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelUserControls.Controls.Add(this.label3);
-            this.panelUserControls.Controls.Add(this.label4);
-            this.panelUserControls.Controls.Add(this.label2);
-            this.panelUserControls.Controls.Add(this.label1);
+            this.panelUserControls.Controls.Add(this.lblUsername);
+            this.panelUserControls.Controls.Add(this.lblPassword);
+            this.panelUserControls.Controls.Add(this.lblFullName);
+            this.panelUserControls.Controls.Add(this.lblRole);
             this.panelUserControls.Controls.Add(this.txtUsername);
             this.panelUserControls.Controls.Add(this.txtPassword);
             this.panelUserControls.Controls.Add(this.txtFullName);
@@ -130,65 +162,64 @@
             this.panelUserControls.Location = new System.Drawing.Point(590, 15);
             this.panelUserControls.Name = "panelUserControls";
             this.panelUserControls.Size = new System.Drawing.Size(280, 480);
-            this.panelUserControls.TabIndex = 2;
+            this.panelUserControls.TabIndex = 3;
             // 
-            // label3
+            // lblUsername
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 147);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Role:";
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(17, 27);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblUsername.TabIndex = 0;
+            this.lblUsername.Text = "Username:";
             // 
-            // label4
+            // lblPassword
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 107);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Full Name:";
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Location = new System.Drawing.Point(17, 67);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblPassword.TabIndex = 1;
+            this.lblPassword.Text = "Password:";
             // 
-            // label2
+            // lblFullName
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(17, 67);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Password:";
+            this.lblFullName.AutoSize = true;
+            this.lblFullName.Location = new System.Drawing.Point(17, 107);
+            this.lblFullName.Name = "lblFullName";
+            this.lblFullName.Size = new System.Drawing.Size(57, 13);
+            this.lblFullName.TabIndex = 2;
+            this.lblFullName.Text = "Full Name:";
             // 
-            // label1
+            // lblRole
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Username:";
+            this.lblRole.AutoSize = true;
+            this.lblRole.Location = new System.Drawing.Point(17, 147);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new System.Drawing.Size(32, 13);
+            this.lblRole.TabIndex = 3;
+            this.lblRole.Text = "Role:";
             // 
             // txtUsername
             // 
             this.txtUsername.Location = new System.Drawing.Point(130, 20);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(130, 20);
-            this.txtUsername.TabIndex = 0;
+            this.txtUsername.TabIndex = 4;
             // 
             // txtPassword
             // 
             this.txtPassword.Location = new System.Drawing.Point(130, 60);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(130, 20);
-            this.txtPassword.TabIndex = 1;
-            this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPassword.TabIndex = 5;
             // 
             // txtFullName
             // 
             this.txtFullName.Location = new System.Drawing.Point(130, 100);
             this.txtFullName.Name = "txtFullName";
             this.txtFullName.Size = new System.Drawing.Size(130, 20);
-            this.txtFullName.TabIndex = 2;
+            this.txtFullName.TabIndex = 6;
             // 
             // cmbRole
             // 
@@ -200,47 +231,43 @@
             this.cmbRole.Location = new System.Drawing.Point(130, 140);
             this.cmbRole.Name = "cmbRole";
             this.cmbRole.Size = new System.Drawing.Size(130, 21);
-            this.cmbRole.TabIndex = 3;
+            this.cmbRole.TabIndex = 7;
             // 
             // btnAddUser
             // 
             this.btnAddUser.Location = new System.Drawing.Point(20, 180);
             this.btnAddUser.Name = "btnAddUser";
             this.btnAddUser.Size = new System.Drawing.Size(100, 30);
-            this.btnAddUser.TabIndex = 4;
+            this.btnAddUser.TabIndex = 8;
             this.btnAddUser.Text = "Add User";
-            this.btnAddUser.UseVisualStyleBackColor = true;
             // 
             // btnUpdateUser
             // 
             this.btnUpdateUser.Location = new System.Drawing.Point(160, 180);
             this.btnUpdateUser.Name = "btnUpdateUser";
             this.btnUpdateUser.Size = new System.Drawing.Size(100, 30);
-            this.btnUpdateUser.TabIndex = 5;
+            this.btnUpdateUser.TabIndex = 9;
             this.btnUpdateUser.Text = "Update User";
-            this.btnUpdateUser.UseVisualStyleBackColor = true;
             // 
             // btnDeleteUser
             // 
             this.btnDeleteUser.Location = new System.Drawing.Point(20, 220);
             this.btnDeleteUser.Name = "btnDeleteUser";
             this.btnDeleteUser.Size = new System.Drawing.Size(100, 30);
-            this.btnDeleteUser.TabIndex = 6;
+            this.btnDeleteUser.TabIndex = 10;
             this.btnDeleteUser.Text = "Delete User";
-            this.btnDeleteUser.UseVisualStyleBackColor = true;
             // 
             // btnRefreshUsers
             // 
             this.btnRefreshUsers.Location = new System.Drawing.Point(160, 220);
             this.btnRefreshUsers.Name = "btnRefreshUsers";
             this.btnRefreshUsers.Size = new System.Drawing.Size(100, 30);
-            this.btnRefreshUsers.TabIndex = 7;
+            this.btnRefreshUsers.TabIndex = 11;
             this.btnRefreshUsers.Text = "Refresh Users";
-            this.btnRefreshUsers.UseVisualStyleBackColor = true;
             // 
             // tabSettings
             // 
-            this.tabSettings.Controls.Add(this.label6);
+            this.tabSettings.Controls.Add(this.lblSearchSettings);
             this.tabSettings.Controls.Add(this.txtSearchSettings);
             this.tabSettings.Controls.Add(this.dgvSettings);
             this.tabSettings.Controls.Add(this.btnSaveSettings);
@@ -252,6 +279,15 @@
             this.tabSettings.Text = "System Settings";
             this.tabSettings.UseVisualStyleBackColor = true;
             // 
+            // lblSearchSettings
+            // 
+            this.lblSearchSettings.AutoSize = true;
+            this.lblSearchSettings.Location = new System.Drawing.Point(17, 18);
+            this.lblSearchSettings.Name = "lblSearchSettings";
+            this.lblSearchSettings.Size = new System.Drawing.Size(44, 13);
+            this.lblSearchSettings.TabIndex = 0;
+            this.lblSearchSettings.Text = "Search:";
+            // 
             // txtSearchSettings
             // 
             this.txtSearchSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -259,7 +295,7 @@
             this.txtSearchSettings.Location = new System.Drawing.Point(99, 15);
             this.txtSearchSettings.Name = "txtSearchSettings";
             this.txtSearchSettings.Size = new System.Drawing.Size(771, 20);
-            this.txtSearchSettings.TabIndex = 0;
+            this.txtSearchSettings.TabIndex = 1;
             // 
             // dgvSettings
             // 
@@ -268,10 +304,17 @@
             this.dgvSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvSettings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvSettings.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvSettings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.setting_id,
+            this.setting_key,
+            this.setting_value,
+            this.description});
             this.dgvSettings.Location = new System.Drawing.Point(20, 45);
             this.dgvSettings.Name = "dgvSettings";
             this.dgvSettings.Size = new System.Drawing.Size(850, 400);
-            this.dgvSettings.TabIndex = 1;
+            this.dgvSettings.TabIndex = 2;
             // 
             // btnSaveSettings
             // 
@@ -279,9 +322,8 @@
             this.btnSaveSettings.Location = new System.Drawing.Point(770, 460);
             this.btnSaveSettings.Name = "btnSaveSettings";
             this.btnSaveSettings.Size = new System.Drawing.Size(100, 30);
-            this.btnSaveSettings.TabIndex = 2;
+            this.btnSaveSettings.TabIndex = 3;
             this.btnSaveSettings.Text = "Save";
-            this.btnSaveSettings.UseVisualStyleBackColor = true;
             // 
             // btnRefreshSettings
             // 
@@ -289,27 +331,66 @@
             this.btnRefreshSettings.Location = new System.Drawing.Point(20, 460);
             this.btnRefreshSettings.Name = "btnRefreshSettings";
             this.btnRefreshSettings.Size = new System.Drawing.Size(100, 30);
-            this.btnRefreshSettings.TabIndex = 3;
+            this.btnRefreshSettings.TabIndex = 4;
             this.btnRefreshSettings.Text = "Refresh";
-            this.btnRefreshSettings.UseVisualStyleBackColor = true;
             // 
-            // label5
+            // user_id
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Search";
+            this.user_id.DataPropertyName = "user_id";
+            this.user_id.HeaderText = "User ID";
+            this.user_id.Name = "user_id";
+            this.user_id.ReadOnly = true;
             // 
-            // label6
+            // username
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(17, 18);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Search";
+            this.username.DataPropertyName = "username";
+            this.username.HeaderText = "User Name";
+            this.username.Name = "username";
+            // 
+            // password
+            // 
+            this.password.DataPropertyName = "password";
+            this.password.HeaderText = "Password";
+            this.password.Name = "password";
+            // 
+            // full_name
+            // 
+            this.full_name.DataPropertyName = "full_name";
+            this.full_name.HeaderText = "Full Name";
+            this.full_name.Name = "full_name";
+            // 
+            // role
+            // 
+            this.role.DataPropertyName = "role";
+            this.role.HeaderText = "Role";
+            this.role.Name = "role";
+            // 
+            // setting_id
+            // 
+            this.setting_id.DataPropertyName = "setting_id";
+            this.setting_id.HeaderText = "Settings ID";
+            this.setting_id.Name = "setting_id";
+            this.setting_id.ReadOnly = true;
+            this.setting_id.Visible = false;
+            // 
+            // setting_key
+            // 
+            this.setting_key.DataPropertyName = "setting_key";
+            this.setting_key.HeaderText = "Settings Key";
+            this.setting_key.Name = "setting_key";
+            this.setting_key.ReadOnly = true;
+            // 
+            // setting_value
+            // 
+            this.setting_value.DataPropertyName = "setting_value";
+            this.setting_value.HeaderText = "Settings Value";
+            this.setting_value.Name = "setting_value";
+            // 
+            // description
+            // 
+            this.description.DataPropertyName = "description";
+            this.description.HeaderText = "Description";
+            this.description.Name = "description";
             // 
             // SystemAdminForm
             // 
@@ -330,12 +411,14 @@
             this.ResumeLayout(false);
 
         }
-
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn user_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn username;
+        private System.Windows.Forms.DataGridViewTextBoxColumn password;
+        private System.Windows.Forms.DataGridViewTextBoxColumn full_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn role;
+        private System.Windows.Forms.DataGridViewTextBoxColumn setting_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn setting_key;
+        private System.Windows.Forms.DataGridViewTextBoxColumn setting_value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn description;
     }
 }
