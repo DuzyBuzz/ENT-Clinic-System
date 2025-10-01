@@ -33,14 +33,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutCalendar = new System.Windows.Forms.TableLayoutPanel();
             this.lblMonthYear = new System.Windows.Forms.Label();
             this.btnPrevMonth = new System.Windows.Forms.Button();
             this.btnNextMonth = new System.Windows.Forms.Button();
             this.dgvAppointments = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
             this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.todayButton = new System.Windows.Forms.Button();
+            this.apointmentDateLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointments)).BeginInit();
             this.patientsContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -111,20 +114,42 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvAppointments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvAppointments.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvAppointments.BackgroundColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.dgvAppointments.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvAppointments.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvAppointments.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlDark;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAppointments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAppointments.ColumnHeadersHeight = 40;
             this.dgvAppointments.ContextMenuStrip = this.patientsContextMenuStrip;
-            this.dgvAppointments.Location = new System.Drawing.Point(1438, 50);
+            this.dgvAppointments.Location = new System.Drawing.Point(1438, 63);
             this.dgvAppointments.MultiSelect = false;
             this.dgvAppointments.Name = "dgvAppointments";
             this.dgvAppointments.ReadOnly = true;
             this.dgvAppointments.RowHeadersVisible = false;
             this.dgvAppointments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAppointments.Size = new System.Drawing.Size(455, 940);
+            this.dgvAppointments.Size = new System.Drawing.Size(455, 927);
             this.dgvAppointments.TabIndex = 3;
             this.dgvAppointments.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAppointments_CellMouseDown);
+            // 
+            // patientsContextMenuStrip
+            // 
+            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewConsultationToolStripMenuItem});
+            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(171, 26);
+            // 
+            // viewConsultationToolStripMenuItem
+            // 
+            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
+            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -137,22 +162,32 @@
             this.label1.Text = "Appointments";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // patientsContextMenuStrip
+            // todayButton
             // 
-            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewConsultationToolStripMenuItem});
-            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(171, 26);
+            this.todayButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.todayButton.Location = new System.Drawing.Point(1213, 13);
+            this.todayButton.Name = "todayButton";
+            this.todayButton.Size = new System.Drawing.Size(100, 30);
+            this.todayButton.TabIndex = 5;
+            this.todayButton.Text = "Today";
+            this.todayButton.UseVisualStyleBackColor = true;
+            this.todayButton.Click += new System.EventHandler(this.todayButton_Click);
             // 
-            // viewConsultationToolStripMenuItem
+            // apointmentDateLabel
             // 
-            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.viewConsultationToolStripMenuItem.Text = "View Consultation";
-            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
+            this.apointmentDateLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.apointmentDateLabel.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.apointmentDateLabel.Location = new System.Drawing.Point(1438, 40);
+            this.apointmentDateLabel.Name = "apointmentDateLabel";
+            this.apointmentDateLabel.Size = new System.Drawing.Size(455, 20);
+            this.apointmentDateLabel.TabIndex = 6;
+            this.apointmentDateLabel.Text = "Appointments";
+            this.apointmentDateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // AppointmentsUserControl
             // 
+            this.Controls.Add(this.apointmentDateLabel);
+            this.Controls.Add(this.todayButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblMonthYear);
             this.Controls.Add(this.btnPrevMonth);
@@ -173,5 +208,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ContextMenuStrip patientsContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem viewConsultationToolStripMenuItem;
+        private System.Windows.Forms.Button todayButton;
+        private System.Windows.Forms.Label apointmentDateLabel;
     }
 }

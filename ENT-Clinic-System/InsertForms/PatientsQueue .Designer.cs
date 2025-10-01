@@ -20,6 +20,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientsQueue));
             this.dgvPatients = new System.Windows.Forms.DataGridView();
             this.dgvQueue = new System.Windows.Forms.DataGridView();
             this.txtSearchPatient = new System.Windows.Forms.TextBox();
@@ -144,6 +145,7 @@
             this.Controls.Add(this.dgvQueue);
             this.Controls.Add(this.dgvPatients);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PatientsQueue";
             this.Text = "Patients Queue";
             this.Load += new System.EventHandler(this.PatientsQueue_Load);

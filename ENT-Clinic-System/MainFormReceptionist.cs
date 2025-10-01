@@ -186,8 +186,27 @@ namespace ENT_Clinic_System
 
         private void MainFormReceptionist_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            // Show a MessageBox with Yes and No buttons
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to exit?", // Message text
+                "Confirm Exit",                  // Title of the message box
+                MessageBoxButtons.YesNo,         // Buttons to display
+                MessageBoxIcon.Question          // Icon type
+            );
+
+            // Check the user's choice
+            if (result == DialogResult.No)
+            {
+                // Cancel the form closing if user clicked "No"
+                e.Cancel = true;
+            }
+            else
+            {
+                // Otherwise, exit the application
+                Application.Exit();
+            }
         }
+
 
         private void scheduleToolStripMenuItem_Click(object sender, EventArgs e)
         {

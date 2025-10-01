@@ -105,8 +105,8 @@ namespace ENT_Clinic_System
                     if (UserCredentials.ValidateLogin(loginForm.EnteredUsername, loginForm.EnteredPassword, out string msg))
                     {
 
-                        MainFormDoctor mainFormDoctor = new MainFormDoctor();
-                        mainFormDoctor.Show();
+                        MainFormReceptionist mainFormReceptionist = new MainFormReceptionist();
+                        mainFormReceptionist.Show();
                         this.Hide();
                     }
                     else
@@ -139,6 +139,39 @@ namespace ENT_Clinic_System
                 }
             }
         }
+
+        private void Login_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check for Ctrl + Enter
+            if (e.Control && e.KeyCode == Keys.Enter)
+            {
+                OpenAdminLogin();
+            }
+        }
+
+        private void OpenAdminLogin()
+        {
+            UserCredentials.Role = "Admin"; // set role to admin
+
+            using (var adminLoginForm = new UserLoginForm("Admin"))
+            {
+                if (adminLoginForm.ShowDialog() == DialogResult.OK)
+                {
+                    if (UserCredentials.ValidateLogin(adminLoginForm.EnteredUsername, adminLoginForm.EnteredPassword, out string msg))
+                    {
+                        // Open the System Admin Form
+                        SystemAdminForm adminForm = new SystemAdminForm();
+                        adminForm.Show();
+                        this.Hide(); // hide login
+                    }
+                    else
+                    {
+                        MessageBox.Show(msg, "Admin Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
 
     }
 }

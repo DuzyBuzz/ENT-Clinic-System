@@ -134,26 +134,26 @@ namespace ENT_Clinic_System.Helpers
                 conn.Open();
 
                 string sql = @"
-                    INSERT INTO consultation 
-                        (patient_id, doctor_name, consultation_date, chief_complaint, history, ear_exam, nose_exam, throat_exam, diagnosis, recommendations, notes, follow_up_date, follow_up_notes)
-                    VALUES
-                        (@patient_id, @doctor_name, @consultation_date, @chief_complaint, @history, @ear_exam, @nose_exam, @throat_exam, @diagnosis, @recommendations, @notes, @follow_up_date, @follow_up_notes);
-                    SELECT LAST_INSERT_ID();
-                ";
+            INSERT INTO consultation 
+                (patient_id, doctor_name, consultation_date, chief_complaint, history, ear_exam, nose_exam, throat_exam, diagnosis, recommendations, notes, follow_up_date, follow_up_notes)
+            VALUES
+                (@patient_id, @doctor_name, @consultation_date, @chief_complaint, @history, @ear_exam, @nose_exam, @throat_exam, @diagnosis, @recommendations, @notes, @follow_up_date, @follow_up_notes);
+            SELECT LAST_INSERT_ID();
+        ";
 
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@patient_id", patientId);
                     cmd.Parameters.AddWithValue("@doctor_name", doctorName ?? "");
                     cmd.Parameters.AddWithValue("@consultation_date", consultationDate);
-                    cmd.Parameters.AddWithValue("@chief_complaint", inputs.ComplaintsRichText.Text);
-                    cmd.Parameters.AddWithValue("@history", inputs.IllnessHistoryRichText.Text);
-                    cmd.Parameters.AddWithValue("@ear_exam", inputs.EarsRichText.Text);
-                    cmd.Parameters.AddWithValue("@nose_exam", inputs.NoseRichText.Text);
-                    cmd.Parameters.AddWithValue("@throat_exam", inputs.ThroatRichText.Text);
-                    cmd.Parameters.AddWithValue("@diagnosis", inputs.DiagnosisRichText.Text);
-                    cmd.Parameters.AddWithValue("@recommendations", inputs.RecommendationRichText.Text);
-                    cmd.Parameters.AddWithValue("@notes", inputs.NoteRichText.Text);
+                    cmd.Parameters.AddWithValue("@chief_complaint", SafeRichText(inputs.ComplaintsRichText));
+                    cmd.Parameters.AddWithValue("@history", SafeRichText(inputs.IllnessHistoryRichText));
+                    cmd.Parameters.AddWithValue("@ear_exam", SafeRichText(inputs.EarsRichText));
+                    cmd.Parameters.AddWithValue("@nose_exam", SafeRichText(inputs.NoseRichText));
+                    cmd.Parameters.AddWithValue("@throat_exam", SafeRichText(inputs.ThroatRichText));
+                    cmd.Parameters.AddWithValue("@diagnosis", SafeRichText(inputs.DiagnosisRichText));
+                    cmd.Parameters.AddWithValue("@recommendations", SafeRichText(inputs.RecommendationRichText));
+                    cmd.Parameters.AddWithValue("@notes", SafeRichText(inputs.NoteRichText));
                     cmd.Parameters.AddWithValue("@follow_up_date", followUpDate.HasValue ? followUpDate.Value : (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@follow_up_notes", DBNull.Value);
 
@@ -163,6 +163,22 @@ namespace ENT_Clinic_System.Helpers
 
             return consultationId;
         }
+
+        /// <summary>
+        /// Returns "" if RichTextBox is null, empty, or contains only bullet symbols
+        /// Otherwise returns trimmed text for saving
+        /// </summary>
+        private static string SafeRichText(RichTextBox rtb)
+        {
+            if (rtb == null) return "";
+            string text = rtb.Text.Trim();
+
+            // Remove all bullet symbols and check if there is any meaningful text
+            string cleanText = text.Replace("•", "").Trim();
+
+            return string.IsNullOrEmpty(cleanText) ? "" : text;
+        }
+
 
         private static void InsertAttachment(int consultationId, int patientId, string fileType, string path, string category, string note)
         {

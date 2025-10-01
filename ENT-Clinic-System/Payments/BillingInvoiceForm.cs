@@ -319,7 +319,6 @@ namespace ENT_Clinic_System.Payments
                 "note"
             );
 
-            comboBox.SelectedIndex = 0; // Default to first option
 
             Button confirmation = new Button()
             {

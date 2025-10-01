@@ -20,6 +20,18 @@ namespace ENT_Clinic_System.Payments
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBoxRecords = new System.Windows.Forms.GroupBox();
             this.billingDataGridView = new System.Windows.Forms.DataGridView();
+            this.billing_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fee = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discount_percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.discount_amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.total_amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.payment_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.amount_paid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.updated_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label11 = new System.Windows.Forms.Label();
@@ -55,18 +67,6 @@ namespace ENT_Clinic_System.Payments
             this.label1 = new System.Windows.Forms.Label();
             this.labelRemainingBalance = new System.Windows.Forms.Label();
             this.remainingBalanceTextBox = new System.Windows.Forms.TextBox();
-            this.billing_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.patient_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fee = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.discount_percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.discount_amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.total_amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.payment_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.amount_paid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.updated_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -143,6 +143,91 @@ namespace ENT_Clinic_System.Payments
             this.billingDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.billingDataGridView.Size = new System.Drawing.Size(1134, 886);
             this.billingDataGridView.TabIndex = 7;
+            // 
+            // billing_id
+            // 
+            this.billing_id.DataPropertyName = "billing_id";
+            this.billing_id.HeaderText = "Billing ID";
+            this.billing_id.Name = "billing_id";
+            this.billing_id.ReadOnly = true;
+            // 
+            // patient_name
+            // 
+            this.patient_name.DataPropertyName = "patient_name";
+            this.patient_name.HeaderText = "Patient Name";
+            this.patient_name.Name = "patient_name";
+            this.patient_name.ReadOnly = true;
+            // 
+            // fee
+            // 
+            this.fee.DataPropertyName = "fee";
+            this.fee.HeaderText = "Doctors Fee";
+            this.fee.Name = "fee";
+            this.fee.ReadOnly = true;
+            // 
+            // discount_percent
+            // 
+            this.discount_percent.DataPropertyName = "discount_percent";
+            this.discount_percent.HeaderText = "Discount (%)";
+            this.discount_percent.Name = "discount_percent";
+            this.discount_percent.ReadOnly = true;
+            // 
+            // discount_amount
+            // 
+            this.discount_amount.DataPropertyName = "discount_amount";
+            this.discount_amount.HeaderText = "Discount Amount";
+            this.discount_amount.Name = "discount_amount";
+            this.discount_amount.ReadOnly = true;
+            // 
+            // total_amount
+            // 
+            this.total_amount.DataPropertyName = "total_amount";
+            this.total_amount.HeaderText = "Total Amount";
+            this.total_amount.Name = "total_amount";
+            this.total_amount.ReadOnly = true;
+            // 
+            // note
+            // 
+            this.note.DataPropertyName = "note";
+            this.note.HeaderText = "Note";
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            // 
+            // payment_status
+            // 
+            this.payment_status.DataPropertyName = "payment_status";
+            this.payment_status.HeaderText = "Payment Status";
+            this.payment_status.Name = "payment_status";
+            this.payment_status.ReadOnly = true;
+            // 
+            // amount_paid
+            // 
+            this.amount_paid.DataPropertyName = "amount_paid";
+            this.amount_paid.HeaderText = "Amount Paid";
+            this.amount_paid.Name = "amount_paid";
+            this.amount_paid.ReadOnly = true;
+            // 
+            // balance
+            // 
+            this.balance.DataPropertyName = "balance";
+            this.balance.HeaderText = "Balance";
+            this.balance.Name = "balance";
+            this.balance.ReadOnly = true;
+            // 
+            // updated_at
+            // 
+            this.updated_at.DataPropertyName = "updated_at";
+            this.updated_at.HeaderText = "Payment Date";
+            this.updated_at.Name = "updated_at";
+            this.updated_at.ReadOnly = true;
+            // 
+            // consultation_id
+            // 
+            this.consultation_id.DataPropertyName = "consultation_id";
+            this.consultation_id.HeaderText = "Consultation ID";
+            this.consultation_id.Name = "consultation_id";
+            this.consultation_id.ReadOnly = true;
+            this.consultation_id.Visible = false;
             // 
             // tableLayoutPanel1
             // 
@@ -567,91 +652,6 @@ namespace ENT_Clinic_System.Payments
             this.remainingBalanceTextBox.Size = new System.Drawing.Size(150, 23);
             this.remainingBalanceTextBox.TabIndex = 12;
             this.remainingBalanceTextBox.Visible = false;
-            // 
-            // billing_id
-            // 
-            this.billing_id.DataPropertyName = "billing_id";
-            this.billing_id.HeaderText = "Billing ID";
-            this.billing_id.Name = "billing_id";
-            this.billing_id.ReadOnly = true;
-            // 
-            // patient_name
-            // 
-            this.patient_name.DataPropertyName = "patient_name";
-            this.patient_name.HeaderText = "Patient Name";
-            this.patient_name.Name = "patient_name";
-            this.patient_name.ReadOnly = true;
-            // 
-            // fee
-            // 
-            this.fee.DataPropertyName = "fee";
-            this.fee.HeaderText = "Doctors Fee";
-            this.fee.Name = "fee";
-            this.fee.ReadOnly = true;
-            // 
-            // discount_percent
-            // 
-            this.discount_percent.DataPropertyName = "discount_percent";
-            this.discount_percent.HeaderText = "Discount (%)";
-            this.discount_percent.Name = "discount_percent";
-            this.discount_percent.ReadOnly = true;
-            // 
-            // discount_amount
-            // 
-            this.discount_amount.DataPropertyName = "discount_amount";
-            this.discount_amount.HeaderText = "Discount Amount";
-            this.discount_amount.Name = "discount_amount";
-            this.discount_amount.ReadOnly = true;
-            // 
-            // total_amount
-            // 
-            this.total_amount.DataPropertyName = "total_amount";
-            this.total_amount.HeaderText = "Total Amount";
-            this.total_amount.Name = "total_amount";
-            this.total_amount.ReadOnly = true;
-            // 
-            // note
-            // 
-            this.note.DataPropertyName = "note";
-            this.note.HeaderText = "Note";
-            this.note.Name = "note";
-            this.note.ReadOnly = true;
-            // 
-            // payment_status
-            // 
-            this.payment_status.DataPropertyName = "payment_status";
-            this.payment_status.HeaderText = "Payment Status";
-            this.payment_status.Name = "payment_status";
-            this.payment_status.ReadOnly = true;
-            // 
-            // amount_paid
-            // 
-            this.amount_paid.DataPropertyName = "amount_paid";
-            this.amount_paid.HeaderText = "Amount Paid";
-            this.amount_paid.Name = "amount_paid";
-            this.amount_paid.ReadOnly = true;
-            // 
-            // balance
-            // 
-            this.balance.DataPropertyName = "balance";
-            this.balance.HeaderText = "Balance";
-            this.balance.Name = "balance";
-            this.balance.ReadOnly = true;
-            // 
-            // updated_at
-            // 
-            this.updated_at.DataPropertyName = "updated_at";
-            this.updated_at.HeaderText = "Payment Date";
-            this.updated_at.Name = "updated_at";
-            this.updated_at.ReadOnly = true;
-            // 
-            // consultation_id
-            // 
-            this.consultation_id.DataPropertyName = "consultation_id";
-            this.consultation_id.HeaderText = "Consultation ID";
-            this.consultation_id.Name = "consultation_id";
-            this.consultation_id.ReadOnly = true;
-            this.consultation_id.Visible = false;
             // 
             // BillingInvoiceForm
             // 

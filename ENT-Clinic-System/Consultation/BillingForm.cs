@@ -78,6 +78,7 @@ namespace ENT_Clinic_System.Consultation
         {
             try
             {
+                // Validate fee
                 if (!decimal.TryParse(feeComboBox.Text, out decimal fee))
                 {
                     MessageBox.Show("Please enter a valid doctor's fee.", "Validation Error",
@@ -85,6 +86,7 @@ namespace ENT_Clinic_System.Consultation
                     return;
                 }
 
+                // Calculate discount
                 int discountPercent = 0;
                 if (fullDiscountCheckBox.Checked)
                 {
@@ -99,15 +101,16 @@ namespace ENT_Clinic_System.Consultation
                 decimal finalAmount = Math.Max(fee - discountAmount, 0);
                 string note = noteComboBox.Text.Trim();
 
+                // Save billing record
                 using (MySqlConnection conn = DBConfig.GetConnection())
                 {
                     conn.Open();
 
                     string sql = @"
-                        INSERT INTO billing 
-                            (consultation_id, patient_id, fee, discount_percent, discount_amount, total_amount, note, created_at) 
-                        VALUES 
-                            (@consultation_id, @patient_id, @fee, @discount_percent, @discount_amount, @total_amount, @note, NOW())";
+                INSERT INTO billing 
+                    (consultation_id, patient_id, fee, discount_percent, discount_amount, total_amount, note, created_at) 
+                VALUES 
+                    (@consultation_id, @patient_id, @fee, @discount_percent, @discount_amount, @total_amount, @note, NOW())";
 
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
@@ -123,8 +126,23 @@ namespace ENT_Clinic_System.Consultation
                     }
                 }
 
-                MessageBox.Show("Billing record saved successfully!",
-                    "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Billing record saved successfully!", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // --- ASK USER IF THERE IS A LAB REQUEST ---
+                DialogResult result = MessageBox.Show(
+                    "Do you want to create a laboratory request for this patient?",
+                    "Lab Request",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    using (LabRequestForm labForm = new LabRequestForm(_patientId, _consultationId))
+                    {
+                        labForm.ShowDialog(); // modal
+                    }
+                }
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -135,6 +153,7 @@ namespace ENT_Clinic_System.Consultation
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void cancelButton_Click(object sender, EventArgs e)
         {

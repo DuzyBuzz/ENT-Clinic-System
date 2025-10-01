@@ -30,14 +30,15 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.clearButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBoxAvailable = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.categoryCombobox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.refreshPatientsButton = new System.Windows.Forms.Button();
             this.searchItemtButton = new System.Windows.Forms.Button();
             this.searchItemsTextBox = new System.Windows.Forms.TextBox();
-            this.categoryCombobox = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableItems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedItems)).BeginInit();
@@ -134,13 +135,14 @@ namespace ENT_Clinic_System.Consultation
             this.groupBox2.Size = new System.Drawing.Size(767, 905);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Stock Movements";
+            this.groupBox2.Text = "Selected Items";
             // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.18123F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.81878F));
+            this.tableLayoutPanel4.Controls.Add(this.clearButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnSubmit, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 914);
@@ -149,6 +151,17 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(767, 38);
             this.tableLayoutPanel4.TabIndex = 10;
+            // 
+            // clearButton
+            // 
+            this.clearButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.clearButton.Location = new System.Drawing.Point(515, 3);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(120, 32);
+            this.clearButton.TabIndex = 3;
+            this.clearButton.Text = "Clear";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // panel1
             // 
@@ -182,11 +195,11 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.494505F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.40171F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.42002F));
+            this.tableLayoutPanel2.Controls.Add(this.categoryCombobox, 5, 0);
             this.tableLayoutPanel2.Controls.Add(this.label3, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.refreshPatientsButton, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.searchItemtButton, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.searchItemsTextBox, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.categoryCombobox, 5, 0);
             this.tableLayoutPanel2.Controls.Add(this.label8, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
@@ -196,6 +209,19 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(772, 42);
             this.tableLayoutPanel2.TabIndex = 6;
+            // 
+            // categoryCombobox
+            // 
+            this.categoryCombobox.BackColor = System.Drawing.SystemColors.Control;
+            this.categoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.categoryCombobox.FormattingEnabled = true;
+            this.categoryCombobox.Location = new System.Drawing.Point(568, 13);
+            this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
+            this.categoryCombobox.Name = "categoryCombobox";
+            this.categoryCombobox.Size = new System.Drawing.Size(200, 28);
+            this.categoryCombobox.TabIndex = 6;
             // 
             // label3
             // 
@@ -253,20 +279,6 @@ namespace ENT_Clinic_System.Consultation
             this.searchItemsTextBox.Size = new System.Drawing.Size(257, 26);
             this.searchItemsTextBox.TabIndex = 1;
             // 
-            // categoryCombobox
-            // 
-            this.categoryCombobox.BackColor = System.Drawing.SystemColors.Control;
-            this.categoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.categoryCombobox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(568, 13);
-            this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
-            this.categoryCombobox.Name = "categoryCombobox";
-            this.categoryCombobox.Size = new System.Drawing.Size(200, 28);
-            this.categoryCombobox.TabIndex = 4;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -319,10 +331,11 @@ namespace ENT_Clinic_System.Consultation
         private System.Windows.Forms.Button refreshPatientsButton;
         private System.Windows.Forms.Button searchItemtButton;
         private System.Windows.Forms.TextBox searchItemsTextBox;
-        private System.Windows.Forms.ComboBox categoryCombobox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Button clearButton;
+        private System.Windows.Forms.ComboBox categoryCombobox;
     }
 }

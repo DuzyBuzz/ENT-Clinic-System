@@ -157,83 +157,98 @@ namespace ENT_Clinic_System.UserControls
         {
             try
             {
+                // Prepare the inputs, skip empty or default bullet RichTextBoxes
                 ConsultationInputs inputs = new ConsultationInputs
                 {
-                    ComplaintsRichText = complaintsRichTextBox,
-                    IllnessHistoryRichText = illnessHistoryRichTextBox,
-                    EarsRichText = earsRichTextBox,
-                    NoseRichText = noseRichTextBox,
-                    ThroatRichText = throatRichTextBox,
-                    DiagnosisRichText = diagnosisRichTextBox,
-                    RecommendationRichText = recommendationRichTextBox,
-                    NoteRichText = noteRichTextBox,
+                    ComplaintsRichText = FilterEmptyRichText(complaintsRichTextBox),
+                    IllnessHistoryRichText = FilterEmptyRichText(illnessHistoryRichTextBox),
+                    EarsRichText = FilterEmptyRichText(earsRichTextBox),
+                    NoseRichText = FilterEmptyRichText(noseRichTextBox),
+                    ThroatRichText = FilterEmptyRichText(throatRichTextBox),
+                    DiagnosisRichText = FilterEmptyRichText(diagnosisRichTextBox),
+                    RecommendationRichText = FilterEmptyRichText(recommendationRichTextBox),
+                    NoteRichText = FilterEmptyRichText(noteRichTextBox),
                     ImageFlowLayout = imageFlowLayoutPanel,
                     VideoFlowLayout = videoFlowLayoutPanel,
-                    
                 };
+
+                // Validation: prevent saving if nothing meaningful is entered
+                if (inputs.ComplaintsRichText == null && inputs.IllnessHistoryRichText == null &&
+                    inputs.EarsRichText == null && inputs.NoseRichText == null &&
+                    inputs.ThroatRichText == null && inputs.DiagnosisRichText == null &&
+                    inputs.RecommendationRichText == null && inputs.NoteRichText == null &&
+                    inputs.ImageFlowLayout.Controls.Count == 0 && inputs.VideoFlowLayout.Controls.Count == 0)
+                {
+                    MessageBox.Show("Please enter at least one input before saving.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; // stop here
+                }
 
                 DateTime? followUpDate = followUpDateTimePicker.Checked
                                          ? (DateTime?)followUpDateTimePicker.Value
                                          : null;
+
+                // Call existing save logic (unchanged)
                 var savedFiles = ConsultationSaver.SaveConsultation(
                     _patientId,
                     $"Dr. {UserCredentials.Fullname}",
                     DateTime.Now,
                     followUpDate,
                     inputs,
-                    imageHelper,   
+                    imageHelper,
                     videoHelper
                 );
 
-                //string message = "Consultation saved successfully!\n\nSaved files:\n";
-                //foreach (var (type, path) in savedFiles)
-                //    message += $"{type}: {path}\n";
-                string message = "Consultation saved successfully!";
-                MessageBox.Show(message, "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Consultation saved successfully!", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 int latestConsultationId = LatestIdHelper.GetLatestId("consultation", "consultation_id");
-                Debug.WriteLine($"Latest Consultation ID: {latestConsultationId}");
+
                 PrescriptionForm prescriptionForm = new PrescriptionForm(_patientId, latestConsultationId);
                 prescriptionForm.ShowDialog();
                 BillingForm billingForm = new BillingForm(latestConsultationId, _patientId);
                 billingForm.ShowDialog();
 
-                // Reset UI
+                // Reset UI (same as before)
                 imageFlowLayoutPanel.Controls.Clear();
                 videoFlowLayoutPanel.Controls.Clear();
                 imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
                 videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
 
-
-
-
+                // Refresh parent form safely
                 if (this.ParentForm != null)
                 {
                     Form parentForm = this.ParentForm;
-
-                    string formName = parentForm.Name;
-
-                    // Close the current form
                     parentForm.Hide();
-
-                    // Re-open a fresh instance
                     Form newForm = (Form)Activator.CreateInstance(parentForm.GetType());
                     newForm.Show();
-
-                    // Dispose this one completely
                     parentForm.Dispose();
                 }
-
-
-
-
-
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to save consultation: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        /// <summary>
+        /// Returns null if RichTextBox contains only the default bullet or is empty
+        /// Otherwise returns the RichTextBox itself for saving
+        /// </summary>
+        private RichTextBox FilterEmptyRichText(RichTextBox rtb)
+        {
+            if (rtb == null) return null;
+
+            string text = rtb.Text.Trim();
+            if (string.IsNullOrEmpty(text) || text == "•") // only bullet or empty
+                return null;
+
+            // Check if the text contains only bullets and spaces
+            string cleanText = text.Replace("•", "").Trim();
+            if (string.IsNullOrEmpty(cleanText))
+                return null;
+
+            return rtb;
+        }
+
 
         private void uploadImageButton_Click(object sender, EventArgs e)
         {

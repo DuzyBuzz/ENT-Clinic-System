@@ -39,6 +39,7 @@ namespace ENT_Clinic_System.UserControls
 
             // Configure columns and rows for the calendar at runtime (designer remains clean)
             ConfigureTableLayout();
+            CreateWeekdayHeaders();
 
             // Create 42 day panels (at runtime) and add them to the table layout
             CreateDayPanels();
@@ -46,6 +47,7 @@ namespace ENT_Clinic_System.UserControls
             // Render the initial calendar
             // Note: Load event will also call RenderCalendar, but it's safe to call here as well
             // to show the initial view if user constructs the control programmatically.
+
             RenderCalendar();
         }
 
@@ -55,22 +57,45 @@ namespace ENT_Clinic_System.UserControls
         /// </summary>
         private void ConfigureTableLayout()
         {
-            // Clear any existing styles (designer might have created default entries)
             tableLayoutCalendar.ColumnStyles.Clear();
             tableLayoutCalendar.RowStyles.Clear();
 
-            // 7 columns (equal percent)
+            // 7 columns (equal percent width)
             for (int i = 0; i < 7; i++)
             {
                 tableLayoutCalendar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 7f));
             }
 
-            // 6 rows (equal percent)
+            // 1 row for weekdays header (fixed small height)
+            tableLayoutCalendar.RowStyles.Add(new RowStyle(SizeType.Absolute, 25f));
+
+            // 6 rows for days
             for (int i = 0; i < 6; i++)
             {
                 tableLayoutCalendar.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / 6f));
             }
         }
+        private void CreateWeekdayHeaders()
+        {
+            string[] weekDays = { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+            for (int i = 0; i < 7; i++)
+            {
+                var lbl = new Label
+                {
+                    Text = weekDays[i],
+                    Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                    BackColor = (i == 0) ? Color.LightCoral : Color.LightGray, // Sunday = redish
+                    ForeColor = Color.Black,
+                    Margin = new Padding(0)
+                };
+
+                tableLayoutCalendar.Controls.Add(lbl, i, 0); // add to header row (row 0)
+            }
+        }
+
 
         /// <summary>
         /// Creates 42 panel controls and adds them to the TableLayoutPanel at runtime.
@@ -93,16 +118,16 @@ namespace ENT_Clinic_System.UserControls
                         Name = $"dayCell_{r}_{c}"
                     };
 
-                    // Click should open the day's appointments
                     panel.Click += DayCell_Click;
 
-                    // Add to table layout at column c, row r
-                    this.tableLayoutCalendar.Controls.Add(panel, c, r);
+                    // Notice row is shifted by +1
+                    this.tableLayoutCalendar.Controls.Add(panel, c, r + 1);
 
                     dayPanels[r * 7 + c] = panel;
                 }
             }
         }
+
 
         private void AppointmentsUserControl_Load(object sender, EventArgs e)
         {
@@ -182,6 +207,11 @@ namespace ENT_Clinic_System.UserControls
                                 TextAlign = ContentAlignment.MiddleLeft,
                                 Cursor = Cursors.Hand
                             };
+                            // Make Sundays red
+                            if (col == 0) // Sunday column
+                            {
+                                lblDay.ForeColor = Color.Red;
+                            }
                             lblDay.Click += (s, ev) => DayCell_Click(dayCell, EventArgs.Empty);
                             dayCell.Controls.Add(lblDay);
 
@@ -194,9 +224,11 @@ namespace ENT_Clinic_System.UserControls
                                     AutoSize = false,
                                     Dock = DockStyle.Fill,
                                     Font = apptFont,
-                                    ForeColor = Color.Red,
+                                    ForeColor = Color.Yellow,
                                     TextAlign = ContentAlignment.MiddleCenter,
-                                    Cursor = Cursors.Hand
+                                    Cursor = Cursors.Hand,
+                                    BackColor = Color.SteelBlue
+
                                 };
                                 lblCount.Click += (s, ev) => DayCell_Click(dayCell, EventArgs.Empty);
                                 dayCell.Controls.Add(lblCount);
@@ -207,6 +239,8 @@ namespace ENT_Clinic_System.UserControls
                             {
                                 dayCell.BackColor = Color.AntiqueWhite;
                             }
+             
+
 
                             // Store the date in the panel tag for click handler
                             dayCell.Tag = cellDate.Date;
@@ -313,6 +347,8 @@ namespace ENT_Clinic_System.UserControls
         /// </summary>
         private void LoadAppointmentsIntoGrid(DateTime date)
         {
+            apointmentDateLabel.Text = date.ToString("MMMM dd, yyyy");
+
             DataTable dt = new DataTable();
 
             if (appointmentsByDate.TryGetValue(date.Date, out var rows) && rows.Count > 0)
@@ -326,7 +362,6 @@ namespace ENT_Clinic_System.UserControls
                 // fallback single-date query
                 dt = GetAppointmentsForDate(date);
             }
-
             dgvAppointments.DataSource = dt;
 
             // Hide ID columns (they’re just for internal use)
@@ -416,5 +451,16 @@ namespace ENT_Clinic_System.UserControls
             }
         }
 
+        private void todayButton_Click(object sender, EventArgs e)
+        {
+            // Reset to today’s date
+            currentMonth = DateTime.Today;
+
+            // Re-render the calendar
+            RenderCalendar();
+
+            // Also load today's appointments in the grid
+            LoadAppointmentsIntoGrid(DateTime.Today);
+        }
     }
 }

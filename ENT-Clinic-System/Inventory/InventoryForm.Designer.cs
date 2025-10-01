@@ -185,7 +185,7 @@
             // 
             this.categoryCombobox.BackColor = System.Drawing.SystemColors.Control;
             this.categoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.categoryCombobox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
             this.categoryCombobox.Location = new System.Drawing.Point(579, 13);
@@ -553,6 +553,7 @@
             this.movementDataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.movementDataGridView.MultiSelect = false;
             this.movementDataGridView.Name = "movementDataGridView";
+            this.movementDataGridView.ReadOnly = true;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
             this.movementDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
@@ -586,6 +587,7 @@
             this.movement_quantity.DataPropertyName = "quantity";
             this.movement_quantity.HeaderText = "Quantity";
             this.movement_quantity.Name = "movement_quantity";
+            this.movement_quantity.ReadOnly = true;
             // 
             // movement_date
             // 

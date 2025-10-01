@@ -158,7 +158,7 @@
             // selectAllButton
             // 
             this.selectAllButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.selectAllButton.Location = new System.Drawing.Point(329, 3);
+            this.selectAllButton.Location = new System.Drawing.Point(328, 3);
             this.selectAllButton.Name = "selectAllButton";
             this.selectAllButton.Size = new System.Drawing.Size(120, 31);
             this.selectAllButton.TabIndex = 9;
@@ -167,7 +167,7 @@
             // deselectAllButton
             // 
             this.deselectAllButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.deselectAllButton.Location = new System.Drawing.Point(588, 3);
+            this.deselectAllButton.Location = new System.Drawing.Point(586, 3);
             this.deselectAllButton.Name = "deselectAllButton";
             this.deselectAllButton.Size = new System.Drawing.Size(105, 31);
             this.deselectAllButton.TabIndex = 10;
@@ -176,7 +176,7 @@
             // printButton
             // 
             this.printButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.printButton.Location = new System.Drawing.Point(462, 3);
+            this.printButton.Location = new System.Drawing.Point(460, 3);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(120, 31);
             this.printButton.TabIndex = 11;
@@ -368,7 +368,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.30376F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.69625F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 182F));
             this.tableLayoutPanel1.Controls.Add(this.printButton, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.deselectAllButton, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.saveRequestButton, 3, 0);

@@ -48,12 +48,17 @@ namespace ENT_Clinic_System.InsertForms
                 dgvPatients.DataSource = patientsTable;
             }
 
+            // Set column headers
             if (dgvPatients.Columns.Contains("patient_id"))
+            {
                 dgvPatients.Columns["patient_id"].HeaderText = "Patient ID";
+                dgvPatients.Columns["patient_id"].Visible = false; // Hide the column
+            }
+
             if (dgvPatients.Columns.Contains("full_name"))
                 dgvPatients.Columns["full_name"].HeaderText = "Full Name";
-
         }
+
 
         private void LoadQueue()
         {

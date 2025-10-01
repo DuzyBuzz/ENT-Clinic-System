@@ -206,6 +206,13 @@ namespace ENT_Clinic_System.Consultation
         }
         private void PrescriptionForm_Load(object sender, EventArgs e)
         {
+            AutoCompleteHelper.SetupAutoComplete(categoryCombobox, "items", new List<string> { "category" });
         }
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            // Clear all rows from the selected items DataGridView
+            dgvSelectedItems.Rows.Clear();
+        }
+
     }
 }

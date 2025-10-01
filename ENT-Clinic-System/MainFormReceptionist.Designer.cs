@@ -46,6 +46,9 @@
             this.patientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.paymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dispensingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.maximizeMaximizeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,9 +57,6 @@
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.paymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.billingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dispensingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,7 +92,7 @@
             // stockInButton
             // 
             this.stockInButton.Name = "stockInButton";
-            this.stockInButton.Size = new System.Drawing.Size(180, 30);
+            this.stockInButton.Size = new System.Drawing.Size(147, 30);
             this.stockInButton.Text = "Stock In";
             this.stockInButton.Click += new System.EventHandler(this.stockInButton_Click);
             // 
@@ -108,7 +108,7 @@
             // returnToolStripMenuItem
             // 
             this.returnToolStripMenuItem.Name = "returnToolStripMenuItem";
-            this.returnToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
+            this.returnToolStripMenuItem.Size = new System.Drawing.Size(147, 30);
             this.returnToolStripMenuItem.Text = "Return";
             this.returnToolStripMenuItem.Click += new System.EventHandler(this.returnToolStripMenuItem_Click);
             // 
@@ -202,6 +202,30 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(28, 29);
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
+            // paymentToolStripMenuItem
+            // 
+            this.paymentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.billingToolStripMenuItem1,
+            this.dispensingToolStripMenuItem});
+            this.paymentToolStripMenuItem.Name = "paymentToolStripMenuItem";
+            this.paymentToolStripMenuItem.Size = new System.Drawing.Size(93, 29);
+            this.paymentToolStripMenuItem.Text = "Payment";
+            this.paymentToolStripMenuItem.Click += new System.EventHandler(this.paymentToolStripMenuItem_Click);
+            // 
+            // billingToolStripMenuItem1
+            // 
+            this.billingToolStripMenuItem1.Name = "billingToolStripMenuItem1";
+            this.billingToolStripMenuItem1.Size = new System.Drawing.Size(172, 30);
+            this.billingToolStripMenuItem1.Text = "Billing";
+            this.billingToolStripMenuItem1.Click += new System.EventHandler(this.billingToolStripMenuItem_Click);
+            // 
+            // dispensingToolStripMenuItem
+            // 
+            this.dispensingToolStripMenuItem.Name = "dispensingToolStripMenuItem";
+            this.dispensingToolStripMenuItem.Size = new System.Drawing.Size(172, 30);
+            this.dispensingToolStripMenuItem.Text = "Dispensing";
+            this.dispensingToolStripMenuItem.Click += new System.EventHandler(this.itemsDispensingPaymentToolStripMenuItem_Click);
+            // 
             // closeButton
             // 
             this.closeButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -270,30 +294,6 @@
             this.MainPanel.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
             this.MainPanel.Size = new System.Drawing.Size(1878, 972);
             this.MainPanel.TabIndex = 6;
-            // 
-            // paymentToolStripMenuItem
-            // 
-            this.paymentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.billingToolStripMenuItem1,
-            this.dispensingToolStripMenuItem});
-            this.paymentToolStripMenuItem.Name = "paymentToolStripMenuItem";
-            this.paymentToolStripMenuItem.Size = new System.Drawing.Size(93, 29);
-            this.paymentToolStripMenuItem.Text = "Payment";
-            this.paymentToolStripMenuItem.Click += new System.EventHandler(this.paymentToolStripMenuItem_Click);
-            // 
-            // billingToolStripMenuItem1
-            // 
-            this.billingToolStripMenuItem1.Name = "billingToolStripMenuItem1";
-            this.billingToolStripMenuItem1.Size = new System.Drawing.Size(180, 30);
-            this.billingToolStripMenuItem1.Text = "Billing";
-            this.billingToolStripMenuItem1.Click += new System.EventHandler(this.billingToolStripMenuItem_Click);
-            // 
-            // dispensingToolStripMenuItem
-            // 
-            this.dispensingToolStripMenuItem.Name = "dispensingToolStripMenuItem";
-            this.dispensingToolStripMenuItem.Size = new System.Drawing.Size(180, 30);
-            this.dispensingToolStripMenuItem.Text = "Dispensing";
-            this.dispensingToolStripMenuItem.Click += new System.EventHandler(this.itemsDispensingPaymentToolStripMenuItem_Click);
             // 
             // MainFormReceptionist
             // 

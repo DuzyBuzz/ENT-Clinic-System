@@ -69,7 +69,6 @@
             this.followUpDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label13 = new System.Windows.Forms.Label();
             this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
-            this.prescribeMedicineButton = new System.Windows.Forms.Button();
             this.saveConsultationButton = new System.Windows.Forms.Button();
             this.noteRichTextBox = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
@@ -641,11 +640,10 @@
             // 
             // tableLayoutPanel16
             // 
-            this.tableLayoutPanel16.ColumnCount = 2;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel16.Controls.Add(this.prescribeMedicineButton, 0, 0);
-            this.tableLayoutPanel16.Controls.Add(this.saveConsultationButton, 1, 0);
+            this.tableLayoutPanel16.ColumnCount = 1;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel16.Controls.Add(this.saveConsultationButton, 0, 0);
             this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel16.Location = new System.Drawing.Point(4, 235);
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
@@ -654,23 +652,12 @@
             this.tableLayoutPanel16.Size = new System.Drawing.Size(420, 46);
             this.tableLayoutPanel16.TabIndex = 8;
             // 
-            // prescribeMedicineButton
-            // 
-            this.prescribeMedicineButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.prescribeMedicineButton.Location = new System.Drawing.Point(3, 3);
-            this.prescribeMedicineButton.Name = "prescribeMedicineButton";
-            this.prescribeMedicineButton.Size = new System.Drawing.Size(204, 40);
-            this.prescribeMedicineButton.TabIndex = 0;
-            this.prescribeMedicineButton.Text = "Prescribe Medicine";
-            this.prescribeMedicineButton.UseVisualStyleBackColor = true;
-            this.prescribeMedicineButton.Click += new System.EventHandler(this.prescribeMedicineButton_Click);
-            // 
             // saveConsultationButton
             // 
             this.saveConsultationButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveConsultationButton.Location = new System.Drawing.Point(213, 3);
+            this.saveConsultationButton.Location = new System.Drawing.Point(3, 3);
             this.saveConsultationButton.Name = "saveConsultationButton";
-            this.saveConsultationButton.Size = new System.Drawing.Size(204, 40);
+            this.saveConsultationButton.Size = new System.Drawing.Size(414, 40);
             this.saveConsultationButton.TabIndex = 1;
             this.saveConsultationButton.Text = "Save Consultation";
             this.saveConsultationButton.UseVisualStyleBackColor = true;
@@ -1381,7 +1368,6 @@
         private System.Windows.Forms.DateTimePicker followUpDateTimePicker;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel16;
-        private System.Windows.Forms.Button prescribeMedicineButton;
         private System.Windows.Forms.Button saveConsultationButton;
         private System.Windows.Forms.RichTextBox noteRichTextBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
