@@ -37,13 +37,13 @@ namespace ENT_Clinic_System.Helpers
             // Current date string for folder organization
             string dateFolder = DateTime.Now.ToString("yyyy-MM-dd");
 
-            // Base path for attachments
+            // Base path for attachments on D: drive
             string baseFolder = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                "ENT_CLINIC_Attachments",
-                patientId.ToString(),
-                dateFolder
+                @"D:\ENT_CLINIC_Attachments",  // Root folder in D: drive
+                patientId.ToString(),          // Patient-specific folder
+                dateFolder                     // Subfolder based on date
             );
+
 
             // -----------------------
             // Save Images

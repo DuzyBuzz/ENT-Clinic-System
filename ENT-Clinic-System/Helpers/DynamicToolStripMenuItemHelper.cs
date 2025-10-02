@@ -55,7 +55,7 @@ namespace ENT_Clinic_System.Helpers
                     sb.Append(" FROM ").Append(tableName);
                     if (!string.IsNullOrWhiteSpace(whereClause))
                         sb.Append(" WHERE ").Append(whereClause);
-                    sb.Append(" ORDER BY ").Append(displayColsList[0]).Append(" ASC");
+                    sb.Append(" ORDER BY ").Append(displayColsList[0]).Append(" DESC");
 
                     using (var cmd = new MySqlCommand(sb.ToString(), conn))
                     using (var reader = cmd.ExecuteReader())

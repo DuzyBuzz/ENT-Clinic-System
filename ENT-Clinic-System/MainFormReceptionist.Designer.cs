@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormReceptionist));
-            this.userGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,10 +36,7 @@
             this.expiryReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockOnHandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wastageDamagedItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutENTSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patientQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,15 +55,10 @@
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // userGuideToolStripMenuItem
-            // 
-            this.userGuideToolStripMenuItem.Name = "userGuideToolStripMenuItem";
-            this.userGuideToolStripMenuItem.Size = new System.Drawing.Size(232, 30);
-            this.userGuideToolStripMenuItem.Text = "User Guide";
             // 
             // reportsToolStripMenuItem
             // 
@@ -77,8 +68,7 @@
             this.dispensingReportToolStripMenuItem,
             this.expiryReportToolStripMenuItem,
             this.stockOnHandToolStripMenuItem,
-            this.stocToolStripMenuItem,
-            this.wastageDamagedItemsToolStripMenuItem});
+            this.stocToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
             this.reportsToolStripMenuItem.Text = "Report";
@@ -125,34 +115,12 @@
             this.stocToolStripMenuItem.Text = "Low Stock / Reorder";
             this.stocToolStripMenuItem.Click += new System.EventHandler(this.stocToolStripMenuItem_Click);
             // 
-            // wastageDamagedItemsToolStripMenuItem
-            // 
-            this.wastageDamagedItemsToolStripMenuItem.Name = "wastageDamagedItemsToolStripMenuItem";
-            this.wastageDamagedItemsToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
-            this.wastageDamagedItemsToolStripMenuItem.Text = "Wastage / Damaged Items";
-            this.wastageDamagedItemsToolStripMenuItem.Click += new System.EventHandler(this.wastageDamagedItemsToolStripMenuItem_Click);
-            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(97, 29);
             this.settingsToolStripMenuItem.Text = "Inventory";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.userGuideToolStripMenuItem,
-            this.aboutENTSystemToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(60, 29);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutENTSystemToolStripMenuItem
-            // 
-            this.aboutENTSystemToolStripMenuItem.Name = "aboutENTSystemToolStripMenuItem";
-            this.aboutENTSystemToolStripMenuItem.Size = new System.Drawing.Size(232, 30);
-            this.aboutENTSystemToolStripMenuItem.Text = "About ENT System";
             // 
             // patientQueueToolStripMenuItem
             // 
@@ -210,11 +178,11 @@
             this.settingsToolStripMenuItem,
             this.paymentToolStripMenuItem,
             this.reportsToolStripMenuItem,
-            this.helpToolStripMenuItem,
             this.closeButton,
             this.maximizeMaximizeButton,
             this.minimizeButton,
-            this.accountToolStripMenuItem});
+            this.accountToolStripMenuItem,
+            this.toolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(13, 15);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 5, 0, 5);
@@ -288,26 +256,35 @@
             this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
             this.accountToolStripMenuItem.Size = new System.Drawing.Size(46, 29);
             this.accountToolStripMenuItem.Text = "⚙️";
+            this.accountToolStripMenuItem.Click += new System.EventHandler(this.accountToolStripMenuItem_Click);
             // 
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(141, 30);
-            this.updateToolStripMenuItem.Text = "Update";
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
+            this.updateToolStripMenuItem.Text = "Auto Complete";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // profileToolStripMenuItem
             // 
             this.profileToolStripMenuItem.Name = "profileToolStripMenuItem";
-            this.profileToolStripMenuItem.Size = new System.Drawing.Size(141, 30);
+            this.profileToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
             this.profileToolStripMenuItem.Text = "Profile";
+            this.profileToolStripMenuItem.Click += new System.EventHandler(this.profileToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(141, 30);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(39, 29);
+            this.toolStripMenuItem2.Text = "❓";
             // 
             // MainPanel
             // 
@@ -348,12 +325,8 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStripMenuItem userGuideToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutENTSystemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem patientQueueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scheduleToolStripMenuItem;
@@ -376,9 +349,9 @@
         private System.Windows.Forms.ToolStripMenuItem dispensingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expiryReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dispensingReportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem wastageDamagedItemsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stockOnHandToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }

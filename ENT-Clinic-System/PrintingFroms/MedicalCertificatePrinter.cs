@@ -131,32 +131,25 @@ namespace ENT_Clinic_System.PrintingForms
             Font titleFont = new Font("Arial", 14, FontStyle.Bold);
             Font bodyFont = new Font("Arial", 11, FontStyle.Regular);
             Font highlightFont = new Font("Arial", 11, FontStyle.Bold);
-            Brush highlightBrush = Brushes.Black;
+            Brush brush = Brushes.Black;
 
             // Centered text format
             StringFormat centerFormat = new StringFormat() { Alignment = StringAlignment.Center };
-
-            // Wrap format to prevent word splitting
-            StringFormat wrapFormat = new StringFormat()
-            {
-                Alignment = StringAlignment.Near,
-                LineAlignment = StringAlignment.Near,
-                FormatFlags = StringFormatFlags.LineLimit,
-                Trimming = StringTrimming.Word
-            };
 
             // ===========================
             // HEADER
             // ===========================
             y = WaterMarkHelper.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
 
-            // Date top-right
-            g.DrawString($"{DateTime.Now:MMMM dd, yyyy}", bodyFont, Brushes.Black, e.PageBounds.Width - rightMargin - 150, y);
+
 
             // Title
-            g.DrawString("MEDICAL CERTIFICATE", titleFont, Brushes.Black, new RectangleF(leftMargin, y, contentWidth, 30), centerFormat);
-            y += 50;
+            g.DrawString("MEDICAL CERTIFICATE", titleFont, brush, new RectangleF(leftMargin, y, contentWidth, 30), centerFormat);
+            y += 60;
 
+            // Date top-right
+            g.DrawString($"{DateTime.Now:MMMM dd, yyyy}", bodyFont, brush, e.PageBounds.Width - rightMargin - 150, y);
+            y += 60;
             // ===========================
             // SALUTATION / PRONOUNS
             // ===========================
@@ -166,13 +159,13 @@ namespace ENT_Clinic_System.PrintingForms
 
             if (!string.IsNullOrEmpty(patientSex))
             {
-                if (patientSex.ToLower() == "male")
+                if (patientSex.ToLower() == "m")
                 {
                     salutation = "Mr.";
                     pronounSubject = "He";
                     pronounObject = "him";
                 }
-                else if (patientSex.ToLower() == "female")
+                else if (patientSex.ToLower() == "f")
                 {
                     salutation = (patientCivilStatus?.ToLower() == "married") ? "Mrs." : "Ms.";
                     pronounSubject = "She";
@@ -183,59 +176,64 @@ namespace ENT_Clinic_System.PrintingForms
             // ===========================
             // BODY
             // ===========================
-            // Greeting
-            g.DrawString("To Whom It May Concern,", bodyFont, Brushes.Black, leftMargin, y);
-            y += 25;
+            g.DrawString("To Whom It May Concern,", bodyFont, brush, leftMargin, y);
+            y += 35;
 
-            // Patient Info
-            g.DrawString($"This is to certify that {salutation} {patientName}", highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, 50), wrapFormat);
-            y += 25;
+            // Name + Address
+            y = DrawUnderlinedText(g, $"This is to certify that {salutation}", patientName, bodyFont, brush, leftMargin, y, contentWidth);
+            y = DrawUnderlinedText(g, "of", patientAddress, bodyFont, brush, leftMargin, y, contentWidth);
 
-            g.DrawString($"of {patientAddress},", highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, 50), wrapFormat);
-            y += 30;
-
-            // Consultation reason
-            g.DrawString("consulted my clinic due to:", bodyFont, Brushes.Black, leftMargin, y);
-            y += 20;
-
-            SizeF diagSize = g.MeasureString(diagnosis, highlightFont, (int)contentWidth, wrapFormat);
-            g.DrawString(diagnosis, highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, diagSize.Height), wrapFormat);
-            y += diagSize.Height + 10;
+            // Complaint
+            y = DrawUnderlinedText(g, "consulted my clinic due to", chief_complaint, bodyFont, brush, leftMargin, y, contentWidth);
 
             // Diagnosis
-            g.DrawString($"{pronounSubject} was diagnosed and/or managed as a case of:", bodyFont, Brushes.Black, leftMargin, y);
-            y += 20;
-
-            SizeF diag2Size = g.MeasureString(diagnosis, highlightFont, (int)contentWidth, wrapFormat);
-            g.DrawString(diagnosis, highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, diag2Size.Height), wrapFormat);
-            y += diag2Size.Height + 10;
+            y = DrawUnderlinedText(g, $"{pronounSubject} was diagnosed and/or managed as a case of", diagnosis, bodyFont, brush, leftMargin, y, contentWidth);
 
             // Recommendations
-            g.DrawString($"{pronounSubject} was advised to:", bodyFont, Brushes.Black, leftMargin, y);
-            y += 20;
-
-            SizeF recSize = g.MeasureString(recommendations, highlightFont, (int)contentWidth, wrapFormat);
-            g.DrawString(recommendations, highlightFont, highlightBrush, new RectangleF(leftMargin, y, contentWidth, recSize.Height), wrapFormat);
-            y += recSize.Height + 10;
+            y = DrawUnderlinedText(g, $"{pronounSubject} was advised", recommendations, bodyFont, brush, leftMargin, y, contentWidth);
 
             // Requester
-            g.DrawString("This certificate is issued upon the request of:", bodyFont, Brushes.Black, leftMargin, y);
-            g.DrawString(requester, highlightFont, highlightBrush, leftMargin + 310, y);
-            y += 30;
+            y = DrawUnderlinedText(g, "This certificate is issued upon the request of", requester, bodyFont, brush, leftMargin, y, contentWidth);
 
-            // Closing statement
-            g.DrawString($"Serve {pronounObject} best.", bodyFont, Brushes.Black, leftMargin, y);
-            y += 30;
-
-
-            // General statement
-            g.DrawString("For whatever purpose it may serve.", bodyFont, Brushes.Black, leftMargin, y);
+            // Closing
+            g.DrawString($"for whatever purpose it may serve {pronounObject} best.", bodyFont, brush, leftMargin, y + 20);
             y += 50;
+
+            g.DrawString("Thank you.", bodyFont, brush, leftMargin, y);
 
             // ===========================
             // FOOTER
             // ===========================
             WaterMarkHelper.PrintFooter(g, (int)leftMargin, (int)(e.PageBounds.Bottom - 80));
+        }
+
+        /// <summary>
+        /// Draws label + value with an underline that continues across the line.
+        /// Example: "This is to certify that Mr." + "Juan Dela Cruz" (underlined)
+        /// </summary>
+        private float DrawUnderlinedText(Graphics g, string label, string value, Font font, Brush brush, float x, float y, float lineWidth)
+        {
+            // Draw the label first
+            g.DrawString(label, font, brush, x, y);
+
+            // Measure label width
+            float labelWidth = g.MeasureString(label + " ", font).Width;
+
+            // Starting X for value
+            float valueX = x + labelWidth;
+
+            // Draw the value text
+            g.DrawString(value, font, brush, valueX, y);
+
+            // Measure value width
+            SizeF valueSize = g.MeasureString(value, font);
+
+            // Draw underline (after label, covering value + extending to lineWidth)
+            float underlineY = y + valueSize.Height;
+            g.DrawLine(Pens.Black, valueX, underlineY, x + lineWidth, underlineY);
+
+            // Return next line Y position
+            return y + valueSize.Height + 20;
         }
 
 

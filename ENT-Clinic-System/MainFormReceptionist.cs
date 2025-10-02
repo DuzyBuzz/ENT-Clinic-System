@@ -193,10 +193,10 @@ namespace ENT_Clinic_System
             SystemAdminForm systemSettingsForm = new SystemAdminForm();
             systemSettingsForm.Show();
         }
-        private async void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UpdateHelper helper = new UpdateHelper();
-            await helper.CheckForUpdatesAsync();
+            AutoCompleteManager autoCompleteManager = new AutoCompleteManager();
+            autoCompleteManager.Show();
         }
 
         private void MainFormReceptionist_FormClosing(object sender, FormClosingEventArgs e)
@@ -392,6 +392,17 @@ namespace ENT_Clinic_System
         {
             InventoryForm inventoryForm = new InventoryForm();
             inventoryForm.Show();
+        }
+
+        private void accountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void profileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UserProfile userProfile = new UserProfile();
+            userProfile.Show();
         }
     }
 

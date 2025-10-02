@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using WMPLib;
 
@@ -248,6 +249,57 @@ namespace ENT_Clinic_System.PrintingForms
             // Reset for next print
             e.HasMorePages = false;
             currentSectionIndex = 5;
+        }
+        public void ShowPreview()
+        {
+            PrintPreviewDialog preview = new PrintPreviewDialog
+            {
+                Document = printDocument,
+                Width = 1000,
+                Height = 700
+            };
+
+            preview.Shown += (s, e) =>
+            {
+                foreach (Control ctrl in preview.Controls)
+                {
+                    if (ctrl is ToolStrip toolStrip)
+                    {
+                        foreach (ToolStripItem item in toolStrip.Items)
+                        {
+                            if (item is ToolStripButton btn && btn.ToolTipText.ToLower().Contains("print"))
+                            {
+                                btn.Visible = false; // hide default Print button
+                            }
+                        }
+                    }
+                }
+
+                // Add a custom Print button to the ToolStrip
+                ToolStrip tool = preview.Controls.OfType<ToolStrip>().FirstOrDefault();
+                if (tool != null)
+                {
+                    ToolStripButton customPrint = new ToolStripButton("Print");
+                    customPrint.Click += (sender, args) =>
+                    {
+                        using (PrintDialog printDialog = new PrintDialog())
+                        {
+                            printDialog.Document = printDocument;
+                            printDialog.AllowSomePages = true;
+                            printDialog.AllowSelection = true;
+
+                            if (printDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                printDocument.Print();
+                            }
+                        }
+                    };
+                    // Insert at the left-most position
+                    tool.Items.Insert(0, customPrint);
+                }
+            };
+
+            preview.ShowDialog();
         }
 
     }

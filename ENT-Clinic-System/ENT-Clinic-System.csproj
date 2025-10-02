@@ -368,6 +368,12 @@
     <Compile Include="Reports\RevenueReport.cs" />
     <Compile Include="Reports\SalesReport.cs" />
     <Compile Include="Reports\StockOnHandReport.cs" />
+    <Compile Include="UI\AutoCompleteManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AutoCompleteManager.Designer.cs">
+      <DependentUpon>AutoCompleteManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SystemAdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -379,6 +385,12 @@
     </Compile>
     <Compile Include="UI\UserLoginForm.Designer.cs">
       <DependentUpon>UserLoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UserProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UserProfile.Designer.cs">
+      <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\AppointmentsUserControl.cs">
       <SubType>UserControl</SubType>
@@ -480,8 +492,14 @@
     <EmbeddedResource Include="Reports\ParamsForm\StockOnHandReportForm .resx">
       <DependentUpon>StockOnHandReportForm .cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\AutoCompleteManager.resx">
+      <DependentUpon>AutoCompleteManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\SystemAdminForm.resx">
       <DependentUpon>SystemAdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UserProfile.resx">
+      <DependentUpon>UserProfile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\AppointmentsUserControl.resx">
       <DependentUpon>AppointmentsUserControl.cs</DependentUpon>
