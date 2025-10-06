@@ -118,8 +118,8 @@ namespace ENT_Clinic_System.UserControls
             int patientId = GetSelectedPatientId();
             if (patientId > 0)
             {
-                var viewControl = new ConsultationControl(patientId);
-                LoadUserControl(viewControl);
+                ConsultationControl consultationControl = new ConsultationControl(patientId);
+                consultationControl.Show();
             }
         }
 

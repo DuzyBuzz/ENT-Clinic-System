@@ -173,7 +173,9 @@
     <Compile Include="CustomUI\CustomMenuRenderer.cs" />
     <Compile Include="CustomUI\textEditorToolStrip.cs" />
     <Compile Include="Helpers\AgeCalculatorHelper.cs" />
+    <Compile Include="Helpers\AutoCompleteDgvHelper.cs" />
     <Compile Include="Helpers\AutoCompleteHelper.cs" />
+    <Compile Include="Helpers\AutoCompleteSaver.cs" />
     <Compile Include="Helpers\CamelCaseHelper.cs" />
     <Compile Include="Helpers\CameraConsultationForm.cs">
       <SubType>Form</SubType>
@@ -182,16 +184,17 @@
       <DependentUpon>CameraConsultationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CleanupHelper.cs" />
+    <Compile Include="Helpers\ComboBoxCollectionHelper.cs" />
     <Compile Include="Helpers\DGVViewHelper.cs" />
     <Compile Include="Helpers\DynamicToolStripMenuItemHelper.cs" />
     <Compile Include="Helpers\FireflyHelper.cs" />
-    <Compile Include="Helpers\ComboBoxCollectionHelper.cs" />
     <Compile Include="Helpers\ConsultationSaver.cs" />
     <Compile Include="Helpers\DBConfig.cs" />
     <Compile Include="Helpers\DBConnectionMonitor.cs" />
     <Compile Include="Helpers\DGVCrudHelper.cs" />
     <Compile Include="Helpers\DGVDeleteHelper.cs" />
     <Compile Include="Helpers\FlowLayoutHelper.cs" />
+    <Compile Include="Helpers\HealthRecordHelper.cs" />
     <Compile Include="Helpers\ImageFlowHelper.cs" />
     <Compile Include="Helpers\ImageFolderHelper.cs" />
     <Compile Include="Helpers\InsertHelper.cs" />
@@ -203,6 +206,7 @@
     <Compile Include="Helpers\PatientCamera.Designer.cs">
       <DependentUpon>PatientCamera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PhysicalExamLoader.cs" />
     <Compile Include="Helpers\PurposeInputForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +229,12 @@
     </Compile>
     <Compile Include="InsertForms\DoctorPatientQueue.Designer.cs">
       <DependentUpon>DoctorPatientQueue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InsertForms\PatientHealthRecordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertForms\PatientHealthRecordForm.Designer.cs">
+      <DependentUpon>PatientHealthRecordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InsertForms\PatientsQueue .cs">
       <SubType>Form</SubType>
@@ -399,7 +409,7 @@
       <DependentUpon>AppointmentsUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ConsultationControl.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UserControls\ConsultationControl.Designer.cs">
       <DependentUpon>ConsultationControl.cs</DependentUpon>

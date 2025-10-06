@@ -37,14 +37,30 @@ namespace ENT_Clinic_System.UI
             btnRefreshUsers.Click += (s, e) => usersHelper.LoadData();
 
             // --- SETTINGS HELPER ---
+            // --- SETTINGS HELPER ---
             settingsHelper = new DGVCrudHelper(
-                dgvSettings,                     // Settings DataGridView
+                dgvSettings,                     // DataGridView
                 "system_settings",               // Table name
-                new List<string> { "setting_value", "description" }, // Columns editable
-                "setting_key"                    // Primary key (read-only)
+                new List<string> { "setting_value" }, // Only editable column
+                "setting_key"                    // Primary key
             );
 
+            // Load once at startup
             settingsHelper.LoadData();
+
+            // Explicitly set read-only for non-editable columns
+            if (dgvSettings.Columns["description"] != null)
+                dgvSettings.Columns["description"].ReadOnly = true;
+
+            if (dgvSettings.Columns["setting_key"] != null)
+                dgvSettings.Columns["setting_key"].ReadOnly = true;
+
+            // Refresh button should reload only if needed, else do nothing
+            btnRefreshSettings.Click += (s, e) => settingsHelper.LoadData();
+
+            // Optional: prevent auto-generating columns overwrite
+            dgvSettings.AutoGenerateColumns = false;
+
 
             // Settings search filter
             txtSearchSettings.TextChanged += (s, e) =>
@@ -133,6 +149,11 @@ namespace ENT_Clinic_System.UI
                 e.Cancel = true;
                 return;
             }
+
+        }
+
+        private void dgvSettings_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

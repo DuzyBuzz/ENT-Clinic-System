@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ENT_Clinic_System.UserControls
 {
-    public partial class ConsultationControl : UserControl
+    public partial class ConsultationControl : Form
     {
         private int _patientId;
 
@@ -35,23 +35,54 @@ namespace ENT_Clinic_System.UserControls
 
         private void ConsultationControl_Load(object sender, EventArgs e)
         {
-            followUpDateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm tt";
             videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
             imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
+            // Call this after initializing your form and your FlowLayoutPanel
 
-            RichTextBulletDropdownHelper.LoadColumnsData(
-                "consultation",
-                new List<string> { "chief_complaint", "history", "ear_exam", "nose_exam", "throat_exam", "diagnosis", "recommendations" }
+
+
+
+
+
+
+            SaveAndLoadConsultations();
+            // 🔹 Load health record for this patient
+            HealthRecordHelper.LoadHealthRecord(
+                _patientId,
+                pastMedicalHistoryDGV,
+                familyComboBox,
+                personalComboBox,
+                bpTextBox,
+                temperatureTextBox,
+                prTextBox,
+                rrTextBox,
+                htTextBox,
+                wtTextBox,
+                generalApperanceComboBox,
+                skinComboBox,
+                headAndFaceComboBox,
+                eyesComboBox,
+                neckComboBox,
+                chestLungsComboBox,
+                heartComboBox,
+                abdomenComboBox,
+                extremetiesComboBox,
+                neurologicComboBox
             );
+        }
 
-            RichTextBulletDropdownHelper.Enable(complaintsRichTextBox, "consultation", "chief_complaint");
-            RichTextBulletDropdownHelper.Enable(illnessHistoryRichTextBox, "consultation", "history");
-            RichTextBulletDropdownHelper.Enable(earsRichTextBox, "consultation", "ear_exam");
-            RichTextBulletDropdownHelper.Enable(noseRichTextBox, "consultation", "nose_exam");
-            RichTextBulletDropdownHelper.Enable(throatRichTextBox, "consultation", "throat_exam");
-            RichTextBulletDropdownHelper.Enable(diagnosisRichTextBox, "consultation", "diagnosis");
-            RichTextBulletDropdownHelper.Enable(recommendationRichTextBox, "consultation", "recommendations");
-
+        private void SaveAndLoadConsultations()
+        {
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(recentIlnessDGV, "recentIllness", "history");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(pastMedicalHistoryDGV, "pastMedicalHistory", "past_medical_history");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(chiefComplaintsDGV, "chiefComplaintsDGVColumn", "chief_complaint");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(earsDGV, "ears", "ear_exam");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(noseDGV, "nose", "nose_exam");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(throatDGV, "throat", "throat_exam");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(neckDGV, "neck", "neck_exam");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(diagnosisDGV, "diagnosis", "diagnosis");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(proceduresDGV, "procedures", "procedures");
+            AutoCompleteDgvHelper.LoadColumnAutocomplete(recommendationsDGV, "recommendations", "recommendations");
         }
 
         private void LoadConsultationDate(int patientID)
@@ -135,9 +166,7 @@ namespace ENT_Clinic_System.UserControls
             sexLabel.Text = PatientDataHelper.GetPatientValue(patientId, "sex");
             civilStatusLabel.Text = PatientDataHelper.GetPatientValue(patientId, "civil_status");
             patientContactNumberLabel.Text = PatientDataHelper.GetPatientValue(patientId, "patient_contact_number");
-            emergencyNameLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_name");
-            emergencyContactNumberLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_contact_number");
-            emergencyRelationshipLabel.Text = PatientDataHelper.GetPatientValue(patientId, "emergency_relationship");
+
 
             // Load photo
             Image photo = PatientDataHelper.GetPatientPhoto(patientId);
@@ -157,37 +186,79 @@ namespace ENT_Clinic_System.UserControls
         {
             try
             {
-                // Prepare the inputs, skip empty or default bullet RichTextBoxes
-                ConsultationInputs inputs = new ConsultationInputs
+                // 1️⃣ Helper to convert a DGV column into a comma-separated string
+                string GetDgvValuesAsCsv(DataGridView dgv)
                 {
-                    ComplaintsRichText = FilterEmptyRichText(complaintsRichTextBox),
-                    IllnessHistoryRichText = FilterEmptyRichText(illnessHistoryRichTextBox),
-                    EarsRichText = FilterEmptyRichText(earsRichTextBox),
-                    NoseRichText = FilterEmptyRichText(noseRichTextBox),
-                    ThroatRichText = FilterEmptyRichText(throatRichTextBox),
-                    DiagnosisRichText = FilterEmptyRichText(diagnosisRichTextBox),
-                    RecommendationRichText = FilterEmptyRichText(recommendationRichTextBox),
-                    NoteRichText = FilterEmptyRichText(noteRichTextBox),
-                    ImageFlowLayout = imageFlowLayoutPanel,
-                    VideoFlowLayout = videoFlowLayoutPanel,
-                };
+                    if (dgv == null || dgv.Rows.Count == 0) return null;
 
-                // Validation: prevent saving if nothing meaningful is entered
-                if (inputs.ComplaintsRichText == null && inputs.IllnessHistoryRichText == null &&
-                    inputs.EarsRichText == null && inputs.NoseRichText == null &&
-                    inputs.ThroatRichText == null && inputs.DiagnosisRichText == null &&
-                    inputs.RecommendationRichText == null && inputs.NoteRichText == null &&
-                    inputs.ImageFlowLayout.Controls.Count == 0 && inputs.VideoFlowLayout.Controls.Count == 0)
-                {
-                    MessageBox.Show("Please enter at least one input before saving.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return; // stop here
+                    List<string> values = new List<string>();
+
+                    foreach (DataGridViewRow row in dgv.Rows)
+                    {
+                        if (row.IsNewRow) continue;
+
+                        foreach (DataGridViewCell cell in row.Cells)
+                        {
+                            if (cell.Value != null)
+                            {
+                                string val = cell.Value.ToString().Trim();
+                                if (!string.IsNullOrEmpty(val))
+                                    values.Add(val);
+                            }
+                        }
+                    }
+
+                    return values.Count > 0 ? string.Join(", ", values) : null;
                 }
 
-                DateTime? followUpDate = followUpDateTimePicker.Checked
+                // 2️⃣ Prepare ConsultationInputs with DGVs converted to CSV strings
+                ConsultationInputs inputs = new ConsultationInputs
+                {
+                    ageLabel = ageLabel,
+                    ComplaintsCsv = GetDgvValuesAsCsv(chiefComplaintsDGV),
+                    RecentIllnessCsv = GetDgvValuesAsCsv(recentIlnessDGV),
+                    PastMedicalHistoryCsv = GetDgvValuesAsCsv(pastMedicalHistoryDGV),
+                    EarsCsv = GetDgvValuesAsCsv(earsDGV),
+                    NoseCsv = GetDgvValuesAsCsv(noseDGV),
+                    ThroatCsv = GetDgvValuesAsCsv(throatDGV),
+                    NeckCsv = GetDgvValuesAsCsv(neckDGV),
+                    DiagnosisCsv = GetDgvValuesAsCsv(diagnosisDGV),
+                    ProceduresCsv = GetDgvValuesAsCsv(proceduresDGV),
+                    RecommendationsCsv = GetDgvValuesAsCsv(recommendationsDGV),
+                    NoteRichText = FilterEmptyRichText(noteRichTextBox), // keep note as RichTextBox
+                    ImageFlowLayout = imageFlowLayoutPanel,
+                    VideoFlowLayout = videoFlowLayoutPanel
+                };
+
+                // 3️⃣ Validation: ensure at least one meaningful input
+                bool hasMeaningfulInput =
+                    !string.IsNullOrEmpty(inputs.ComplaintsCsv) ||
+                    !string.IsNullOrEmpty(inputs.RecentIllnessCsv) ||
+                    !string.IsNullOrEmpty(inputs.PastMedicalHistoryCsv) ||
+                    !string.IsNullOrEmpty(inputs.EarsCsv) ||
+                    !string.IsNullOrEmpty(inputs.NoseCsv) ||
+                    !string.IsNullOrEmpty(inputs.ThroatCsv) ||
+                    !string.IsNullOrEmpty(inputs.NeckCsv) ||
+                    !string.IsNullOrEmpty(inputs.DiagnosisCsv) ||
+                    !string.IsNullOrEmpty(inputs.ProceduresCsv) ||
+                    !string.IsNullOrEmpty(inputs.RecommendationsCsv) ||
+                    inputs.NoteRichText != null ||
+                    inputs.ImageFlowLayout.Controls.Count > 0 ||
+                    inputs.VideoFlowLayout.Controls.Count > 0;
+
+                if (!hasMeaningfulInput)
+                {
+                    MessageBox.Show("Please enter at least one input before saving.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 4️⃣ Follow-up date
+                DateTime? followUpDate = followUpCheckBox.Checked
                                          ? (DateTime?)followUpDateTimePicker.Value
                                          : null;
 
-                // Call existing save logic (unchanged)
+
+                // 5️⃣ Save consultation
                 var savedFiles = ConsultationSaver.SaveConsultation(
                     _patientId,
                     $"Dr. {UserCredentials.Fullname}",
@@ -197,37 +268,72 @@ namespace ENT_Clinic_System.UserControls
                     imageHelper,
                     videoHelper
                 );
+                // Save or update health record
+                HealthRecordHelper.SaveUpdateHealthRecord(
+                    _patientId,                  // Patient ID
+                    pastMedicalHistoryDGV,       // Past Medical History DataGridView
+                    familyComboBox,              // Family History ComboBox
+                    personalComboBox,            // Personal History ComboBox
+                    bpTextBox,                   // BP
+                    temperatureTextBox,          // Temperature
+                    prTextBox,                   // Pulse Rate
+                    rrTextBox,                   // Respiratory Rate
+                    htTextBox,                   // Height
+                    wtTextBox,                   // Weight
+                    generalApperanceComboBox,    // General Appearance
+                    skinComboBox,                // Skin
+                    headAndFaceComboBox,         // Head and Face
+                    eyesComboBox,                // Eyes
+                    neckComboBox,                // Neck
+                    chestLungsComboBox,          // Chest/Lungs
+                    heartComboBox,               // Heart
+                    abdomenComboBox,             // Abdomen
+                    extremetiesComboBox,         // Extremities
+                    neurologicComboBox           // Neurologic
+                );
 
                 MessageBox.Show("Consultation saved successfully!", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Save dynamic Physical Exam values
 
                 int latestConsultationId = LatestIdHelper.GetLatestId("consultation", "consultation_id");
 
+                // 6️⃣ Open Prescription and Billing forms
                 PrescriptionForm prescriptionForm = new PrescriptionForm(_patientId, latestConsultationId);
                 prescriptionForm.ShowDialog();
                 BillingForm billingForm = new BillingForm(latestConsultationId, _patientId);
                 billingForm.ShowDialog();
 
-                // Reset UI (same as before)
+                // 7️⃣ Reset UI
                 imageFlowLayoutPanel.Controls.Clear();
                 videoFlowLayoutPanel.Controls.Clear();
                 imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
                 videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
 
-                // Refresh parent form safely
-                if (this.ParentForm != null)
-                {
-                    Form parentForm = this.ParentForm;
-                    parentForm.Hide();
-                    Form newForm = (Form)Activator.CreateInstance(parentForm.GetType());
-                    newForm.Show();
-                    parentForm.Dispose();
-                }
+                this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to save consultation: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+        /// <summary>
+        /// Checks if a DataGridView has any non-empty rows in the first column
+        /// </summary>
+        private bool DgvHasData(DataGridView dgv)
+        {
+            if (dgv == null) return false;
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (row.IsNewRow) continue;
+                var value = row.Cells[0].Value;
+                if (value != null && !string.IsNullOrWhiteSpace(value.ToString()))
+                    return true;
+            }
+            return false;
+        }
+
 
         /// <summary>
         /// Returns null if RichTextBox contains only the default bullet or is empty
@@ -283,7 +389,7 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
-
+        
         private void printConsultationHistoryButton_Click(object sender, EventArgs e)
         {
             try
@@ -441,6 +547,122 @@ namespace ENT_Clinic_System.UserControls
         private void labRequestButton_Click(object sender, EventArgs e)
         {
 
+
+        }
+
+        private void followUpCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void familyHistoryTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void personalComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void wtTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void followUpTablePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel9_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void earsDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void temperatureTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bpTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rrTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void htTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void prTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel10_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void generalApperanceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void headAndFaceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eyesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void neckComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chestLungsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void heartComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void abdomenComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void extremetiesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void neurologicComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

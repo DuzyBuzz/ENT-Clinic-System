@@ -1,0 +1,83 @@
+ALTER TABLE consultation
+ADD COLUMN history_of_present_illness TEXT,
+ADD COLUMN past_medical_history TEXT,
+ADD COLUMN family_history TEXT,
+ADD COLUMN social_history TEXT,
+ADD COLUMN general_examination TEXT,
+ADD COLUMN neck_exam TEXT;
+
+////////////////////////////
+CREATE TABLE appointments (
+    follow_up_id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Unique ID for each follow-up
+    patient_id INTEGER NOT NULL,                     -- ID of the patient
+    follow_up_date DATE NOT NULL,                    -- Date of follow-up
+    note TEXT,                                      -- Notes about the follow-up
+    FOREIGN KEY(patient_id) REFERENCES patients(patient_id)  -- Link to patients table
+);
+CREATE TABLE IF NOT EXISTS general_pe (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pe_name VARCHAR(255) NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE `health_record` (
+  `health_record_id` INT NOT NULL AUTO_INCREMENT,
+  `patient_id` INT DEFAULT NULL,
+  
+  -- Medical history
+  `past_medical_history` TEXT,
+  `family_history` TEXT,
+  `personal_history` TEXT,
+  
+  -- Vital signs
+  `bp` VARCHAR(20) DEFAULT NULL,
+  `temperature` DECIMAL(4,1) DEFAULT NULL,
+  `pr` INT DEFAULT NULL,
+  `rr` INT DEFAULT NULL,
+  `ht` DECIMAL(5,2) DEFAULT NULL,
+  `wt` DECIMAL(5,2) DEFAULT NULL,
+  
+  -- ENT-focused physical exam
+  `general_appearance` VARCHAR(255) DEFAULT NULL,
+  `skin` VARCHAR(255) DEFAULT NULL,
+  `head_and_face` VARCHAR(255) DEFAULT NULL,
+  `eyes` VARCHAR(255) DEFAULT NULL,
+  `neck` VARCHAR(255) DEFAULT NULL,
+  `chest_lungs` VARCHAR(255) DEFAULT NULL,
+  `heart` VARCHAR(255) DEFAULT NULL,
+  `abdomen` VARCHAR(255) DEFAULT NULL,
+  `extremities` VARCHAR(255) DEFAULT NULL,
+  `neurologic` VARCHAR(255) DEFAULT NULL,
+  
+  
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  
+  PRIMARY KEY (`health_record_id`),
+  KEY `patient_id` (`patient_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
+
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `trg_autocomplete_entries_no_duplicates` BEFORE INSERT ON `autocomplete_entries` FOR EACH ROW BEGIN
+    -- Check for existing entry with same column_name and value (case-insensitive)
+    IF EXISTS (
+        SELECT 1
+        FROM autocomplete_entries
+        WHERE LOWER(column_name) = LOWER(NEW.column_name)
+          AND LOWER(value) = LOWER(NEW.value)
+        LIMIT 1
+    ) THEN
+        -- Prevent insert silently by setting NEW.id to NULL (auto_increment field)
+        SET NEW.id = NULL;
+    END IF;
+END

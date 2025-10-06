@@ -45,6 +45,11 @@
             this.lblSearchUsers = new System.Windows.Forms.Label();
             this.txtSearchUsers = new System.Windows.Forms.TextBox();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
+            this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.role = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelUserControls = new System.Windows.Forms.Panel();
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
@@ -64,15 +69,6 @@
             this.dgvSettings = new System.Windows.Forms.DataGridView();
             this.btnSaveSettings = new System.Windows.Forms.Button();
             this.btnRefreshSettings = new System.Windows.Forms.Button();
-            this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.username = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.role = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.setting_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.setting_key = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.setting_value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControlMain.SuspendLayout();
             this.tabUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
@@ -142,6 +138,37 @@
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsers.Size = new System.Drawing.Size(550, 450);
             this.dgvUsers.TabIndex = 2;
+            // 
+            // user_id
+            // 
+            this.user_id.DataPropertyName = "user_id";
+            this.user_id.HeaderText = "User ID";
+            this.user_id.Name = "user_id";
+            this.user_id.ReadOnly = true;
+            // 
+            // username
+            // 
+            this.username.DataPropertyName = "username";
+            this.username.HeaderText = "User Name";
+            this.username.Name = "username";
+            // 
+            // password
+            // 
+            this.password.DataPropertyName = "password";
+            this.password.HeaderText = "Password";
+            this.password.Name = "password";
+            // 
+            // full_name
+            // 
+            this.full_name.DataPropertyName = "full_name";
+            this.full_name.HeaderText = "Full Name";
+            this.full_name.Name = "full_name";
+            // 
+            // role
+            // 
+            this.role.DataPropertyName = "role";
+            this.role.HeaderText = "Role";
+            this.role.Name = "role";
             // 
             // panelUserControls
             // 
@@ -306,15 +333,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSettings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSettings.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvSettings.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.setting_id,
-            this.setting_key,
-            this.setting_value,
-            this.description});
             this.dgvSettings.Location = new System.Drawing.Point(20, 45);
             this.dgvSettings.Name = "dgvSettings";
             this.dgvSettings.Size = new System.Drawing.Size(850, 400);
             this.dgvSettings.TabIndex = 2;
+            this.dgvSettings.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSettings_CellContentClick);
             // 
             // btnSaveSettings
             // 
@@ -333,64 +356,6 @@
             this.btnRefreshSettings.Size = new System.Drawing.Size(100, 30);
             this.btnRefreshSettings.TabIndex = 4;
             this.btnRefreshSettings.Text = "Refresh";
-            // 
-            // user_id
-            // 
-            this.user_id.DataPropertyName = "user_id";
-            this.user_id.HeaderText = "User ID";
-            this.user_id.Name = "user_id";
-            this.user_id.ReadOnly = true;
-            // 
-            // username
-            // 
-            this.username.DataPropertyName = "username";
-            this.username.HeaderText = "User Name";
-            this.username.Name = "username";
-            // 
-            // password
-            // 
-            this.password.DataPropertyName = "password";
-            this.password.HeaderText = "Password";
-            this.password.Name = "password";
-            // 
-            // full_name
-            // 
-            this.full_name.DataPropertyName = "full_name";
-            this.full_name.HeaderText = "Full Name";
-            this.full_name.Name = "full_name";
-            // 
-            // role
-            // 
-            this.role.DataPropertyName = "role";
-            this.role.HeaderText = "Role";
-            this.role.Name = "role";
-            // 
-            // setting_id
-            // 
-            this.setting_id.DataPropertyName = "setting_id";
-            this.setting_id.HeaderText = "Settings ID";
-            this.setting_id.Name = "setting_id";
-            this.setting_id.ReadOnly = true;
-            this.setting_id.Visible = false;
-            // 
-            // setting_key
-            // 
-            this.setting_key.DataPropertyName = "setting_key";
-            this.setting_key.HeaderText = "Settings Key";
-            this.setting_key.Name = "setting_key";
-            this.setting_key.ReadOnly = true;
-            // 
-            // setting_value
-            // 
-            this.setting_value.DataPropertyName = "setting_value";
-            this.setting_value.HeaderText = "Settings Value";
-            this.setting_value.Name = "setting_value";
-            // 
-            // description
-            // 
-            this.description.DataPropertyName = "description";
-            this.description.HeaderText = "Description";
-            this.description.Name = "description";
             // 
             // SystemAdminForm
             // 
@@ -416,9 +381,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn password;
         private System.Windows.Forms.DataGridViewTextBoxColumn full_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn role;
-        private System.Windows.Forms.DataGridViewTextBoxColumn setting_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn setting_key;
-        private System.Windows.Forms.DataGridViewTextBoxColumn setting_value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn description;
     }
 }

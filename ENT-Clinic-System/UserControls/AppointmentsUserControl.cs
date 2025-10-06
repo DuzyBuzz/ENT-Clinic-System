@@ -430,8 +430,8 @@ namespace ENT_Clinic_System.UserControls
                     dgvAppointments.SelectedRows[0].Cells["patient_id"].Value
                 );
 
-                var viewControl = new ConsultationControl(patientId);
-                LoadUserControl(viewControl);
+                ConsultationControl consultation = new ConsultationControl(patientId);
+                consultation.Show();
             }
         }
 
