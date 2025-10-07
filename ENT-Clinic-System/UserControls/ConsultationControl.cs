@@ -2,6 +2,7 @@
 using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.PrintingForms;
+using MySql.Data.MySqlClient;
 using Syncfusion.Collections;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,19 @@ namespace ENT_Clinic_System.UserControls
             // Call this after initializing your form and your FlowLayoutPanel
 
 
-
+            // Example for all ComboBoxes in your form
+            ComboBoxCollectionHelper.PopulateComboBox(familyComboBox, "health_record", "family_history");
+            ComboBoxCollectionHelper.PopulateComboBox(personalComboBox, "health_record", "personal_history");
+            ComboBoxCollectionHelper.PopulateComboBox(generalApperanceComboBox, "health_record", "general_appearance");
+            ComboBoxCollectionHelper.PopulateComboBox(skinComboBox, "health_record", "skin");
+            ComboBoxCollectionHelper.PopulateComboBox(headAndFaceComboBox, "health_record", "head_and_face");
+            ComboBoxCollectionHelper.PopulateComboBox(eyesComboBox, "health_record", "eyes");
+            ComboBoxCollectionHelper.PopulateComboBox(neckComboBox, "health_record", "neck");
+            ComboBoxCollectionHelper.PopulateComboBox(chestLungsComboBox, "health_record", "chest_lungs");
+            ComboBoxCollectionHelper.PopulateComboBox(heartComboBox, "health_record", "heart");
+            ComboBoxCollectionHelper.PopulateComboBox(abdomenComboBox, "health_record", "abdomen");
+            ComboBoxCollectionHelper.PopulateComboBox(extremetiesComboBox, "health_record", "extremities");
+            ComboBoxCollectionHelper.PopulateComboBox(neurologicComboBox, "health_record", "neurologic");
 
 
 
@@ -79,7 +92,6 @@ namespace ENT_Clinic_System.UserControls
             AutoCompleteDgvHelper.LoadColumnAutocomplete(earsDGV, "ears", "ear_exam");
             AutoCompleteDgvHelper.LoadColumnAutocomplete(noseDGV, "nose", "nose_exam");
             AutoCompleteDgvHelper.LoadColumnAutocomplete(throatDGV, "throat", "throat_exam");
-            AutoCompleteDgvHelper.LoadColumnAutocomplete(neckDGV, "neck", "neck_exam");
             AutoCompleteDgvHelper.LoadColumnAutocomplete(diagnosisDGV, "diagnosis", "diagnosis");
             AutoCompleteDgvHelper.LoadColumnAutocomplete(proceduresDGV, "procedures", "procedures");
             AutoCompleteDgvHelper.LoadColumnAutocomplete(recommendationsDGV, "recommendations", "recommendations");
@@ -180,7 +192,39 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
+        // =============================
+        // SAVE FOLLOW-UP APPOINTMENT
+        // =============================
+        private void SaveAppointments(int patientId, DateTime followUpDate, string note)
+        {
+            try
+            {
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
 
+                    string query = @"INSERT INTO appointments (patient_id, follow_up_date, note)
+                             VALUES (@patient_id, @follow_up_date, @note)";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@patient_id", patientId);
+                        cmd.Parameters.AddWithValue("@follow_up_date", followUpDate);
+                        if (string.IsNullOrWhiteSpace(note))
+                            cmd.Parameters.Add("@note", MySqlDbType.VarChar).Value = DBNull.Value;
+                        else
+                            cmd.Parameters.Add("@note", MySqlDbType.VarChar).Value = note.Trim();
+
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving appointment: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void saveConsultationButton_Click(object sender, EventArgs e)
         {
@@ -221,7 +265,6 @@ namespace ENT_Clinic_System.UserControls
                     EarsCsv = GetDgvValuesAsCsv(earsDGV),
                     NoseCsv = GetDgvValuesAsCsv(noseDGV),
                     ThroatCsv = GetDgvValuesAsCsv(throatDGV),
-                    NeckCsv = GetDgvValuesAsCsv(neckDGV),
                     DiagnosisCsv = GetDgvValuesAsCsv(diagnosisDGV),
                     ProceduresCsv = GetDgvValuesAsCsv(proceduresDGV),
                     RecommendationsCsv = GetDgvValuesAsCsv(recommendationsDGV),
@@ -268,6 +311,11 @@ namespace ENT_Clinic_System.UserControls
                     imageHelper,
                     videoHelper
                 );
+                if (followUpCheckBox.Checked && followUpDate.HasValue)
+                {
+                    string note = noteRichTextBox.Text;
+                    SaveAppointments(_patientId, followUpDate.Value, note);
+                }
                 // Save or update health record
                 HealthRecordHelper.SaveUpdateHealthRecord(
                     _patientId,                  // Patient ID

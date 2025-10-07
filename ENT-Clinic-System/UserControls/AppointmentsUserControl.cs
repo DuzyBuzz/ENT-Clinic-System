@@ -17,6 +17,9 @@ namespace ENT_Clinic_System.UserControls
         // Cache: appointments for the current month grouped by date (date -> list of DataRow)
         private Dictionary<DateTime, List<DataRow>> appointmentsByDate;
 
+        private ContextMenuStrip calendarContextMenu;
+        private DateTime? rightClickedDate = null;
+
         // Panels (6 rows x 7 cols = 42)
         private Panel[] dayPanels;
 
@@ -120,13 +123,47 @@ namespace ENT_Clinic_System.UserControls
 
                     panel.Click += DayCell_Click;
 
-                    // Notice row is shifted by +1
-                    this.tableLayoutCalendar.Controls.Add(panel, c, r + 1);
+                    // 👇 ADD THIS LINE
+                    panel.DoubleClick += DayCell_DoubleClick;
 
+                    this.tableLayoutCalendar.Controls.Add(panel, c, r + 1);
                     dayPanels[r * 7 + c] = panel;
                 }
             }
         }
+        /// <summary>
+        /// Double-click handler — opens AddAppointmentForm for that specific date.
+        /// </summary>
+        private void DayCell_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                Panel panel = null;
+                if (sender is Panel p) panel = p;
+                else if (sender is Control c && c.Parent is Panel parentPanel) panel = parentPanel;
+
+                if (panel == null || panel.Tag == null) return;
+
+                if (panel.Tag is DateTime date)
+                {
+                    // Open AddAppointmentForm, passing the selected date
+                    using (var form = new ENT_Clinic_System.InsertForms.AddAppointmentForm(date))
+                    {
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            // After saving, refresh the calendar
+                            RenderCalendar();
+                            LoadAppointmentsIntoGrid(date);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("DayCell_DoubleClick error: " + ex);
+            }
+        }
+
 
 
         private void AppointmentsUserControl_Load(object sender, EventArgs e)
@@ -222,7 +259,7 @@ namespace ENT_Clinic_System.UserControls
                                 {
                                     Text = $"{rows.Count} Appointment/s",
                                     AutoSize = false,
-                                    Dock = DockStyle.Fill,
+                                    Dock = DockStyle.Bottom,
                                     Font = apptFont,
                                     ForeColor = Color.Yellow,
                                     TextAlign = ContentAlignment.MiddleCenter,
@@ -263,7 +300,8 @@ namespace ENT_Clinic_System.UserControls
 
 
         /// <summary>
-        /// Loads all appointments for the month into appointmentsByDate (single DB call).
+        /// Loads all appointments for the given month from the 'appointments' table.
+        /// Groups results by follow_up_date.
         /// </summary>
         private void LoadAppointmentsForMonth(DateTime anyDateInMonth)
         {
@@ -279,16 +317,24 @@ namespace ENT_Clinic_System.UserControls
                 {
                     conn.Open();
                     string sql = @"
-                        SELECT c.consultation_id, c.patient_id, p.full_name AS patient_name, c.follow_up_date, c.notes
-                        FROM consultation c
-                        INNER JOIN patients p ON c.patient_id = p.patient_id
-                        WHERE DATE(c.follow_up_date) BETWEEN @start AND @end
-                        ORDER BY c.follow_up_date, p.full_name;
-                    ";
+    SELECT 
+        a.follow_up_id,
+        a.patient_id,
+        COALESCE(p.full_name, 'Clinic Appointment') AS patient_name,
+        a.follow_up_date,
+        a.note
+    FROM appointments a
+    LEFT JOIN patients p ON a.patient_id = p.patient_id
+    WHERE DATE(a.follow_up_date) BETWEEN @start AND @end
+    ORDER BY a.follow_up_date, patient_name;
+";
+
+
                     using (var cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@start", startOfMonth.Date);
                         cmd.Parameters.AddWithValue("@end", endOfMonth.Date);
+
                         using (var adapter = new MySqlDataAdapter(cmd))
                         {
                             adapter.Fill(dt);
@@ -296,13 +342,13 @@ namespace ENT_Clinic_System.UserControls
                     }
                 }
 
-                // Group by date
+                // Group results by date
                 foreach (DataRow dr in dt.Rows)
                 {
                     if (dr["follow_up_date"] == DBNull.Value) continue;
                     if (!DateTime.TryParse(dr["follow_up_date"].ToString(), out var fullDt)) continue;
 
-                    var key = fullDt.Date;
+                    DateTime key = fullDt.Date;
                     if (!appointmentsByDate.TryGetValue(key, out var list))
                     {
                         list = new List<DataRow>();
@@ -316,6 +362,7 @@ namespace ENT_Clinic_System.UserControls
                 System.Diagnostics.Debug.WriteLine("LoadAppointmentsForMonth error: " + ex);
             }
         }
+
 
         /// <summary>
         /// Click handler for day cells. The panel's Tag contains the DateTime (or null).
@@ -363,27 +410,36 @@ namespace ENT_Clinic_System.UserControls
                 dt = GetAppointmentsForDate(date);
             }
             dgvAppointments.DataSource = dt;
-
-            // Hide ID columns (they’re just for internal use)
-            if (dgvAppointments.Columns.Contains("consultation_id"))
-                dgvAppointments.Columns["consultation_id"].Visible = false;
+            // Hide internal columns
+            if (dgvAppointments.Columns.Contains("follow_up_id"))
+                dgvAppointments.Columns["follow_up_id"].Visible = false;
 
             if (dgvAppointments.Columns.Contains("patient_id"))
                 dgvAppointments.Columns["patient_id"].Visible = false;
 
             // User-friendly headers
             if (dgvAppointments.Columns.Contains("patient_name"))
-                dgvAppointments.Columns["patient_name"].HeaderText = "Patient Name";
+                dgvAppointments.Columns["patient_name"].HeaderText = "Name";
 
             if (dgvAppointments.Columns.Contains("follow_up_date"))
                 dgvAppointments.Columns["follow_up_date"].HeaderText = "Follow-up Date";
 
-            if (dgvAppointments.Columns.Contains("notes"))
-                dgvAppointments.Columns["notes"].HeaderText = "Notes";
+            if (dgvAppointments.Columns.Contains("note"))
+                dgvAppointments.Columns["note"].HeaderText = "Notes";
+            foreach (DataGridViewRow row in dgvAppointments.Rows)
+            {
+                var patientName = row.Cells["patient_name"].Value?.ToString();
+                if (patientName == "(Custom Appointment)")
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightYellow;
+                }
+            }
+
+
         }
 
         /// <summary>
-        /// Fallback: fetch appointments for a single date from DB
+        /// Fallback: fetch appointments for a single date directly from the 'appointments' table.
         /// </summary>
         private DataTable GetAppointmentsForDate(DateTime date)
         {
@@ -394,18 +450,19 @@ namespace ENT_Clinic_System.UserControls
                 {
                     conn.Open();
                     string sql = @"
-                        SELECT 
-                            c.consultation_id,
-                            c.patient_id,
-                            c.patient_id,
-                            p.full_name AS patient_name,
-                            c.follow_up_date,
-                            c.notes
-                        FROM consultation c
-                        JOIN patient p ON c.patient_id = p.patient_id
-                        WHERE DATE(c.follow_up_date) = DATE(@date)
+    SELECT 
+        a.follow_up_id,
+        a.patient_id,
+        COALESCE(p.full_name, '(Custom Appointment)') AS patient_name,
+        a.follow_up_date,
+        a.note
+    FROM appointments a
+    LEFT JOIN patients p ON a.patient_id = p.patient_id
+    WHERE DATE(a.follow_up_date) = DATE(@date)
+    ORDER BY patient_name;
+";
 
-                    ";
+
                     using (var cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@date", date.Date);
@@ -422,18 +479,53 @@ namespace ENT_Clinic_System.UserControls
             }
             return dt;
         }
+
         private void viewConsultationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dgvAppointments.SelectedRows.Count > 0)
+            try
             {
-                int patientId = Convert.ToInt32(
-                    dgvAppointments.SelectedRows[0].Cells["patient_id"].Value
-                );
+                if (dgvAppointments.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select an appointment first.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                ConsultationControl consultation = new ConsultationControl(patientId);
-                consultation.Show();
+                // Get patient_id value safely
+                var patientIdObj = dgvAppointments.SelectedRows[0].Cells["patient_id"].Value;
+
+                if (patientIdObj == DBNull.Value || patientIdObj == null || string.IsNullOrWhiteSpace(patientIdObj.ToString()))
+                {
+                    MessageBox.Show("This appointment does not have a linked patient record.",
+                                    "No Patient Linked",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Convert safely
+                if (int.TryParse(patientIdObj.ToString(), out int patientId))
+                {
+                    // Open consultation form for that patient
+                    ConsultationControl consultation = new ConsultationControl(patientId);
+                    consultation.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid patient ID found in the selected appointment.",
+                                    "Invalid Data",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while trying to view the consultation:\n" + ex.Message,
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
+
 
 
         private void LoadUserControl(UserControl control)

@@ -43,6 +43,7 @@
             this.selling_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stock_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxItem = new System.Windows.Forms.GroupBox();
+            this.writeOffButton = new System.Windows.Forms.Button();
             this.sellingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.costPriceNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.clearButton = new System.Windows.Forms.Button();
@@ -59,11 +60,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.movementDateToDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.movementDateFromDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.movementDataGridView = new System.Windows.Forms.DataGridView();
+            this.movement_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.itemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.movement_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.movement_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.movement_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.expiration_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxStock = new System.Windows.Forms.GroupBox();
             this.quantityNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.expirationDateCheckBox = new System.Windows.Forms.CheckBox();
@@ -75,14 +78,11 @@
             this.itemIdTextBox = new System.Windows.Forms.TextBox();
             this.stockInButton = new System.Windows.Forms.Button();
             this.stockOutButton = new System.Windows.Forms.Button();
-            this.movementDataGridView = new System.Windows.Forms.DataGridView();
-            this.movement_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.itemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.movement_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.movement_quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.movement_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.expiration_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.writeOffButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.movementDateToDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.movementDateFromDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -94,10 +94,10 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.movementDataGridView)).BeginInit();
             this.groupBoxStock.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quantityNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.movementDataGridView)).BeginInit();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel2
@@ -189,7 +189,7 @@
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(579, 13);
+            this.categoryCombobox.Location = new System.Drawing.Point(579, 6);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(204, 28);
@@ -349,6 +349,19 @@
             this.groupBoxItem.TabIndex = 4;
             this.groupBoxItem.TabStop = false;
             this.groupBoxItem.Text = "Add / Update Item";
+            // 
+            // writeOffButton
+            // 
+            this.writeOffButton.BackColor = System.Drawing.SystemColors.Control;
+            this.writeOffButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.writeOffButton.Location = new System.Drawing.Point(351, 110);
+            this.writeOffButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.writeOffButton.Name = "writeOffButton";
+            this.writeOffButton.Size = new System.Drawing.Size(105, 34);
+            this.writeOffButton.TabIndex = 18;
+            this.writeOffButton.Text = "Write-Off";
+            this.writeOffButton.UseVisualStyleBackColor = false;
+            this.writeOffButton.Click += new System.EventHandler(this.writeOffButton_Click);
             // 
             // sellingNumericUpDown
             // 
@@ -532,80 +545,84 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Stock Movements";
             // 
-            // tableLayoutPanel3
+            // movementDataGridView
             // 
-            this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.68996F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.51207F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.767471F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.90343F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Controls.Add(this.label11, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.label10, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.movementDateToDateTimePicker, 3, 0);
-            this.tableLayoutPanel3.Controls.Add(this.movementDateFromDateTimePicker, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(787, 42);
-            this.tableLayoutPanel3.TabIndex = 7;
+            this.movementDataGridView.AllowUserToAddRows = false;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            this.movementDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.movementDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.movementDataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.movementDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.movementDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.movementDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.movement_id,
+            this.itemId,
+            this.movement_type,
+            this.movement_quantity,
+            this.movement_date,
+            this.expiration_date});
+            this.movementDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.movementDataGridView.Location = new System.Drawing.Point(3, 21);
+            this.movementDataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.movementDataGridView.MultiSelect = false;
+            this.movementDataGridView.Name = "movementDataGridView";
+            this.movementDataGridView.ReadOnly = true;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            this.movementDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            this.movementDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.movementDataGridView.Size = new System.Drawing.Size(781, 776);
+            this.movementDataGridView.TabIndex = 12;
             // 
-            // label11
+            // movement_id
             // 
-            this.label11.AutoSize = true;
-            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label11.Location = new System.Drawing.Point(344, 0);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(61, 42);
-            this.label11.TabIndex = 14;
-            this.label11.Text = "Date To:";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.movement_id.DataPropertyName = "movement_id";
+            this.movement_id.HeaderText = "Movement ID";
+            this.movement_id.Name = "movement_id";
+            this.movement_id.ReadOnly = true;
             // 
-            // label10
+            // itemId
             // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label10.Location = new System.Drawing.Point(4, 0);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(84, 42);
-            this.label10.TabIndex = 13;
-            this.label10.Text = "Date From:";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.itemId.DataPropertyName = "item_id";
+            this.itemId.HeaderText = "Item ID";
+            this.itemId.Name = "itemId";
+            this.itemId.ReadOnly = true;
             // 
-            // movementDateToDateTimePicker
+            // movement_type
             // 
-            this.movementDateToDateTimePicker.Dock = System.Windows.Forms.DockStyle.Left;
-            this.movementDateToDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.movementDateToDateTimePicker.Location = new System.Drawing.Point(419, 10);
-            this.movementDateToDateTimePicker.Margin = new System.Windows.Forms.Padding(10);
-            this.movementDateToDateTimePicker.Name = "movementDateToDateTimePicker";
-            this.movementDateToDateTimePicker.Size = new System.Drawing.Size(110, 25);
-            this.movementDateToDateTimePicker.TabIndex = 6;
-            this.movementDateToDateTimePicker.ValueChanged += new System.EventHandler(this.movementDateToDateTimePicker_ValueChanged);
+            this.movement_type.DataPropertyName = "movement_type";
+            this.movement_type.HeaderText = "Movement";
+            this.movement_type.Name = "movement_type";
+            this.movement_type.ReadOnly = true;
             // 
-            // movementDateFromDateTimePicker
+            // movement_quantity
             // 
-            this.movementDateFromDateTimePicker.Dock = System.Windows.Forms.DockStyle.Left;
-            this.movementDateFromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.movementDateFromDateTimePicker.Location = new System.Drawing.Point(102, 10);
-            this.movementDateFromDateTimePicker.Margin = new System.Windows.Forms.Padding(10);
-            this.movementDateFromDateTimePicker.Name = "movementDateFromDateTimePicker";
-            this.movementDateFromDateTimePicker.Size = new System.Drawing.Size(110, 25);
-            this.movementDateFromDateTimePicker.TabIndex = 8;
-            this.movementDateFromDateTimePicker.ValueChanged += new System.EventHandler(this.movementDateFromDateTimePicker_ValueChanged);
+            this.movement_quantity.DataPropertyName = "quantity";
+            this.movement_quantity.HeaderText = "Quantity";
+            this.movement_quantity.Name = "movement_quantity";
+            this.movement_quantity.ReadOnly = true;
+            // 
+            // movement_date
+            // 
+            this.movement_date.DataPropertyName = "movement_date";
+            dataGridViewCellStyle4.Format = "d";
+            dataGridViewCellStyle4.NullValue = null;
+            this.movement_date.DefaultCellStyle = dataGridViewCellStyle4;
+            this.movement_date.HeaderText = "Date";
+            this.movement_date.Name = "movement_date";
+            this.movement_date.ReadOnly = true;
+            // 
+            // expiration_date
+            // 
+            this.expiration_date.DataPropertyName = "expiration_date";
+            dataGridViewCellStyle5.Format = "d";
+            dataGridViewCellStyle5.NullValue = null;
+            this.expiration_date.DefaultCellStyle = dataGridViewCellStyle5;
+            this.expiration_date.HeaderText = "Expiration Date";
+            this.expiration_date.Name = "expiration_date";
+            this.expiration_date.ReadOnly = true;
             // 
             // groupBoxStock
             // 
@@ -740,97 +757,80 @@
             this.stockOutButton.UseVisualStyleBackColor = false;
             this.stockOutButton.Visible = false;
             // 
-            // movementDataGridView
+            // tableLayoutPanel3
             // 
-            this.movementDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            this.movementDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.movementDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.movementDataGridView.BackgroundColor = System.Drawing.Color.White;
-            this.movementDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.movementDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.movementDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.movement_id,
-            this.itemId,
-            this.movement_type,
-            this.movement_quantity,
-            this.movement_date,
-            this.expiration_date});
-            this.movementDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.movementDataGridView.Location = new System.Drawing.Point(3, 21);
-            this.movementDataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.movementDataGridView.MultiSelect = false;
-            this.movementDataGridView.Name = "movementDataGridView";
-            this.movementDataGridView.ReadOnly = true;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            this.movementDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            this.movementDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.movementDataGridView.Size = new System.Drawing.Size(781, 776);
-            this.movementDataGridView.TabIndex = 12;
+            this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.68996F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.51207F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.767471F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.90343F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Controls.Add(this.label11, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label10, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.movementDateToDateTimePicker, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.movementDateFromDateTimePicker, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(787, 42);
+            this.tableLayoutPanel3.TabIndex = 7;
             // 
-            // movement_id
+            // label11
             // 
-            this.movement_id.DataPropertyName = "movement_id";
-            this.movement_id.HeaderText = "Movement ID";
-            this.movement_id.Name = "movement_id";
-            this.movement_id.ReadOnly = true;
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label11.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label11.Location = new System.Drawing.Point(344, 0);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(61, 42);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "Date To:";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // itemId
+            // label10
             // 
-            this.itemId.DataPropertyName = "item_id";
-            this.itemId.HeaderText = "Item ID";
-            this.itemId.Name = "itemId";
-            this.itemId.ReadOnly = true;
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label10.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label10.Location = new System.Drawing.Point(4, 0);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(84, 42);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "Date From:";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // movement_type
+            // movementDateToDateTimePicker
             // 
-            this.movement_type.DataPropertyName = "movement_type";
-            this.movement_type.HeaderText = "Movement";
-            this.movement_type.Name = "movement_type";
-            this.movement_type.ReadOnly = true;
+            this.movementDateToDateTimePicker.Dock = System.Windows.Forms.DockStyle.Left;
+            this.movementDateToDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.movementDateToDateTimePicker.Location = new System.Drawing.Point(419, 10);
+            this.movementDateToDateTimePicker.Margin = new System.Windows.Forms.Padding(10);
+            this.movementDateToDateTimePicker.Name = "movementDateToDateTimePicker";
+            this.movementDateToDateTimePicker.Size = new System.Drawing.Size(110, 25);
+            this.movementDateToDateTimePicker.TabIndex = 6;
+            this.movementDateToDateTimePicker.ValueChanged += new System.EventHandler(this.movementDateToDateTimePicker_ValueChanged);
             // 
-            // movement_quantity
+            // movementDateFromDateTimePicker
             // 
-            this.movement_quantity.DataPropertyName = "quantity";
-            this.movement_quantity.HeaderText = "Quantity";
-            this.movement_quantity.Name = "movement_quantity";
-            this.movement_quantity.ReadOnly = true;
-            // 
-            // movement_date
-            // 
-            this.movement_date.DataPropertyName = "movement_date";
-            dataGridViewCellStyle4.Format = "d";
-            dataGridViewCellStyle4.NullValue = null;
-            this.movement_date.DefaultCellStyle = dataGridViewCellStyle4;
-            this.movement_date.HeaderText = "Date";
-            this.movement_date.Name = "movement_date";
-            this.movement_date.ReadOnly = true;
-            // 
-            // expiration_date
-            // 
-            this.expiration_date.DataPropertyName = "expiration_date";
-            dataGridViewCellStyle5.Format = "d";
-            dataGridViewCellStyle5.NullValue = null;
-            this.expiration_date.DefaultCellStyle = dataGridViewCellStyle5;
-            this.expiration_date.HeaderText = "Expiration Date";
-            this.expiration_date.Name = "expiration_date";
-            this.expiration_date.ReadOnly = true;
-            // 
-            // writeOffButton
-            // 
-            this.writeOffButton.BackColor = System.Drawing.SystemColors.Control;
-            this.writeOffButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.writeOffButton.Location = new System.Drawing.Point(351, 110);
-            this.writeOffButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.writeOffButton.Name = "writeOffButton";
-            this.writeOffButton.Size = new System.Drawing.Size(105, 34);
-            this.writeOffButton.TabIndex = 18;
-            this.writeOffButton.Text = "Write-Off";
-            this.writeOffButton.UseVisualStyleBackColor = false;
-            this.writeOffButton.Click += new System.EventHandler(this.writeOffButton_Click);
+            this.movementDateFromDateTimePicker.Dock = System.Windows.Forms.DockStyle.Left;
+            this.movementDateFromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.movementDateFromDateTimePicker.Location = new System.Drawing.Point(102, 10);
+            this.movementDateFromDateTimePicker.Margin = new System.Windows.Forms.Padding(10);
+            this.movementDateFromDateTimePicker.Name = "movementDateFromDateTimePicker";
+            this.movementDateFromDateTimePicker.Size = new System.Drawing.Size(110, 25);
+            this.movementDateFromDateTimePicker.TabIndex = 8;
+            this.movementDateFromDateTimePicker.ValueChanged += new System.EventHandler(this.movementDateFromDateTimePicker_ValueChanged);
             // 
             // InventoryForm
             // 
@@ -860,12 +860,12 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.movementDataGridView)).EndInit();
             this.groupBoxStock.ResumeLayout(false);
             this.groupBoxStock.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.quantityNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.movementDataGridView)).EndInit();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }

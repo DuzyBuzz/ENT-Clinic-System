@@ -63,6 +63,7 @@
             this.dgvQueue.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvQueue.Size = new System.Drawing.Size(616, 398);
             this.dgvQueue.TabIndex = 1;
+            this.dgvQueue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvQueue_MouseDown);
             // 
             // txtSearchPatient
             // 

@@ -159,7 +159,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(455, 30);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Appointments";
+            this.label1.Text = "Follow Up";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // todayButton

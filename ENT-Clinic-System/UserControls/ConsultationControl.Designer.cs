@@ -30,23 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle123 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle124 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle113 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle125 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle126 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle127 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle128 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle129 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle130 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle131 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle132 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle133 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.printAttachmentButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.printMedicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
@@ -64,6 +59,117 @@
             this.patientContactNumberLabel = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.patientProfilePictureBox = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel25 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
+            this.neurologicComboBox = new System.Windows.Forms.ComboBox();
+            this.extremetiesComboBox = new System.Windows.Forms.ComboBox();
+            this.abdomenComboBox = new System.Windows.Forms.ComboBox();
+            this.heartComboBox = new System.Windows.Forms.ComboBox();
+            this.chestLungsComboBox = new System.Windows.Forms.ComboBox();
+            this.neckComboBox = new System.Windows.Forms.ComboBox();
+            this.eyesComboBox = new System.Windows.Forms.ComboBox();
+            this.headAndFaceComboBox = new System.Windows.Forms.ComboBox();
+            this.skinComboBox = new System.Windows.Forms.ComboBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.generalApperanceComboBox = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel29 = new System.Windows.Forms.TableLayoutPanel();
+            this.wtTextBox = new System.Windows.Forms.TextBox();
+            this.htTextBox = new System.Windows.Forms.TextBox();
+            this.rrTextBox = new System.Windows.Forms.TextBox();
+            this.prTextBox = new System.Windows.Forms.TextBox();
+            this.temperatureTextBox = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.bpTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel28 = new System.Windows.Forms.TableLayoutPanel();
+            this.personalComboBox = new System.Windows.Forms.ComboBox();
+            this.pastMedicalHistoryDGV = new System.Windows.Forms.DataGridView();
+            this.pastMedicalHistory = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.recentIlnessDGV = new System.Windows.Forms.DataGridView();
+            this.recentIllness = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.familyComboBox = new System.Windows.Forms.ComboBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.consultationDateDataGridView = new System.Windows.Forms.DataGridView();
+            this.consultation_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.printAttachmentButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.printMedicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.labResultsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.chiefComplaintsDGV = new System.Windows.Forms.DataGridView();
+            this.chiefComplaintsDGVColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.throatDGV = new System.Windows.Forms.DataGridView();
+            this.throat = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.noseDGV = new System.Windows.Forms.DataGridView();
+            this.nose = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.earsDGV = new System.Windows.Forms.DataGridView();
+            this.ears = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.proceduresDGV = new System.Windows.Forms.DataGridView();
+            this.procedures = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.diagnosisDGV = new System.Windows.Forms.DataGridView();
+            this.diagnosis = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.followUpTablePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.followUpCheckBox = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.followUpDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
+            this.saveConsultationButton = new System.Windows.Forms.Button();
+            this.noteRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.recommendationsDGV = new System.Windows.Forms.DataGridView();
+            this.recommendations = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.videoFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.imageFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.tableLayoutPanel26 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mySqlDataAdapter1 = new MySql.Data.MySqlClient.MySqlDataAdapter();
             this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
@@ -71,171 +177,60 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel26 = new System.Windows.Forms.TableLayoutPanel();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.imageFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.videoFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.followUpTablePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.noteRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.tableLayoutPanel16 = new System.Windows.Forms.TableLayoutPanel();
-            this.saveConsultationButton = new System.Windows.Forms.Button();
-            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
-            this.label13 = new System.Windows.Forms.Label();
-            this.followUpDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.followUpCheckBox = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.consultationDateDataGridView = new System.Windows.Forms.DataGridView();
-            this.consultation_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel25 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.tableLayoutPanel28 = new System.Windows.Forms.TableLayoutPanel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.recentIlnessDGV = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel29 = new System.Windows.Forms.TableLayoutPanel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.bpTextBox = new System.Windows.Forms.TextBox();
-            this.temperatureTextBox = new System.Windows.Forms.TextBox();
-            this.prTextBox = new System.Windows.Forms.TextBox();
-            this.rrTextBox = new System.Windows.Forms.TextBox();
-            this.htTextBox = new System.Windows.Forms.TextBox();
-            this.wtTextBox = new System.Windows.Forms.TextBox();
-            this.pastMedicalHistoryDGV = new System.Windows.Forms.DataGridView();
-            this.familyComboBox = new System.Windows.Forms.ComboBox();
-            this.personalComboBox = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.labResultsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.chiefComplaintsDGV = new System.Windows.Forms.DataGridView();
-            this.chiefComplaintsDGVColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.earsDGV = new System.Windows.Forms.DataGridView();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.noseDGV = new System.Windows.Forms.DataGridView();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.throatDGV = new System.Windows.Forms.DataGridView();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.neckDGV = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.ears = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.nose = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.throat = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.neck = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.diagnosisDGV = new System.Windows.Forms.DataGridView();
-            this.diagnosis = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.recommendationsDGV = new System.Windows.Forms.DataGridView();
-            this.recommendations = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.proceduresDGV = new System.Windows.Forms.DataGridView();
-            this.procedures = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.recentIllness = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.pastMedicalHistory = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.generalApperanceComboBox = new System.Windows.Forms.ComboBox();
-            this.skinComboBox = new System.Windows.Forms.ComboBox();
-            this.headAndFaceComboBox = new System.Windows.Forms.ComboBox();
-            this.eyesComboBox = new System.Windows.Forms.ComboBox();
-            this.neckComboBox = new System.Windows.Forms.ComboBox();
-            this.chestLungsComboBox = new System.Windows.Forms.ComboBox();
-            this.heartComboBox = new System.Windows.Forms.ComboBox();
-            this.abdomenComboBox = new System.Windows.Forms.ComboBox();
-            this.extremetiesComboBox = new System.Windows.Forms.ComboBox();
-            this.neurologicComboBox = new System.Windows.Forms.ComboBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1.SuspendLayout();
-            this.consultationHistoryContextMenuStrip.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientProfilePictureBox)).BeginInit();
-            this.tableLayoutPanel18.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.tableLayoutPanel13.SuspendLayout();
-            this.tableLayoutPanel26.SuspendLayout();
-            this.tableLayoutPanel17.SuspendLayout();
-            this.tableLayoutPanel14.SuspendLayout();
-            this.followUpTablePanel.SuspendLayout();
-            this.tableLayoutPanel16.SuspendLayout();
-            this.tableLayoutPanel15.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tableLayoutPanel25.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.tableLayoutPanel28.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.recentIlnessDGV)).BeginInit();
+            this.tableLayoutPanel10.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tableLayoutPanel29.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel28.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pastMedicalHistoryDGV)).BeginInit();
-            this.tableLayoutPanel9.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.recentIlnessDGV)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).BeginInit();
+            this.consultationHistoryContextMenuStrip.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chiefComplaintsDGV)).BeginInit();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.earsDGV)).BeginInit();
-            this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.noseDGV)).BeginInit();
+            this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).BeginInit();
-            this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.neckDGV)).BeginInit();
-            this.tableLayoutPanel8.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.diagnosisDGV)).BeginInit();
-            this.groupBox11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.recommendationsDGV)).BeginInit();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.noseDGV)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.earsDGV)).BeginInit();
+            this.tableLayoutPanel9.SuspendLayout();
             this.groupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.proceduresDGV)).BeginInit();
-            this.tableLayoutPanel10.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.diagnosisDGV)).BeginInit();
+            this.followUpTablePanel.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
+            this.tableLayoutPanel16.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.recommendationsDGV)).BeginInit();
+            this.tableLayoutPanel13.SuspendLayout();
+            this.tableLayoutPanel14.SuspendLayout();
+            this.tableLayoutPanel17.SuspendLayout();
+            this.tableLayoutPanel26.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.tableLayoutPanel18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -255,37 +250,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1888, 971);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // consultationHistoryContextMenuStrip
-            // 
-            this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.printConsultationHistoryButton,
-            this.printAttachmentButton,
-            this.printMedicalCertificateToolStripMenuItem});
-            this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
-            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 70);
-            // 
-            // printConsultationHistoryButton
-            // 
-            this.printConsultationHistoryButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.printConsultationHistoryButton.Name = "printConsultationHistoryButton";
-            this.printConsultationHistoryButton.Size = new System.Drawing.Size(215, 22);
-            this.printConsultationHistoryButton.Text = "Show Consultation History";
-            this.printConsultationHistoryButton.Click += new System.EventHandler(this.printConsultationHistoryButton_Click);
-            // 
-            // printAttachmentButton
-            // 
-            this.printAttachmentButton.Name = "printAttachmentButton";
-            this.printAttachmentButton.Size = new System.Drawing.Size(215, 22);
-            this.printAttachmentButton.Text = "Show Attachments";
-            this.printAttachmentButton.Click += new System.EventHandler(this.printAttachmentButton_Click);
-            // 
-            // printMedicalCertificateToolStripMenuItem
-            // 
-            this.printMedicalCertificateToolStripMenuItem.Name = "printMedicalCertificateToolStripMenuItem";
-            this.printMedicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.printMedicalCertificateToolStripMenuItem.Text = "Print Medical Certificate";
-            this.printMedicalCertificateToolStripMenuItem.Click += new System.EventHandler(this.printMedicalCertificateToolStripMenuItem_Click);
             // 
             // tableLayoutPanel12
             // 
@@ -521,334 +485,23 @@
             this.patientProfilePictureBox.TabIndex = 61;
             this.patientProfilePictureBox.TabStop = false;
             // 
-            // contextMenuStrip1
+            // tableLayoutPanel2
             // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // mySqlDataAdapter1
-            // 
-            this.mySqlDataAdapter1.DeleteCommand = null;
-            this.mySqlDataAdapter1.InsertCommand = null;
-            this.mySqlDataAdapter1.SelectCommand = null;
-            this.mySqlDataAdapter1.UpdateCommand = null;
-            // 
-            // tableLayoutPanel18
-            // 
-            this.tableLayoutPanel18.ColumnCount = 1;
-            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel18.Controls.Add(this.dataGridView1, 0, 0);
-            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel18.Location = new System.Drawing.Point(4, 5);
-            this.tableLayoutPanel18.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
-            this.tableLayoutPanel18.RowCount = 1;
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 99.99999F));
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 844F));
-            this.tableLayoutPanel18.Size = new System.Drawing.Size(124, 840);
-            this.tableLayoutPanel18.TabIndex = 0;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle123.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle123;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.dataGridView1.Location = new System.Drawing.Point(4, 5);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(116, 830);
-            this.dataGridView1.TabIndex = 2;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "consultation_date";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Consultation History";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // printPreviewDialog1
-            // 
-            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
-            this.printPreviewDialog1.Enabled = true;
-            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
-            this.printPreviewDialog1.Name = "printPreviewDialog1";
-            this.printPreviewDialog1.Visible = false;
-            // 
-            // tableLayoutPanel13
-            // 
-            this.tableLayoutPanel13.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel13.ColumnCount = 1;
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel14, 0, 1);
-            this.tableLayoutPanel13.Controls.Add(this.videoFlowLayoutPanel, 0, 4);
-            this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel17, 0, 3);
-            this.tableLayoutPanel13.Controls.Add(this.imageFlowLayoutPanel, 0, 2);
-            this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel26, 0, 0);
-            this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(1576, 3);
-            this.tableLayoutPanel13.Name = "tableLayoutPanel13";
-            this.tableLayoutPanel13.RowCount = 5;
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.306604F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.672986F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.94948F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.13318F));
-            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.50287F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(299, 861);
-            this.tableLayoutPanel13.TabIndex = 2;
-            // 
-            // tableLayoutPanel26
-            // 
-            this.tableLayoutPanel26.ColumnCount = 2;
-            this.tableLayoutPanel26.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.86254F));
-            this.tableLayoutPanel26.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.13746F));
-            this.tableLayoutPanel26.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel26.Controls.Add(this.toolStrip1, 1, 0);
-            this.tableLayoutPanel26.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel26.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel26.Name = "tableLayoutPanel26";
-            this.tableLayoutPanel26.RowCount = 1;
-            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel26.Size = new System.Drawing.Size(291, 39);
-            this.tableLayoutPanel26.TabIndex = 4;
-            // 
-            // miniToolStrip
-            // 
-            this.miniToolStrip.AccessibleName = "New item selection";
-            this.miniToolStrip.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDown;
-            this.miniToolStrip.AutoSize = false;
-            this.miniToolStrip.CanOverflow = false;
-            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.miniToolStrip.Location = new System.Drawing.Point(0, 0);
-            this.miniToolStrip.Name = "miniToolStrip";
-            this.miniToolStrip.Size = new System.Drawing.Size(142, 39);
-            this.miniToolStrip.TabIndex = 3;
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(84, 36);
-            this.toolStripButton1.Text = "Open Camera";
-            this.toolStripButton1.Click += new System.EventHandler(this.openCameraButton_Click);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(85, 36);
-            this.toolStripButton2.Text = "Upload Image";
-            this.toolStripButton2.Click += new System.EventHandler(this.uploadImageButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 39);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Attachments";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // imageFlowLayoutPanel
-            // 
-            this.imageFlowLayoutPanel.AutoScroll = true;
-            this.imageFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.imageFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageFlowLayoutPanel.Location = new System.Drawing.Point(4, 82);
-            this.imageFlowLayoutPanel.Name = "imageFlowLayoutPanel";
-            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(291, 543);
-            this.imageFlowLayoutPanel.TabIndex = 4;
-            // 
-            // tableLayoutPanel17
-            // 
-            this.tableLayoutPanel17.ColumnCount = 1;
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.78712F));
-            this.tableLayoutPanel17.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel17.Location = new System.Drawing.Point(4, 632);
-            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
-            this.tableLayoutPanel17.RowCount = 1;
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(291, 29);
-            this.tableLayoutPanel17.TabIndex = 5;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 22);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Video";
-            // 
-            // videoFlowLayoutPanel
-            // 
-            this.videoFlowLayoutPanel.AutoScroll = true;
-            this.videoFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 668);
-            this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
-            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(291, 189);
-            this.videoFlowLayoutPanel.TabIndex = 6;
-            // 
-            // tableLayoutPanel14
-            // 
-            this.tableLayoutPanel14.ColumnCount = 1;
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.78712F));
-            this.tableLayoutPanel14.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel14.Location = new System.Drawing.Point(4, 50);
-            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
-            this.tableLayoutPanel14.RowCount = 1;
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(291, 2);
-            this.tableLayoutPanel14.TabIndex = 7;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 2);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Image";
-            // 
-            // followUpTablePanel
-            // 
-            this.followUpTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.followUpTablePanel.ColumnCount = 1;
-            this.followUpTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.followUpTablePanel.Controls.Add(this.label14, 0, 2);
-            this.followUpTablePanel.Controls.Add(this.followUpCheckBox, 0, 0);
-            this.followUpTablePanel.Controls.Add(this.tableLayoutPanel15, 0, 1);
-            this.followUpTablePanel.Controls.Add(this.tableLayoutPanel16, 0, 4);
-            this.followUpTablePanel.Controls.Add(this.noteRichTextBox, 0, 3);
-            this.followUpTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.followUpTablePanel.Location = new System.Drawing.Point(964, 4);
-            this.followUpTablePanel.Name = "followUpTablePanel";
-            this.followUpTablePanel.RowCount = 5;
-            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.7619F));
-            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.09524F));
-            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.38095F));
-            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
-            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.followUpTablePanel.Size = new System.Drawing.Size(164, 211);
-            this.followUpTablePanel.TabIndex = 2;
-            this.followUpTablePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.followUpTablePanel_Paint);
-            // 
-            // noteRichTextBox
-            // 
-            this.noteRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.noteRichTextBox.Location = new System.Drawing.Point(4, 99);
-            this.noteRichTextBox.Name = "noteRichTextBox";
-            this.noteRichTextBox.Size = new System.Drawing.Size(156, 56);
-            this.noteRichTextBox.TabIndex = 9;
-            this.noteRichTextBox.Text = "";
-            // 
-            // tableLayoutPanel16
-            // 
-            this.tableLayoutPanel16.ColumnCount = 1;
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel16.Controls.Add(this.saveConsultationButton, 0, 0);
-            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel16.Location = new System.Drawing.Point(4, 162);
-            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
-            this.tableLayoutPanel16.RowCount = 1;
-            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(156, 45);
-            this.tableLayoutPanel16.TabIndex = 8;
-            // 
-            // saveConsultationButton
-            // 
-            this.saveConsultationButton.Location = new System.Drawing.Point(3, 3);
-            this.saveConsultationButton.Name = "saveConsultationButton";
-            this.saveConsultationButton.Size = new System.Drawing.Size(150, 39);
-            this.saveConsultationButton.TabIndex = 1;
-            this.saveConsultationButton.Text = "Save Consultation";
-            this.saveConsultationButton.UseVisualStyleBackColor = true;
-            this.saveConsultationButton.Click += new System.EventHandler(this.saveConsultationButton_Click);
-            // 
-            // tableLayoutPanel15
-            // 
-            this.tableLayoutPanel15.ColumnCount = 2;
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.99536F));
-            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.00464F));
-            this.tableLayoutPanel15.Controls.Add(this.followUpDateTimePicker, 1, 0);
-            this.tableLayoutPanel15.Controls.Add(this.label13, 0, 0);
-            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel15.Location = new System.Drawing.Point(4, 35);
-            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
-            this.tableLayoutPanel15.RowCount = 1;
-            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(156, 31);
-            this.tableLayoutPanel15.TabIndex = 6;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label13.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(3, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(39, 31);
-            this.label13.TabIndex = 1;
-            this.label13.Text = "Date";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // followUpDateTimePicker
-            // 
-            this.followUpDateTimePicker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.followUpDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.followUpDateTimePicker.Location = new System.Drawing.Point(68, 3);
-            this.followUpDateTimePicker.Name = "followUpDateTimePicker";
-            this.followUpDateTimePicker.Size = new System.Drawing.Size(85, 26);
-            this.followUpDateTimePicker.TabIndex = 0;
-            // 
-            // followUpCheckBox
-            // 
-            this.followUpCheckBox.AutoSize = true;
-            this.followUpCheckBox.Font = new System.Drawing.Font("Arial", 12.75F, System.Drawing.FontStyle.Bold);
-            this.followUpCheckBox.Location = new System.Drawing.Point(4, 4);
-            this.followUpCheckBox.Name = "followUpCheckBox";
-            this.followUpCheckBox.Size = new System.Drawing.Size(106, 23);
-            this.followUpCheckBox.TabIndex = 3;
-            this.followUpCheckBox.Text = "Follow Up";
-            this.followUpCheckBox.UseVisualStyleBackColor = true;
-            this.followUpCheckBox.CheckedChanged += new System.EventHandler(this.followUpCheckBox_CheckedChanged);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label14.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(4, 70);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(39, 25);
-            this.label14.TabIndex = 7;
-            this.label14.Text = "Note";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15019F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84981F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 305F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel6, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel13, 2, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 98);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1878, 867);
+            this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel3
             // 
@@ -865,69 +518,11 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(419, 857);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
-            // consultationDateDataGridView
-            // 
-            this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle124.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle124;
-            this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.consultationDateDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.consultationDateDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.consultation_date});
-            this.consultationDateDataGridView.ContextMenuStrip = this.consultationHistoryContextMenuStrip;
-            this.consultationDateDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.consultationDateDataGridView.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.consultationDateDataGridView.Location = new System.Drawing.Point(3, 3);
-            this.consultationDateDataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.consultationDateDataGridView.Name = "consultationDateDataGridView";
-            this.consultationDateDataGridView.RowHeadersVisible = false;
-            this.consultationDateDataGridView.Size = new System.Drawing.Size(416, 812);
-            this.consultationDateDataGridView.TabIndex = 2;
-            this.consultationDateDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.consultationDateDataGridView_CellClick);
-            // 
-            // consultation_date
-            // 
-            this.consultation_date.DataPropertyName = "consultation_date";
-            this.consultation_date.HeaderText = "Consultation History";
-            this.consultation_date.Name = "consultation_date";
-            this.consultation_date.ReadOnly = true;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15019F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84981F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 304F));
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel6, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel13, 2, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 98);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1878, 867);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
-            this.toolStrip1.Location = new System.Drawing.Point(115, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(176, 39);
-            this.toolStrip1.TabIndex = 3;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
@@ -946,17 +541,6 @@
             this.tabPage1.Text = "Health Record";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.consultationDateDataGridView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(422, 818);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Visits";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // tableLayoutPanel25
             // 
             this.tableLayoutPanel25.ColumnCount = 1;
@@ -974,30 +558,6 @@
             this.tableLayoutPanel25.Size = new System.Drawing.Size(399, 812);
             this.tableLayoutPanel25.TabIndex = 0;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.tableLayoutPanel28);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(393, 352);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Medical History";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.tableLayoutPanel29);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(3, 361);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(393, 71);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Vital Signs";
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.tableLayoutPanel10);
@@ -1009,762 +569,6 @@
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Physical Examination";
-            // 
-            // tableLayoutPanel28
-            // 
-            this.tableLayoutPanel28.AutoScroll = true;
-            this.tableLayoutPanel28.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel28.ColumnCount = 2;
-            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.49131F));
-            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.50868F));
-            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel28.Controls.Add(this.personalComboBox, 1, 3);
-            this.tableLayoutPanel28.Controls.Add(this.pastMedicalHistoryDGV, 1, 1);
-            this.tableLayoutPanel28.Controls.Add(this.label26, 0, 3);
-            this.tableLayoutPanel28.Controls.Add(this.label24, 0, 2);
-            this.tableLayoutPanel28.Controls.Add(this.label21, 0, 1);
-            this.tableLayoutPanel28.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel28.Controls.Add(this.recentIlnessDGV, 1, 0);
-            this.tableLayoutPanel28.Controls.Add(this.familyComboBox, 1, 2);
-            this.tableLayoutPanel28.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel28.Location = new System.Drawing.Point(3, 22);
-            this.tableLayoutPanel28.Name = "tableLayoutPanel28";
-            this.tableLayoutPanel28.RowCount = 4;
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.06116F));
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.73089F));
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.64526F));
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.256881F));
-            this.tableLayoutPanel28.Size = new System.Drawing.Size(387, 327);
-            this.tableLayoutPanel28.TabIndex = 0;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(4, 1);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(126, 129);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Recent Illness:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label21.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(4, 131);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(126, 141);
-            this.label21.TabIndex = 2;
-            this.label21.Text = "Past Medical History:";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label24.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(4, 273);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(126, 24);
-            this.label24.TabIndex = 4;
-            this.label24.Text = "Family History:";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label26.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(4, 298);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(126, 28);
-            this.label26.TabIndex = 6;
-            this.label26.Text = "Personal/Social History:";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // recentIlnessDGV
-            // 
-            this.recentIlnessDGV.AllowUserToOrderColumns = true;
-            this.recentIlnessDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.recentIlnessDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.recentIlnessDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.recentIlnessDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.recentIlnessDGV.ColumnHeadersVisible = false;
-            this.recentIlnessDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.recentIllness});
-            this.recentIlnessDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.recentIlnessDGV.Location = new System.Drawing.Point(134, 1);
-            this.recentIlnessDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.recentIlnessDGV.Name = "recentIlnessDGV";
-            this.recentIlnessDGV.RowHeadersWidth = 15;
-            this.recentIlnessDGV.Size = new System.Drawing.Size(252, 129);
-            this.recentIlnessDGV.TabIndex = 7;
-            // 
-            // tableLayoutPanel29
-            // 
-            this.tableLayoutPanel29.ColumnCount = 6;
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel29.Controls.Add(this.wtTextBox, 5, 1);
-            this.tableLayoutPanel29.Controls.Add(this.htTextBox, 3, 1);
-            this.tableLayoutPanel29.Controls.Add(this.rrTextBox, 1, 1);
-            this.tableLayoutPanel29.Controls.Add(this.prTextBox, 5, 0);
-            this.tableLayoutPanel29.Controls.Add(this.temperatureTextBox, 3, 0);
-            this.tableLayoutPanel29.Controls.Add(this.label35, 4, 1);
-            this.tableLayoutPanel29.Controls.Add(this.label33, 2, 1);
-            this.tableLayoutPanel29.Controls.Add(this.label31, 0, 1);
-            this.tableLayoutPanel29.Controls.Add(this.label28, 4, 0);
-            this.tableLayoutPanel29.Controls.Add(this.label25, 2, 0);
-            this.tableLayoutPanel29.Controls.Add(this.label12, 0, 0);
-            this.tableLayoutPanel29.Controls.Add(this.bpTextBox, 1, 0);
-            this.tableLayoutPanel29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel29.Location = new System.Drawing.Point(3, 22);
-            this.tableLayoutPanel29.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel29.Name = "tableLayoutPanel29";
-            this.tableLayoutPanel29.RowCount = 2;
-            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel29.Size = new System.Drawing.Size(387, 46);
-            this.tableLayoutPanel29.TabIndex = 0;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(0, 0);
-            this.label12.Margin = new System.Windows.Forms.Padding(0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(64, 23);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "BP:";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label25.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(128, 0);
-            this.label25.Margin = new System.Windows.Forms.Padding(0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(64, 23);
-            this.label25.TabIndex = 2;
-            this.label25.Text = "T:";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label28.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(256, 0);
-            this.label28.Margin = new System.Windows.Forms.Padding(0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(64, 23);
-            this.label28.TabIndex = 4;
-            this.label28.Text = "PR:";
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label31.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(0, 23);
-            this.label31.Margin = new System.Windows.Forms.Padding(0);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(64, 23);
-            this.label31.TabIndex = 6;
-            this.label31.Text = "RR:";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label33.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label33.Location = new System.Drawing.Point(128, 23);
-            this.label33.Margin = new System.Windows.Forms.Padding(0);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(64, 23);
-            this.label33.TabIndex = 8;
-            this.label33.Text = "Ht (in):";
-            this.label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label35.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label35.Location = new System.Drawing.Point(256, 23);
-            this.label35.Margin = new System.Windows.Forms.Padding(0);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(64, 23);
-            this.label35.TabIndex = 10;
-            this.label35.Text = "Wt (lbs):";
-            this.label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // bpTextBox
-            // 
-            this.bpTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bpTextBox.Location = new System.Drawing.Point(64, 0);
-            this.bpTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.bpTextBox.Name = "bpTextBox";
-            this.bpTextBox.Size = new System.Drawing.Size(64, 22);
-            this.bpTextBox.TabIndex = 11;
-            this.bpTextBox.TextChanged += new System.EventHandler(this.bpTextBox_TextChanged);
-            // 
-            // temperatureTextBox
-            // 
-            this.temperatureTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.temperatureTextBox.Location = new System.Drawing.Point(192, 0);
-            this.temperatureTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.temperatureTextBox.Name = "temperatureTextBox";
-            this.temperatureTextBox.Size = new System.Drawing.Size(64, 22);
-            this.temperatureTextBox.TabIndex = 12;
-            this.temperatureTextBox.TextChanged += new System.EventHandler(this.temperatureTextBox_TextChanged);
-            // 
-            // prTextBox
-            // 
-            this.prTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prTextBox.Location = new System.Drawing.Point(320, 0);
-            this.prTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.prTextBox.Name = "prTextBox";
-            this.prTextBox.Size = new System.Drawing.Size(67, 22);
-            this.prTextBox.TabIndex = 13;
-            this.prTextBox.TextChanged += new System.EventHandler(this.prTextBox_TextChanged);
-            // 
-            // rrTextBox
-            // 
-            this.rrTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rrTextBox.Location = new System.Drawing.Point(64, 23);
-            this.rrTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.rrTextBox.Name = "rrTextBox";
-            this.rrTextBox.Size = new System.Drawing.Size(64, 22);
-            this.rrTextBox.TabIndex = 14;
-            this.rrTextBox.TextChanged += new System.EventHandler(this.rrTextBox_TextChanged);
-            // 
-            // htTextBox
-            // 
-            this.htTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.htTextBox.Location = new System.Drawing.Point(192, 23);
-            this.htTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.htTextBox.Name = "htTextBox";
-            this.htTextBox.Size = new System.Drawing.Size(64, 22);
-            this.htTextBox.TabIndex = 15;
-            this.htTextBox.TextChanged += new System.EventHandler(this.htTextBox_TextChanged);
-            // 
-            // wtTextBox
-            // 
-            this.wtTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wtTextBox.Location = new System.Drawing.Point(320, 23);
-            this.wtTextBox.Margin = new System.Windows.Forms.Padding(0);
-            this.wtTextBox.Name = "wtTextBox";
-            this.wtTextBox.Size = new System.Drawing.Size(67, 22);
-            this.wtTextBox.TabIndex = 16;
-            this.wtTextBox.TextChanged += new System.EventHandler(this.wtTextBox_TextChanged);
-            // 
-            // pastMedicalHistoryDGV
-            // 
-            this.pastMedicalHistoryDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.pastMedicalHistoryDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.pastMedicalHistoryDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.pastMedicalHistoryDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.pastMedicalHistoryDGV.ColumnHeadersVisible = false;
-            this.pastMedicalHistoryDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.pastMedicalHistory});
-            this.pastMedicalHistoryDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pastMedicalHistoryDGV.Location = new System.Drawing.Point(134, 131);
-            this.pastMedicalHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.pastMedicalHistoryDGV.Name = "pastMedicalHistoryDGV";
-            this.pastMedicalHistoryDGV.RowHeadersWidth = 15;
-            this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(252, 141);
-            this.pastMedicalHistoryDGV.TabIndex = 8;
-            // 
-            // familyComboBox
-            // 
-            this.familyComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.familyComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.familyComboBox.FormattingEnabled = true;
-            this.familyComboBox.Location = new System.Drawing.Point(134, 273);
-            this.familyComboBox.Margin = new System.Windows.Forms.Padding(0);
-            this.familyComboBox.Name = "familyComboBox";
-            this.familyComboBox.Size = new System.Drawing.Size(252, 24);
-            this.familyComboBox.TabIndex = 9;
-            // 
-            // personalComboBox
-            // 
-            this.personalComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.personalComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personalComboBox.FormattingEnabled = true;
-            this.personalComboBox.Location = new System.Drawing.Point(134, 298);
-            this.personalComboBox.Margin = new System.Windows.Forms.Padding(0);
-            this.personalComboBox.Name = "personalComboBox";
-            this.personalComboBox.Size = new System.Drawing.Size(252, 24);
-            this.personalComboBox.TabIndex = 10;
-            this.personalComboBox.SelectedIndexChanged += new System.EventHandler(this.personalComboBox_SelectedIndexChanged);
-            // 
-            // tableLayoutPanel9
-            // 
-            this.tableLayoutPanel9.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel9.ColumnCount = 4;
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.33333F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.33333F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.33333F));
-            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel9.Controls.Add(this.groupBox12, 1, 0);
-            this.tableLayoutPanel9.Controls.Add(this.groupBox10, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.followUpTablePanel, 3, 0);
-            this.tableLayoutPanel9.Controls.Add(this.groupBox11, 2, 0);
-            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel9.Location = new System.Drawing.Point(4, 638);
-            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
-            this.tableLayoutPanel9.RowCount = 1;
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(1132, 219);
-            this.tableLayoutPanel9.TabIndex = 2;
-            this.tableLayoutPanel9.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel9_Paint);
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 99.99999F));
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel7, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel8, 0, 1);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1132, 627);
-            this.tableLayoutPanel4.TabIndex = 1;
-            // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel6.ColumnCount = 1;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel4, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel9, 0, 1);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(430, 3);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 2;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.83721F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.16279F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1140, 861);
-            this.tableLayoutPanel6.TabIndex = 1;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 4;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel5.Controls.Add(this.groupBox9, 3, 0);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox8, 2, 0);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox7, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.groupBox6, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 38);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1118, 265);
-            this.tableLayoutPanel5.TabIndex = 0;
-            // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.ColumnCount = 2;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.45552F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.54448F));
-            this.tableLayoutPanel7.Controls.Add(this.groupBox5, 1, 0);
-            this.tableLayoutPanel7.Controls.Add(this.groupBox4, 0, 0);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1124, 306);
-            this.tableLayoutPanel7.TabIndex = 1;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.chiefComplaintsDGV);
-            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(3, 3);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(415, 300);
-            this.groupBox4.TabIndex = 0;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Chief Complaints";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.labResultsFlowLayoutPanel);
-            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(424, 3);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(697, 300);
-            this.groupBox5.TabIndex = 1;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Laboratory Results";
-            // 
-            // labResultsFlowLayoutPanel
-            // 
-            this.labResultsFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labResultsFlowLayoutPanel.Location = new System.Drawing.Point(3, 22);
-            this.labResultsFlowLayoutPanel.Name = "labResultsFlowLayoutPanel";
-            this.labResultsFlowLayoutPanel.Size = new System.Drawing.Size(691, 275);
-            this.labResultsFlowLayoutPanel.TabIndex = 0;
-            // 
-            // chiefComplaintsDGV
-            // 
-            this.chiefComplaintsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.chiefComplaintsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.chiefComplaintsDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.chiefComplaintsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.chiefComplaintsDGV.ColumnHeadersVisible = false;
-            this.chiefComplaintsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.chiefComplaintsDGVColumn});
-            this.chiefComplaintsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chiefComplaintsDGV.Location = new System.Drawing.Point(3, 22);
-            this.chiefComplaintsDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.chiefComplaintsDGV.Name = "chiefComplaintsDGV";
-            this.chiefComplaintsDGV.RowHeadersWidth = 15;
-            this.chiefComplaintsDGV.Size = new System.Drawing.Size(409, 275);
-            this.chiefComplaintsDGV.TabIndex = 8;
-            // 
-            // chiefComplaintsDGVColumn
-            // 
-            dataGridViewCellStyle113.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chiefComplaintsDGVColumn.DefaultCellStyle = dataGridViewCellStyle113;
-            this.chiefComplaintsDGVColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.chiefComplaintsDGVColumn.HeaderText = "";
-            this.chiefComplaintsDGVColumn.Name = "chiefComplaintsDGVColumn";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.earsDGV);
-            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox6.Location = new System.Drawing.Point(3, 3);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(273, 259);
-            this.groupBox6.TabIndex = 1;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Ears";
-            // 
-            // earsDGV
-            // 
-            this.earsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.earsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.earsDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.earsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.earsDGV.ColumnHeadersVisible = false;
-            this.earsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ears});
-            this.earsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.earsDGV.Location = new System.Drawing.Point(3, 22);
-            this.earsDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.earsDGV.Name = "earsDGV";
-            this.earsDGV.RowHeadersWidth = 15;
-            this.earsDGV.Size = new System.Drawing.Size(267, 234);
-            this.earsDGV.TabIndex = 8;
-            this.earsDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.earsDGV_CellContentClick);
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.noseDGV);
-            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox7.Location = new System.Drawing.Point(282, 3);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(273, 259);
-            this.groupBox7.TabIndex = 2;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Nose";
-            // 
-            // noseDGV
-            // 
-            this.noseDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.noseDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.noseDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.noseDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.noseDGV.ColumnHeadersVisible = false;
-            this.noseDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nose});
-            this.noseDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.noseDGV.Location = new System.Drawing.Point(3, 22);
-            this.noseDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.noseDGV.Name = "noseDGV";
-            this.noseDGV.RowHeadersWidth = 15;
-            this.noseDGV.Size = new System.Drawing.Size(267, 234);
-            this.noseDGV.TabIndex = 8;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.throatDGV);
-            this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox8.Location = new System.Drawing.Point(561, 3);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(273, 259);
-            this.groupBox8.TabIndex = 3;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Throat";
-            // 
-            // throatDGV
-            // 
-            this.throatDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.throatDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.throatDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.throatDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.throatDGV.ColumnHeadersVisible = false;
-            this.throatDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.throat});
-            this.throatDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.throatDGV.Location = new System.Drawing.Point(3, 22);
-            this.throatDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.throatDGV.Name = "throatDGV";
-            this.throatDGV.RowHeadersWidth = 15;
-            this.throatDGV.Size = new System.Drawing.Size(267, 234);
-            this.throatDGV.TabIndex = 8;
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.neckDGV);
-            this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox9.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox9.Location = new System.Drawing.Point(840, 3);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(275, 259);
-            this.groupBox9.TabIndex = 4;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Neck";
-            // 
-            // neckDGV
-            // 
-            this.neckDGV.AllowUserToOrderColumns = true;
-            this.neckDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.neckDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.neckDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.neckDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.neckDGV.ColumnHeadersVisible = false;
-            this.neckDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.neck});
-            this.neckDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.neckDGV.Location = new System.Drawing.Point(3, 22);
-            this.neckDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.neckDGV.Name = "neckDGV";
-            this.neckDGV.RowHeadersWidth = 15;
-            this.neckDGV.Size = new System.Drawing.Size(269, 234);
-            this.neckDGV.TabIndex = 8;
-            // 
-            // tableLayoutPanel8
-            // 
-            this.tableLayoutPanel8.ColumnCount = 1;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel5, 0, 1);
-            this.tableLayoutPanel8.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(4, 317);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 2;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.61049F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.38951F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1124, 306);
-            this.tableLayoutPanel8.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(1118, 35);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "ENT Examination and Findings";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // ears
-            // 
-            dataGridViewCellStyle125.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ears.DefaultCellStyle = dataGridViewCellStyle125;
-            this.ears.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.ears.HeaderText = "";
-            this.ears.Name = "ears";
-            // 
-            // nose
-            // 
-            dataGridViewCellStyle126.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nose.DefaultCellStyle = dataGridViewCellStyle126;
-            this.nose.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.nose.HeaderText = "";
-            this.nose.Name = "nose";
-            // 
-            // throat
-            // 
-            dataGridViewCellStyle127.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.throat.DefaultCellStyle = dataGridViewCellStyle127;
-            this.throat.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.throat.HeaderText = "";
-            this.throat.Name = "throat";
-            // 
-            // neck
-            // 
-            dataGridViewCellStyle128.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.neck.DefaultCellStyle = dataGridViewCellStyle128;
-            this.neck.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.neck.HeaderText = "";
-            this.neck.Name = "neck";
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.diagnosisDGV);
-            this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox10.Location = new System.Drawing.Point(4, 4);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(313, 211);
-            this.groupBox10.TabIndex = 3;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Diagnosis";
-            // 
-            // diagnosisDGV
-            // 
-            this.diagnosisDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.diagnosisDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.diagnosisDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.diagnosisDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.diagnosisDGV.ColumnHeadersVisible = false;
-            this.diagnosisDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.diagnosis});
-            this.diagnosisDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.diagnosisDGV.Location = new System.Drawing.Point(3, 22);
-            this.diagnosisDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.diagnosisDGV.Name = "diagnosisDGV";
-            this.diagnosisDGV.RowHeadersWidth = 15;
-            this.diagnosisDGV.Size = new System.Drawing.Size(307, 186);
-            this.diagnosisDGV.TabIndex = 8;
-            // 
-            // diagnosis
-            // 
-            dataGridViewCellStyle129.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle129;
-            this.diagnosis.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.diagnosis.HeaderText = "";
-            this.diagnosis.Name = "diagnosis";
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.recommendationsDGV);
-            this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox11.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox11.Location = new System.Drawing.Point(644, 4);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(313, 211);
-            this.groupBox11.TabIndex = 5;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Recommendations";
-            // 
-            // recommendationsDGV
-            // 
-            this.recommendationsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.recommendationsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.recommendationsDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.recommendationsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.recommendationsDGV.ColumnHeadersVisible = false;
-            this.recommendationsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.recommendations});
-            this.recommendationsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.recommendationsDGV.Location = new System.Drawing.Point(3, 22);
-            this.recommendationsDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.recommendationsDGV.Name = "recommendationsDGV";
-            this.recommendationsDGV.RowHeadersWidth = 15;
-            this.recommendationsDGV.Size = new System.Drawing.Size(307, 186);
-            this.recommendationsDGV.TabIndex = 8;
-            // 
-            // recommendations
-            // 
-            dataGridViewCellStyle130.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recommendations.DefaultCellStyle = dataGridViewCellStyle130;
-            this.recommendations.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.recommendations.HeaderText = "";
-            this.recommendations.Name = "recommendations";
-            // 
-            // groupBox12
-            // 
-            this.groupBox12.Controls.Add(this.proceduresDGV);
-            this.groupBox12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox12.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox12.Location = new System.Drawing.Point(324, 4);
-            this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(313, 211);
-            this.groupBox12.TabIndex = 6;
-            this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Procedures";
-            // 
-            // proceduresDGV
-            // 
-            this.proceduresDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.proceduresDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.proceduresDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.proceduresDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.proceduresDGV.ColumnHeadersVisible = false;
-            this.proceduresDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.procedures});
-            this.proceduresDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.proceduresDGV.Location = new System.Drawing.Point(3, 22);
-            this.proceduresDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.proceduresDGV.Name = "proceduresDGV";
-            this.proceduresDGV.RowHeadersWidth = 15;
-            this.proceduresDGV.Size = new System.Drawing.Size(307, 186);
-            this.proceduresDGV.TabIndex = 8;
-            // 
-            // procedures
-            // 
-            dataGridViewCellStyle131.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.procedures.DefaultCellStyle = dataGridViewCellStyle131;
-            this.procedures.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.procedures.HeaderText = "";
-            this.procedures.Name = "procedures";
-            // 
-            // recentIllness
-            // 
-            dataGridViewCellStyle132.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recentIllness.DefaultCellStyle = dataGridViewCellStyle132;
-            this.recentIllness.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.recentIllness.HeaderText = "";
-            this.recentIllness.Name = "recentIllness";
-            this.recentIllness.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // pastMedicalHistory
-            // 
-            dataGridViewCellStyle133.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pastMedicalHistory.DefaultCellStyle = dataGridViewCellStyle133;
-            this.pastMedicalHistory.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.pastMedicalHistory.HeaderText = "";
-            this.pastMedicalHistory.Name = "pastMedicalHistory";
             // 
             // tableLayoutPanel10
             // 
@@ -1809,193 +613,16 @@
             this.tableLayoutPanel10.TabIndex = 0;
             this.tableLayoutPanel10.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel10_Paint);
             // 
-            // label8
+            // neurologicComboBox
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(3, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(156, 18);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "General Appearance:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(3, 34);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(43, 18);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "Skin:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(3, 68);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(120, 18);
-            this.label15.TabIndex = 4;
-            this.label15.Text = "Head and Neck:";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(3, 102);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(47, 18);
-            this.label19.TabIndex = 6;
-            this.label19.Text = "Eyes:";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(3, 136);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(48, 18);
-            this.label27.TabIndex = 8;
-            this.label27.Text = "Neck:";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label32.Location = new System.Drawing.Point(3, 170);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(99, 18);
-            this.label32.TabIndex = 10;
-            this.label32.Text = "Chest/Lungs:";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(3, 204);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(50, 18);
-            this.label36.TabIndex = 12;
-            this.label36.Text = "Heart:";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label38.Location = new System.Drawing.Point(3, 238);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(80, 18);
-            this.label38.TabIndex = 14;
-            this.label38.Text = "Abdomen:";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label40.Location = new System.Drawing.Point(3, 272);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(90, 18);
-            this.label40.TabIndex = 16;
-            this.label40.Text = "Extremities:";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label42.Location = new System.Drawing.Point(3, 306);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(83, 18);
-            this.label42.TabIndex = 18;
-            this.label42.Text = "Neurologic";
-            // 
-            // generalApperanceComboBox
-            // 
-            this.generalApperanceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.generalApperanceComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.generalApperanceComboBox.FormattingEnabled = true;
-            this.generalApperanceComboBox.Location = new System.Drawing.Point(196, 3);
-            this.generalApperanceComboBox.Name = "generalApperanceComboBox";
-            this.generalApperanceComboBox.Size = new System.Drawing.Size(188, 24);
-            this.generalApperanceComboBox.TabIndex = 19;
-            this.generalApperanceComboBox.SelectedIndexChanged += new System.EventHandler(this.generalApperanceComboBox_SelectedIndexChanged);
-            // 
-            // skinComboBox
-            // 
-            this.skinComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skinComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skinComboBox.FormattingEnabled = true;
-            this.skinComboBox.Location = new System.Drawing.Point(196, 37);
-            this.skinComboBox.Name = "skinComboBox";
-            this.skinComboBox.Size = new System.Drawing.Size(188, 24);
-            this.skinComboBox.TabIndex = 20;
-            this.skinComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            // 
-            // headAndFaceComboBox
-            // 
-            this.headAndFaceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.headAndFaceComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.headAndFaceComboBox.FormattingEnabled = true;
-            this.headAndFaceComboBox.Location = new System.Drawing.Point(196, 71);
-            this.headAndFaceComboBox.Name = "headAndFaceComboBox";
-            this.headAndFaceComboBox.Size = new System.Drawing.Size(188, 24);
-            this.headAndFaceComboBox.TabIndex = 21;
-            this.headAndFaceComboBox.SelectedIndexChanged += new System.EventHandler(this.headAndFaceComboBox_SelectedIndexChanged);
-            // 
-            // eyesComboBox
-            // 
-            this.eyesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.eyesComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.eyesComboBox.FormattingEnabled = true;
-            this.eyesComboBox.Location = new System.Drawing.Point(196, 105);
-            this.eyesComboBox.Name = "eyesComboBox";
-            this.eyesComboBox.Size = new System.Drawing.Size(188, 24);
-            this.eyesComboBox.TabIndex = 22;
-            this.eyesComboBox.SelectedIndexChanged += new System.EventHandler(this.eyesComboBox_SelectedIndexChanged);
-            // 
-            // neckComboBox
-            // 
-            this.neckComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.neckComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.neckComboBox.FormattingEnabled = true;
-            this.neckComboBox.Location = new System.Drawing.Point(196, 139);
-            this.neckComboBox.Name = "neckComboBox";
-            this.neckComboBox.Size = new System.Drawing.Size(188, 24);
-            this.neckComboBox.TabIndex = 23;
-            this.neckComboBox.SelectedIndexChanged += new System.EventHandler(this.neckComboBox_SelectedIndexChanged);
-            // 
-            // chestLungsComboBox
-            // 
-            this.chestLungsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chestLungsComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chestLungsComboBox.FormattingEnabled = true;
-            this.chestLungsComboBox.Location = new System.Drawing.Point(196, 173);
-            this.chestLungsComboBox.Name = "chestLungsComboBox";
-            this.chestLungsComboBox.Size = new System.Drawing.Size(188, 24);
-            this.chestLungsComboBox.TabIndex = 24;
-            this.chestLungsComboBox.SelectedIndexChanged += new System.EventHandler(this.chestLungsComboBox_SelectedIndexChanged);
-            // 
-            // heartComboBox
-            // 
-            this.heartComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.heartComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heartComboBox.FormattingEnabled = true;
-            this.heartComboBox.Location = new System.Drawing.Point(196, 207);
-            this.heartComboBox.Name = "heartComboBox";
-            this.heartComboBox.Size = new System.Drawing.Size(188, 24);
-            this.heartComboBox.TabIndex = 25;
-            this.heartComboBox.SelectedIndexChanged += new System.EventHandler(this.heartComboBox_SelectedIndexChanged);
-            // 
-            // abdomenComboBox
-            // 
-            this.abdomenComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.abdomenComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.abdomenComboBox.FormattingEnabled = true;
-            this.abdomenComboBox.Location = new System.Drawing.Point(196, 241);
-            this.abdomenComboBox.Name = "abdomenComboBox";
-            this.abdomenComboBox.Size = new System.Drawing.Size(188, 24);
-            this.abdomenComboBox.TabIndex = 26;
-            this.abdomenComboBox.SelectedIndexChanged += new System.EventHandler(this.abdomenComboBox_SelectedIndexChanged);
+            this.neurologicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.neurologicComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.neurologicComboBox.FormattingEnabled = true;
+            this.neurologicComboBox.Location = new System.Drawing.Point(196, 309);
+            this.neurologicComboBox.Name = "neurologicComboBox";
+            this.neurologicComboBox.Size = new System.Drawing.Size(188, 24);
+            this.neurologicComboBox.TabIndex = 28;
+            this.neurologicComboBox.SelectedIndexChanged += new System.EventHandler(this.neurologicComboBox_SelectedIndexChanged);
             // 
             // extremetiesComboBox
             // 
@@ -2008,16 +635,1354 @@
             this.extremetiesComboBox.TabIndex = 27;
             this.extremetiesComboBox.SelectedIndexChanged += new System.EventHandler(this.extremetiesComboBox_SelectedIndexChanged);
             // 
-            // neurologicComboBox
+            // abdomenComboBox
             // 
-            this.neurologicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.neurologicComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.neurologicComboBox.FormattingEnabled = true;
-            this.neurologicComboBox.Location = new System.Drawing.Point(196, 309);
-            this.neurologicComboBox.Name = "neurologicComboBox";
-            this.neurologicComboBox.Size = new System.Drawing.Size(188, 24);
-            this.neurologicComboBox.TabIndex = 28;
-            this.neurologicComboBox.SelectedIndexChanged += new System.EventHandler(this.neurologicComboBox_SelectedIndexChanged);
+            this.abdomenComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.abdomenComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.abdomenComboBox.FormattingEnabled = true;
+            this.abdomenComboBox.Location = new System.Drawing.Point(196, 241);
+            this.abdomenComboBox.Name = "abdomenComboBox";
+            this.abdomenComboBox.Size = new System.Drawing.Size(188, 24);
+            this.abdomenComboBox.TabIndex = 26;
+            this.abdomenComboBox.SelectedIndexChanged += new System.EventHandler(this.abdomenComboBox_SelectedIndexChanged);
+            // 
+            // heartComboBox
+            // 
+            this.heartComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.heartComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heartComboBox.FormattingEnabled = true;
+            this.heartComboBox.Location = new System.Drawing.Point(196, 207);
+            this.heartComboBox.Name = "heartComboBox";
+            this.heartComboBox.Size = new System.Drawing.Size(188, 24);
+            this.heartComboBox.TabIndex = 25;
+            this.heartComboBox.SelectedIndexChanged += new System.EventHandler(this.heartComboBox_SelectedIndexChanged);
+            // 
+            // chestLungsComboBox
+            // 
+            this.chestLungsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chestLungsComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chestLungsComboBox.FormattingEnabled = true;
+            this.chestLungsComboBox.Location = new System.Drawing.Point(196, 173);
+            this.chestLungsComboBox.Name = "chestLungsComboBox";
+            this.chestLungsComboBox.Size = new System.Drawing.Size(188, 24);
+            this.chestLungsComboBox.TabIndex = 24;
+            this.chestLungsComboBox.SelectedIndexChanged += new System.EventHandler(this.chestLungsComboBox_SelectedIndexChanged);
+            // 
+            // neckComboBox
+            // 
+            this.neckComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.neckComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.neckComboBox.FormattingEnabled = true;
+            this.neckComboBox.Location = new System.Drawing.Point(196, 139);
+            this.neckComboBox.Name = "neckComboBox";
+            this.neckComboBox.Size = new System.Drawing.Size(188, 24);
+            this.neckComboBox.TabIndex = 23;
+            this.neckComboBox.SelectedIndexChanged += new System.EventHandler(this.neckComboBox_SelectedIndexChanged);
+            // 
+            // eyesComboBox
+            // 
+            this.eyesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.eyesComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eyesComboBox.FormattingEnabled = true;
+            this.eyesComboBox.Location = new System.Drawing.Point(196, 105);
+            this.eyesComboBox.Name = "eyesComboBox";
+            this.eyesComboBox.Size = new System.Drawing.Size(188, 24);
+            this.eyesComboBox.TabIndex = 22;
+            this.eyesComboBox.SelectedIndexChanged += new System.EventHandler(this.eyesComboBox_SelectedIndexChanged);
+            // 
+            // headAndFaceComboBox
+            // 
+            this.headAndFaceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.headAndFaceComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headAndFaceComboBox.FormattingEnabled = true;
+            this.headAndFaceComboBox.Location = new System.Drawing.Point(196, 71);
+            this.headAndFaceComboBox.Name = "headAndFaceComboBox";
+            this.headAndFaceComboBox.Size = new System.Drawing.Size(188, 24);
+            this.headAndFaceComboBox.TabIndex = 21;
+            this.headAndFaceComboBox.SelectedIndexChanged += new System.EventHandler(this.headAndFaceComboBox_SelectedIndexChanged);
+            // 
+            // skinComboBox
+            // 
+            this.skinComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.skinComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinComboBox.FormattingEnabled = true;
+            this.skinComboBox.Location = new System.Drawing.Point(196, 37);
+            this.skinComboBox.Name = "skinComboBox";
+            this.skinComboBox.Size = new System.Drawing.Size(188, 24);
+            this.skinComboBox.TabIndex = 20;
+            this.skinComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label42.Location = new System.Drawing.Point(3, 306);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(83, 18);
+            this.label42.TabIndex = 18;
+            this.label42.Text = "Neurologic";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.Location = new System.Drawing.Point(3, 272);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(90, 18);
+            this.label40.TabIndex = 16;
+            this.label40.Text = "Extremities:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label38.Location = new System.Drawing.Point(3, 238);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(80, 18);
+            this.label38.TabIndex = 14;
+            this.label38.Text = "Abdomen:";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(3, 204);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(50, 18);
+            this.label36.TabIndex = 12;
+            this.label36.Text = "Heart:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.Location = new System.Drawing.Point(3, 170);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(99, 18);
+            this.label32.TabIndex = 10;
+            this.label32.Text = "Chest/Lungs:";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(3, 136);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(48, 18);
+            this.label27.TabIndex = 8;
+            this.label27.Text = "Neck:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(3, 102);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(47, 18);
+            this.label19.TabIndex = 6;
+            this.label19.Text = "Eyes:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(3, 68);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(120, 18);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "Head and Neck:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(3, 34);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(43, 18);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Skin:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(3, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(156, 18);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "General Appearance:";
+            // 
+            // generalApperanceComboBox
+            // 
+            this.generalApperanceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.generalApperanceComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.generalApperanceComboBox.FormattingEnabled = true;
+            this.generalApperanceComboBox.Location = new System.Drawing.Point(196, 3);
+            this.generalApperanceComboBox.Name = "generalApperanceComboBox";
+            this.generalApperanceComboBox.Size = new System.Drawing.Size(188, 24);
+            this.generalApperanceComboBox.TabIndex = 19;
+            this.generalApperanceComboBox.SelectedIndexChanged += new System.EventHandler(this.generalApperanceComboBox_SelectedIndexChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.tableLayoutPanel29);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(3, 361);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(393, 71);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Vital Signs";
+            // 
+            // tableLayoutPanel29
+            // 
+            this.tableLayoutPanel29.ColumnCount = 6;
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel29.Controls.Add(this.wtTextBox, 5, 1);
+            this.tableLayoutPanel29.Controls.Add(this.htTextBox, 3, 1);
+            this.tableLayoutPanel29.Controls.Add(this.rrTextBox, 1, 1);
+            this.tableLayoutPanel29.Controls.Add(this.prTextBox, 5, 0);
+            this.tableLayoutPanel29.Controls.Add(this.temperatureTextBox, 3, 0);
+            this.tableLayoutPanel29.Controls.Add(this.label35, 4, 1);
+            this.tableLayoutPanel29.Controls.Add(this.label33, 2, 1);
+            this.tableLayoutPanel29.Controls.Add(this.label31, 0, 1);
+            this.tableLayoutPanel29.Controls.Add(this.label28, 4, 0);
+            this.tableLayoutPanel29.Controls.Add(this.label25, 2, 0);
+            this.tableLayoutPanel29.Controls.Add(this.label12, 0, 0);
+            this.tableLayoutPanel29.Controls.Add(this.bpTextBox, 1, 0);
+            this.tableLayoutPanel29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel29.Location = new System.Drawing.Point(3, 22);
+            this.tableLayoutPanel29.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel29.Name = "tableLayoutPanel29";
+            this.tableLayoutPanel29.RowCount = 2;
+            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel29.Size = new System.Drawing.Size(387, 46);
+            this.tableLayoutPanel29.TabIndex = 0;
+            // 
+            // wtTextBox
+            // 
+            this.wtTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wtTextBox.Location = new System.Drawing.Point(320, 23);
+            this.wtTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.wtTextBox.Name = "wtTextBox";
+            this.wtTextBox.Size = new System.Drawing.Size(67, 22);
+            this.wtTextBox.TabIndex = 16;
+            this.wtTextBox.TextChanged += new System.EventHandler(this.wtTextBox_TextChanged);
+            // 
+            // htTextBox
+            // 
+            this.htTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.htTextBox.Location = new System.Drawing.Point(192, 23);
+            this.htTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.htTextBox.Name = "htTextBox";
+            this.htTextBox.Size = new System.Drawing.Size(64, 22);
+            this.htTextBox.TabIndex = 15;
+            this.htTextBox.TextChanged += new System.EventHandler(this.htTextBox_TextChanged);
+            // 
+            // rrTextBox
+            // 
+            this.rrTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rrTextBox.Location = new System.Drawing.Point(64, 23);
+            this.rrTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.rrTextBox.Name = "rrTextBox";
+            this.rrTextBox.Size = new System.Drawing.Size(64, 22);
+            this.rrTextBox.TabIndex = 14;
+            this.rrTextBox.TextChanged += new System.EventHandler(this.rrTextBox_TextChanged);
+            // 
+            // prTextBox
+            // 
+            this.prTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.prTextBox.Location = new System.Drawing.Point(320, 0);
+            this.prTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.prTextBox.Name = "prTextBox";
+            this.prTextBox.Size = new System.Drawing.Size(67, 22);
+            this.prTextBox.TabIndex = 13;
+            this.prTextBox.TextChanged += new System.EventHandler(this.prTextBox_TextChanged);
+            // 
+            // temperatureTextBox
+            // 
+            this.temperatureTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.temperatureTextBox.Location = new System.Drawing.Point(192, 0);
+            this.temperatureTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.temperatureTextBox.Name = "temperatureTextBox";
+            this.temperatureTextBox.Size = new System.Drawing.Size(64, 22);
+            this.temperatureTextBox.TabIndex = 12;
+            this.temperatureTextBox.TextChanged += new System.EventHandler(this.temperatureTextBox_TextChanged);
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label35.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.Location = new System.Drawing.Point(256, 23);
+            this.label35.Margin = new System.Windows.Forms.Padding(0);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(64, 23);
+            this.label35.TabIndex = 10;
+            this.label35.Text = "Wt (lbs):";
+            this.label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label33.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(128, 23);
+            this.label33.Margin = new System.Windows.Forms.Padding(0);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(64, 23);
+            this.label33.TabIndex = 8;
+            this.label33.Text = "Ht (in):";
+            this.label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label31.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.Location = new System.Drawing.Point(0, 23);
+            this.label31.Margin = new System.Windows.Forms.Padding(0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(64, 23);
+            this.label31.TabIndex = 6;
+            this.label31.Text = "RR:";
+            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label28.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(256, 0);
+            this.label28.Margin = new System.Windows.Forms.Padding(0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(64, 23);
+            this.label28.TabIndex = 4;
+            this.label28.Text = "PR:";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label25.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(128, 0);
+            this.label25.Margin = new System.Windows.Forms.Padding(0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(64, 23);
+            this.label25.TabIndex = 2;
+            this.label25.Text = "T:";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label12.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(0, 0);
+            this.label12.Margin = new System.Windows.Forms.Padding(0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(64, 23);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "BP:";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // bpTextBox
+            // 
+            this.bpTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bpTextBox.Location = new System.Drawing.Point(64, 0);
+            this.bpTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.bpTextBox.Name = "bpTextBox";
+            this.bpTextBox.Size = new System.Drawing.Size(64, 22);
+            this.bpTextBox.TabIndex = 11;
+            this.bpTextBox.TextChanged += new System.EventHandler(this.bpTextBox_TextChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.tableLayoutPanel28);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(393, 352);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Medical History";
+            // 
+            // tableLayoutPanel28
+            // 
+            this.tableLayoutPanel28.AutoScroll = true;
+            this.tableLayoutPanel28.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel28.ColumnCount = 2;
+            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.49131F));
+            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.50868F));
+            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel28.Controls.Add(this.personalComboBox, 1, 3);
+            this.tableLayoutPanel28.Controls.Add(this.pastMedicalHistoryDGV, 1, 1);
+            this.tableLayoutPanel28.Controls.Add(this.label26, 0, 3);
+            this.tableLayoutPanel28.Controls.Add(this.label24, 0, 2);
+            this.tableLayoutPanel28.Controls.Add(this.label21, 0, 1);
+            this.tableLayoutPanel28.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel28.Controls.Add(this.recentIlnessDGV, 1, 0);
+            this.tableLayoutPanel28.Controls.Add(this.familyComboBox, 1, 2);
+            this.tableLayoutPanel28.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel28.Location = new System.Drawing.Point(3, 22);
+            this.tableLayoutPanel28.Name = "tableLayoutPanel28";
+            this.tableLayoutPanel28.RowCount = 4;
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.06116F));
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.73089F));
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.64526F));
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.256881F));
+            this.tableLayoutPanel28.Size = new System.Drawing.Size(387, 327);
+            this.tableLayoutPanel28.TabIndex = 0;
+            // 
+            // personalComboBox
+            // 
+            this.personalComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.personalComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personalComboBox.FormattingEnabled = true;
+            this.personalComboBox.Location = new System.Drawing.Point(134, 298);
+            this.personalComboBox.Margin = new System.Windows.Forms.Padding(0);
+            this.personalComboBox.Name = "personalComboBox";
+            this.personalComboBox.Size = new System.Drawing.Size(252, 24);
+            this.personalComboBox.TabIndex = 10;
+            this.personalComboBox.SelectedIndexChanged += new System.EventHandler(this.personalComboBox_SelectedIndexChanged);
+            // 
+            // pastMedicalHistoryDGV
+            // 
+            this.pastMedicalHistoryDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.pastMedicalHistoryDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.pastMedicalHistoryDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.pastMedicalHistoryDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.pastMedicalHistoryDGV.ColumnHeadersVisible = false;
+            this.pastMedicalHistoryDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.pastMedicalHistory});
+            this.pastMedicalHistoryDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pastMedicalHistoryDGV.Location = new System.Drawing.Point(134, 131);
+            this.pastMedicalHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.pastMedicalHistoryDGV.Name = "pastMedicalHistoryDGV";
+            this.pastMedicalHistoryDGV.RowHeadersWidth = 15;
+            this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(252, 141);
+            this.pastMedicalHistoryDGV.TabIndex = 8;
+            // 
+            // pastMedicalHistory
+            // 
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pastMedicalHistory.DefaultCellStyle = dataGridViewCellStyle12;
+            this.pastMedicalHistory.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.pastMedicalHistory.HeaderText = "";
+            this.pastMedicalHistory.Name = "pastMedicalHistory";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label26.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(4, 298);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(126, 28);
+            this.label26.TabIndex = 6;
+            this.label26.Text = "Personal/Social History:";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label24.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(4, 273);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(126, 24);
+            this.label24.TabIndex = 4;
+            this.label24.Text = "Family History:";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label21.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(4, 131);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(126, 141);
+            this.label21.TabIndex = 2;
+            this.label21.Text = "Past Medical History:";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(4, 1);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(126, 129);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Recent Illness:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // recentIlnessDGV
+            // 
+            this.recentIlnessDGV.AllowUserToOrderColumns = true;
+            this.recentIlnessDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.recentIlnessDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.recentIlnessDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.recentIlnessDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.recentIlnessDGV.ColumnHeadersVisible = false;
+            this.recentIlnessDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.recentIllness});
+            this.recentIlnessDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.recentIlnessDGV.Location = new System.Drawing.Point(134, 1);
+            this.recentIlnessDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.recentIlnessDGV.Name = "recentIlnessDGV";
+            this.recentIlnessDGV.RowHeadersWidth = 15;
+            this.recentIlnessDGV.Size = new System.Drawing.Size(252, 129);
+            this.recentIlnessDGV.TabIndex = 7;
+            // 
+            // recentIllness
+            // 
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recentIllness.DefaultCellStyle = dataGridViewCellStyle13;
+            this.recentIllness.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.recentIllness.HeaderText = "";
+            this.recentIllness.Name = "recentIllness";
+            this.recentIllness.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // familyComboBox
+            // 
+            this.familyComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.familyComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.familyComboBox.FormattingEnabled = true;
+            this.familyComboBox.Location = new System.Drawing.Point(134, 273);
+            this.familyComboBox.Margin = new System.Windows.Forms.Padding(0);
+            this.familyComboBox.Name = "familyComboBox";
+            this.familyComboBox.Size = new System.Drawing.Size(252, 24);
+            this.familyComboBox.TabIndex = 9;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.consultationDateDataGridView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(405, 818);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Visits";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // consultationDateDataGridView
+            // 
+            this.consultationDateDataGridView.AllowUserToAddRows = false;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
+            this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.consultationDateDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.consultationDateDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.consultation_date});
+            this.consultationDateDataGridView.ContextMenuStrip = this.consultationHistoryContextMenuStrip;
+            this.consultationDateDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.consultationDateDataGridView.GridColor = System.Drawing.SystemColors.ActiveBorder;
+            this.consultationDateDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.consultationDateDataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.consultationDateDataGridView.Name = "consultationDateDataGridView";
+            this.consultationDateDataGridView.RowHeadersVisible = false;
+            this.consultationDateDataGridView.Size = new System.Drawing.Size(399, 812);
+            this.consultationDateDataGridView.TabIndex = 2;
+            this.consultationDateDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.consultationDateDataGridView_CellClick);
+            // 
+            // consultation_date
+            // 
+            this.consultation_date.DataPropertyName = "consultation_date";
+            this.consultation_date.HeaderText = "Consultation History";
+            this.consultation_date.Name = "consultation_date";
+            this.consultation_date.ReadOnly = true;
+            // 
+            // consultationHistoryContextMenuStrip
+            // 
+            this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.printConsultationHistoryButton,
+            this.printAttachmentButton,
+            this.printMedicalCertificateToolStripMenuItem});
+            this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
+            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 70);
+            // 
+            // printConsultationHistoryButton
+            // 
+            this.printConsultationHistoryButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.printConsultationHistoryButton.Name = "printConsultationHistoryButton";
+            this.printConsultationHistoryButton.Size = new System.Drawing.Size(215, 22);
+            this.printConsultationHistoryButton.Text = "Show Consultation History";
+            this.printConsultationHistoryButton.Click += new System.EventHandler(this.printConsultationHistoryButton_Click);
+            // 
+            // printAttachmentButton
+            // 
+            this.printAttachmentButton.Name = "printAttachmentButton";
+            this.printAttachmentButton.Size = new System.Drawing.Size(215, 22);
+            this.printAttachmentButton.Text = "Show Attachments";
+            this.printAttachmentButton.Click += new System.EventHandler(this.printAttachmentButton_Click);
+            // 
+            // printMedicalCertificateToolStripMenuItem
+            // 
+            this.printMedicalCertificateToolStripMenuItem.Name = "printMedicalCertificateToolStripMenuItem";
+            this.printMedicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.printMedicalCertificateToolStripMenuItem.Text = "Print Medical Certificate";
+            this.printMedicalCertificateToolStripMenuItem.Click += new System.EventHandler(this.printMedicalCertificateToolStripMenuItem_Click);
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel6.ColumnCount = 1;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel4, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel9, 0, 1);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(430, 3);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 2;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.83721F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.16279F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1139, 861);
+            this.tableLayoutPanel6.TabIndex = 1;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 99.99999F));
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel7, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel8, 0, 1);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1131, 627);
+            this.tableLayoutPanel4.TabIndex = 1;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37.45552F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.54448F));
+            this.tableLayoutPanel7.Controls.Add(this.groupBox5, 1, 0);
+            this.tableLayoutPanel7.Controls.Add(this.groupBox4, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 306F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1123, 306);
+            this.tableLayoutPanel7.TabIndex = 1;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.labResultsFlowLayoutPanel);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(423, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(697, 300);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Laboratory Results";
+            // 
+            // labResultsFlowLayoutPanel
+            // 
+            this.labResultsFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labResultsFlowLayoutPanel.Location = new System.Drawing.Point(3, 22);
+            this.labResultsFlowLayoutPanel.Name = "labResultsFlowLayoutPanel";
+            this.labResultsFlowLayoutPanel.Size = new System.Drawing.Size(691, 275);
+            this.labResultsFlowLayoutPanel.TabIndex = 0;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.chiefComplaintsDGV);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox4.Location = new System.Drawing.Point(3, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(414, 300);
+            this.groupBox4.TabIndex = 0;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Chief Complaints";
+            // 
+            // chiefComplaintsDGV
+            // 
+            this.chiefComplaintsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.chiefComplaintsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.chiefComplaintsDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.chiefComplaintsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.chiefComplaintsDGV.ColumnHeadersVisible = false;
+            this.chiefComplaintsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.chiefComplaintsDGVColumn});
+            this.chiefComplaintsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chiefComplaintsDGV.Location = new System.Drawing.Point(3, 22);
+            this.chiefComplaintsDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.chiefComplaintsDGV.Name = "chiefComplaintsDGV";
+            this.chiefComplaintsDGV.RowHeadersWidth = 15;
+            this.chiefComplaintsDGV.Size = new System.Drawing.Size(408, 275);
+            this.chiefComplaintsDGV.TabIndex = 8;
+            // 
+            // chiefComplaintsDGVColumn
+            // 
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chiefComplaintsDGVColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.chiefComplaintsDGVColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.chiefComplaintsDGVColumn.HeaderText = "";
+            this.chiefComplaintsDGVColumn.Name = "chiefComplaintsDGVColumn";
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 1;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel5, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(4, 317);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 2;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.61049F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.38951F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1123, 306);
+            this.tableLayoutPanel8.TabIndex = 2;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel5.Controls.Add(this.groupBox8, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.groupBox7, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.groupBox6, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 38);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 265F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1117, 265);
+            this.tableLayoutPanel5.TabIndex = 0;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.throatDGV);
+            this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox8.Location = new System.Drawing.Point(747, 3);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(367, 259);
+            this.groupBox8.TabIndex = 3;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Throat";
+            // 
+            // throatDGV
+            // 
+            this.throatDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.throatDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.throatDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.throatDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.throatDGV.ColumnHeadersVisible = false;
+            this.throatDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.throat});
+            this.throatDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.throatDGV.Location = new System.Drawing.Point(3, 22);
+            this.throatDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.throatDGV.Name = "throatDGV";
+            this.throatDGV.RowHeadersWidth = 15;
+            this.throatDGV.Size = new System.Drawing.Size(361, 234);
+            this.throatDGV.TabIndex = 8;
+            // 
+            // throat
+            // 
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.throat.DefaultCellStyle = dataGridViewCellStyle15;
+            this.throat.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.throat.HeaderText = "";
+            this.throat.Name = "throat";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.noseDGV);
+            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox7.Location = new System.Drawing.Point(375, 3);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(366, 259);
+            this.groupBox7.TabIndex = 2;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Nose";
+            // 
+            // noseDGV
+            // 
+            this.noseDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.noseDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.noseDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.noseDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.noseDGV.ColumnHeadersVisible = false;
+            this.noseDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nose});
+            this.noseDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.noseDGV.Location = new System.Drawing.Point(3, 22);
+            this.noseDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.noseDGV.Name = "noseDGV";
+            this.noseDGV.RowHeadersWidth = 15;
+            this.noseDGV.Size = new System.Drawing.Size(360, 234);
+            this.noseDGV.TabIndex = 8;
+            // 
+            // nose
+            // 
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nose.DefaultCellStyle = dataGridViewCellStyle16;
+            this.nose.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.nose.HeaderText = "";
+            this.nose.Name = "nose";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.earsDGV);
+            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox6.Location = new System.Drawing.Point(3, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(366, 259);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Ears";
+            // 
+            // earsDGV
+            // 
+            this.earsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.earsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.earsDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.earsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.earsDGV.ColumnHeadersVisible = false;
+            this.earsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ears});
+            this.earsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.earsDGV.Location = new System.Drawing.Point(3, 22);
+            this.earsDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.earsDGV.Name = "earsDGV";
+            this.earsDGV.RowHeadersWidth = 15;
+            this.earsDGV.Size = new System.Drawing.Size(360, 234);
+            this.earsDGV.TabIndex = 8;
+            this.earsDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.earsDGV_CellContentClick);
+            // 
+            // ears
+            // 
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ears.DefaultCellStyle = dataGridViewCellStyle17;
+            this.ears.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.ears.HeaderText = "";
+            this.ears.Name = "ears";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(1117, 35);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "ENT Examination and Findings";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel9
+            // 
+            this.tableLayoutPanel9.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel9.ColumnCount = 4;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.33333F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.33333F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.33333F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel9.Controls.Add(this.groupBox12, 1, 0);
+            this.tableLayoutPanel9.Controls.Add(this.groupBox10, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.followUpTablePanel, 3, 0);
+            this.tableLayoutPanel9.Controls.Add(this.groupBox11, 2, 0);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(4, 638);
+            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
+            this.tableLayoutPanel9.RowCount = 1;
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(1131, 219);
+            this.tableLayoutPanel9.TabIndex = 2;
+            this.tableLayoutPanel9.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel9_Paint);
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.proceduresDGV);
+            this.groupBox12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox12.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox12.Location = new System.Drawing.Point(324, 4);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(313, 211);
+            this.groupBox12.TabIndex = 6;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Procedures";
+            // 
+            // proceduresDGV
+            // 
+            this.proceduresDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.proceduresDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.proceduresDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.proceduresDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.proceduresDGV.ColumnHeadersVisible = false;
+            this.proceduresDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.procedures});
+            this.proceduresDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.proceduresDGV.Location = new System.Drawing.Point(3, 22);
+            this.proceduresDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.proceduresDGV.Name = "proceduresDGV";
+            this.proceduresDGV.RowHeadersWidth = 15;
+            this.proceduresDGV.Size = new System.Drawing.Size(307, 186);
+            this.proceduresDGV.TabIndex = 8;
+            // 
+            // procedures
+            // 
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.procedures.DefaultCellStyle = dataGridViewCellStyle18;
+            this.procedures.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.procedures.HeaderText = "";
+            this.procedures.Name = "procedures";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.diagnosisDGV);
+            this.groupBox10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox10.Location = new System.Drawing.Point(4, 4);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(313, 211);
+            this.groupBox10.TabIndex = 3;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Diagnosis";
+            // 
+            // diagnosisDGV
+            // 
+            this.diagnosisDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.diagnosisDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.diagnosisDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.diagnosisDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.diagnosisDGV.ColumnHeadersVisible = false;
+            this.diagnosisDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.diagnosis});
+            this.diagnosisDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.diagnosisDGV.Location = new System.Drawing.Point(3, 22);
+            this.diagnosisDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.diagnosisDGV.Name = "diagnosisDGV";
+            this.diagnosisDGV.RowHeadersWidth = 15;
+            this.diagnosisDGV.Size = new System.Drawing.Size(307, 186);
+            this.diagnosisDGV.TabIndex = 8;
+            // 
+            // diagnosis
+            // 
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle19;
+            this.diagnosis.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.diagnosis.HeaderText = "";
+            this.diagnosis.Name = "diagnosis";
+            // 
+            // followUpTablePanel
+            // 
+            this.followUpTablePanel.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.followUpTablePanel.ColumnCount = 1;
+            this.followUpTablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.followUpTablePanel.Controls.Add(this.label14, 0, 2);
+            this.followUpTablePanel.Controls.Add(this.followUpCheckBox, 0, 0);
+            this.followUpTablePanel.Controls.Add(this.tableLayoutPanel15, 0, 1);
+            this.followUpTablePanel.Controls.Add(this.tableLayoutPanel16, 0, 4);
+            this.followUpTablePanel.Controls.Add(this.noteRichTextBox, 0, 3);
+            this.followUpTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.followUpTablePanel.Location = new System.Drawing.Point(964, 4);
+            this.followUpTablePanel.Name = "followUpTablePanel";
+            this.followUpTablePanel.RowCount = 5;
+            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.7619F));
+            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.09524F));
+            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.38095F));
+            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
+            this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.followUpTablePanel.Size = new System.Drawing.Size(163, 211);
+            this.followUpTablePanel.TabIndex = 2;
+            this.followUpTablePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.followUpTablePanel_Paint);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label14.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(4, 70);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(39, 25);
+            this.label14.TabIndex = 7;
+            this.label14.Text = "Note";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // followUpCheckBox
+            // 
+            this.followUpCheckBox.AutoSize = true;
+            this.followUpCheckBox.Font = new System.Drawing.Font("Arial", 12.75F, System.Drawing.FontStyle.Bold);
+            this.followUpCheckBox.Location = new System.Drawing.Point(4, 4);
+            this.followUpCheckBox.Name = "followUpCheckBox";
+            this.followUpCheckBox.Size = new System.Drawing.Size(106, 23);
+            this.followUpCheckBox.TabIndex = 3;
+            this.followUpCheckBox.Text = "Follow Up";
+            this.followUpCheckBox.UseVisualStyleBackColor = true;
+            this.followUpCheckBox.CheckedChanged += new System.EventHandler(this.followUpCheckBox_CheckedChanged);
+            // 
+            // tableLayoutPanel15
+            // 
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.99536F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.00464F));
+            this.tableLayoutPanel15.Controls.Add(this.followUpDateTimePicker, 1, 0);
+            this.tableLayoutPanel15.Controls.Add(this.label13, 0, 0);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(4, 35);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 1;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(155, 31);
+            this.tableLayoutPanel15.TabIndex = 6;
+            // 
+            // followUpDateTimePicker
+            // 
+            this.followUpDateTimePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.followUpDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.followUpDateTimePicker.Location = new System.Drawing.Point(68, 3);
+            this.followUpDateTimePicker.Name = "followUpDateTimePicker";
+            this.followUpDateTimePicker.Size = new System.Drawing.Size(84, 26);
+            this.followUpDateTimePicker.TabIndex = 0;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label13.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(3, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(39, 31);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "Date";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tableLayoutPanel16
+            // 
+            this.tableLayoutPanel16.ColumnCount = 1;
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel16.Controls.Add(this.saveConsultationButton, 0, 0);
+            this.tableLayoutPanel16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel16.Location = new System.Drawing.Point(4, 162);
+            this.tableLayoutPanel16.Name = "tableLayoutPanel16";
+            this.tableLayoutPanel16.RowCount = 1;
+            this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(155, 45);
+            this.tableLayoutPanel16.TabIndex = 8;
+            // 
+            // saveConsultationButton
+            // 
+            this.saveConsultationButton.Location = new System.Drawing.Point(3, 3);
+            this.saveConsultationButton.Name = "saveConsultationButton";
+            this.saveConsultationButton.Size = new System.Drawing.Size(149, 39);
+            this.saveConsultationButton.TabIndex = 1;
+            this.saveConsultationButton.Text = "Save Consultation";
+            this.saveConsultationButton.UseVisualStyleBackColor = true;
+            this.saveConsultationButton.Click += new System.EventHandler(this.saveConsultationButton_Click);
+            // 
+            // noteRichTextBox
+            // 
+            this.noteRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.noteRichTextBox.Location = new System.Drawing.Point(4, 99);
+            this.noteRichTextBox.Name = "noteRichTextBox";
+            this.noteRichTextBox.Size = new System.Drawing.Size(155, 56);
+            this.noteRichTextBox.TabIndex = 9;
+            this.noteRichTextBox.Text = "";
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.recommendationsDGV);
+            this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox11.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox11.Location = new System.Drawing.Point(644, 4);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(313, 211);
+            this.groupBox11.TabIndex = 5;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Recommendations";
+            // 
+            // recommendationsDGV
+            // 
+            this.recommendationsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.recommendationsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.recommendationsDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.recommendationsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.recommendationsDGV.ColumnHeadersVisible = false;
+            this.recommendationsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.recommendations});
+            this.recommendationsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.recommendationsDGV.Location = new System.Drawing.Point(3, 22);
+            this.recommendationsDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.recommendationsDGV.Name = "recommendationsDGV";
+            this.recommendationsDGV.RowHeadersWidth = 15;
+            this.recommendationsDGV.Size = new System.Drawing.Size(307, 186);
+            this.recommendationsDGV.TabIndex = 8;
+            // 
+            // recommendations
+            // 
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recommendations.DefaultCellStyle = dataGridViewCellStyle20;
+            this.recommendations.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.recommendations.HeaderText = "";
+            this.recommendations.Name = "recommendations";
+            // 
+            // tableLayoutPanel13
+            // 
+            this.tableLayoutPanel13.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel13.ColumnCount = 1;
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel14, 0, 1);
+            this.tableLayoutPanel13.Controls.Add(this.videoFlowLayoutPanel, 0, 4);
+            this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel17, 0, 3);
+            this.tableLayoutPanel13.Controls.Add(this.imageFlowLayoutPanel, 0, 2);
+            this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel26, 0, 0);
+            this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(1575, 3);
+            this.tableLayoutPanel13.Name = "tableLayoutPanel13";
+            this.tableLayoutPanel13.RowCount = 5;
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.306604F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.672986F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.94948F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.13318F));
+            this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.50287F));
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(300, 861);
+            this.tableLayoutPanel13.TabIndex = 2;
+            // 
+            // tableLayoutPanel14
+            // 
+            this.tableLayoutPanel14.ColumnCount = 1;
+            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.78712F));
+            this.tableLayoutPanel14.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel14.Location = new System.Drawing.Point(4, 50);
+            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
+            this.tableLayoutPanel14.RowCount = 1;
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(291, 2);
+            this.tableLayoutPanel14.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 2);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Image";
+            // 
+            // videoFlowLayoutPanel
+            // 
+            this.videoFlowLayoutPanel.AutoScroll = true;
+            this.videoFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 668);
+            this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
+            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(292, 189);
+            this.videoFlowLayoutPanel.TabIndex = 6;
+            // 
+            // tableLayoutPanel17
+            // 
+            this.tableLayoutPanel17.ColumnCount = 1;
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.78712F));
+            this.tableLayoutPanel17.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel17.Location = new System.Drawing.Point(4, 632);
+            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
+            this.tableLayoutPanel17.RowCount = 1;
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(292, 29);
+            this.tableLayoutPanel17.TabIndex = 5;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(46, 22);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Video";
+            // 
+            // imageFlowLayoutPanel
+            // 
+            this.imageFlowLayoutPanel.AutoScroll = true;
+            this.imageFlowLayoutPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.imageFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageFlowLayoutPanel.Location = new System.Drawing.Point(4, 82);
+            this.imageFlowLayoutPanel.Name = "imageFlowLayoutPanel";
+            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(292, 543);
+            this.imageFlowLayoutPanel.TabIndex = 4;
+            // 
+            // tableLayoutPanel26
+            // 
+            this.tableLayoutPanel26.ColumnCount = 2;
+            this.tableLayoutPanel26.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.86254F));
+            this.tableLayoutPanel26.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.13746F));
+            this.tableLayoutPanel26.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel26.Controls.Add(this.toolStrip1, 1, 0);
+            this.tableLayoutPanel26.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel26.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel26.Name = "tableLayoutPanel26";
+            this.tableLayoutPanel26.RowCount = 1;
+            this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel26.Size = new System.Drawing.Size(292, 39);
+            this.tableLayoutPanel26.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Font = new System.Drawing.Font("Arial Narrow", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(97, 39);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Attachments";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2});
+            this.toolStrip1.Location = new System.Drawing.Point(116, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(176, 39);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(84, 36);
+            this.toolStripButton1.Text = "Open Camera";
+            this.toolStripButton1.Click += new System.EventHandler(this.openCameraButton_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(85, 19);
+            this.toolStripButton2.Text = "Upload Image";
+            this.toolStripButton2.Click += new System.EventHandler(this.uploadImageButton_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // mySqlDataAdapter1
+            // 
+            this.mySqlDataAdapter1.DeleteCommand = null;
+            this.mySqlDataAdapter1.InsertCommand = null;
+            this.mySqlDataAdapter1.SelectCommand = null;
+            this.mySqlDataAdapter1.UpdateCommand = null;
+            // 
+            // tableLayoutPanel18
+            // 
+            this.tableLayoutPanel18.ColumnCount = 1;
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.Controls.Add(this.dataGridView1, 0, 0);
+            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel18.Location = new System.Drawing.Point(4, 5);
+            this.tableLayoutPanel18.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
+            this.tableLayoutPanel18.RowCount = 1;
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 99.99999F));
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 844F));
+            this.tableLayoutPanel18.Size = new System.Drawing.Size(124, 840);
+            this.tableLayoutPanel18.TabIndex = 0;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveBorder;
+            this.dataGridView1.Location = new System.Drawing.Point(4, 5);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(116, 830);
+            this.dataGridView1.TabIndex = 2;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "consultation_date";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Consultation History";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
+            // miniToolStrip
+            // 
+            this.miniToolStrip.AccessibleName = "New item selection";
+            this.miniToolStrip.AccessibleRole = System.Windows.Forms.AccessibleRole.ButtonDropDown;
+            this.miniToolStrip.AutoSize = false;
+            this.miniToolStrip.CanOverflow = false;
+            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.miniToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.miniToolStrip.Name = "miniToolStrip";
+            this.miniToolStrip.Size = new System.Drawing.Size(142, 39);
+            this.miniToolStrip.TabIndex = 3;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(405, 818);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Emergency Contact";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // ConsultationControl
             // 
@@ -2033,71 +1998,69 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ConsultationControl_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.consultationHistoryContextMenuStrip.ResumeLayout(false);
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel23.ResumeLayout(false);
             this.tableLayoutPanel23.PerformLayout();
             this.tableLayoutPanel24.ResumeLayout(false);
             this.tableLayoutPanel24.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientProfilePictureBox)).EndInit();
-            this.tableLayoutPanel18.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.tableLayoutPanel13.ResumeLayout(false);
-            this.tableLayoutPanel26.ResumeLayout(false);
-            this.tableLayoutPanel26.PerformLayout();
-            this.tableLayoutPanel17.ResumeLayout(false);
-            this.tableLayoutPanel17.PerformLayout();
-            this.tableLayoutPanel14.ResumeLayout(false);
-            this.tableLayoutPanel14.PerformLayout();
-            this.followUpTablePanel.ResumeLayout(false);
-            this.followUpTablePanel.PerformLayout();
-            this.tableLayoutPanel16.ResumeLayout(false);
-            this.tableLayoutPanel15.ResumeLayout(false);
-            this.tableLayoutPanel15.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel25.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.tableLayoutPanel28.ResumeLayout(false);
-            this.tableLayoutPanel28.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.recentIlnessDGV)).EndInit();
-            this.tableLayoutPanel29.ResumeLayout(false);
-            this.tableLayoutPanel29.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pastMedicalHistoryDGV)).EndInit();
-            this.tableLayoutPanel9.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chiefComplaintsDGV)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.earsDGV)).EndInit();
-            this.groupBox7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.noseDGV)).EndInit();
-            this.groupBox8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).EndInit();
-            this.groupBox9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.neckDGV)).EndInit();
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
-            this.groupBox10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.diagnosisDGV)).EndInit();
-            this.groupBox11.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.recommendationsDGV)).EndInit();
-            this.groupBox12.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.proceduresDGV)).EndInit();
             this.tableLayoutPanel10.ResumeLayout(false);
             this.tableLayoutPanel10.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.tableLayoutPanel29.ResumeLayout(false);
+            this.tableLayoutPanel29.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.tableLayoutPanel28.ResumeLayout(false);
+            this.tableLayoutPanel28.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pastMedicalHistoryDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.recentIlnessDGV)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).EndInit();
+            this.consultationHistoryContextMenuStrip.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chiefComplaintsDGV)).EndInit();
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel8.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.noseDGV)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.earsDGV)).EndInit();
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.proceduresDGV)).EndInit();
+            this.groupBox10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.diagnosisDGV)).EndInit();
+            this.followUpTablePanel.ResumeLayout(false);
+            this.followUpTablePanel.PerformLayout();
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.tableLayoutPanel15.PerformLayout();
+            this.tableLayoutPanel16.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.recommendationsDGV)).EndInit();
+            this.tableLayoutPanel13.ResumeLayout(false);
+            this.tableLayoutPanel14.ResumeLayout(false);
+            this.tableLayoutPanel14.PerformLayout();
+            this.tableLayoutPanel17.ResumeLayout(false);
+            this.tableLayoutPanel17.PerformLayout();
+            this.tableLayoutPanel26.ResumeLayout(false);
+            this.tableLayoutPanel26.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.tableLayoutPanel18.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2199,8 +2162,6 @@
         private System.Windows.Forms.DataGridView chiefComplaintsDGV;
         private System.Windows.Forms.DataGridViewComboBoxColumn chiefComplaintsDGVColumn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.DataGridView neckDGV;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.DataGridView throatDGV;
         private System.Windows.Forms.GroupBox groupBox7;
@@ -2211,7 +2172,6 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn nose;
         private System.Windows.Forms.DataGridViewComboBoxColumn ears;
         private System.Windows.Forms.DataGridViewComboBoxColumn throat;
-        private System.Windows.Forms.DataGridViewComboBoxColumn neck;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.DataGridView diagnosisDGV;
         private System.Windows.Forms.DataGridViewComboBoxColumn diagnosis;
@@ -2244,5 +2204,6 @@
         private System.Windows.Forms.ComboBox headAndFaceComboBox;
         private System.Windows.Forms.ComboBox skinComboBox;
         private System.Windows.Forms.ComboBox generalApperanceComboBox;
+        private System.Windows.Forms.TabPage tabPage3;
     }
 }

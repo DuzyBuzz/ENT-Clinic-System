@@ -224,6 +224,12 @@
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\UpdateHelper.cs" />
     <Compile Include="Helpers\WaterMarkHelper.cs" />
+    <Compile Include="InsertForms\AddAppointmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertForms\AddAppointmentForm.Designer.cs">
+      <DependentUpon>AddAppointmentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="InsertForms\DoctorPatientQueue.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -450,6 +456,9 @@
       <DependentUpon>PatientCamera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helpers\VideoCameraUI.resx" />
+    <EmbeddedResource Include="InsertForms\AddAppointmentForm.resx">
+      <DependentUpon>AddAppointmentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InsertForms\ConsultationForm.resx">
       <DependentUpon>ConsultationForm.cs</DependentUpon>
     </EmbeddedResource>

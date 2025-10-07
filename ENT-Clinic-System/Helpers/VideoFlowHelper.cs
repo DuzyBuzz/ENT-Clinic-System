@@ -7,7 +7,7 @@ using System.Windows.Forms;
 public class VideoFlowHelper
 {
     private readonly FlowLayoutPanel panel;
-    private readonly string[] categories = new[] { "Nose", "Ears", "Throat" };
+    private readonly string[] categories = new[] { "","Nose", "Ears", "Throat" };
 
     // Map Panel -> (VideoPath, NoteLabel, CategoryLabel, Note, Category)
     private readonly Dictionary<Panel, (string VideoPath, Label NoteLabel, Label CategoryLabel, string Note, string Category)> videoNotes

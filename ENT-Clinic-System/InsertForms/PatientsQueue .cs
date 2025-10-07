@@ -1,4 +1,6 @@
-﻿using ENT_Clinic_System.Helpers;
+﻿using AForge.Imaging.Filters;
+using ENT_Clinic_System.Helpers;
+using ENT_Clinic_System.UserControls;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -19,9 +21,17 @@ namespace ENT_Clinic_System.InsertForms
 
             dgvQueue.AutoGenerateColumns = true;
 
-            // Very important: subscribe to these
+            // ✅ Add Context Menu for right click
+            var contextMenu = new ContextMenuStrip();
+            var viewConsultationItem = new ToolStripMenuItem("View Consultation");
+            viewConsultationItem.Click += viewConsultationItem_Click;
+            contextMenu.Items.Add(viewConsultationItem);
+            dgvQueue.ContextMenuStrip = contextMenu;
+
+            // Subscribe events
             dgvQueue.CurrentCellDirtyStateChanged += dgvQueue_CurrentCellDirtyStateChanged;
             dgvQueue.CellValueChanged += dgvQueue_CellValueChanged;
+            dgvQueue.MouseDown += dgvQueue_MouseDown;
         }
 
         private void PatientsQueue_Load(object sender, EventArgs e)
@@ -33,7 +43,6 @@ namespace ENT_Clinic_System.InsertForms
                 "patients",
                 new List<string> { "full_name" }
             );
-
         }
 
         private void LoadPatients()
@@ -48,17 +57,15 @@ namespace ENT_Clinic_System.InsertForms
                 dgvPatients.DataSource = patientsTable;
             }
 
-            // Set column headers
             if (dgvPatients.Columns.Contains("patient_id"))
             {
                 dgvPatients.Columns["patient_id"].HeaderText = "Patient ID";
-                dgvPatients.Columns["patient_id"].Visible = false; // Hide the column
+                dgvPatients.Columns["patient_id"].Visible = false;
             }
 
             if (dgvPatients.Columns.Contains("full_name"))
                 dgvPatients.Columns["full_name"].HeaderText = "Full Name";
         }
-
 
         private void LoadQueue()
         {
@@ -71,6 +78,7 @@ namespace ENT_Clinic_System.InsertForms
                     string sql = @"
                         SELECT 
                             q.queue_id,
+                            q.patient_id,           -- ✅ Added to retrieve patient_id
                             q.queue_number,
                             p.full_name AS patient_name,
                             q.status
@@ -98,12 +106,19 @@ namespace ENT_Clinic_System.InsertForms
                 if (dgvQueue.Columns.Contains("queue_id"))
                     dgvQueue.Columns["queue_id"].Visible = false;
 
+                // ✅ Hide patient_id column from UI
+                if (dgvQueue.Columns.Contains("patient_id"))
+                    dgvQueue.Columns["patient_id"].Visible = false;
+
                 if (dgvQueue.Columns.Contains("queue_number"))
                     dgvQueue.Columns["queue_number"].HeaderText = "Queue #";
+
                 if (dgvQueue.Columns.Contains("patient_name"))
                     dgvQueue.Columns["patient_name"].HeaderText = "Patient Name";
+
                 if (dgvQueue.Columns.Contains("status"))
                     dgvQueue.Columns["status"].HeaderText = "Current Status";
+
 
                 foreach (DataGridViewColumn col in dgvQueue.Columns)
                 {
@@ -120,7 +135,7 @@ namespace ENT_Clinic_System.InsertForms
         {
             if (!dgvQueue.Columns.Contains("status")) return;
 
-            // if it's already a combo, don't recreate
+            // Prevent re-creating if it’s already a combo column
             if (dgvQueue.Columns["status"] is DataGridViewComboBoxColumn) return;
 
             int idx = dgvQueue.Columns["status"].Index;
@@ -130,10 +145,10 @@ namespace ENT_Clinic_System.InsertForms
             {
                 Name = "status",
                 HeaderText = "Current Status",
-                DataPropertyName = "status", // binds to the DataTable
+                DataPropertyName = "status",
                 ValueType = typeof(string),
                 DataSource = new string[] { "examining", "waiting", "done", "skipped" },
-                FlatStyle = FlatStyle.Standard // <-- makes dropdown work normally
+                FlatStyle = FlatStyle.Standard
             };
 
             dgvQueue.Columns.Insert(idx, combo);
@@ -169,17 +184,17 @@ namespace ENT_Clinic_System.InsertForms
                     }
                 }
 
-                LoadQueue(); // refresh after update
+                LoadQueue();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to update status: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed to update status: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void dgvQueue_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            // Ensures change is committed immediately
             if (dgvQueue.IsCurrentCellDirty && dgvQueue.CurrentCell is DataGridViewComboBoxCell)
             {
                 dgvQueue.CommitEdit(DataGridViewDataErrorContexts.Commit);
@@ -211,7 +226,6 @@ namespace ENT_Clinic_System.InsertForms
             {
                 conn.Open();
 
-                // ✅ Check if patient already in today's queue
                 string checkSql = "SELECT COUNT(*) FROM queue WHERE patient_id=@pid AND DATE(created_at)=CURDATE()";
                 using (var checkCmd = new MySqlCommand(checkSql, conn))
                 {
@@ -224,18 +238,16 @@ namespace ENT_Clinic_System.InsertForms
                                         "Duplicate Entry",
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Warning);
-                        return; // stop here, don’t insert duplicate
+                        return;
                     }
                 }
 
-                // ✅ Get next queue number
                 int nextQueueNum;
                 using (var cmd = new MySqlCommand("SELECT IFNULL(MAX(queue_number),0)+1 FROM queue WHERE DATE(created_at)=CURDATE()", conn))
                 {
                     nextQueueNum = Convert.ToInt32(cmd.ExecuteScalar());
                 }
 
-                // ✅ Insert new queue record
                 string sql = "INSERT INTO queue (patient_id, queue_number, status, created_at) VALUES (@pid, @qnum, 'waiting', NOW())";
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
@@ -247,7 +259,6 @@ namespace ENT_Clinic_System.InsertForms
 
             LoadQueue();
         }
-
 
         private void btnRemoveFromQueue_Click(object sender, EventArgs e)
         {
@@ -275,7 +286,90 @@ namespace ENT_Clinic_System.InsertForms
 
         private void txtSearchPatient_TextChanged(object sender, EventArgs e)
         {
-
         }
+
+        // ✅ Handles row selection when right-clicking
+        private void dgvQueue_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hitTest = dgvQueue.HitTest(e.X, e.Y);
+                if (hitTest.RowIndex >= 0)
+                {
+                    dgvQueue.ClearSelection();
+                    dgvQueue.Rows[hitTest.RowIndex].Selected = true;
+                }
+                else
+                {
+                    dgvQueue.ClearSelection();
+                }
+            }
+        }
+
+        // ✅ Opens ConsultationControl safely
+        private void viewConsultationItem_Click(object sender, EventArgs e)
+        {
+            if (dgvQueue.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a patient from the queue first.", "No selection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var selectedRow = dgvQueue.SelectedRows[0];
+
+                // ✅ Check if patient_id column exists
+                if (!dgvQueue.Columns.Contains("patient_id"))
+                {
+                    MessageBox.Show("The queue does not contain a patient_id column.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var patientIdObj = selectedRow.Cells["patient_id"].Value;
+                if (patientIdObj == null || patientIdObj == DBNull.Value)
+                {
+                    MessageBox.Show("This queue entry is not linked to a patient.", "Information",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                int patientId = Convert.ToInt32(patientIdObj);
+
+                // ✅ Update status to 'examining'
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    string updateSql = @"
+                UPDATE queue 
+                SET status = 'examining', called_at = NOW() 
+                WHERE patient_id = @pid AND DATE(created_at) = CURDATE();
+            ";
+
+                    using (var cmd = new MySqlCommand(updateSql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@pid", patientId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // ✅ Open consultation window
+                ConsultationControl consultation = new ConsultationControl(patientId);
+                consultation.Show();
+
+                // ✅ Refresh queue display to reflect updated status
+                LoadQueue();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
     }
 }

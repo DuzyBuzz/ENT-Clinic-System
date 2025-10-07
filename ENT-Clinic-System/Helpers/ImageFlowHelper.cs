@@ -8,7 +8,7 @@ using System.Windows.Forms;
 public class ImageFlowHelper
 {
     private readonly FlowLayoutPanel panel;
-    private readonly string[] categories = new[] { "Nose", "Ears", "Throat" };
+    private readonly string[] categories = new[] {"", "Nose", "Ears", "Throat" };
 
     // Map Panel -> (ImagePath, NoteLabel, CategoryLabel, Note, Category)
     private readonly Dictionary<Panel, (string ImagePath, Label NoteLabel, Label CategoryLabel, string Note, string Category)> imageNotes
@@ -27,7 +27,7 @@ public class ImageFlowHelper
     public Panel AddImage(string imagePath, string initialNote = "", string initialCategory = "")
     {
         if (!File.Exists(imagePath)) return null;
-        if (string.IsNullOrEmpty(initialCategory)) initialCategory = "(no category)";
+        if (string.IsNullOrEmpty(initialCategory)) initialCategory = "";
 
         // Container for image + note + category
         Panel container = new Panel
@@ -51,7 +51,7 @@ public class ImageFlowHelper
         // Note label
         Label noteLabel = new Label
         {
-            Text = string.IsNullOrEmpty(initialNote) ? "(double-click to add note)" : initialNote,
+            Text = string.IsNullOrEmpty(initialNote) ? "" : initialNote,
             Dock = DockStyle.Bottom,
             Height = 40,
             TextAlign = ContentAlignment.MiddleCenter,
@@ -208,7 +208,7 @@ public class ImageFlowHelper
                 string newCategory = cbCategory.SelectedItem?.ToString() ?? categories[0];
 
                 imageNotes[container] = (data.ImagePath, data.NoteLabel, data.CategoryLabel, newNote, newCategory);
-                data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "(double-click to add note)" : newNote;
+                data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "" : newNote;
                 data.CategoryLabel.Text = newCategory;
 
                 editForm.Close();
