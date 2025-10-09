@@ -218,7 +218,7 @@ namespace ENT_Clinic_System.PrintingForms
             }
 
             // 5️⃣ Footer (doctor info / signature)
-            WaterMarkHelper.PrintFooter(g, leftMargin, e.PageBounds.Bottom - 80);
+            WaterMarkHelper.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width);
         }
 
         // =========================

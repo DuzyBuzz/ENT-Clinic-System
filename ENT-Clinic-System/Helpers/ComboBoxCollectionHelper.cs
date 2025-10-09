@@ -8,18 +8,19 @@ namespace ENT_Clinic_System.Helpers
     internal class ComboBoxCollectionHelper
     {
         /// <summary>
-        /// Populates a ComboBox with distinct values from any database column.
+        /// Populates a ComboBox with distinct non-null values from a database column.
         /// Works with string, int, decimal, date, etc.
         /// </summary>
         /// <param name="comboBox">The ComboBox to populate.</param>
         /// <param name="tableName">Database table name.</param>
         /// <param name="columnName">Database column name.</param>
-        public static void PopulateComboBox(ComboBox comboBox, string tableName, string columnName)
+        /// <param name="append">If true, appends items instead of clearing existing ones.</param>
+        public static void PopulateComboBox(ComboBox comboBox, string tableName, string columnName, bool append = false)
         {
             try
             {
-                List<object> items = new List<object>(); // use object to support all data types
-                string sql = $"SELECT DISTINCT {columnName} FROM {tableName} ORDER BY {columnName}";
+                List<object> items = new List<object>();
+                string sql = $"SELECT DISTINCT {columnName} FROM {tableName} WHERE {columnName} IS NOT NULL ORDER BY {columnName}";
 
                 using (var conn = DBConfig.GetConnection())
                 using (var cmd = new MySqlCommand(sql, conn))
@@ -29,16 +30,17 @@ namespace ENT_Clinic_System.Helpers
                     {
                         while (reader.Read())
                         {
+                            // Already filtered by SQL IS NOT NULL, but double-check
                             if (!reader.IsDBNull(0))
                                 items.Add(reader.GetValue(0));
-                            // ✅ GetValue works for ANY SQL data type (int, decimal, string, date, etc.)
                         }
                     }
                 }
 
-                comboBox.Items.Clear();
+                if (!append)
+                    comboBox.Items.Clear();
+
                 comboBox.Items.AddRange(items.ToArray());
-                // ✅ Items can now be int, decimal, string, etc.
             }
             catch (Exception ex)
             {

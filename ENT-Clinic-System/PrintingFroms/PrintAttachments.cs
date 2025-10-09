@@ -18,17 +18,14 @@ namespace ENT_Clinic_System.Consultation
 
         private ImageFlowHelper imageHelper;
         private VideoFlowHelper videoHelper;
-        private List<Image> imagesToPrint = new List<Image>();
 
-        // Keep this field at class-level so pagination works
-        private int currentImageIndex = 0;
+        private int currentPrintIndex = 0;
 
         public PrintAttachments(int consultationId)
         {
             InitializeComponent();
             this.consultationId = consultationId;
 
-            // Load patient info automatically from DB
             LoadPatientInfo();
 
             imageHelper = new ImageFlowHelper(imagesPanel);
@@ -37,9 +34,6 @@ namespace ENT_Clinic_System.Consultation
             LoadAttachmentsFromDatabase();
         }
 
-        /// <summary>
-        /// Queries the database to get the patient's full name and consultation date
-        /// </summary>
         private void LoadPatientInfo()
         {
             try
@@ -47,7 +41,6 @@ namespace ENT_Clinic_System.Consultation
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-
                     string sql = @"
                         SELECT c.consultation_date, p.full_name, p.patient_id
                         FROM consultation c
@@ -75,7 +68,6 @@ namespace ENT_Clinic_System.Consultation
                     }
                 }
 
-                // Update form title
                 this.Text = $"{fullName} - {consultationDate}";
             }
             catch (Exception ex)
@@ -85,9 +77,6 @@ namespace ENT_Clinic_System.Consultation
             }
         }
 
-        /// <summary>
-        /// Loads image and video attachments for the consultation from the database
-        /// </summary>
         private void LoadAttachmentsFromDatabase()
         {
             try
@@ -103,7 +92,6 @@ namespace ENT_Clinic_System.Consultation
                     using (var cmd = new MySqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@consultation_id", consultationId);
-
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -116,14 +104,9 @@ namespace ENT_Clinic_System.Consultation
                                 if (!File.Exists(path)) continue;
 
                                 if (type == "Image")
-                                {
                                     imageHelper.AddImage(path, note, category);
-                                    imagesToPrint.Add(Image.FromFile(path));
-                                }
                                 else if (type == "Video")
-                                {
                                     videoHelper.AddVideo(path, note, category);
-                                }
                             }
                         }
                     }
@@ -131,16 +114,13 @@ namespace ENT_Clinic_System.Consultation
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading attachments: " + ex.Message,
-                    "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error loading attachments: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        /// <summary>
-        /// Print button click → opens preview and prints images
-        /// </summary>
         private void printButton_Click(object sender, EventArgs e)
         {
+            var imagesToPrint = imageHelper.GetAllImages();
             if (imagesToPrint.Count == 0)
             {
                 MessageBox.Show("No images to print.");
@@ -148,79 +128,134 @@ namespace ENT_Clinic_System.Consultation
             }
 
             PrintDocument doc = new PrintDocument();
-            doc.PrintPage += PrintDocImages_PrintPage;
+            doc.DefaultPageSettings.Landscape = false;
+            doc.PrintPage += (s, f) => PrintDocImages_PrintPage(s, f, imagesToPrint);
 
             using (PrintPreviewDialog preview = new PrintPreviewDialog())
             {
                 preview.Document = doc;
-                preview.Width = 800;
-                preview.Height = 600;
+                preview.Width = 900;
+                preview.Height = 700;
                 preview.ShowDialog();
             }
         }
 
-        /// <summary>
-        /// Handles printing of consultation images with pagination and title
-        /// </summary>
-        private void PrintDocImages_PrintPage(object sender, PrintPageEventArgs e)
+        private void PrintDocImages_PrintPage(object sender, PrintPageEventArgs e, List<(string ImagePath, string Note, string Category)> images)
         {
             float x = e.MarginBounds.Left;
             float y = e.MarginBounds.Top;
-            float contentWidth = e.MarginBounds.Width;
-            float pageBottom = e.MarginBounds.Bottom;
-
+            float pageWidth = e.MarginBounds.Width;
+            float pageHeight = e.MarginBounds.Height;
             Graphics g = e.Graphics;
 
-            using (Font headerFont = new Font("Arial", 14, FontStyle.Bold))
+            using (Font headerFont = new Font("Arial", 16, FontStyle.Bold))
+            using (Font infoFont = new Font("Arial", 12, FontStyle.Regular))
             {
-                if (currentImageIndex == 0)
+                if (currentPrintIndex == 0)
                 {
-                    string attachTitle = $"Attachments - {fullName} ({consultationDate})";
-                    SizeF headerSize = g.MeasureString(attachTitle, headerFont);
+                    string title = $"Attachments - {fullName}";
+                    SizeF titleSize = g.MeasureString(title, headerFont);
+                    g.DrawString(title, headerFont, Brushes.Black, x + (pageWidth - titleSize.Width) / 2, y);
+                    y += titleSize.Height + 5;
 
-                    g.DrawString(
-                        attachTitle,
-                        headerFont,
-                        Brushes.Black,
-                        x + (contentWidth - headerSize.Width) / 2,
-                        y
-                    );
-
-                    y += headerSize.Height + 20;
+                    string dateInfo = $"Consultation Date: {consultationDate}";
+                    SizeF dateSize = g.MeasureString(dateInfo, infoFont);
+                    g.DrawString(dateInfo, infoFont, Brushes.Black, x + (pageWidth - dateSize.Width) / 2, y);
+                    y += dateSize.Height + 20;
                 }
             }
 
-            while (currentImageIndex < imagesToPrint.Count)
+            float maxImageHeight = 400;
+            float maxImageWidth = pageWidth - 40;
+            float spacing = 20;
+
+            while (currentPrintIndex < images.Count)
             {
-                Image img = imagesToPrint[currentImageIndex];
-
-                float ratio = Math.Min(
-                    contentWidth / img.Width,
-                    (e.MarginBounds.Height - (y - e.MarginBounds.Top)) / (float)img.Height
-                );
-
-                int drawWidth = (int)(img.Width * ratio);
-                int drawHeight = (int)(img.Height * ratio);
-
-                if (y + drawHeight > pageBottom)
+                var imgData = images[currentPrintIndex];
+                using (Image img = Image.FromFile(imgData.ImagePath))
                 {
-                    e.HasMorePages = true;
-                    return;
+                    float scale = Math.Min(maxImageWidth / img.Width, maxImageHeight / img.Height);
+                    int drawWidth = (int)(img.Width * scale);
+                    int drawHeight = (int)(img.Height * scale);
+
+                    if (y + drawHeight > e.MarginBounds.Bottom)
+                    {
+                        e.HasMorePages = true;
+                        return;
+                    }
+
+                    float drawX = x + (pageWidth - drawWidth) / 2;
+                    g.DrawImage(img, new RectangleF(drawX, y, drawWidth, drawHeight));
+                    y += drawHeight + spacing;
+
+                    using (Font noteFont = new Font("Arial", 10, FontStyle.Italic))
+                    {
+                        SizeF noteSize = g.MeasureString(imgData.Note, noteFont);
+                        g.DrawString(imgData.Note, noteFont, Brushes.Black, x + (pageWidth - noteSize.Width) / 2, y);
+                        y += noteSize.Height + spacing;
+                    }
                 }
-
-                float drawX = x + (contentWidth - drawWidth) / 2;
-                g.DrawImage(img, new RectangleF(drawX, y, drawWidth, drawHeight));
-
-                y += drawHeight + 25;
-                currentImageIndex++;
+                currentPrintIndex++;
             }
 
             e.HasMorePages = false;
-            currentImageIndex = 0;
+            currentPrintIndex = 0;
         }
 
-        private void PrintAttachments_Load(object sender, EventArgs e)
+        private void updateButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    // Update images
+                    var images = imageHelper.GetAllImages();
+                    foreach (var img in images)
+                    {
+                        string sql = @"
+                    UPDATE attachments 
+                    SET note = @note, category = @category 
+                    WHERE consultation_id = @consultationId AND file_path = @path AND file_type = 'Image'";
+
+                        using (var cmd = new MySqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@note", img.Note);
+                            cmd.Parameters.AddWithValue("@category", img.Category);
+                            cmd.Parameters.AddWithValue("@consultationId", consultationId);
+                            cmd.Parameters.AddWithValue("@path", img.ImagePath);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    // Update videos
+                    var videos = videoHelper.GetAllVideos();
+                    foreach (var vid in videos)
+                    {
+                        string sql = @"
+                    UPDATE attachments 
+                    SET note = @note, category = @category 
+                    WHERE consultation_id = @consultationId AND file_path = @path AND file_type = 'Video'";
+
+                        using (var cmd = new MySqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@note", vid.Note);
+                            cmd.Parameters.AddWithValue("@category", vid.Category);
+                            cmd.Parameters.AddWithValue("@consultationId", consultationId);
+                            cmd.Parameters.AddWithValue("@path", vid.VideoPath);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                MessageBox.Show("Changes saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save changes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
     }
 }

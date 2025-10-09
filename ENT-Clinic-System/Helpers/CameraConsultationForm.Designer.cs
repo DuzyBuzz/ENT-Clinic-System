@@ -20,6 +20,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CameraConsultationForm));
             this.cameraPreviewPanel = new System.Windows.Forms.Panel();
             this.captureImageButton = new System.Windows.Forms.Button();
             this.captureVideoButton = new System.Windows.Forms.Button();
@@ -144,6 +145,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1087, 789);
             this.Controls.Add(this.tableLayoutPanel2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "CameraConsultationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

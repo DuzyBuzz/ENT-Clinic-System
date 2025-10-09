@@ -246,22 +246,20 @@ namespace ENT_Clinic_System.UserControls
     {
         { "Print Consultation History", new Action<int>(consultationId =>
             {
-                try
-                {
-                    PrintTextHistory printer = new PrintTextHistory(patientId, consultationId);
-                    MultiPrintPreviewDialog previewDialog = new MultiPrintPreviewDialog
+                    try
                     {
-                        Document = printer.Document,
-                        StartPosition = FormStartPosition.CenterScreen,
-                        ShowInTaskbar = true,
-                        Text = $"Patient {patientId} - Consultation {consultationId}"
-                    };
-                    previewDialog.Show();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error printing consultation history: " + ex.Message);
-                }
+                        // Create the print helper (this loads the patient + consultation data)
+                        PrintTextHistory printer = new PrintTextHistory(patientId, consultationId);
+
+                        // Call your custom ShowPreview() (the version with custom toolbar buttons)
+                        printer.ShowPreview();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error printing consultation history: " + ex.Message,
+                            "Print Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
             })
         },
         { "Print Attachments", new Action<int>(consultationId =>
@@ -307,10 +305,10 @@ namespace ENT_Clinic_System.UserControls
         // ✅ Laboratory Request nested submenu
         { "Laboratory Request", new Func<int, ToolStripMenuItem>(consultationId =>
             {
-                var labMenu = new ToolStripMenuItem("Laboratory Request");
+                var labMenu = new ToolStripMenuItem("Laboratory");
 
                 // Submenu: Create Lab Request
-                var createLab = new ToolStripMenuItem("Create Lab Request");
+                var createLab = new ToolStripMenuItem("Create Laboratory Request");
                 createLab.Click += (s, args) =>
                 {
                     LabRequestForm labForm = new LabRequestForm(patientId, consultationId);
@@ -319,7 +317,7 @@ namespace ENT_Clinic_System.UserControls
                 labMenu.DropDownItems.Add(createLab);
 
                 // Submenu: Show Laboratory Requests
-                var showLab = new ToolStripMenuItem("Show Laboratory Requests");
+                var showLab = new ToolStripMenuItem("Laboratory Requests");
                 showLab.Click += (s, args) =>
                 {
                     var helper = new LabRequestPrintHelper(consultationId);
@@ -327,9 +325,19 @@ namespace ENT_Clinic_System.UserControls
                 };
                 labMenu.DropDownItems.Add(showLab);
 
+                // Submenu: Show Laboratory Results
+                var showResults = new ToolStripMenuItem("Laboratory Results");
+                showResults.Click += (s, args) =>
+                {
+                    LabResultsForm labResultsForm = new LabResultsForm(consultationId, patientId);
+                    labResultsForm.Show();
+                };
+                labMenu.DropDownItems.Add(showResults);
+
                 return labMenu;
             })
         }
+
     };
 
             // 3️⃣ Populate all consultation rows dynamically using the updated helper

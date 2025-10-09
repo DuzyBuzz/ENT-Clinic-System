@@ -14,7 +14,7 @@ namespace ENT_Clinic_System.Helpers
         {
             int y = startY;
 
-            // Fetch settings values
+            // Fetch settings safely
             string clinicName = SettingsHelper.GetSetting("clinic_name") ?? "ENT Clinic";
             string clinicSubtitle = SettingsHelper.GetSetting("clinic_subtitle") ?? "";
             string clinicAddress = SettingsHelper.GetSetting("clinic_address") ?? "";
@@ -24,19 +24,19 @@ namespace ENT_Clinic_System.Helpers
             string clinicHours = SettingsHelper.GetSetting("clinic_hours") ?? "";
             string clinicAffiliations = SettingsHelper.GetSetting("clinic_affiliations") ?? "";
 
-            // Fonts
-            using (Font titleFont = new Font("Segoe UI", 12, FontStyle.Bold))
-            using (Font subtitleFont = new Font("Segoe UI", 9, FontStyle.Regular))
-            using (Font columnTitleFont = new Font("Segoe UI", 9, FontStyle.Bold))
-            using (Font columnFont = new Font("Segoe UI", 9, FontStyle.Regular))
+            // Fonts for A5
+            using (Font titleFont = new Font("Arial", 12, FontStyle.Bold))
+            using (Font subtitleFont = new Font("Arial", 7, FontStyle.Regular))
+            using (Font columnTitleFont = new Font("Arial", 7, FontStyle.Bold))
+            using (Font columnFont = new Font("Arial", 7, FontStyle.Regular))
             {
                 // 1. Main title (centered)
                 SizeF titleSize = g.MeasureString(clinicName, titleFont);
                 float titleX = Math.Max((pageWidth - titleSize.Width) / 2, 0);
                 g.DrawString(clinicName, titleFont, Brushes.Black, titleX, y);
-                y += 20;
+                y += 16;
 
-                // 2. Subtitle (centered, multiple lines supported)
+                // 2. Subtitle (centered)
                 if (!string.IsNullOrWhiteSpace(clinicSubtitle))
                 {
                     string[] subtitleLines = clinicSubtitle.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -45,105 +45,136 @@ namespace ENT_Clinic_System.Helpers
                         SizeF size = g.MeasureString(line, subtitleFont);
                         float x = Math.Max((pageWidth - size.Width) / 2, 0);
                         g.DrawString(line, subtitleFont, Brushes.Black, x, y);
-                        y += 15;
+                        y += 10;
                     }
-                    y += 10; // spacing after subtitle
+                    y += 6;
                 }
 
-                // 3. Column titles (left-aligned inside a centered block)
-                int colWidth = 220; // each column width
-                int blockWidth = colWidth * 3;
-                int blockStartX = (pageWidth - blockWidth) / 2;
-
-                int col1X = blockStartX;
-                int col2X = blockStartX + colWidth;
-                int col3X = blockStartX + colWidth * 2;
+                // 3. Columns
+                int availableWidth = pageWidth - leftMargin * 2;
+                int colCount = 3;
+                int colWidth = availableWidth / colCount;
+                int col1X = leftMargin;
+                int col2X = leftMargin + colWidth;
+                int col3X = leftMargin + colWidth * 2;
 
                 g.DrawString("CLINIC ADDRESS:", columnTitleFont, Brushes.Black, col1X, y);
                 g.DrawString("CLINIC HOURS:", columnTitleFont, Brushes.Black, col2X, y);
                 g.DrawString("HOSPITAL AFFILIATIONS:", columnTitleFont, Brushes.Black, col3X, y);
-                y += 18;
+                y += 12;
 
-                // 4. Column contents
-                string[] addressLines = new string[]
-                {
-            clinicAddress,
-            $"Tel No.: {clinicTel}",
-            $"Mobile No.: {clinicMobile}",
-            $"Email: {clinicEmailAdd}"
-                };
+                // Column contents
+                // Column contents
+                List<string> addressLines = new List<string>()
+                    {
+                        clinicAddress,
+                        $"Tel: {clinicTel}",
+                        $"Mobile: {clinicMobile}",
+                        $"Email: {clinicEmailAdd}"
+                    };
 
-                string[] hoursParts = clinicHours.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                List<string> clinicHoursLines = new List<string>();
-                for (int i = 0; i < hoursParts.Length; i += 2)
-                {
-                    string line = hoursParts[i].Trim();
-                    if (i + 1 < hoursParts.Length)
-                        line += ", " + hoursParts[i + 1].Trim();
-                    clinicHoursLines.Add(line);
-                }
+                // Split hours by newline (\n) instead of comma
+                string[] hoursLines = string.IsNullOrEmpty(clinicHours)
+                    ? new string[0]
+                    : clinicHours.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-                string[] affiliationsLines = clinicAffiliations.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                // Split affiliations by newline (\n)
+                string[] affiliationsLines = string.IsNullOrEmpty(clinicAffiliations)
+                    ? new string[0]
+                    : clinicAffiliations.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-                int maxLines = Math.Max(Math.Max(addressLines.Length, clinicHoursLines.Count), affiliationsLines.Length);
+                // Determine max lines
+                int maxLines = Math.Max(Math.Max(addressLines.Count, hoursLines.Length), affiliationsLines.Length);
 
+                // Extend shorter columns
+                while (addressLines.Count < maxLines) addressLines.Add("");
+                while (hoursLines.Length < maxLines) Array.Resize(ref hoursLines, maxLines);
+                if (affiliationsLines.Length < maxLines) Array.Resize(ref affiliationsLines, maxLines);
+
+                // Draw all lines aligned
                 for (int i = 0; i < maxLines; i++)
                 {
-                    if (i < addressLines.Length)
-                        g.DrawString(addressLines[i].Trim(), columnFont, Brushes.Black, col1X, y);
-
-                    if (i < clinicHoursLines.Count)
-                        g.DrawString(clinicHoursLines[i].Trim(), columnFont, Brushes.Black, col2X, y);
-
-                    if (i < affiliationsLines.Length)
-                        g.DrawString(affiliationsLines[i].Trim(), columnFont, Brushes.Black, col3X, y);
-
-                    y += 15;
+                    DrawWrappedText(g, addressLines[i], columnFont, col1X, y, colWidth - 4);
+                    DrawWrappedText(g, hoursLines[i]?.Trim() ?? "", columnFont, col2X, y, colWidth - 4);
+                    DrawWrappedText(g, affiliationsLines[i]?.Trim() ?? "", columnFont, col3X, y, colWidth - 4);
+                    y += 10;
                 }
 
-                y += 10; // spacing after header
 
-                // 5. Draw horizontal line under header
+                y += 50;
+
+                // Horizontal line under header
                 using (Pen pen = new Pen(Color.Black, 1))
                 {
                     g.DrawLine(pen, leftMargin, y, pageWidth - leftMargin, y);
                 }
-
-                y += 10; // spacing after line
+                y += 6;
             }
 
             return y;
         }
-
-
-
 
         /// <summary>
         /// Prints the report footer and returns the new Y position.
         /// </summary>
-        public static int PrintFooter(Graphics g, int leftMargin, int startY)
+        public static int PrintFooter(Graphics g, int leftMargin, int startY, int pageWidth)
         {
-            int y = startY;
+            int y = startY ;
 
-            // Fetch the dynamic settings for clinic name and license number
             string clinicName = SettingsHelper.GetSetting("clinic_name") ?? "Unknown Clinic Name";
-            string licenseNumber = SettingsHelper.GetSetting("license_number") ?? "Unknown License Number";
+            string licenseNumber = SettingsHelper.GetSetting("license_number") ?? "";
+            string ptrNumber = SettingsHelper.GetSetting("ptr") ?? "";
+            string s2Number = SettingsHelper.GetSetting("stwo") ?? "";
 
-            // Fonts
-            using (Font footerFont = new Font("Segoe UI", 9))
-            using (Font bodyFont = new Font("Segoe UI", 10, FontStyle.Bold))
+            using (Font nameFont = new Font("Arial", 8, FontStyle.Bold))
+            using (Font labelFont = new Font("Arial", 8))
+            using (Font numberFont = new Font("Arial", 8, FontStyle.Bold))
+            using (Pen linePen = new Pen(Color.Black, 1))
             {
-                // Clinic Name (bold and positioned dynamically)
-                g.DrawString(clinicName, bodyFont, Brushes.Black, leftMargin + 350, y);
-                y += 20;
+                int colX = pageWidth - 150;
 
-                // License Number
-                g.DrawString(licenseNumber, footerFont, Brushes.Black, leftMargin + 500, y);
-                y += 20;
+                g.DrawString(clinicName, nameFont, Brushes.Black, colX - 150, y);
+                y += 18;
+
+                // License number
+                g.DrawString("Lic. No.", labelFont, Brushes.Black, colX - 150, y);
+                g.DrawLine(linePen, colX - 100, y + 10, colX + 160, y + 10);
+                g.DrawString(licenseNumber, numberFont, Brushes.Black, colX , y - 2);
+                y += 16;
+
+                // PTR
+                g.DrawString("PTR No.", labelFont, Brushes.Black, colX - 150, y);
+                g.DrawLine(linePen, colX - 100, y + 10, colX + 160, y + 10);
+                g.DrawString(ptrNumber, numberFont, Brushes.Black, colX, y - 2);
+                y += 16;
+
+                // S2
+                g.DrawString("S2 No.", labelFont, Brushes.Black, colX - 150, y);
+                g.DrawLine(linePen, colX - 100, y + 10, colX + 160, y + 10);
+                g.DrawString(s2Number, numberFont, Brushes.Black, colX, y - 2);
+                y += 16;
             }
 
             return y;
         }
 
+        /// <summary>
+        /// Draw text wrapped to max width
+        /// </summary>
+        private static void DrawWrappedText(Graphics g, string text, Font font, int x, int y, int maxWidth)
+        {
+            if (string.IsNullOrEmpty(text)) return;
+
+            RectangleF rect = new RectangleF(x, y, maxWidth, 1000);
+            StringFormat sf = new StringFormat
+            {
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Near,
+                Trimming = StringTrimming.Word,
+                FormatFlags = StringFormatFlags.LineLimit
+            };
+
+            g.DrawString(text, font, Brushes.Black, rect, sf);
+        }
     }
 }

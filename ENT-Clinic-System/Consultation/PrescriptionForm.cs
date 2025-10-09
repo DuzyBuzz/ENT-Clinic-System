@@ -43,6 +43,8 @@ namespace ENT_Clinic_System.Consultation
             dgvOtherItems.CellDoubleClick += DgvOtherItems_CellDoubleClick;
             btnSubmit.Click += BtnSubmit_Click;
 
+            // Enable double-click deletion for medicines
+            dgvSelectedItems.CellDoubleClick += DgvSelectedItems_CellDoubleClick;
 
 
             // 🟩 NEW: Enable realtime deletion for Other Items
@@ -692,12 +694,38 @@ namespace ENT_Clinic_System.Consultation
                 MessageBox.Show("Error loading item details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        // =========================
+        // DOUBLE CLICK TO REMOVE / DECREASE MEDICINE
+        // =========================
+        private void DgvSelectedItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dgvSelectedItems.Rows[e.RowIndex];
+            int currentQty = Convert.ToInt32(row.Cells["quantity"].Value);
+
+            if (currentQty > 1)
+            {
+                // Decrease quantity by 1
+                row.Cells["quantity"].Value = currentQty - 1;
+            }
+            else
+            {
+                // Remove item completely if quantity = 1
+                dgvSelectedItems.Rows.RemoveAt(e.RowIndex);
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             categoryCombobox.Text = "";
             addItemNameComboBox.Text = "";
             addDescriptionComboBox.Text = "";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

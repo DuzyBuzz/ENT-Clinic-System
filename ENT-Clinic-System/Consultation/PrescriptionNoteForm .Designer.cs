@@ -17,17 +17,20 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrescriptionNoteForm));
             this.SuspendLayout();
             // 
             // PrescriptionNoteForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true; // allow scroll if many items
-            this.ClientSize = new System.Drawing.Size(400, 500);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(343, 433);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PrescriptionNoteForm";
             this.Text = "Enter Notes for Prescription";
             this.ResumeLayout(false);
+
         }
 
         #endregion

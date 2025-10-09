@@ -345,9 +345,20 @@ namespace ENT_Clinic_System.UserControls
 
                 int latestConsultationId = LatestIdHelper.GetLatestId("consultation", "consultation_id");
 
-                // 6️⃣ Open Prescription and Billing forms
-                PrescriptionForm prescriptionForm = new PrescriptionForm(_patientId, latestConsultationId);
-                prescriptionForm.ShowDialog();
+                // 6️⃣ Ask user before opening Prescription and Billing forms
+                var result = MessageBox.Show(
+                    "Do you want to open the Prescription and Billing forms?",
+                    "Open Forms",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    PrescriptionForm prescriptionForm = new PrescriptionForm(_patientId, latestConsultationId);
+                    prescriptionForm.ShowDialog();
+                }
+
                 BillingForm billingForm = new BillingForm(latestConsultationId, _patientId);
                 billingForm.ShowDialog();
 
@@ -437,7 +448,7 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
-        
+
         private void printConsultationHistoryButton_Click(object sender, EventArgs e)
         {
             try
@@ -453,30 +464,27 @@ namespace ENT_Clinic_System.UserControls
                 {
                     if (row.Cells["consultation_id"].Value == null ||
                         row.Cells["patient_id"].Value == null ||
-                            row.Cells["consultation_date"].Value == null)
+                        row.Cells["consultation_date"].Value == null)
                         continue;
 
                     int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
                     int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
                     string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
 
-                    // Create the helper
-                    PrintTextHistory printer = new PrintTextHistory(patientId, consultationId);
-                    string fullName = PatientDataHelper.GetPatientValue(patientId, "full_name");
-                    // Use custom MultiPrintPreviewDialog (non-modal, taskbar visible)
-                    MultiPrintPreviewDialog previewDialog = new MultiPrintPreviewDialog
+                    try
                     {
-                        Document = printer.Document,
-                        StartPosition = FormStartPosition.CenterScreen,
-                        ShowInTaskbar = true,
-                        Text = $"{fullName} - {consultationDate}",
-                        ShowIcon = false,
-                       
+                        // Create the print helper (this loads the patient + consultation data)
+                        PrintTextHistory printer = new PrintTextHistory(patientId, consultationId);
 
+                        // Call your custom ShowPreview() (the version with custom toolbar buttons)
+                        printer.ShowPreview();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error printing consultation history: " + ex.Message,
+                            "Print Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
-                    };
-
-                    previewDialog.Show(); // Non-modal: multiple dialogs can be opened
                 }
             }
             catch (Exception ex)
@@ -485,6 +493,7 @@ namespace ENT_Clinic_System.UserControls
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void printAttachmentButton_Click(object sender, EventArgs e)
         {

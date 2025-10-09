@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -178,10 +179,88 @@ namespace ENT_Clinic_System
             }
         }
 
+        // 🔹 Print test by clicking the picture box
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Create the PrintDocument instance
+                PrintDocument printDoc = new PrintDocument();
+
+                // 🖨️ Use the exact printer name shown in Control Panel
+                printDoc.PrinterSettings.PrinterName = "POS-58";
+
+                // 📄 Configure 58 mm custom paper (≈ 220 pixels wide)
+                PaperSize paperSize = new PaperSize("Custom", 220, 600);
+                printDoc.DefaultPageSettings.PaperSize = paperSize;
+                printDoc.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
+
+                // Set high print quality
+                printDoc.PrinterSettings.DefaultPageSettings.PrinterResolution =
+                    new PrinterResolution { Kind = PrinterResolutionKind.High };
+
+                // Handle the PrintPage event
+                printDoc.PrintPage += PrintDoc_PrintPage_XPIID;
+
+                // Start printing
+                printDoc.Print();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Printing Error: " + ex.Message);
+            }
         }
 
+        // 🔹 Event: draw the layout for XP-IID printer
+        private void PrintDoc_PrintPage_XPIID(object sender, PrintPageEventArgs e)
+        {
+            // Safe font for GDI printing — avoid Unicode fonts
+            using (Font font = new Font("Lucida Console", 8, FontStyle.Regular))
+            using (Font bold = new Font("Lucida Console", 9, FontStyle.Bold))
+            {
+                float left = 5;            // left margin
+                float top = 5;             // top margin
+                float lineHeight = font.GetHeight(e.Graphics) + 2;
+
+                // Header
+                e.Graphics.DrawString("DUZY BUZZ CAFE", bold, Brushes.Black, left, top);
+                top += lineHeight;
+                e.Graphics.DrawString("Buntatala, Jaro, Iloilo City", font, Brushes.Black, left, top);
+                top += lineHeight * 2;
+
+                // Receipt info
+                e.Graphics.DrawString("Receipt No: 001", font, Brushes.Black, left, top);
+                top += lineHeight;
+                e.Graphics.DrawString(DateTime.Now.ToString("MMM dd, yyyy  hh:mm tt"), font, Brushes.Black, left, top);
+                top += lineHeight;
+                e.Graphics.DrawString("--------------------------------", font, Brushes.Black, left, top);
+                top += lineHeight;
+
+                // Items
+                e.Graphics.DrawString("Inasal         ₱120.00", font, Brushes.Black, left, top);
+                top += lineHeight;
+                e.Graphics.DrawString("Softdrinks     ₱40.00", font, Brushes.Black, left, top);
+                top += lineHeight;
+
+                e.Graphics.DrawString("--------------------------------", font, Brushes.Black, left, top);
+                top += lineHeight;
+
+                // Total
+                e.Graphics.DrawString("TOTAL: ₱160.00", bold, Brushes.Black, left, top);
+                top += lineHeight * 2;
+
+                // Footer
+                e.Graphics.DrawString("Thank you for dining!", font, Brushes.Black, left, top);
+                top += lineHeight;
+                e.Graphics.DrawString("Please come again.", font, Brushes.Black, left, top);
+                top += lineHeight * 2;
+
+                // Add paper feed spacing (simulate paper cut)
+                e.Graphics.DrawString("\n\n\n-------------------------------\n", font, Brushes.Black, left, top);
+            }
+
+
+        }
         private void Login_KeyPress(object sender, KeyPressEventArgs e)
         {
 

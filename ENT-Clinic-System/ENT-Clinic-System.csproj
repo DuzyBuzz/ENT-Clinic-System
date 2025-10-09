@@ -275,6 +275,12 @@
     </Compile>
     <Compile Include="PrintingFroms\BillingPrinter.cs" />
     <Compile Include="PrintingFroms\LabRequestPrintHelper.cs" />
+    <Compile Include="PrintingFroms\LabResultsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintingFroms\LabResultsForm.Designer.cs">
+      <DependentUpon>LabResultsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrintingFroms\MedicalCertificatePrinter.cs" />
     <Compile Include="Helpers\PatientAgeHelper.cs" />
     <Compile Include="Helpers\PatientDataHelper.cs" />
@@ -449,11 +455,17 @@
     <EmbeddedResource Include="Consultation\BillingForm.resx">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Consultation\PrescriptionNoteForm .resx">
+      <DependentUpon>PrescriptionNoteForm .cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Helpers\CameraConsultationForm.resx">
       <DependentUpon>CameraConsultationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helpers\PatientCamera.resx">
       <DependentUpon>PatientCamera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Helpers\PurposeInputForm.resx">
+      <DependentUpon>PurposeInputForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helpers\VideoCameraUI.resx" />
     <EmbeddedResource Include="InsertForms\AddAppointmentForm.resx">
@@ -492,6 +504,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainFormDoctor.resx">
       <DependentUpon>MainFormDoctor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintingFroms\LabResultsForm.resx">
+      <DependentUpon>LabResultsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrintingFroms\PrintAttachments.resx">
       <DependentUpon>PrintAttachments.cs</DependentUpon>
@@ -567,7 +582,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\icon\ent_logo.ico" />
+    <Content Include="assets\icon\pdf.ico" />
     <Content Include="assets\images\ENT LOGO.jpg" />
+    <Content Include="assets\images\pdf.png" />
     <Content Include="BDADLL.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

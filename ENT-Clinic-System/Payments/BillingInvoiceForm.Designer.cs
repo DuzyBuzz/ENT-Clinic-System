@@ -44,6 +44,7 @@ namespace ENT_Clinic_System.Payments
             this.searchPatientTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.paymentHistoryDataGridView = new System.Windows.Forms.DataGridView();
             this.panelRight = new System.Windows.Forms.Panel();
             this.groupBoxPayment = new System.Windows.Forms.GroupBox();
@@ -67,7 +68,6 @@ namespace ENT_Clinic_System.Payments
             this.label1 = new System.Windows.Forms.Label();
             this.labelRemainingBalance = new System.Windows.Forms.Label();
             this.remainingBalanceTextBox = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -78,12 +78,12 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paymentHistoryDataGridView)).BeginInit();
             this.panelRight.SuspendLayout();
             this.groupBoxPayment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.amountRecievedNumericUpDown)).BeginInit();
             this.groupBoxSummary.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -414,6 +414,18 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel4.Size = new System.Drawing.Size(414, 961);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.paymentHistoryDataGridView);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(408, 541);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Payment History";
+            // 
             // paymentHistoryDataGridView
             // 
             this.paymentHistoryDataGridView.AllowUserToAddRows = false;
@@ -460,6 +472,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // balanceTextBox
             // 
+            this.balanceTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.balanceTextBox.Location = new System.Drawing.Point(224, 95);
             this.balanceTextBox.Name = "balanceTextBox";
             this.balanceTextBox.ReadOnly = true;
@@ -468,6 +481,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // label10
             // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(17, 98);
             this.label10.Name = "label10";
@@ -477,6 +491,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // amountRecievedNumericUpDown
             // 
+            this.amountRecievedNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.amountRecievedNumericUpDown.Location = new System.Drawing.Point(225, 31);
             this.amountRecievedNumericUpDown.Maximum = new decimal(new int[] {
             10000000,
@@ -489,6 +504,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // saveButton
             // 
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.saveButton.BackColor = System.Drawing.SystemColors.Control;
             this.saveButton.ForeColor = System.Drawing.SystemColors.ControlText;
             this.saveButton.Location = new System.Drawing.Point(262, 144);
@@ -501,6 +517,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // changeTextBox
             // 
+            this.changeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.changeTextBox.Location = new System.Drawing.Point(225, 65);
             this.changeTextBox.Name = "changeTextBox";
             this.changeTextBox.ReadOnly = true;
@@ -509,6 +526,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(17, 68);
             this.label7.Name = "label7";
@@ -518,6 +536,7 @@ namespace ENT_Clinic_System.Payments
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(17, 33);
             this.label6.Name = "label6";
@@ -655,18 +674,6 @@ namespace ENT_Clinic_System.Payments
             this.remainingBalanceTextBox.TabIndex = 12;
             this.remainingBalanceTextBox.Visible = false;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.paymentHistoryDataGridView);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(408, 541);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Payment History";
-            // 
             // BillingInvoiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -690,6 +697,7 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.paymentHistoryDataGridView)).EndInit();
             this.panelRight.ResumeLayout(false);
             this.groupBoxPayment.ResumeLayout(false);
@@ -697,7 +705,6 @@ namespace ENT_Clinic_System.Payments
             ((System.ComponentModel.ISupportInitialize)(this.amountRecievedNumericUpDown)).EndInit();
             this.groupBoxSummary.ResumeLayout(false);
             this.groupBoxSummary.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

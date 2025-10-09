@@ -18,6 +18,7 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesReportForm));
             this.panelTop = new System.Windows.Forms.Panel();
             this.lblReportType = new System.Windows.Forms.Label();
             this.cmbReportType = new System.Windows.Forms.ComboBox();
@@ -112,6 +113,7 @@
             this.ClientSize = new System.Drawing.Size(1184, 711);
             this.Controls.Add(this.dgvReport);
             this.Controls.Add(this.panelTop);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SalesReportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sales Report";

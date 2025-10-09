@@ -17,12 +17,14 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrintAttachments));
             this.imagesPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.videosPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.printButton = new System.Windows.Forms.Button();
             this.labelImages = new System.Windows.Forms.Label();
             this.labelVideos = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.updateButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,6 +88,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.updateButton, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.labelImages, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.printButton, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.videosPanel, 1, 1);
@@ -101,13 +104,24 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(780, 620);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
+            // updateButton
+            // 
+            this.updateButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.updateButton.Location = new System.Drawing.Point(657, 578);
+            this.updateButton.Name = "updateButton";
+            this.updateButton.Size = new System.Drawing.Size(120, 39);
+            this.updateButton.TabIndex = 5;
+            this.updateButton.Text = "Update";
+            this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
+            // 
             // PrintAttachments
             // 
             this.ClientSize = new System.Drawing.Size(780, 620);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PrintAttachments";
             this.Text = "Print Attachments";
-            this.Load += new System.EventHandler(this.PrintAttachments_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -115,5 +129,6 @@
         }
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Button updateButton;
     }
 }
