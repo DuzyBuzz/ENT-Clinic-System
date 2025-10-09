@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.PrintingForms
@@ -76,7 +77,7 @@ namespace ENT_Clinic_System.PrintingForms
                         }
 
                         string itemName = reader["item_name"].ToString();
-                        string description = reader["description"].ToString();
+                        string description = reader["description"]?.ToString() ?? "";
                         int quantity = Convert.ToInt32(reader["quantity"]);
                         string note = reader["note"]?.ToString() ?? "";
 
@@ -132,63 +133,32 @@ namespace ENT_Clinic_System.PrintingForms
             y = WaterMarkHelper.PrintHeader(g, leftMargin, y, e.PageBounds.Width);
 
             // 2️⃣ Patient Info
-            using (Font labelFont = new Font("Segoe UI", 9, FontStyle.Bold))
-            using (Font valueFont = new Font("Segoe UI", 9))
+            using (Font labelFont = new Font("Arial", 9, FontStyle.Bold))
+            using (Font valueFont = new Font("Arial", 9))
             {
                 g.DrawString("Patient Name:", labelFont, Brushes.Black, leftMargin, y);
                 g.DrawString(_patientName, valueFont, Brushes.Black, leftMargin + 100, y);
-                g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 400, y);
-                g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 440, y);
+                g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 350, y); // moved left from 400
+                g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 390, y); // moved left from 440
                 y += 25;
 
                 g.DrawString("Gender:", labelFont, Brushes.Black, leftMargin, y);
                 g.DrawString(_patientGender, valueFont, Brushes.Black, leftMargin + 60, y);
-                g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 400, y);
-                g.DrawString(_prescriptionDate.ToShortDateString(), valueFont, Brushes.Black, leftMargin + 440, y);
+                g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 350, y); // moved left from 400
+                g.DrawString(_prescriptionDate.ToShortDateString(), valueFont, Brushes.Black, leftMargin + 390, y); // moved left from 440
                 y += 40;
+
             }
 
-            using (Font headerFont = new Font("Segoe UI", 9, FontStyle.Bold))
-            using (Font rowFont = new Font("Segoe UI", 9))
+            using (Font headerFont = new Font("Arial", 9, FontStyle.Bold))
+            using (Font rowFont = new Font("Arial", 9))
             {
                 // ================================
-                // SECTION 1: MEDICINES
+                // SECTION: ALL PRESCRIPTIONS
                 // ================================
-                if (_medicines.Count > 0)
+                if (_medicines.Count + _otherItems.Count > 0)
                 {
-                    g.DrawString("MEDICINES", headerFont, Brushes.Black, leftMargin, y);
-                    y += 20;
-
-                    g.DrawString("Item Name", headerFont, Brushes.Black, leftMargin, y);
-                    g.DrawString("Qty", headerFont, Brushes.Black, leftMargin + 250, y);
-                    g.DrawString("Description", headerFont, Brushes.Black, leftMargin + 300, y);
-                    y += 20;
-                    g.DrawLine(Pens.Black, leftMargin, y, e.PageBounds.Width - leftMargin, y);
-                    y += 10;
-
-                    foreach (var item in _medicines)
-                    {
-                        g.DrawString(item.ItemName, rowFont, Brushes.Black, leftMargin, y);
-                        g.DrawString(item.Quantity.ToString(), rowFont, Brushes.Black, leftMargin + 250, y);
-                        g.DrawString(item.Description, rowFont, Brushes.Black, leftMargin + 300, y);
-                        y += 20;
-
-                        if (!string.IsNullOrEmpty(item.Note))
-                        {
-                            g.DrawString($"- Note: {item.Note}", rowFont, Brushes.Black, leftMargin + 20, y);
-                            y += 20;
-                        }
-                    }
-
-                    y += 15;
-                }
-
-                // ================================
-                // SECTION 2: OTHER ITEMS
-                // ================================
-                if (_otherItems.Count > 0)
-                {
-                    g.DrawString("OTHER ITEMS", headerFont, Brushes.Black, leftMargin, y);
+                    g.DrawString("PRESCRIPTIONS", headerFont, Brushes.Black, leftMargin, y);
                     y += 20;
 
                     g.DrawString("Item Name", headerFont, Brushes.Black, leftMargin, y);
@@ -198,6 +168,22 @@ namespace ENT_Clinic_System.PrintingForms
                     g.DrawLine(Pens.Black, leftMargin, y, e.PageBounds.Width - leftMargin, y);
                     y += 10;
 
+                    // First print medicines
+                    foreach (var item in _medicines)
+                    {
+                        g.DrawString(item.ItemName, rowFont, Brushes.Black, leftMargin, y);
+                        g.DrawString(item.Quantity.ToString(), rowFont, Brushes.Black, leftMargin + 250, y);
+                        g.DrawString($"Medicine - {item.Description}", rowFont, Brushes.Black, leftMargin + 300, y);
+                        y += 20;
+
+                        if (!string.IsNullOrEmpty(item.Note))
+                        {
+                            g.DrawString($"- Note: {item.Note}", rowFont, Brushes.Black, leftMargin + 20, y);
+                            y += 20;
+                        }
+                    }
+
+                    // Then print other items
                     foreach (var item in _otherItems)
                     {
                         g.DrawString(item.ItemName, rowFont, Brushes.Black, leftMargin, y);
@@ -211,15 +197,16 @@ namespace ENT_Clinic_System.PrintingForms
                             y += 20;
                         }
                     }
-                }
 
-                y += 20;
-                g.DrawLine(Pens.Black, leftMargin, y, e.PageBounds.Width - leftMargin, y);
+                    y += 20;
+                    g.DrawLine(Pens.Black, leftMargin, y, e.PageBounds.Width - leftMargin, y);
+                }
             }
 
-            // 5️⃣ Footer (doctor info / signature)
-            WaterMarkHelper.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width);
+            // 3️⃣ Footer (doctor info / signature)
+            WaterMarkHelper.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width + 150);
         }
+
 
         // =========================
         // SHOW PRINT PREVIEW
@@ -229,9 +216,32 @@ namespace ENT_Clinic_System.PrintingForms
             PrintPreviewDialog preview = new PrintPreviewDialog
             {
                 Document = _printDocument,
-                Width = 1000,
+                Width = 900,
                 Height = 700
             };
+
+            preview.Shown += delegate
+            {
+                ToolStrip tool = preview.Controls.OfType<ToolStrip>().FirstOrDefault();
+                if (tool != null)
+                {
+                    foreach (ToolStripItem item in tool.Items)
+                        if (item is ToolStripButton btn && btn.ToolTipText.ToLower().Contains("print"))
+                            btn.Visible = false;
+
+                    ToolStripButton customPrint = new ToolStripButton("Print");
+                    customPrint.Click += delegate
+                    {
+                        using (PrintDialog dlg = new PrintDialog { Document = _printDocument })
+                        {
+                            if (dlg.ShowDialog() == DialogResult.OK)
+                                _printDocument.Print();
+                        }
+                    };
+                    tool.Items.Insert(0, customPrint);
+                }
+            };
+
             preview.ShowDialog();
         }
     }

@@ -268,10 +268,11 @@ namespace ENT_Clinic_System.UserControls
                     DiagnosisCsv = GetDgvValuesAsCsv(diagnosisDGV),
                     ProceduresCsv = GetDgvValuesAsCsv(proceduresDGV),
                     RecommendationsCsv = GetDgvValuesAsCsv(recommendationsDGV),
-                    NoteRichText = FilterEmptyRichText(noteRichTextBox), // keep note as RichTextBox
+                    NoteRichText = FilterEmptyRichText(noteRichTextBox),
                     ImageFlowLayout = imageFlowLayoutPanel,
                     VideoFlowLayout = videoFlowLayoutPanel
                 };
+
 
                 // 3️⃣ Validation: ensure at least one meaningful input
                 bool hasMeaningfulInput =
@@ -281,7 +282,6 @@ namespace ENT_Clinic_System.UserControls
                     !string.IsNullOrEmpty(inputs.EarsCsv) ||
                     !string.IsNullOrEmpty(inputs.NoseCsv) ||
                     !string.IsNullOrEmpty(inputs.ThroatCsv) ||
-                    !string.IsNullOrEmpty(inputs.NeckCsv) ||
                     !string.IsNullOrEmpty(inputs.DiagnosisCsv) ||
                     !string.IsNullOrEmpty(inputs.ProceduresCsv) ||
                     !string.IsNullOrEmpty(inputs.RecommendationsCsv) ||
@@ -722,5 +722,103 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
+
+        private void showPrescriptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (consultationDateDataGridView.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a consultation to print.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+                {
+                    if (row.Cells["consultation_id"].Value == null ||
+                        row.Cells["patient_id"].Value == null ||
+                        row.Cells["consultation_date"].Value == null)
+                        continue;
+
+                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+                    int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+                    string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
+
+                    var printer = new PrescriptionPrintHelper(consultationId);
+                    printer.ShowPreview();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation record: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+
+        private void laboratoryRequestToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (consultationDateDataGridView.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a consultation to print.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+                {
+                    if (row.Cells["consultation_id"].Value == null)
+                        continue;
+
+                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+
+                    // Directly show the lab request preview
+                    LabRequestPrintHelper helper = new LabRequestPrintHelper(consultationId);
+                    helper.ShowPreview();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation record: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void laboratoryResultToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (consultationDateDataGridView.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a consultation to print.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+                {
+                    if (row.Cells["consultation_id"].Value == null || row.Cells["patient_id"].Value == null)
+                        continue;
+
+                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+                    int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+
+                    // Directly show the lab results form
+                    LabResultsForm labResultsForm = new LabResultsForm(consultationId, patientId);
+                    labResultsForm.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation record: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

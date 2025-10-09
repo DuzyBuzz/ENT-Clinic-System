@@ -108,14 +108,14 @@ namespace ENT_Clinic_System.Helpers
                 conn.Open();
 
                 string sql = @"
-                    INSERT INTO consultation
-                        (patient_id, doctor_name, consultation_date, chief_complaint, history, ear_exam, nose_exam, throat_exam, neck_exam,
-                         diagnosis, recommendations, notes, follow_up_date, follow_up_notes, age)
-                    VALUES
-                        (@patient_id, @doctor_name, @consultation_date, @chief_complaint, @history, @ear_exam, @nose_exam, @throat_exam, @neck_exam,
-                         @diagnosis, @recommendations, @notes, @follow_up_date, @follow_up_notes, @age);
-                    SELECT LAST_INSERT_ID();
-                ";
+            INSERT INTO consultation
+                (patient_id, doctor_name, consultation_date, chief_complaint, history, ear_exam, nose_exam, throat_exam,
+                 diagnosis, recommendations, notes, follow_up_date, follow_up_notes, age)
+            VALUES
+                (@patient_id, @doctor_name, @consultation_date, @chief_complaint, @history, @ear_exam, @nose_exam, @throat_exam,
+                 @diagnosis, @recommendations, @notes, @follow_up_date, @follow_up_notes, @age);
+            SELECT LAST_INSERT_ID();
+        ";
 
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
@@ -123,18 +123,19 @@ namespace ENT_Clinic_System.Helpers
                     cmd.Parameters.AddWithValue("@doctor_name", doctorName ?? "");
                     cmd.Parameters.AddWithValue("@consultation_date", consultationDate);
 
-                    // Convert DataGridViews into comma-separated strings
-                    cmd.Parameters.AddWithValue("@chief_complaint", DgvToCsv(inputs.ComplaintsDGV));
-                    cmd.Parameters.AddWithValue("@history", DgvToCsv(inputs.RecentIllnessDGV) + (string.IsNullOrEmpty(DgvToCsv(inputs.PastMedicalHistoryDGV)) ? "" : ", " + DgvToCsv(inputs.PastMedicalHistoryDGV)));
-                    cmd.Parameters.AddWithValue("@ear_exam", DgvToCsv(inputs.EarsDGV));
-                    cmd.Parameters.AddWithValue("@nose_exam", DgvToCsv(inputs.NoseDGV));
-                    cmd.Parameters.AddWithValue("@throat_exam", DgvToCsv(inputs.ThroatDGV));
-                    cmd.Parameters.AddWithValue("@neck_exam", DgvToCsv(inputs.NeckDGV));
-                    cmd.Parameters.AddWithValue("@diagnosis", DgvToCsv(inputs.DiagnosisDGV));
-                    cmd.Parameters.AddWithValue("@recommendations", DgvToCsv(inputs.RecommendationsDGV));
+                    // ✅ Use CSV strings prepared in saveConsultationButton_Click
+                    cmd.Parameters.AddWithValue("@chief_complaint", inputs.ComplaintsCsv ?? "");
+                    cmd.Parameters.AddWithValue("@history", (inputs.RecentIllnessCsv ?? "") +
+                                                        (string.IsNullOrEmpty(inputs.PastMedicalHistoryCsv) ? "" : ", " + inputs.PastMedicalHistoryCsv));
+                    cmd.Parameters.AddWithValue("@ear_exam", inputs.EarsCsv ?? "");
+                    cmd.Parameters.AddWithValue("@nose_exam", inputs.NoseCsv ?? "");
+                    cmd.Parameters.AddWithValue("@throat_exam", inputs.ThroatCsv ?? "");
+
+                    cmd.Parameters.AddWithValue("@diagnosis", inputs.DiagnosisCsv ?? "");
+                    cmd.Parameters.AddWithValue("@recommendations", inputs.RecommendationsCsv ?? "");
                     cmd.Parameters.AddWithValue("@notes", inputs.NoteRichText?.Text ?? "");
                     cmd.Parameters.AddWithValue("@follow_up_date", followUpDate.HasValue ? followUpDate.Value : (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@follow_up_notes", inputs.NoteRichText?.Text ?? "");
+                    cmd.Parameters.AddWithValue("@follow_up_notes", inputs.NoteRichText?.Text ?? ""); // keep same for now
                     cmd.Parameters.AddWithValue("@age", inputs.ageLabel?.Text ?? "");
 
                     consultationId = Convert.ToInt32(cmd.ExecuteScalar());
@@ -143,6 +144,7 @@ namespace ENT_Clinic_System.Helpers
 
             return consultationId;
         }
+
 
         /// <summary>
         /// Converts DataGridView rows into a comma-separated string
@@ -210,7 +212,6 @@ namespace ENT_Clinic_System.Helpers
         public DataGridView EarsDGV { get; set; }
         public DataGridView NoseDGV { get; set; }
         public DataGridView ThroatDGV { get; set; }
-        public DataGridView NeckDGV { get; set; }
         public DataGridView DiagnosisDGV { get; set; }
         public DataGridView ProceduresDGV { get; set; }
         public DataGridView RecommendationsDGV { get; set; }
@@ -218,16 +219,16 @@ namespace ENT_Clinic_System.Helpers
         public FlowLayoutPanel ImageFlowLayout { get; set; }
         public FlowLayoutPanel VideoFlowLayout { get; set; }
 
-        // ✅ New properties for CSV strings (optional if you want to store directly as strings)
+        // CSV strings (used for saving)
         public string ComplaintsCsv { get; set; }
         public string RecentIllnessCsv { get; set; }
         public string PastMedicalHistoryCsv { get; set; }
         public string EarsCsv { get; set; }
         public string NoseCsv { get; set; }
         public string ThroatCsv { get; set; }
-        public string NeckCsv { get; set; }
         public string DiagnosisCsv { get; set; }
         public string ProceduresCsv { get; set; }
         public string RecommendationsCsv { get; set; }
     }
+
 }

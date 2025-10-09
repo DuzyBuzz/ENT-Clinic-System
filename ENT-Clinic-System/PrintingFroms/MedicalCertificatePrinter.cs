@@ -33,6 +33,8 @@ namespace ENT_Clinic_System.PrintingForms
             LoadData();
 
             printDocument = new PrintDocument();
+            printDocument.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
+
             printDocument.PrintPage += PrintDocument_PrintPage;
         }
 
@@ -116,7 +118,7 @@ namespace ENT_Clinic_System.PrintingForms
             StringFormat centerFormat = new StringFormat() { Alignment = StringAlignment.Center };
 
             // Header
-            y = WaterMarkHelper.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
+            y = WaterMarkHelperA4.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
 
             // Title
             g.DrawString("MEDICAL CERTIFICATE", titleFont, brush, new RectangleF(leftMargin, y, contentWidth, 30), centerFormat);
@@ -150,7 +152,7 @@ namespace ENT_Clinic_System.PrintingForms
             // Footer (aligned to the right)
             int footerWidth = 200; // adjust based on footer text
             int footerX = (int)(e.PageBounds.Width - footerWidth - rightMargin);
-            WaterMarkHelper.PrintFooter(g, footerX, e.MarginBounds.Bottom - 60, footerWidth);
+            WaterMarkHelperA4.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width);
         }
 
         private float DrawUnderlinedText(Graphics g, string label, string value, Font font, Brush brush, float x, float y, float lineWidth)

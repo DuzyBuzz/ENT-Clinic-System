@@ -153,13 +153,13 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.label1.Location = new System.Drawing.Point(1438, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(455, 30);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Follow Up";
+            this.label1.Text = "APPOINTMENT";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // todayButton

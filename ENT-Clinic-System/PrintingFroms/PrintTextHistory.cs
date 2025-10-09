@@ -26,11 +26,7 @@ namespace ENT_Clinic_System.PrintingForms
                        diagnosis, recommendations, notes, followUpNotes;
         private DateTime? followUpDate;
 
-        private List<(string Title, string Body)> printSections;
-        private int currentSectionIndex = 0;
-
         private PrintDocument printDocument;
-        private int pageNumber = 1;
 
         public PrintDocument Document => printDocument;
 
@@ -40,9 +36,9 @@ namespace ENT_Clinic_System.PrintingForms
             this.consultationId = consultationId;
 
             LoadData();
-            BuildPrintSections();
 
             printDocument = new PrintDocument();
+            printDocument.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169); // A4
             printDocument.PrintPage += PrintDocument_PrintPage;
         }
 
@@ -80,7 +76,7 @@ namespace ENT_Clinic_System.PrintingForms
                 // Load consultation info
                 using (var cmd = new MySqlCommand(@"
                     SELECT consultation_date, doctor_name, chief_complaint, history, ear_exam, nose_exam, throat_exam, neck_exam,
-                           diagnosis, recommendations, notes, follow_up_date, follow_up_notes
+                           diagnosis, recommendations, notes, follow_up_date, follow_up_notes, age
                     FROM consultation WHERE consultation_id=@consultationId", conn))
                 {
                     cmd.Parameters.AddWithValue("@consultationId", consultationId);
@@ -100,6 +96,7 @@ namespace ENT_Clinic_System.PrintingForms
                             recommendations = reader["recommendations"]?.ToString() ?? "";
                             notes = reader["notes"]?.ToString() ?? "";
                             followUpNotes = reader["follow_up_notes"]?.ToString();
+                            int.TryParse(reader["age"]?.ToString(), out patientAge);
 
                             DateTime tempDate;
                             if (DateTime.TryParse(reader["follow_up_date"]?.ToString(), out tempDate))
@@ -112,48 +109,18 @@ namespace ENT_Clinic_System.PrintingForms
             }
         }
 
-        private void BuildPrintSections()
-        {
-            printSections = new List<(string Title, string Body)>
-            {
-                ("Patient Name", patientName),
-                ("Address", patientAddress),
-                ("Age", patientAge.ToString()),
-                ("Sex", patientSex),
-                ("Civil Status", civilStatus),
-                ("Contact", patientContact),
-                ("Emergency Contact", string.IsNullOrEmpty(emergencyName) ? "" : $"{emergencyName} ({emergencyRelationship}): {emergencyContact}"),
-                ("Doctor", doctorName),
-                ("Consultation Date", consultationDate.ToString("MMMM dd, yyyy")),
-                ("Chief Complaint", chiefComplaint),
-                ("History of Illness", history)
-            };
-
-            // ENT/Neck exams (only if not empty)
-            if (!string.IsNullOrWhiteSpace(earExam)) printSections.Add(("Ear Examination", earExam));
-            if (!string.IsNullOrWhiteSpace(noseExam)) printSections.Add(("Nose Examination", noseExam));
-            if (!string.IsNullOrWhiteSpace(throatExam)) printSections.Add(("Throat Examination", throatExam));
-            if (!string.IsNullOrWhiteSpace(neckExam)) printSections.Add(("Neck Examination", neckExam));
-
-            if (!string.IsNullOrWhiteSpace(diagnosis)) printSections.Add(("Diagnosis", diagnosis));
-            if (!string.IsNullOrWhiteSpace(recommendations)) printSections.Add(("Recommendations", recommendations));
-            if (!string.IsNullOrWhiteSpace(notes)) printSections.Add(("Notes", notes));
-            if (followUpDate.HasValue || !string.IsNullOrWhiteSpace(followUpNotes))
-                printSections.Add(("Follow-Up", $"{followUpDate?.ToString("MMMM dd, yyyy") ?? ""}\n{followUpNotes ?? ""}"));
-        }
-
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
-            float leftMargin = 50;
-            float rightMargin = 50;
+            float leftMargin = 40;
+            float rightMargin = 40;
             float contentWidth = e.PageBounds.Width - leftMargin - rightMargin;
-            float y = 50;
-            float pageBottom = e.MarginBounds.Bottom;
+            float y = 40;
 
-            Font titleFont = new Font("Arial", 16, FontStyle.Bold);
-            Font headerFont = new Font("Arial", 11, FontStyle.Bold);
-            Font bodyFont = new Font("Arial", 11, FontStyle.Regular);
+            // Fonts: smaller to fit one page
+            Font titleFont = new Font("Arial", 11, FontStyle.Bold);
+            Font headerFont = new Font("Arial", 10, FontStyle.Bold);
+            Font bodyFont = new Font("Arial", 9, FontStyle.Regular);
 
             StringFormat wrapFormat = new StringFormat
             {
@@ -164,56 +131,64 @@ namespace ENT_Clinic_System.PrintingForms
             };
 
             // Header
-            y = WaterMarkHelper.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
+            y = WaterMarkHelperA4.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
 
             // Title
             g.DrawString("ENT CONSULTATION REPORT", titleFont, Brushes.Black,
-                new RectangleF(leftMargin, y, contentWidth, 30),
+                new RectangleF(leftMargin, y, contentWidth, 25),
                 new StringFormat { Alignment = StringAlignment.Center });
-            y += 50;
+            y += 35;
 
-            // Sections
-            while (currentSectionIndex < printSections.Count)
+            // Patient Info
+            g.DrawString("Patient Information", headerFont, Brushes.Black, leftMargin, y);
+            y += 20;
+            g.DrawString($"Patient Name      : {patientName}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            g.DrawString($"Address           : {patientAddress}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            g.DrawString($"Age               : {patientAge}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            g.DrawString($"Sex               : {patientSex}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            g.DrawString($"Civil Status      : {civilStatus}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            g.DrawString($"Contact Number    : {patientContact}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            if (!string.IsNullOrEmpty(emergencyName))
+                g.DrawString($"Emergency Contact : {emergencyName} ({emergencyRelationship}): {emergencyContact}", bodyFont, Brushes.Black, leftMargin, y);
+            y += 20;
+
+            // Consultation Info
+            g.DrawString("Consultation Details", headerFont, Brushes.Black, leftMargin, y); y += 20;
+            g.DrawString($"Doctor           : {doctorName}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            g.DrawString($"Consultation Date: {consultationDate:MMMM dd, yyyy}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            g.DrawString($"Chief Complaint  : {chiefComplaint}", bodyFont, Brushes.Black, leftMargin, y); y += 15;
+            g.DrawString($"History of Illness: {history}", bodyFont, Brushes.Black, new RectangleF(leftMargin, y, contentWidth, 50), wrapFormat);
+            y += 55;
+
+            // ENT & Neck Exams
+            void DrawExam(string title, string value)
             {
-                var (label, value) = printSections[currentSectionIndex];
-
-                if (string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
-                    currentSectionIndex++;
-                    continue;
+                    g.DrawString(title, headerFont, Brushes.Black, leftMargin, y); y += 18;
+                    g.DrawString(value, bodyFont, Brushes.Black, new RectangleF(leftMargin, y, contentWidth, 40), wrapFormat); y += 45;
                 }
-
-                // Bold major headers for exams and diagnosis
-                bool isMajorHeader = label.Contains("Examination") || label == "Diagnosis" || label == "Recommendations";
-                Font useFont = isMajorHeader ? new Font(headerFont, FontStyle.Bold) : bodyFont;
-
-                SizeF labelSize = g.MeasureString(label + ":", headerFont);
-                SizeF valueSize = g.MeasureString(value, bodyFont, new SizeF(contentWidth - 150, float.MaxValue), wrapFormat);
-
-                // Page-break check
-                if (y + Math.Max(labelSize.Height, valueSize.Height) > pageBottom - 80)
-                {
-                    e.HasMorePages = true;
-                    return;
-                }
-
-                g.DrawString(label + ":", headerFont, Brushes.Black, leftMargin, y);
-                g.DrawString(value, useFont, Brushes.Black,
-                    new RectangleF(leftMargin + 150, y, contentWidth - 150, valueSize.Height), wrapFormat);
-
-                y += Math.Max(labelSize.Height, valueSize.Height) + 15; // extra spacing
-                currentSectionIndex++;
             }
 
-            // Footer with page number
-            WaterMarkHelper.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width);
-            g.DrawString($"Page {pageNumber}", new Font("Arial", 9), Brushes.Gray,
-                e.PageBounds.Width - rightMargin - 50, e.MarginBounds.Bottom + 10);
-            pageNumber++;
+            DrawExam("Ear Examination", earExam);
+            DrawExam("Nose Examination", noseExam);
+            DrawExam("Throat Examination", throatExam);
+            DrawExam("Neck Examination", neckExam);
 
-            e.HasMorePages = false;
-            currentSectionIndex = 0;
-            pageNumber = 1;
+            // Diagnosis, Recommendations, Notes
+            DrawExam("Diagnosis", diagnosis);
+            DrawExam("Recommendations", recommendations);
+            DrawExam("Notes", notes);
+
+            // Follow-Up
+            if (followUpDate.HasValue || !string.IsNullOrWhiteSpace(followUpNotes))
+            {
+                string followUpText = $"{followUpDate?.ToString("MMMM dd, yyyy") ?? ""}\n{followUpNotes ?? ""}";
+                DrawExam("Follow-Up", followUpText);
+            }
+
+            // Footer
+            WaterMarkHelperA4.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width);
         }
 
         public void ShowPreview()

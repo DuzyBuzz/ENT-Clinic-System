@@ -224,6 +224,7 @@
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\UpdateHelper.cs" />
     <Compile Include="Helpers\WaterMarkHelper.cs" />
+    <Compile Include="Helpers\WaterMarkHelperA4.cs" />
     <Compile Include="InsertForms\AddAppointmentForm.cs">
       <SubType>Form</SubType>
     </Compile>

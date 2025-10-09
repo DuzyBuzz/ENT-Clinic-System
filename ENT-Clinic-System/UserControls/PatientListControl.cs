@@ -356,5 +356,10 @@ namespace ENT_Clinic_System.UserControls
         {
             throw new NotImplementedException();
         }
+
+        private void showLaboratoryRequesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

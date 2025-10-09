@@ -26,6 +26,12 @@ namespace ENT_Clinic_System.PrintingForms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LabResultsForm));
             this.dgvLabResults = new System.Windows.Forms.DataGridView();
+            this.result_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.test_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.result_text = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.result_file = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAttachFile = new System.Windows.Forms.Button();
             this.lblFileName = new System.Windows.Forms.Label();
             this.flpPreview = new System.Windows.Forms.FlowLayoutPanel();
@@ -39,12 +45,6 @@ namespace ENT_Clinic_System.PrintingForms
             this.label1 = new System.Windows.Forms.Label();
             this.txtResultText = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.result_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.test_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.result_text = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.result_file = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabResults)).BeginInit();
             this.cmsDelete.SuspendLayout();
             this.SuspendLayout();
@@ -71,20 +71,66 @@ namespace ENT_Clinic_System.PrintingForms
             this.dgvLabResults.TabIndex = 0;
             this.dgvLabResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLabResults_CellClick);
             // 
+            // result_id
+            // 
+            this.result_id.DataPropertyName = "result_id";
+            this.result_id.HeaderText = "No.";
+            this.result_id.Name = "result_id";
+            this.result_id.ReadOnly = true;
+            this.result_id.Visible = false;
+            // 
+            // consultation_id
+            // 
+            this.consultation_id.DataPropertyName = "consultation_id";
+            this.consultation_id.HeaderText = "ConsultationId";
+            this.consultation_id.Name = "consultation_id";
+            this.consultation_id.ReadOnly = true;
+            this.consultation_id.Visible = false;
+            // 
+            // test_name
+            // 
+            this.test_name.DataPropertyName = "test_name";
+            this.test_name.HeaderText = "Note";
+            this.test_name.Name = "test_name";
+            this.test_name.ReadOnly = true;
+            // 
+            // result_text
+            // 
+            this.result_text.DataPropertyName = "result_text";
+            this.result_text.HeaderText = "Result Text";
+            this.result_text.Name = "result_text";
+            this.result_text.ReadOnly = true;
+            // 
+            // result_file
+            // 
+            this.result_file.DataPropertyName = "result_file";
+            this.result_file.HeaderText = "File Path";
+            this.result_file.Name = "result_file";
+            this.result_file.ReadOnly = true;
+            this.result_file.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.result_file.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // created_at
+            // 
+            this.created_at.DataPropertyName = "created_at";
+            this.created_at.HeaderText = "Created Date";
+            this.created_at.Name = "created_at";
+            this.created_at.ReadOnly = true;
+            // 
             // btnAttachFile
             // 
             this.btnAttachFile.Location = new System.Drawing.Point(369, 235);
             this.btnAttachFile.Name = "btnAttachFile";
-            this.btnAttachFile.Size = new System.Drawing.Size(80, 30);
+            this.btnAttachFile.Size = new System.Drawing.Size(97, 30);
             this.btnAttachFile.TabIndex = 3;
-            this.btnAttachFile.Text = "Attach File";
+            this.btnAttachFile.Text = "Browse File";
             this.btnAttachFile.UseVisualStyleBackColor = true;
             this.btnAttachFile.Click += new System.EventHandler(this.btnAttachFile_Click);
             // 
             // lblFileName
             // 
             this.lblFileName.AutoSize = true;
-            this.lblFileName.Location = new System.Drawing.Point(462, 246);
+            this.lblFileName.Location = new System.Drawing.Point(482, 247);
             this.lblFileName.Name = "lblFileName";
             this.lblFileName.Size = new System.Drawing.Size(63, 17);
             this.lblFileName.TabIndex = 4;
@@ -188,52 +234,6 @@ namespace ENT_Clinic_System.PrintingForms
             this.label2.Size = new System.Drawing.Size(73, 17);
             this.label2.TabIndex = 10;
             this.label2.Text = "Test Name:";
-            // 
-            // result_id
-            // 
-            this.result_id.DataPropertyName = "result_id";
-            this.result_id.HeaderText = "No.";
-            this.result_id.Name = "result_id";
-            this.result_id.ReadOnly = true;
-            this.result_id.Visible = false;
-            // 
-            // consultation_id
-            // 
-            this.consultation_id.DataPropertyName = "consultation_id";
-            this.consultation_id.HeaderText = "ConsultationId";
-            this.consultation_id.Name = "consultation_id";
-            this.consultation_id.ReadOnly = true;
-            this.consultation_id.Visible = false;
-            // 
-            // test_name
-            // 
-            this.test_name.DataPropertyName = "test_name";
-            this.test_name.HeaderText = "Note";
-            this.test_name.Name = "test_name";
-            this.test_name.ReadOnly = true;
-            // 
-            // result_text
-            // 
-            this.result_text.DataPropertyName = "result_text";
-            this.result_text.HeaderText = "Result Text";
-            this.result_text.Name = "result_text";
-            this.result_text.ReadOnly = true;
-            // 
-            // result_file
-            // 
-            this.result_file.DataPropertyName = "result_file";
-            this.result_file.HeaderText = "File Path";
-            this.result_file.Name = "result_file";
-            this.result_file.ReadOnly = true;
-            this.result_file.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.result_file.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // created_at
-            // 
-            this.created_at.DataPropertyName = "created_at";
-            this.created_at.HeaderText = "Created Date";
-            this.created_at.Name = "created_at";
-            this.created_at.ReadOnly = true;
             // 
             // LabResultsForm
             // 

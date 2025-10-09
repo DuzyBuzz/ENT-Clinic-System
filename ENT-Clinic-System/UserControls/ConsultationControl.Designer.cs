@@ -30,17 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
@@ -118,7 +118,6 @@
             this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
             this.printAttachmentButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.printMedicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
@@ -176,6 +175,9 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
+            this.showPrescriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.laboratoryRequestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.laboratoryResultToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
@@ -486,7 +488,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15019F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84981F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 308F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 309F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel6, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel13, 2, 0);
@@ -511,7 +513,7 @@
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 857F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(418, 857);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(417, 857);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // tabControl1
@@ -522,7 +524,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(412, 851);
+            this.tabControl1.Size = new System.Drawing.Size(411, 851);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -531,7 +533,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(404, 818);
+            this.tabPage1.Size = new System.Drawing.Size(403, 818);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Health Record";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -550,7 +552,7 @@
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 44.08867F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.482759F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.30542F));
-            this.tableLayoutPanel25.Size = new System.Drawing.Size(398, 812);
+            this.tableLayoutPanel25.Size = new System.Drawing.Size(397, 812);
             this.tableLayoutPanel25.TabIndex = 0;
             // 
             // groupBox3
@@ -560,7 +562,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(3, 438);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(392, 371);
+            this.groupBox3.Size = new System.Drawing.Size(391, 371);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Physical Examination";
@@ -604,7 +606,7 @@
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(386, 346);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(385, 346);
             this.tableLayoutPanel10.TabIndex = 0;
             this.tableLayoutPanel10.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel10_Paint);
             // 
@@ -613,7 +615,7 @@
             this.neurologicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.neurologicComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.neurologicComboBox.FormattingEnabled = true;
-            this.neurologicComboBox.Location = new System.Drawing.Point(196, 309);
+            this.neurologicComboBox.Location = new System.Drawing.Point(195, 309);
             this.neurologicComboBox.Name = "neurologicComboBox";
             this.neurologicComboBox.Size = new System.Drawing.Size(187, 24);
             this.neurologicComboBox.TabIndex = 28;
@@ -624,7 +626,7 @@
             this.extremetiesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.extremetiesComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.extremetiesComboBox.FormattingEnabled = true;
-            this.extremetiesComboBox.Location = new System.Drawing.Point(196, 275);
+            this.extremetiesComboBox.Location = new System.Drawing.Point(195, 275);
             this.extremetiesComboBox.Name = "extremetiesComboBox";
             this.extremetiesComboBox.Size = new System.Drawing.Size(187, 24);
             this.extremetiesComboBox.TabIndex = 27;
@@ -635,7 +637,7 @@
             this.abdomenComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.abdomenComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.abdomenComboBox.FormattingEnabled = true;
-            this.abdomenComboBox.Location = new System.Drawing.Point(196, 241);
+            this.abdomenComboBox.Location = new System.Drawing.Point(195, 241);
             this.abdomenComboBox.Name = "abdomenComboBox";
             this.abdomenComboBox.Size = new System.Drawing.Size(187, 24);
             this.abdomenComboBox.TabIndex = 26;
@@ -646,7 +648,7 @@
             this.heartComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.heartComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.heartComboBox.FormattingEnabled = true;
-            this.heartComboBox.Location = new System.Drawing.Point(196, 207);
+            this.heartComboBox.Location = new System.Drawing.Point(195, 207);
             this.heartComboBox.Name = "heartComboBox";
             this.heartComboBox.Size = new System.Drawing.Size(187, 24);
             this.heartComboBox.TabIndex = 25;
@@ -657,7 +659,7 @@
             this.chestLungsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chestLungsComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chestLungsComboBox.FormattingEnabled = true;
-            this.chestLungsComboBox.Location = new System.Drawing.Point(196, 173);
+            this.chestLungsComboBox.Location = new System.Drawing.Point(195, 173);
             this.chestLungsComboBox.Name = "chestLungsComboBox";
             this.chestLungsComboBox.Size = new System.Drawing.Size(187, 24);
             this.chestLungsComboBox.TabIndex = 24;
@@ -668,7 +670,7 @@
             this.neckComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.neckComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.neckComboBox.FormattingEnabled = true;
-            this.neckComboBox.Location = new System.Drawing.Point(196, 139);
+            this.neckComboBox.Location = new System.Drawing.Point(195, 139);
             this.neckComboBox.Name = "neckComboBox";
             this.neckComboBox.Size = new System.Drawing.Size(187, 24);
             this.neckComboBox.TabIndex = 23;
@@ -679,7 +681,7 @@
             this.eyesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.eyesComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.eyesComboBox.FormattingEnabled = true;
-            this.eyesComboBox.Location = new System.Drawing.Point(196, 105);
+            this.eyesComboBox.Location = new System.Drawing.Point(195, 105);
             this.eyesComboBox.Name = "eyesComboBox";
             this.eyesComboBox.Size = new System.Drawing.Size(187, 24);
             this.eyesComboBox.TabIndex = 22;
@@ -690,7 +692,7 @@
             this.headAndFaceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.headAndFaceComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.headAndFaceComboBox.FormattingEnabled = true;
-            this.headAndFaceComboBox.Location = new System.Drawing.Point(196, 71);
+            this.headAndFaceComboBox.Location = new System.Drawing.Point(195, 71);
             this.headAndFaceComboBox.Name = "headAndFaceComboBox";
             this.headAndFaceComboBox.Size = new System.Drawing.Size(187, 24);
             this.headAndFaceComboBox.TabIndex = 21;
@@ -701,7 +703,7 @@
             this.skinComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinComboBox.FormattingEnabled = true;
-            this.skinComboBox.Location = new System.Drawing.Point(196, 37);
+            this.skinComboBox.Location = new System.Drawing.Point(195, 37);
             this.skinComboBox.Name = "skinComboBox";
             this.skinComboBox.Size = new System.Drawing.Size(187, 24);
             this.skinComboBox.TabIndex = 20;
@@ -812,7 +814,7 @@
             this.generalApperanceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.generalApperanceComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.generalApperanceComboBox.FormattingEnabled = true;
-            this.generalApperanceComboBox.Location = new System.Drawing.Point(196, 3);
+            this.generalApperanceComboBox.Location = new System.Drawing.Point(195, 3);
             this.generalApperanceComboBox.Name = "generalApperanceComboBox";
             this.generalApperanceComboBox.Size = new System.Drawing.Size(187, 24);
             this.generalApperanceComboBox.TabIndex = 19;
@@ -825,7 +827,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(3, 361);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(392, 71);
+            this.groupBox2.Size = new System.Drawing.Size(391, 71);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Vital Signs";
@@ -858,7 +860,7 @@
             this.tableLayoutPanel29.RowCount = 2;
             this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel29.Size = new System.Drawing.Size(386, 46);
+            this.tableLayoutPanel29.Size = new System.Drawing.Size(385, 46);
             this.tableLayoutPanel29.TabIndex = 0;
             // 
             // wtTextBox
@@ -867,7 +869,7 @@
             this.wtTextBox.Location = new System.Drawing.Point(320, 23);
             this.wtTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.wtTextBox.Name = "wtTextBox";
-            this.wtTextBox.Size = new System.Drawing.Size(66, 22);
+            this.wtTextBox.Size = new System.Drawing.Size(65, 22);
             this.wtTextBox.TabIndex = 16;
             this.wtTextBox.TextChanged += new System.EventHandler(this.wtTextBox_TextChanged);
             // 
@@ -897,7 +899,7 @@
             this.prTextBox.Location = new System.Drawing.Point(320, 0);
             this.prTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.prTextBox.Name = "prTextBox";
-            this.prTextBox.Size = new System.Drawing.Size(66, 22);
+            this.prTextBox.Size = new System.Drawing.Size(65, 22);
             this.prTextBox.TabIndex = 13;
             this.prTextBox.TextChanged += new System.EventHandler(this.prTextBox_TextChanged);
             // 
@@ -1006,7 +1008,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(392, 352);
+            this.groupBox1.Size = new System.Drawing.Size(391, 352);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Medical History";
@@ -1033,10 +1035,10 @@
             this.tableLayoutPanel28.Name = "tableLayoutPanel28";
             this.tableLayoutPanel28.RowCount = 4;
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.06116F));
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.73089F));
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.64526F));
-            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.256881F));
-            this.tableLayoutPanel28.Size = new System.Drawing.Size(386, 327);
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.73006F));
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.97546F));
+            this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.49693F));
+            this.tableLayoutPanel28.Size = new System.Drawing.Size(385, 327);
             this.tableLayoutPanel28.TabIndex = 0;
             // 
             // personalComboBox
@@ -1044,7 +1046,7 @@
             this.personalComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.personalComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.personalComboBox.FormattingEnabled = true;
-            this.personalComboBox.Location = new System.Drawing.Point(134, 298);
+            this.personalComboBox.Location = new System.Drawing.Point(133, 280);
             this.personalComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.personalComboBox.Name = "personalComboBox";
             this.personalComboBox.Size = new System.Drawing.Size(251, 24);
@@ -1061,17 +1063,17 @@
             this.pastMedicalHistoryDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.pastMedicalHistory});
             this.pastMedicalHistoryDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pastMedicalHistoryDGV.Location = new System.Drawing.Point(134, 131);
+            this.pastMedicalHistoryDGV.Location = new System.Drawing.Point(133, 131);
             this.pastMedicalHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
             this.pastMedicalHistoryDGV.Name = "pastMedicalHistoryDGV";
             this.pastMedicalHistoryDGV.RowHeadersWidth = 15;
-            this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(251, 141);
+            this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(251, 122);
             this.pastMedicalHistoryDGV.TabIndex = 8;
             // 
             // pastMedicalHistory
             // 
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pastMedicalHistory.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pastMedicalHistory.DefaultCellStyle = dataGridViewCellStyle12;
             this.pastMedicalHistory.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.pastMedicalHistory.HeaderText = "";
             this.pastMedicalHistory.Name = "pastMedicalHistory";
@@ -1081,9 +1083,9 @@
             this.label26.AutoSize = true;
             this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label26.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(4, 298);
+            this.label26.Location = new System.Drawing.Point(4, 280);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(126, 28);
+            this.label26.Size = new System.Drawing.Size(125, 46);
             this.label26.TabIndex = 6;
             this.label26.Text = "Personal/Social History:";
             this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1093,9 +1095,9 @@
             this.label24.AutoSize = true;
             this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label24.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(4, 273);
+            this.label24.Location = new System.Drawing.Point(4, 254);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(126, 24);
+            this.label24.Size = new System.Drawing.Size(125, 25);
             this.label24.TabIndex = 4;
             this.label24.Text = "Family History:";
             this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1107,7 +1109,7 @@
             this.label21.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.Location = new System.Drawing.Point(4, 131);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(126, 141);
+            this.label21.Size = new System.Drawing.Size(125, 122);
             this.label21.TabIndex = 2;
             this.label21.Text = "Past Medical History:";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1119,7 +1121,7 @@
             this.label6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(4, 1);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(126, 129);
+            this.label6.Size = new System.Drawing.Size(125, 129);
             this.label6.TabIndex = 0;
             this.label6.Text = "Recent Illness:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1135,7 +1137,7 @@
             this.recentIlnessDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.recentIllness});
             this.recentIlnessDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.recentIlnessDGV.Location = new System.Drawing.Point(134, 1);
+            this.recentIlnessDGV.Location = new System.Drawing.Point(133, 1);
             this.recentIlnessDGV.Margin = new System.Windows.Forms.Padding(0);
             this.recentIlnessDGV.Name = "recentIlnessDGV";
             this.recentIlnessDGV.RowHeadersWidth = 15;
@@ -1144,8 +1146,8 @@
             // 
             // recentIllness
             // 
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recentIllness.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recentIllness.DefaultCellStyle = dataGridViewCellStyle13;
             this.recentIllness.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.recentIllness.HeaderText = "";
             this.recentIllness.Name = "recentIllness";
@@ -1156,7 +1158,7 @@
             this.familyComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.familyComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.familyComboBox.FormattingEnabled = true;
-            this.familyComboBox.Location = new System.Drawing.Point(134, 273);
+            this.familyComboBox.Location = new System.Drawing.Point(133, 254);
             this.familyComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.familyComboBox.Name = "familyComboBox";
             this.familyComboBox.Size = new System.Drawing.Size(251, 24);
@@ -1168,7 +1170,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(404, 818);
+            this.tabPage2.Size = new System.Drawing.Size(403, 818);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Visits";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1176,8 +1178,8 @@
             // consultationDateDataGridView
             // 
             this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
             this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1191,7 +1193,7 @@
             this.consultationDateDataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.consultationDateDataGridView.Name = "consultationDateDataGridView";
             this.consultationDateDataGridView.RowHeadersVisible = false;
-            this.consultationDateDataGridView.Size = new System.Drawing.Size(398, 812);
+            this.consultationDateDataGridView.Size = new System.Drawing.Size(397, 812);
             this.consultationDateDataGridView.TabIndex = 2;
             this.consultationDateDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.consultationDateDataGridView_CellClick);
             // 
@@ -1207,31 +1209,26 @@
             this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.printConsultationHistoryButton,
             this.printAttachmentButton,
-            this.printMedicalCertificateToolStripMenuItem});
+            this.showPrescriptionsToolStripMenuItem,
+            this.laboratoryRequestToolStripMenuItem1,
+            this.laboratoryResultToolStripMenuItem1});
             this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
-            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 70);
+            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(213, 114);
             // 
             // printConsultationHistoryButton
             // 
             this.printConsultationHistoryButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.printConsultationHistoryButton.Name = "printConsultationHistoryButton";
-            this.printConsultationHistoryButton.Size = new System.Drawing.Size(215, 22);
-            this.printConsultationHistoryButton.Text = "Show Consultation History";
+            this.printConsultationHistoryButton.Size = new System.Drawing.Size(212, 22);
+            this.printConsultationHistoryButton.Text = "Show Consultation Report";
             this.printConsultationHistoryButton.Click += new System.EventHandler(this.printConsultationHistoryButton_Click);
             // 
             // printAttachmentButton
             // 
             this.printAttachmentButton.Name = "printAttachmentButton";
-            this.printAttachmentButton.Size = new System.Drawing.Size(215, 22);
+            this.printAttachmentButton.Size = new System.Drawing.Size(212, 22);
             this.printAttachmentButton.Text = "Show Attachments";
             this.printAttachmentButton.Click += new System.EventHandler(this.printAttachmentButton_Click);
-            // 
-            // printMedicalCertificateToolStripMenuItem
-            // 
-            this.printMedicalCertificateToolStripMenuItem.Name = "printMedicalCertificateToolStripMenuItem";
-            this.printMedicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.printMedicalCertificateToolStripMenuItem.Text = "Print Medical Certificate";
-            this.printMedicalCertificateToolStripMenuItem.Click += new System.EventHandler(this.printMedicalCertificateToolStripMenuItem_Click);
             // 
             // tableLayoutPanel6
             // 
@@ -1242,7 +1239,7 @@
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel9, 0, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(429, 3);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(428, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.83721F));
@@ -1313,8 +1310,8 @@
             // 
             // procedures
             // 
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.procedures.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.procedures.DefaultCellStyle = dataGridViewCellStyle3;
             this.procedures.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.procedures.HeaderText = "";
             this.procedures.Name = "procedures";
@@ -1350,8 +1347,8 @@
             // 
             // chiefComplaintsDGVColumn
             // 
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chiefComplaintsDGVColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chiefComplaintsDGVColumn.DefaultCellStyle = dataGridViewCellStyle15;
             this.chiefComplaintsDGVColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.chiefComplaintsDGVColumn.HeaderText = "";
             this.chiefComplaintsDGVColumn.Name = "chiefComplaintsDGVColumn";
@@ -1422,8 +1419,8 @@
             // 
             // throat
             // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.throat.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.throat.DefaultCellStyle = dataGridViewCellStyle16;
             this.throat.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.throat.HeaderText = "";
             this.throat.Name = "throat";
@@ -1459,8 +1456,8 @@
             // 
             // nose
             // 
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nose.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nose.DefaultCellStyle = dataGridViewCellStyle17;
             this.nose.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.nose.HeaderText = "";
             this.nose.Name = "nose";
@@ -1497,8 +1494,8 @@
             // 
             // ears
             // 
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ears.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ears.DefaultCellStyle = dataGridViewCellStyle18;
             this.ears.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.ears.HeaderText = "";
             this.ears.Name = "ears";
@@ -1566,8 +1563,8 @@
             // 
             // diagnosis
             // 
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle19;
             this.diagnosis.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.diagnosis.HeaderText = "";
             this.diagnosis.Name = "diagnosis";
@@ -1721,8 +1718,8 @@
             // 
             // recommendations
             // 
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recommendations.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recommendations.DefaultCellStyle = dataGridViewCellStyle20;
             this.recommendations.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.recommendations.HeaderText = "";
             this.recommendations.Name = "recommendations";
@@ -1739,7 +1736,7 @@
             this.tableLayoutPanel13.Controls.Add(this.imageFlowLayoutPanel, 0, 2);
             this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel26, 0, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(1572, 3);
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(1571, 3);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 5;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.306604F));
@@ -1747,7 +1744,7 @@
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.94948F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.13318F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.50287F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(303, 861);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(304, 861);
             this.tableLayoutPanel13.TabIndex = 2;
             // 
             // tableLayoutPanel14
@@ -1779,7 +1776,7 @@
             this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 668);
             this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
-            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(295, 189);
+            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(296, 189);
             this.videoFlowLayoutPanel.TabIndex = 6;
             // 
             // tableLayoutPanel17
@@ -1792,7 +1789,7 @@
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 1;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(295, 29);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(296, 29);
             this.tableLayoutPanel17.TabIndex = 5;
             // 
             // label5
@@ -1812,7 +1809,7 @@
             this.imageFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageFlowLayoutPanel.Location = new System.Drawing.Point(4, 82);
             this.imageFlowLayoutPanel.Name = "imageFlowLayoutPanel";
-            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(295, 543);
+            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(296, 543);
             this.imageFlowLayoutPanel.TabIndex = 4;
             // 
             // tableLayoutPanel26
@@ -1827,7 +1824,7 @@
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
             this.tableLayoutPanel26.RowCount = 1;
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel26.Size = new System.Drawing.Size(295, 39);
+            this.tableLayoutPanel26.Size = new System.Drawing.Size(296, 39);
             this.tableLayoutPanel26.TabIndex = 4;
             // 
             // label1
@@ -1850,7 +1847,7 @@
             this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(117, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(178, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(179, 39);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1870,7 +1867,7 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(85, 19);
+            this.toolStripButton2.Size = new System.Drawing.Size(85, 36);
             this.toolStripButton2.Text = "Upload Image";
             this.toolStripButton2.Click += new System.EventHandler(this.uploadImageButton_Click);
             // 
@@ -1904,8 +1901,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1950,6 +1947,27 @@
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(142, 39);
             this.miniToolStrip.TabIndex = 3;
+            // 
+            // showPrescriptionsToolStripMenuItem
+            // 
+            this.showPrescriptionsToolStripMenuItem.Name = "showPrescriptionsToolStripMenuItem";
+            this.showPrescriptionsToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.showPrescriptionsToolStripMenuItem.Text = "Show Prescriptions";
+            this.showPrescriptionsToolStripMenuItem.Click += new System.EventHandler(this.showPrescriptionsToolStripMenuItem_Click);
+            // 
+            // laboratoryRequestToolStripMenuItem1
+            // 
+            this.laboratoryRequestToolStripMenuItem1.Name = "laboratoryRequestToolStripMenuItem1";
+            this.laboratoryRequestToolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
+            this.laboratoryRequestToolStripMenuItem1.Text = "Laboratory Request";
+            this.laboratoryRequestToolStripMenuItem1.Click += new System.EventHandler(this.laboratoryRequestToolStripMenuItem1_Click);
+            // 
+            // laboratoryResultToolStripMenuItem1
+            // 
+            this.laboratoryResultToolStripMenuItem1.Name = "laboratoryResultToolStripMenuItem1";
+            this.laboratoryResultToolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
+            this.laboratoryResultToolStripMenuItem1.Text = "Laboratory Result";
+            this.laboratoryResultToolStripMenuItem1.Click += new System.EventHandler(this.laboratoryResultToolStripMenuItem1_Click);
             // 
             // ConsultationControl
             // 
@@ -2044,7 +2062,6 @@
         private System.Windows.Forms.ToolStripMenuItem printConsultationHistoryButton;
         private System.Windows.Forms.ToolStripMenuItem printAttachmentButton;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
-        private System.Windows.Forms.ToolStripMenuItem printMedicalCertificateToolStripMenuItem;
         private System.Windows.Forms.PictureBox patientProfilePictureBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel23;
         private System.Windows.Forms.Label label4;
@@ -2168,5 +2185,8 @@
         private System.Windows.Forms.ComboBox headAndFaceComboBox;
         private System.Windows.Forms.ComboBox skinComboBox;
         private System.Windows.Forms.ComboBox generalApperanceComboBox;
+        private System.Windows.Forms.ToolStripMenuItem showPrescriptionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem laboratoryRequestToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem laboratoryResultToolStripMenuItem1;
     }
 }
