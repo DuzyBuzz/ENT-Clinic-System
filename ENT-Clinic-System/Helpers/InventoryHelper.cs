@@ -8,150 +8,6 @@ namespace ENT_Clinic_System.Helpers
     internal class InventoryHelper
     {
         // ================================
-        // 🔹 Get system setting (e.g., tax, discount, markup)
-        // ================================
-        private decimal GetSettingValue(string key)
-        {
-            try
-            {
-                using (MySqlConnection conn = DBConfig.GetConnection())
-                {
-                    conn.Open();
-                    string query = "SELECT setting_value FROM system_settings WHERE setting_key = @key LIMIT 1";
-
-                    using (var cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@key", key);
-                        object result = cmd.ExecuteScalar();
-                        if (result != null && decimal.TryParse(result.ToString(), out decimal value))
-                        {
-                            return value;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"⚠️ Error fetching setting '{key}': {ex.Message}");
-            }
-
-            return 0; // default if not found
-        }
-
-        //// ================================
-        //// 🔹 Smart Price Calculation
-        //// ================================
-        //public (decimal BasePrice, decimal DiscountAmount, decimal PriceAfterDiscount,
-        //        decimal TaxAmount, decimal FinalPrice) CalculateFinalPrice(decimal sellingPrice, bool applyDiscount, int quantity = 1)
-        //{
-        //    decimal discountPercent = applyDiscount ? GetSettingValue("discount_percentage") : 0;
-        //    decimal taxPercent = GetSettingValue("tax_percentage");
-        //    //decimal markupPercent = GetSettingValue("markup_percentage");
-
-
-        //    //// Step 1: Compute base selling price = cost + markup
-        //    //decimal sellingPrice = costPrice * (1 + markupPercent / 100);
-
-        //    // Step 2: Multiply by quantity
-        //    decimal basePrice = sellingPrice * quantity;
-
-        //    // Step 3: Apply discount first
-        //    decimal discountAmount = basePrice * (discountPercent / 100);
-        //    decimal priceAfterDiscount = basePrice - discountAmount;
-
-        //    // Step 4: Apply tax after discount
-        //    decimal taxAmount = priceAfterDiscount * (taxPercent / 100);
-
-        //    // Step 5: Final price
-        //    decimal finalPrice = priceAfterDiscount + taxAmount;
-
-        //    return (basePrice, discountAmount, priceAfterDiscount, taxAmount, finalPrice);
-        //}
-
-
-        // ================================
-        // 🔹 Stock Movements (insert + sales tracking)
-        // ================================
-        public bool AddStockMovement(int itemId, string movementType, int quantity, DateTime expirationDate, bool hasExpiration)
-        {
-            try
-            {
-                using (MySqlConnection conn = DBConfig.GetConnection())
-                {
-                    conn.Open();
-
-                    // 🔹 Step 1: Get selling price (unit price)
-                    decimal sellingPrice = 0;
-                    string priceQuery = "SELECT selling_price FROM items WHERE item_id=@itemId";
-                    using (var cmd = new MySqlCommand(priceQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@itemId", itemId);
-                        object result = cmd.ExecuteScalar();
-                        if (result != null) sellingPrice = Convert.ToDecimal(result);
-                    }
-
-                    // 🔹 Step 2: Insert into stock_movements
-                    string movementQuery = @"INSERT INTO stock_movements 
-                (item_id, movement_type, quantity, unit_price, expiration_date)
-                VALUES (@itemId, @movementType, @quantity, @unit_price, @expiration_date)";
-
-                    using (var cmd = new MySqlCommand(movementQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@itemId", itemId);
-                        cmd.Parameters.AddWithValue("@movementType", movementType);
-                        cmd.Parameters.AddWithValue("@quantity", quantity);
-                        cmd.Parameters.AddWithValue("@unit_price", sellingPrice);
-
-                        if (hasExpiration)
-                            cmd.Parameters.AddWithValue("@expiration_date", expirationDate);
-                        else
-                            cmd.Parameters.AddWithValue("@expiration_date", DBNull.Value);
-
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error in stock movement: " + ex.Message);
-                return false;
-            }
-        }
-
-
-
-
-
-        // ================================
-        // 🔹 Stock Quantity
-        // ================================
-        public int GetStockQuantity(int itemId)
-        {
-            try
-            {
-                using (MySqlConnection conn = DBConfig.GetConnection())
-                {
-                    conn.Open();
-                    string query = "SELECT stock_quantity FROM items WHERE item_id = @item_id";
-
-                    using (var cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@item_id", itemId);
-                        object result = cmd.ExecuteScalar();
-                        return result != null ? Convert.ToInt32(result) : 0;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("⚠️ Error getting stock quantity: " + ex.Message);
-                return 0;
-            }
-        }
-
-        // ================================
         // 🔹 Get all items
         // ================================
         public DataTable GetAllItems()
@@ -162,8 +18,9 @@ namespace ENT_Clinic_System.Helpers
                 using (MySqlConnection conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = @"SELECT item_id, item_name, description, category, cost_price, selling_price, stock_quantity, created_at, updated_at
-                                     FROM items ORDER BY item_name";
+                    string query = @"SELECT item_id, brand_name, generic_name, strength, dosage, category, description,
+                                    cost_price, selling_price, quantity, created_at, updated_at
+                                     FROM items ORDER BY brand_name";
 
                     using (var adapter = new MySqlDataAdapter(query, conn))
                     {
@@ -177,28 +34,56 @@ namespace ENT_Clinic_System.Helpers
             }
             return dt;
         }
-
-        // ================================
-        // 🔹 Item Management
-        // ================================
-        public bool AddItem(string itemName, string description, string category, decimal costPrice, decimal sellingPrice)
+        public bool DeleteStockMovement(int movementId)
         {
             try
             {
-
                 using (MySqlConnection conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-
-                    string query = @"INSERT INTO items 
-                                     (item_name, description, category, cost_price, selling_price, stock_quantity) 
-                                     VALUES (@item_name, @description, @category, @cost_price, @selling_price, 0)";
+                    string query = "DELETE FROM stock_movements WHERE movement_id=@movementId";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@item_name", itemName);
-                        cmd.Parameters.AddWithValue("@description", description);
+                        cmd.Parameters.AddWithValue("@movementId", movementId);
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting stock movement: " + ex.Message,
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+
+        // ================================
+        // 🔹 Add new item
+        // ================================
+        public bool AddItem(string brandName, string genericName, string strength, string dosage,
+            string category, string description, decimal costPrice, decimal sellingPrice)
+        {
+            try
+            {
+                using (MySqlConnection conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+                    string query = @"INSERT INTO items 
+                                    (brand_name, generic_name, strength, dosage, category, description,
+                                     cost_price, selling_price, quantity, created_at, updated_at)
+                                     VALUES (@brand_name, @generic_name, @strength, @dosage, @category, @description,
+                                             @cost_price, @selling_price, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@brand_name", brandName);
+                        cmd.Parameters.AddWithValue("@generic_name", genericName);
+                        cmd.Parameters.AddWithValue("@strength", strength);
+                        cmd.Parameters.AddWithValue("@dosage", dosage);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@description", description);
                         cmd.Parameters.AddWithValue("@cost_price", costPrice);
                         cmd.Parameters.AddWithValue("@selling_price", sellingPrice);
 
@@ -213,26 +98,32 @@ namespace ENT_Clinic_System.Helpers
             }
         }
 
-        public bool UpdateItem(int itemId, string itemName, string description, string category, decimal costPrice, decimal sellingPrice)
+        // ================================
+        // 🔹 Update item
+        // ================================
+        public bool UpdateItem(int itemId, string brandName, string genericName, string strength, string dosage,
+            string category, string description, decimal costPrice, decimal sellingPrice)
         {
             try
             {
-
                 using (MySqlConnection conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-
                     string query = @"UPDATE items 
-                                     SET item_name=@item_name, description=@description, category=@category, cost_price=@cost_price, 
-                                         selling_price=@selling_price
+                                     SET brand_name=@brand_name, generic_name=@generic_name, strength=@strength,
+                                         dosage=@dosage, category=@category, description=@description,
+                                         cost_price=@cost_price, selling_price=@selling_price, updated_at=CURRENT_TIMESTAMP
                                      WHERE item_id=@item_id";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@item_id", itemId);
-                        cmd.Parameters.AddWithValue("@item_name", itemName);
-                        cmd.Parameters.AddWithValue("@description", description);
+                        cmd.Parameters.AddWithValue("@brand_name", brandName);
+                        cmd.Parameters.AddWithValue("@generic_name", genericName);
+                        cmd.Parameters.AddWithValue("@strength", strength);
+                        cmd.Parameters.AddWithValue("@dosage", dosage);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@description", description);
                         cmd.Parameters.AddWithValue("@cost_price", costPrice);
                         cmd.Parameters.AddWithValue("@selling_price", sellingPrice);
 
@@ -246,17 +137,125 @@ namespace ENT_Clinic_System.Helpers
                 return false;
             }
         }
+
+        // ================================
+        // 🔹 Delete item
+        // ================================
+        public bool DeleteItem(int itemId)
+        {
+            try
+            {
+                using (MySqlConnection conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+                    string query = "DELETE FROM items WHERE item_id=@item_id";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@item_id", itemId);
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error deleting item: " + ex.Message);
+                return false;
+            }
+        }
+
+        // ================================
+        // 🔹 Add stock movement
+        // ================================
+        public bool AddStockMovement(int itemId, string movementType, int quantity, DateTime expirationDate, bool hasExpiration)
+        {
+            try
+            {
+                using (MySqlConnection conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    // 🔹 Step 1: Get selling price
+                    decimal sellingPrice = 0;
+                    string priceQuery = "SELECT selling_price FROM items WHERE item_id=@itemId";
+                    using (var cmd = new MySqlCommand(priceQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@itemId", itemId);
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                            sellingPrice = Convert.ToDecimal(result);
+                        else
+                            throw new Exception("Item not found.");
+                    }
+
+                    // 🔹 Step 2: Insert stock movement only
+                    string movementQuery = @"INSERT INTO stock_movements 
+                                     (item_id, movement_type, quantity, unit_price, expiration_date)
+                                     VALUES (@itemId, @movementType, @quantity, @unit_price, @expiration_date)";
+                    using (var cmd = new MySqlCommand(movementQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@itemId", itemId);
+                        cmd.Parameters.AddWithValue("@movementType", movementType);
+                        cmd.Parameters.AddWithValue("@quantity", quantity);
+                        cmd.Parameters.AddWithValue("@unit_price", sellingPrice);
+                        cmd.Parameters.AddWithValue("@expiration_date", hasExpiration ? (object)expirationDate : DBNull.Value);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // ✅ Remove manual quantity update
+                    // The DB trigger will handle updating items.quantity
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error in stock movement: " + ex.Message, "Stock Movement Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+
+
+
+        // ================================
+        // 🔹 Get stock quantity
+        // ================================
+        public int GetStockQuantity(int itemId)
+        {
+            try
+            {
+                using (MySqlConnection conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT quantity FROM items WHERE item_id=@itemId";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@itemId", itemId);
+                        object result = cmd.ExecuteScalar();
+                        return result != null ? Convert.ToInt32(result) : 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error getting stock quantity: " + ex.Message);
+                return 0;
+            }
+        }
         public int AddInvoice(
-            string customerName,
-            DataTable items,
-            decimal subtotal,
-            decimal discountAmount,
-            decimal netTotal,
-            decimal amountReceived,
-            decimal changeDue,
-            string discountPercentText,
-            string note,
-            string invoiceType)
+    string customerName,
+    DataTable items,
+    decimal subtotal,
+    decimal discountAmount,
+    decimal netTotal,
+    decimal amountReceived,
+    decimal changeDue,
+    string discountPercentText,
+    string note,
+    string invoiceType)
         {
             try
             {
@@ -267,11 +266,11 @@ namespace ENT_Clinic_System.Helpers
                     {
                         try
                         {
-                            // 🔹 Parse discount percent
+                            // Parse discount percent
                             decimal discountPercent = 0;
                             decimal.TryParse(discountPercentText, out discountPercent);
 
-                            // 🔹 Step 1: Insert invoice header (no more calculations here)
+                            // Insert invoice header
                             string invoiceQuery = @"
                         INSERT INTO invoices 
                         (customer_name, invoice_date, subtotal, discount_amount, net_total, 
@@ -296,7 +295,7 @@ namespace ENT_Clinic_System.Helpers
                                 invoiceId = Convert.ToInt32(cmd.ExecuteScalar());
                             }
 
-                            // 🔹 Step 2: Insert invoice items
+                            // Insert invoice items
                             foreach (DataRow row in items.Rows)
                             {
                                 int itemId = Convert.ToInt32(row["item_id"]);
@@ -304,7 +303,7 @@ namespace ENT_Clinic_System.Helpers
                                 decimal price = Convert.ToDecimal(row["unit_price"]);
                                 decimal itemTotal = price * qty;
 
-                                // 🔹 NEW: Handle prescription_id if available
+                                // Handle prescription_id if available
                                 int prescriptionId = row.Table.Columns.Contains("prescription_id")
                                     ? Convert.ToInt32(row["prescription_id"])
                                     : 0;
@@ -326,7 +325,7 @@ namespace ENT_Clinic_System.Helpers
                                     cmd.ExecuteNonQuery();
                                 }
 
-                                // 🔹 Update stock only for ITEMS
+                                // Update stock only for items
                                 if (invoiceType == "ITEMS")
                                 {
                                     AddStockMovement(itemId, "OUT", qty, DateTime.Now, false);
@@ -351,36 +350,5 @@ namespace ENT_Clinic_System.Helpers
             }
         }
 
-
-
-
-
-
-
-
-
-
-        public bool DeleteItem(int itemId)
-        {
-            try
-            {
-                using (MySqlConnection conn = DBConfig.GetConnection())
-                {
-                    conn.Open();
-                    string query = "DELETE FROM items WHERE item_id=@item_id";
-
-                    using (var cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@item_id", itemId);
-                        return cmd.ExecuteNonQuery() > 0;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("⚠️ Error deleting item: " + ex.Message);
-                return false;
-            }
-        }
     }
 }

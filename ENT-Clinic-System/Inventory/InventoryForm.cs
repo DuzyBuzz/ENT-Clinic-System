@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Inventory
@@ -9,13 +10,15 @@ namespace ENT_Clinic_System.Inventory
     public partial class InventoryForm : Form
     {
         private readonly InventoryHelper _inventoryHelper;
-        private DGVCrudHelper movementCrud;
+        private bool _isProcessingStockIn = false; // Prevent double stock in
+        private ContextMenuStrip movementContextMenu;
 
         public InventoryForm()
         {
             InitializeComponent();
             _inventoryHelper = new InventoryHelper();
             LoadInventory();
+            SetupMovementContextMenu();
         }
 
         // ==========================
@@ -25,19 +28,33 @@ namespace ENT_Clinic_System.Inventory
         {
             try
             {
-                // Populate combo boxes
-                ComboBoxCollectionHelper.PopulateComboBox(categoryCombobox, "items", "category");
-                ComboBoxCollectionHelper.PopulateComboBox(addItemNameComboBox, "items", "item_name");
-                ComboBoxCollectionHelper.PopulateComboBox(addDescriptionComboBox, "items", "description");
-                ComboBoxCollectionHelper.PopulateComboBox(addCategoryComboBox, "items", "category");
+                // Populate combo boxes from database
+                ComboBoxCollectionHelper.PopulateComboBox(brandNameComboBox, "items", "brand_name");
+                ComboBoxCollectionHelper.PopulateComboBox(genericNameComboBox, "items", "generic_name");
+                ComboBoxCollectionHelper.PopulateComboBox(stregnthComboBox, "items", "strength");
+                ComboBoxCollectionHelper.PopulateComboBox(dosageComboBox, "items", "dosage");
+                ComboBoxCollectionHelper.PopulateComboBox(categoryComboBox, "items", "category");
+                ComboBoxCollectionHelper.PopulateComboBox(descriptionComboBox, "items", "description");
 
                 // Load inventory DataGridView
                 DataTable dt = _inventoryHelper.GetAllItems();
                 dgvItems.DataSource = dt;
 
-                // Hide system columns
+                // Hide internal IDs
+                if (dgvItems.Columns.Contains("item_id")) dgvItems.Columns["item_id"].Visible = false;
                 if (dgvItems.Columns.Contains("created_at")) dgvItems.Columns["created_at"].Visible = false;
                 if (dgvItems.Columns.Contains("updated_at")) dgvItems.Columns["updated_at"].Visible = false;
+
+                // Professional column headers
+                if (dgvItems.Columns.Contains("brand_name")) dgvItems.Columns["brand_name"].HeaderText = "Brand Name";
+                if (dgvItems.Columns.Contains("generic_name")) dgvItems.Columns["generic_name"].HeaderText = "Generic Name";
+                if (dgvItems.Columns.Contains("strength")) dgvItems.Columns["strength"].HeaderText = "Strength";
+                if (dgvItems.Columns.Contains("dosage")) dgvItems.Columns["dosage"].HeaderText = "Dosage";
+                if (dgvItems.Columns.Contains("category")) dgvItems.Columns["category"].HeaderText = "Category";
+                if (dgvItems.Columns.Contains("description")) dgvItems.Columns["description"].HeaderText = "Description";
+                if (dgvItems.Columns.Contains("cost_price")) dgvItems.Columns["cost_price"].HeaderText = "Cost Price";
+                if (dgvItems.Columns.Contains("selling_price")) dgvItems.Columns["selling_price"].HeaderText = "Selling Price";
+                if (dgvItems.Columns.Contains("quantity")) dgvItems.Columns["quantity"].HeaderText = "Stock Qty";
             }
             catch (Exception ex)
             {
@@ -46,43 +63,107 @@ namespace ENT_Clinic_System.Inventory
         }
 
         // ==========================
-        // Add New Item
+        // Setup Context Menu for Movements
+        // ==========================
+        private void SetupMovementContextMenu()
+        {
+            movementContextMenu = new ContextMenuStrip();
+
+            // Delete movement menu item
+            var deleteItem = new ToolStripMenuItem("Delete Movement")
+            {
+                ForeColor = System.Drawing.Color.Red
+            };
+            deleteItem.Click += DeleteMovementItem_Click; // Assign proper handler
+
+            movementContextMenu.Items.Add(deleteItem);
+
+            // Show context menu on right-click
+            movementDataGridView.MouseDown += MovementDataGridView_MouseDown;
+        }
+
+        private void MovementDataGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hit = movementDataGridView.HitTest(e.X, e.Y);
+                if (hit.RowIndex >= 0)
+                {
+                    // Select the row under the mouse
+                    movementDataGridView.ClearSelection();
+                    movementDataGridView.Rows[hit.RowIndex].Selected = true;
+
+                    // Show context menu at cursor position
+                    movementContextMenu.Show(movementDataGridView, e.Location);
+                }
+            }
+        }
+
+        // ==========================
+        // Delete Movement Handler
+        // ==========================
+        private void DeleteMovementItem_Click(object sender, EventArgs e)
+        {
+            if (movementDataGridView.SelectedRows.Count == 0) return;
+
+            int movementId = Convert.ToInt32(movementDataGridView.SelectedRows[0].Cells["movement_id"].Value);
+
+            var confirm = MessageBox.Show("Are you sure you want to delete this movement?",
+                                          "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirm == DialogResult.Yes)
+            {
+                bool success = _inventoryHelper.DeleteStockMovement(movementId); // Implement in InventoryHelper
+                if (success)
+                {
+                    MessageBox.Show("Movement deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadMovements();
+                    LoadInventory();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to delete movement.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // ==========================
+        // Add, Update, Delete Item
         // ==========================
         private void btnAddItem_Click(object sender, EventArgs e)
         {
             try
             {
-                // Trim and convert text to camel case
-                string name = CamelCaseHelper.ToCamelCase(addItemNameComboBox.Text.Trim());
-                string description = CamelCaseHelper.ToCamelCase(addDescriptionComboBox.Text.Trim());
-                string category = CamelCaseHelper.ToCamelCase(addCategoryComboBox.Text.Trim());
+                string brandName = CamelCaseHelper.ToCamelCase(brandNameComboBox.Text.Trim());
+                string genericName = CamelCaseHelper.ToCamelCase(genericNameComboBox.Text.Trim());
+                string strength = CamelCaseHelper.ToCamelCase(stregnthComboBox.Text.Trim());
+                string dosage = CamelCaseHelper.ToCamelCase(dosageComboBox.Text.Trim());
+                string category = CamelCaseHelper.ToCamelCase(categoryComboBox.Text.Trim());
+                string description = CamelCaseHelper.ToCamelCase(descriptionComboBox.Text.Trim());
 
-                // Validate inputs
-                if (string.IsNullOrWhiteSpace(name)) { ShowValidationError("Item name cannot be empty.", addItemNameComboBox); return; }
-                if (string.IsNullOrWhiteSpace(description)) { ShowValidationError("Description cannot be empty.", addDescriptionComboBox); return; }
-                if (string.IsNullOrWhiteSpace(category)) { ShowValidationError("Category cannot be empty.", addCategoryComboBox); return; }
+                if (string.IsNullOrWhiteSpace(brandName)) { ShowValidationError("Brand Name cannot be empty.", brandNameComboBox); return; }
+                if (string.IsNullOrWhiteSpace(genericName)) { ShowValidationError("Generic Name cannot be empty.", genericNameComboBox); return; }
+                if (string.IsNullOrWhiteSpace(strength)) { ShowValidationError("Strength cannot be empty.", stregnthComboBox); return; }
+                if (string.IsNullOrWhiteSpace(dosage)) { ShowValidationError("Dosage cannot be empty.", dosageComboBox); return; }
+                if (string.IsNullOrWhiteSpace(category)) { ShowValidationError("Category cannot be empty.", categoryComboBox); return; }
 
-                // Validate numeric values (already using NumericUpDown)
                 decimal costPrice = costPriceNumericUpDown.Value;
                 decimal sellingPrice = sellingNumericUpDown.Value;
-
                 if (costPrice < 0 || sellingPrice < 0)
                 {
                     MessageBox.Show("Prices cannot be negative.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Check for duplicate
-                string[] columns = { "item_name", "description", "category" };
-                object[] values = { name, description, category };
+                string[] columns = { "brand_name", "generic_name", "strength", "dosage" };
+                object[] values = { brandName, genericName, strength, dosage };
                 if (UniqueHelper.Exists("items", columns, values))
                 {
                     MessageBox.Show("This item already exists!", "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                // Add item to database
-                bool success = _inventoryHelper.AddItem(name, description, category, costPrice, sellingPrice);
+                bool success = _inventoryHelper.AddItem(brandName, genericName, strength, dosage, category, description, costPrice, sellingPrice);
                 if (success)
                 {
                     MessageBox.Show("Item added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -100,9 +181,6 @@ namespace ENT_Clinic_System.Inventory
             }
         }
 
-        // ==========================
-        // Update Item
-        // ==========================
         private void btnUpdateItem_Click(object sender, EventArgs e)
         {
             try
@@ -114,15 +192,16 @@ namespace ENT_Clinic_System.Inventory
                 }
 
                 int itemId = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["item_id"].Value);
-
-                string name = CamelCaseHelper.ToCamelCase(addItemNameComboBox.Text.Trim());
-                string description = CamelCaseHelper.ToCamelCase(addDescriptionComboBox.Text.Trim());
-                string category = CamelCaseHelper.ToCamelCase(addCategoryComboBox.Text.Trim());
-
+                string brandName = CamelCaseHelper.ToCamelCase(brandNameComboBox.Text.Trim());
+                string genericName = CamelCaseHelper.ToCamelCase(genericNameComboBox.Text.Trim());
+                string strength = CamelCaseHelper.ToCamelCase(stregnthComboBox.Text.Trim());
+                string dosage = CamelCaseHelper.ToCamelCase(dosageComboBox.Text.Trim());
+                string category = CamelCaseHelper.ToCamelCase(categoryComboBox.Text.Trim());
+                string description = CamelCaseHelper.ToCamelCase(descriptionComboBox.Text.Trim());
                 decimal costPrice = costPriceNumericUpDown.Value;
                 decimal sellingPrice = sellingNumericUpDown.Value;
 
-                if (_inventoryHelper.UpdateItem(itemId, name, description, category, costPrice, sellingPrice))
+                if (_inventoryHelper.UpdateItem(itemId, brandName, genericName, strength, dosage, category, description, costPrice, sellingPrice))
                 {
                     MessageBox.Show("Item updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadInventory();
@@ -138,9 +217,6 @@ namespace ENT_Clinic_System.Inventory
             }
         }
 
-        // ==========================
-        // Delete Item
-        // ==========================
         private void btnDeleteItem_Click(object sender, EventArgs e)
         {
             try
@@ -172,60 +248,37 @@ namespace ENT_Clinic_System.Inventory
         // ==========================
         // Stock In
         // ==========================
-        private void btnStockIn_Click(object sender, EventArgs e)
+        private async void btnStockIn_Click(object sender, EventArgs e)
         {
+            if (_isProcessingStockIn) return; // prevent double click
+            _isProcessingStockIn = true;
+
             try
             {
-                // ==========================
-                // 1️⃣ Validate Item ID
-                // ==========================
-                if (string.IsNullOrWhiteSpace(itemIdTextBox.Text))
-                {
-                    MessageBox.Show("Please select an item first.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    itemIdTextBox.Focus();
-                    return;
-                }
-
                 if (!int.TryParse(itemIdTextBox.Text.Trim(), out int itemId))
                 {
-                    MessageBox.Show("Invalid Item ID. Please select a valid item.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    itemIdTextBox.Focus();
+                    MessageBox.Show("Please select a valid item first.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // ==========================
-                // 2️⃣ Validate Quantity
-                // ==========================
                 int quantity = (int)quantityNumericUpDown.Value;
                 if (quantity <= 0)
                 {
                     MessageBox.Show("Quantity must be greater than zero.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    quantityNumericUpDown.Focus();
                     return;
                 }
 
-                // ==========================
-                // 3️⃣ Validate Expiration Date (if required)
-                // ==========================
                 DateTime expirationDate = expirationDateTimePicker.Value;
                 bool hasExpiration = expirationDateCheckBox.Checked;
 
-                if (hasExpiration)
+                if (hasExpiration && expirationDate < DateTime.Today)
                 {
-                    if (expirationDate < DateTime.Today)
-                    {
-                        MessageBox.Show("Expiration date cannot be in the past.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        expirationDateTimePicker.Focus();
-                        return;
-                    }
+                    MessageBox.Show("Expiration date cannot be in the past.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                bool discount = false; // Stock IN usually does not apply discount
-
-                // ==========================
-                // 4️⃣ Attempt to Add Stock Movement
-                // ==========================
-                bool success = _inventoryHelper.AddStockMovement(itemId, "IN", quantity, expirationDate, hasExpiration);
+                // Stock in asynchronously
+                bool success = await Task.Run(() => _inventoryHelper.AddStockMovement(itemId, "IN", quantity, expirationDate, hasExpiration));
 
                 if (success)
                 {
@@ -242,38 +295,11 @@ namespace ENT_Clinic_System.Inventory
             {
                 MessageBox.Show("Unexpected error during stock in: " + ex.Message, "Stock In Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                _isProcessingStockIn = false;
+            }
         }
-
-
-        //// ==========================
-        //// Stock Out
-        //// ==========================
-        //private void btnStockOut_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        int itemId = Convert.ToInt32(itemIdTextBox.Text.Trim());
-        //        int quantity = (int)quantityNumericUpDown.Value;
-        //        bool hasExpiration = false; // Stock out usually doesn't require expiration
-        //        DateTime expirationDate = DateTime.Now; // Placeholder
-        //        bool applyDiscount = discountCheckBox.Checked;
-
-        //        bool success = _inventoryHelper.AddStockMovement(itemId, "OUT", quantity, expirationDate, applyDiscount, hasExpiration);
-        //        if (success)
-        //        {
-        //            MessageBox.Show(" Stock out successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //            LoadInventory();
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Failed to stock out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Error stocking out: " + ex.Message, "Stock Out Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
 
         // ==========================
         // DataGridView Item Selection
@@ -281,36 +307,36 @@ namespace ENT_Clinic_System.Inventory
         private void dgvItems_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvItems.SelectedRows.Count == 0) return;
-
             DataGridViewRow row = dgvItems.SelectedRows[0];
-            addItemNameComboBox.Text = row.Cells["item_name"].Value.ToString();
-            addDescriptionComboBox.Text = row.Cells["description"].Value.ToString();
-            addCategoryComboBox.Text = row.Cells["category"].Value.ToString();
+
+            brandNameComboBox.Text = row.Cells["brand_name"].Value.ToString();
+            genericNameComboBox.Text = row.Cells["generic_name"].Value.ToString();
+            stregnthComboBox.Text = row.Cells["strength"].Value.ToString();
+            dosageComboBox.Text = row.Cells["dosage"].Value.ToString();
+            categoryComboBox.Text = row.Cells["category"].Value.ToString();
+            descriptionComboBox.Text = row.Cells["description"].Value.ToString();
             costPriceNumericUpDown.Value = Convert.ToDecimal(row.Cells["cost_price"].Value);
             sellingNumericUpDown.Value = Convert.ToDecimal(row.Cells["selling_price"].Value);
 
-            // Stock in fields
             itemIdTextBox.Text = row.Cells["item_id"].Value.ToString();
-            discountCheckBox.Checked = false; // Reset discount
+            discountCheckBox.Checked = false;
         }
 
         // ==========================
         // Clear Inputs
         // ==========================
-        private void clearButton_Click(object sender, EventArgs e)
-        {
-            ClearInputs();
-        }
-
+        private void clearButton_Click(object sender, EventArgs e) => ClearInputs();
         private void ClearInputs()
         {
-            addItemNameComboBox.Text = "";
-            addDescriptionComboBox.Text = "";
-            addCategoryComboBox.Text = "";
+            brandNameComboBox.Text = "";
+            genericNameComboBox.Text = "";
+            stregnthComboBox.Text = "";
+            dosageComboBox.Text = "";
+            categoryComboBox.Text = "";
+            descriptionComboBox.Text = "";
             costPriceNumericUpDown.Value = 0;
             sellingNumericUpDown.Value = 0;
         }
-
         private void ShowValidationError(string message, Control controlToFocus)
         {
             MessageBox.Show(message, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -324,9 +350,7 @@ namespace ENT_Clinic_System.Inventory
         {
             expirationDateTimePicker.Enabled = expirationDateCheckBox.Checked;
             if (!expirationDateCheckBox.Checked)
-            {
                 expirationDateTimePicker.Checked = false;
-            }
         }
 
         // ==========================
@@ -337,15 +361,12 @@ namespace ENT_Clinic_System.Inventory
             SearchHelper.Search(
                 dgv: dgvItems,
                 tableName: "items",
-                columnNames: new string[] { "item_name", "description" },
+                columnNames: new string[] { "brand_name", "generic_name", "strength", "dosage", "category", "description" },
                 filterControl: searchItemsTextBox
             );
         }
 
-        private void refreshPatientsButton_Click(object sender, EventArgs e)
-        {
-            LoadInventory();
-        }
+        private void refreshPatientsButton_Click(object sender, EventArgs e) => LoadInventory();
 
         private void categoryCombobox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -353,7 +374,7 @@ namespace ENT_Clinic_System.Inventory
                 dgv: dgvItems,
                 tableName: "items",
                 columnNames: new string[] { "category" },
-                filterControl: categoryCombobox
+                filterControl: categoryComboBox
             );
         }
 
@@ -364,10 +385,13 @@ namespace ENT_Clinic_System.Inventory
         {
             LoadMovements();
 
-            // Setup auto-complete
-            AutoCompleteHelper.SetupAutoComplete(addItemNameComboBox, "items", new List<string> { "item_name" });
-            AutoCompleteHelper.SetupAutoComplete(addDescriptionComboBox, "items", new List<string> { "description" });
-            AutoCompleteHelper.SetupAutoComplete(addCategoryComboBox, "items", new List<string> { "category" });
+            // Auto-complete
+            AutoCompleteHelper.SetupAutoComplete(brandNameComboBox, "items", new List<string> { "brand_name" });
+            AutoCompleteHelper.SetupAutoComplete(genericNameComboBox, "items", new List<string> { "generic_name" });
+            AutoCompleteHelper.SetupAutoComplete(stregnthComboBox, "items", new List<string> { "strength" });
+            AutoCompleteHelper.SetupAutoComplete(dosageComboBox, "items", new List<string> { "dosage" });
+            AutoCompleteHelper.SetupAutoComplete(categoryComboBox, "items", new List<string> { "category" });
+            AutoCompleteHelper.SetupAutoComplete(descriptionComboBox, "items", new List<string> { "description" });
 
             movementDateFromDateTimePicker.Value = DateTime.Now.AddMonths(-1);
             SortMovementDate();
@@ -377,21 +401,37 @@ namespace ENT_Clinic_System.Inventory
         {
             try
             {
-                List<string> columns = new List<string>
+                string query = @"
+                    SELECT sm.movement_id, sm.item_id, i.brand_name, i.generic_name, i.strength, i.dosage, i.category, i.description,
+                           sm.movement_type, sm.quantity, sm.movement_date, sm.expiration_date
+                    FROM stock_movements sm
+                    INNER JOIN items i ON sm.item_id = i.item_id
+                    ORDER BY sm.movement_date DESC";
+
+                DataTable dt = new DataTable();
+                using (var conn = DBConfig.GetConnection())
+                using (var adapter = new MySql.Data.MySqlClient.MySqlDataAdapter(query, conn))
                 {
-                    "movement_id",
-                    "item_id",
-                    "movement_type",
-                    "quantity",
-                    "movement_date",
-                    "expiration_date",
-                };
+                    adapter.Fill(dt);
+                }
 
-                if (movementCrud == null)
-                    movementCrud = new DGVCrudHelper(movementDataGridView, "stock_movements", columns, "movement_id");
+                movementDataGridView.DataSource = dt;
 
-                if (movementDataGridView.Columns.Contains("movement_id"))
-                    movementDataGridView.Columns["movement_id"].Visible = false;
+                // Hide internal IDs
+                if (movementDataGridView.Columns.Contains("movement_id")) movementDataGridView.Columns["movement_id"].Visible = false;
+                if (movementDataGridView.Columns.Contains("item_id")) movementDataGridView.Columns["item_id"].Visible = false;
+
+                // Professional headers
+                if (movementDataGridView.Columns.Contains("brand_name")) movementDataGridView.Columns["brand_name"].HeaderText = "Brand Name";
+                if (movementDataGridView.Columns.Contains("generic_name")) movementDataGridView.Columns["generic_name"].HeaderText = "Generic Name";
+                if (movementDataGridView.Columns.Contains("strength")) movementDataGridView.Columns["strength"].HeaderText = "Strength";
+                if (movementDataGridView.Columns.Contains("dosage")) movementDataGridView.Columns["dosage"].HeaderText = "Dosage";
+                if (movementDataGridView.Columns.Contains("category")) movementDataGridView.Columns["category"].HeaderText = "Category";
+                if (movementDataGridView.Columns.Contains("description")) movementDataGridView.Columns["description"].HeaderText = "Description";
+                if (movementDataGridView.Columns.Contains("movement_type")) movementDataGridView.Columns["movement_type"].HeaderText = "Type";
+                if (movementDataGridView.Columns.Contains("quantity")) movementDataGridView.Columns["quantity"].HeaderText = "Qty";
+                if (movementDataGridView.Columns.Contains("movement_date")) movementDataGridView.Columns["movement_date"].HeaderText = "Date";
+                if (movementDataGridView.Columns.Contains("expiration_date")) movementDataGridView.Columns["expiration_date"].HeaderText = "Expiration";
             }
             catch (Exception ex)
             {
@@ -399,36 +439,35 @@ namespace ENT_Clinic_System.Inventory
             }
         }
 
-        private void movementDateFromDateTimePicker_ValueChanged(object sender, EventArgs e)
-        {
-            SortMovementDate();
-        }
-
-        private void movementDateToDateTimePicker_ValueChanged(object sender, EventArgs e)
-        {
-            SortMovementDate();
-        }
+        private void movementDateFromDateTimePicker_ValueChanged(object sender, EventArgs e) => SortMovementDate();
+        private void movementDateToDateTimePicker_ValueChanged(object sender, EventArgs e) => SortMovementDate();
 
         private void SortMovementDate()
         {
             if (movementDateFromDateTimePicker.Value <= movementDateToDateTimePicker.Value)
             {
-                SearchHelper.Search(
-                    dgv: movementDataGridView,
-                    tableName: "stock_movements",
-                    columnNames: new string[] { "movement_date" },
-                    fromDate: movementDateFromDateTimePicker.Value,
-                    toDate: movementDateToDateTimePicker.Value,
-                    columns: new string[]
-                    {
-                        "movement_id",
-                        "item_id",
-                        "movement_type",
-                        "quantity",
-                        "movement_date",
-                        "expiration_date"
-                    }
-                );
+                string query = @"
+                    SELECT sm.movement_id, sm.item_id, i.brand_name, i.generic_name, i.strength, i.dosage, i.category, i.description,
+                           sm.movement_type, sm.quantity, sm.movement_date, sm.expiration_date
+                    FROM stock_movements sm
+                    INNER JOIN items i ON sm.item_id = i.item_id
+                    WHERE sm.movement_date BETWEEN @fromDate AND @toDate
+                    ORDER BY sm.movement_date DESC";
+
+                DataTable dt = new DataTable();
+                using (var conn = DBConfig.GetConnection())
+                using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(query, conn))
+                using (var adapter = new MySql.Data.MySqlClient.MySqlDataAdapter(cmd))
+                {
+                    cmd.Parameters.AddWithValue("@fromDate", movementDateFromDateTimePicker.Value.Date);
+                    cmd.Parameters.AddWithValue("@toDate", movementDateToDateTimePicker.Value.Date.AddDays(1).AddSeconds(-1));
+                    adapter.Fill(dt);
+                }
+
+                movementDataGridView.DataSource = dt;
+
+                if (movementDataGridView.Columns.Contains("movement_id")) movementDataGridView.Columns["movement_id"].Visible = false;
+                if (movementDataGridView.Columns.Contains("item_id")) movementDataGridView.Columns["item_id"].Visible = false;
             }
             else
             {
@@ -438,10 +477,9 @@ namespace ENT_Clinic_System.Inventory
 
         private void quantityNumericUpDown_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Prevent typing the decimal point
             if (e.KeyChar == '.' || e.KeyChar == ',' || e.KeyChar == '-')
             {
-                e.Handled = true; // ignore input
+                e.Handled = true;
                 MessageBox.Show("Decimal values are not allowed. Please enter a whole number.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

@@ -119,7 +119,6 @@ namespace ENT_Clinic_System.Consultation
             this.btnSubmit.TabIndex = 2;
             this.btnSubmit.Text = "Submit";
             this.btnSubmit.UseVisualStyleBackColor = true;
-            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click_1);
             // 
             // tableLayoutPanel1
             // 
@@ -318,7 +317,6 @@ namespace ENT_Clinic_System.Consultation
             this.groupBoxItem.TabIndex = 5;
             this.groupBoxItem.TabStop = false;
             this.groupBoxItem.Text = "Add / Update Untracked Items";
-            this.groupBoxItem.Enter += new System.EventHandler(this.groupBoxItem_Enter);
             // 
             // button1
             // 
@@ -432,7 +430,6 @@ namespace ENT_Clinic_System.Consultation
             this.dgvOtherItems.Size = new System.Drawing.Size(754, 314);
             this.dgvOtherItems.TabIndex = 1;
             this.dgvOtherItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOtherItems_CellContentClick);
-            this.dgvOtherItems.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOtherItems_RowValidated);
             // 
             // groupBoxAvailable
             // 
@@ -512,7 +509,6 @@ namespace ENT_Clinic_System.Consultation
             this.refreshPatientsButton.TabIndex = 3;
             this.refreshPatientsButton.Text = "⟳";
             this.refreshPatientsButton.UseVisualStyleBackColor = false;
-            this.refreshPatientsButton.Click += new System.EventHandler(this.refreshPatientsButton_Click);
             // 
             // searchItemtButton
             // 

@@ -115,7 +115,7 @@ namespace ENT_Clinic_System.Consultation
             // ✅ OK / Print button
             Button btnSubmit = new Button
             {
-                Text = "OK / Print",
+                Text = "Save and Print",
                 Location = new Point(10, y),
                 Width = 120,
                 Height = 30

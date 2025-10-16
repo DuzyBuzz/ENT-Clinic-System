@@ -43,12 +43,14 @@ namespace ENT_Clinic_System.Consultation
             dgvOtherItems.CellDoubleClick += DgvOtherItems_CellDoubleClick;
             btnSubmit.Click += BtnSubmit_Click;
 
-            // Enable double-click deletion for medicines
-            dgvSelectedItems.CellDoubleClick += DgvSelectedItems_CellDoubleClick;
+            //// Enable double-click deletion for medicines
+            //dgvSelectedItems.CellDoubleClick += DgvSelectedItems_CellDoubleClick;
 
-
+            // 🟩 Replaced double-click delete with right-click context menu
+            dgvSelectedItems.MouseDown += DgvSelectedItems_MouseDown;
+            selectedOtherDGV.MouseDown += SelectedOtherDGV_MouseDown;
             // 🟩 NEW: Enable realtime deletion for Other Items
-            selectedOtherDGV.CellDoubleClick += SelectedOtherDGV_CellDoubleClick;
+            //selectedOtherDGV.CellDoubleClick += SelectedOtherDGV_CellDoubleClick;
             selectedOtherDGV.KeyDown += SelectedOtherDGV_KeyDown;
 
             dgvOtherItems.UserAddedRow += DgvOtherItems_UserAddedRow;
@@ -56,6 +58,70 @@ namespace ENT_Clinic_System.Consultation
             dgvOtherItems.UserDeletingRow += DgvOtherItems_UserDeletingRow;
 
         }
+        // 🟩 1️⃣ For MEDICINES
+        private void DgvSelectedItems_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hit = dgvSelectedItems.HitTest(e.X, e.Y);
+                if (hit.RowIndex >= 0)
+                {
+                    dgvSelectedItems.ClearSelection();
+                    dgvSelectedItems.Rows[hit.RowIndex].Selected = true;
+
+                    ContextMenuStrip menu = new ContextMenuStrip();
+                    ToolStripMenuItem deleteItem = new ToolStripMenuItem("Remove This Item");
+                    menu.Items.Add(deleteItem);
+                    deleteItem.ForeColor = Color.Red;
+
+                    deleteItem.Click += (s, ev) =>
+                    {
+                        var confirm = MessageBox.Show("Are you sure you want to remove this item?",
+                            "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (confirm == DialogResult.Yes)
+                        {
+                            dgvSelectedItems.Rows.RemoveAt(hit.RowIndex);
+                        }
+                    };
+
+                    menu.Show(dgvSelectedItems, e.Location);
+                }
+            }
+        }
+
+        // 🟩 2️⃣ For OTHER ITEMS
+        private void SelectedOtherDGV_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hit = selectedOtherDGV.HitTest(e.X, e.Y);
+                if (hit.RowIndex >= 0)
+                {
+                    selectedOtherDGV.ClearSelection();
+                    selectedOtherDGV.Rows[hit.RowIndex].Selected = true;
+
+                    ContextMenuStrip menu = new ContextMenuStrip();
+                    ToolStripMenuItem deleteItem = new ToolStripMenuItem("Remove This Item");
+                    menu.Items.Add(deleteItem);
+                    deleteItem.ForeColor = Color.Red;
+
+                    deleteItem.Click += (s, ev) =>
+                    {
+                        var confirm = MessageBox.Show("Are you sure you want to remove this item?",
+                            "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (confirm == DialogResult.Yes)
+                        {
+                            selectedOtherDGV.Rows.RemoveAt(hit.RowIndex);
+                        }
+                    };
+
+                    menu.Show(selectedOtherDGV, e.Location);
+                }
+            }
+        }
+
 
         // =========================
         // SETUP MEDICINE GRID

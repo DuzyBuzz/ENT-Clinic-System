@@ -175,7 +175,7 @@
             // 
             // apointmentDateLabel
             // 
-            this.apointmentDateLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.apointmentDateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.apointmentDateLabel.Font = new System.Drawing.Font("Segoe UI Light", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.apointmentDateLabel.Location = new System.Drawing.Point(1438, 40);
             this.apointmentDateLabel.Name = "apointmentDateLabel";

@@ -76,14 +76,27 @@ namespace ENT_Clinic_System.UserControls
         }
         private void searchPatientButton_Click(object sender, EventArgs e)
         {
+            // Define which columns you want to show when searching
+            string[] displayColumns = {
+        "patient_id",
+        "full_name",
+        "age",
+        "sex",
+        "address",
+        "civil_status",
+        "patient_contact_number"
+    };
+
+            // Perform search with limited columns
             SearchHelper.Search(
                 dgv: patientsDataGridView,
                 tableName: "patients",
-                columnNames: new string[] { "full_name"},
-                filterControl: searchPatientNameTextBox
+                columnNames: new string[] { "full_name" },
+                filterControl: searchPatientNameTextBox,
+                columns: displayColumns
             );
 
-            // Disable pagination buttons when searching
+            // Disable pagination when showing search results
             prevButton.Enabled = false;
             nextButton.Enabled = false;
             pageLabel.Text = "Search results";
@@ -163,23 +176,32 @@ namespace ENT_Clinic_System.UserControls
         {
             if (e.KeyCode == Keys.Enter)
             {
-                // Prevent the 'ding' sound on Enter
                 e.SuppressKeyPress = true;
+
+                string[] displayColumns = {
+            "patient_id",
+            "full_name",
+            "age",
+            "sex",
+            "address",
+            "civil_status",
+            "patient_contact_number"
+        };
 
                 SearchHelper.Search(
                     dgv: patientsDataGridView,
                     tableName: "patients",
                     columnNames: new string[] { "full_name" },
-                    filterControl: searchPatientNameTextBox
+                    filterControl: searchPatientNameTextBox,
+                    columns: displayColumns
                 );
 
-
-                // Disable pagination buttons when searching
                 prevButton.Enabled = false;
                 nextButton.Enabled = false;
                 pageLabel.Text = "Search results";
             }
         }
+
 
         private void patientsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

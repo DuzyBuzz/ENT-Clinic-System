@@ -8,165 +8,148 @@ namespace ENT_Clinic_System.Helpers
 {
     public static class AutoCompleteDgvHelper
     {
-        public static void LoadColumnAutocomplete(DataGridView dgv, string dgvColumnName, string entryColumnName)
+        /// <summary>
+        /// Enables uppercase autocomplete Suggest+Append for a DataGridViewTextBoxColumn.
+        /// Loads suggestions from the 'autocomplete_entries' table.
+        /// </summary>
+        public static void InitializeAutocompleteColumn(DataGridView dgv, string dgvColumnName, string entryColumnName)
         {
             if (dgv == null || string.IsNullOrWhiteSpace(dgvColumnName) || string.IsNullOrWhiteSpace(entryColumnName))
                 return;
 
             try
             {
-                void RefreshItems()
+                // ✅ Load autocomplete values and convert to uppercase
+                var autocompleteValues = LoadExistingAutocompleteValues(entryColumnName)
+                    .Select(v => v.ToUpperInvariant())
+                    .Distinct()
+                    .ToList();
+
+                // ✅ Attach events once
+                dgv.EditingControlShowing -= OnEditingControlShowing;
+                dgv.EditingControlShowing += OnEditingControlShowing;
+
+                void OnEditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
                 {
-                    try
-                    {
-                        HashSet<string> autocompleteValues = new HashSet<string>(StringComparer.OrdinalIgnoreCase); // avoid duplicates
-
-                        using (var conn = DBConfig.GetConnection())
-                        {
-                            conn.Open();
-                            string selectQuery = "SELECT value FROM autocomplete_entries WHERE column_name=@colName ORDER BY value ASC";
-                            using (var cmd = new MySqlCommand(selectQuery, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@colName", entryColumnName);
-                                using (var reader = cmd.ExecuteReader())
-                                {
-                                    while (reader.Read())
-                                    {
-                                        string val = reader["value"]?.ToString()?.Trim();
-                                        if (!string.IsNullOrEmpty(val))
-                                            autocompleteValues.Add(val); // HashSet automatically ignores duplicates
-                                    }
-                                }
-                            }
-                        }
-
-                        if (dgv.Columns[dgvColumnName] is DataGridViewComboBoxColumn comboCol)
-                        {
-                            comboCol.Items.Clear();
-                            comboCol.Items.AddRange(autocompleteValues.OrderBy(x => x).ToArray()); // sorted unique values
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error refreshing autocomplete items:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-
-                // Initial load
-                RefreshItems();
-
-                // Subscribe to editing control showing
-                dgv.EditingControlShowing -= Dgv_EditingControlShowing;
-                dgv.EditingControlShowing += Dgv_EditingControlShowing;
-
-                dgv.DataError -= Dgv_DataError;
-                dgv.DataError += Dgv_DataError;
-
-                void Dgv_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-                {
+                    if (dgv.CurrentCell == null) return;
                     if (dgv.CurrentCell.OwningColumn.Name != dgvColumnName) return;
-                    if (!(e.Control is ComboBox combo)) return;
 
-                    combo.DropDownStyle = ComboBoxStyle.DropDown;
-                    combo.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    combo.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-                    combo.KeyDown -= Combo_KeyDown;
-                    combo.KeyDown += Combo_KeyDown;
-
-                    combo.Leave -= Combo_Leave;
-                    combo.Leave += Combo_Leave;
-
-                    void Combo_KeyDown(object s, KeyEventArgs ke)
+                    if (e.Control is TextBox tb)
                     {
-                        if (ke.KeyCode == Keys.Enter)
-                        {
-                            SaveAndRefresh(combo);
-                            MoveToNextRow(dgv);
-                            ke.Handled = true;
-                        }
+                        // AutoComplete setup
+                        tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                        tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+                        AutoCompleteStringCollection autoSource = new AutoCompleteStringCollection();
+                        autoSource.AddRange(autocompleteValues.ToArray());
+                        tb.AutoCompleteCustomSource = autoSource;
+
+                        // ✅ Force uppercase input while typing
+                        tb.CharacterCasing = CharacterCasing.Upper;
                     }
-
-                    void Combo_Leave(object s, EventArgs le)
-                    {
-                        SaveAndRefresh(combo);
-                    }
-
-                    void SaveAndRefresh(ComboBox c)
-                    {
-                        string input = c.Text.Trim();
-                        if (string.IsNullOrEmpty(input)) return;
-
-                        try
-                        {
-                            // Save to database if not exists
-                            SaveEntryToDatabase(entryColumnName, input);
-
-                            // Refresh collection and remove duplicates
-                            RefreshItems();
-
-                            c.Text = input; // restore text so it doesn't disappear
-                        }
-                        catch { /* ignore DB errors */ }
-                    }
-                }
-
-                void Dgv_DataError(object sender, DataGridViewDataErrorEventArgs e)
-                {
-                    // suppress errors for free text
-                    e.ThrowException = false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error initializing autocomplete column:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error initializing autocomplete column:\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private static void MoveToNextRow(DataGridView dgv)
+        /// <summary>
+        /// Saves unique non-empty uppercase user entries from a DataGridViewTextBoxColumn
+        /// into the autocomplete_entries table (if not already present).
+        /// </summary>
+        public static void SaveAllAutocompleteEntries(DataGridView dgv, string dgvColumnName, string entryColumnName)
         {
             try
             {
-                int colIndex = dgv.CurrentCell.ColumnIndex;
-                int rowIndex = dgv.CurrentCell.RowIndex;
+                if (dgv == null || dgv.Rows.Count == 0)
+                    return;
 
-                if (rowIndex == dgv.Rows.Count - 1 && !dgv.Rows[rowIndex].IsNewRow)
-                    dgv.Rows.Add();
+                HashSet<string> uniqueValues = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-                if (rowIndex < dgv.Rows.Count - 1)
-                    dgv.CurrentCell = dgv[colIndex, rowIndex + 1];
+                foreach (DataGridViewRow row in dgv.Rows)
+                {
+                    if (row.IsNewRow) continue;
+
+                    var cellValue = row.Cells[dgvColumnName].Value?.ToString()?.Trim();
+                    if (!string.IsNullOrEmpty(cellValue))
+                        uniqueValues.Add(cellValue.ToUpperInvariant()); // ✅ store uppercase
+                }
+
+                if (uniqueValues.Count == 0)
+                    return;
+
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    foreach (var value in uniqueValues)
+                    {
+                        string checkQuery = "SELECT COUNT(*) FROM autocomplete_entries WHERE column_name=@col AND UPPER(value)=@val";
+                        using (var checkCmd = new MySqlCommand(checkQuery, conn))
+                        {
+                            checkCmd.Parameters.AddWithValue("@col", entryColumnName);
+                            checkCmd.Parameters.AddWithValue("@val", value);
+                            long count = Convert.ToInt64(checkCmd.ExecuteScalar());
+
+                            if (count == 0)
+                            {
+                                string insertQuery = "INSERT INTO autocomplete_entries (column_name, value) VALUES (@col, @val)";
+                                using (var insertCmd = new MySqlCommand(insertQuery, conn))
+                                {
+                                    insertCmd.Parameters.AddWithValue("@col", entryColumnName);
+                                    insertCmd.Parameters.AddWithValue("@val", value);
+                                    insertCmd.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving autocomplete entries:\n{ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
-        private static void SaveEntryToDatabase(string columnName, string value)
+        /// <summary>
+        /// Loads autocomplete values from DB.
+        /// </summary>
+        private static List<string> LoadExistingAutocompleteValues(string columnName)
         {
+            List<string> values = new List<string>();
+
             try
             {
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string checkQuery = "SELECT COUNT(*) FROM autocomplete_entries WHERE column_name=@colName AND value=@val";
-                    using (var checkCmd = new MySqlCommand(checkQuery, conn))
-                    {
-                        checkCmd.Parameters.AddWithValue("@colName", columnName);
-                        checkCmd.Parameters.AddWithValue("@val", value);
-                        long count = Convert.ToInt64(checkCmd.ExecuteScalar());
+                    string query = "SELECT DISTINCT UPPER(value) AS value FROM autocomplete_entries WHERE column_name=@col ORDER BY value ASC";
 
-                        if (count == 0) // save only if not exists
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@col", columnName);
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            string insertQuery = "INSERT INTO autocomplete_entries (column_name, value) VALUES (@colName, @val)";
-                            using (var insertCmd = new MySqlCommand(insertQuery, conn))
+                            while (reader.Read())
                             {
-                                insertCmd.Parameters.AddWithValue("@colName", columnName);
-                                insertCmd.Parameters.AddWithValue("@val", value);
-                                insertCmd.ExecuteNonQuery();
+                                string val = reader["value"]?.ToString()?.Trim();
+                                if (!string.IsNullOrEmpty(val))
+                                    values.Add(val);
                             }
                         }
                     }
                 }
             }
-            catch { /* ignore DB errors */ }
+            catch
+            {
+                // Ignore errors silently (do not block UI)
+            }
+
+            return values;
         }
     }
 }

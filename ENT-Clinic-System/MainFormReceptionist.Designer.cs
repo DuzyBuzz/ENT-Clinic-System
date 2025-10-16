@@ -76,42 +76,42 @@
             // salesToolStripMenuItem
             // 
             this.salesToolStripMenuItem.Name = "salesToolStripMenuItem";
-            this.salesToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.salesToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
             this.salesToolStripMenuItem.Text = "Sales";
             this.salesToolStripMenuItem.Click += new System.EventHandler(this.salesToolStripMenuItem_Click);
             // 
             // billingToolStripMenuItem
             // 
             this.billingToolStripMenuItem.Name = "billingToolStripMenuItem";
-            this.billingToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.billingToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
             this.billingToolStripMenuItem.Text = "Billing";
             this.billingToolStripMenuItem.Click += new System.EventHandler(this.billingToolStripMenuItem_Click_1);
             // 
             // dispensingReportToolStripMenuItem
             // 
             this.dispensingReportToolStripMenuItem.Name = "dispensingReportToolStripMenuItem";
-            this.dispensingReportToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.dispensingReportToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
             this.dispensingReportToolStripMenuItem.Text = "Dispensing";
             this.dispensingReportToolStripMenuItem.Click += new System.EventHandler(this.dispensingReportToolStripMenuItem_Click);
             // 
             // expiryReportToolStripMenuItem
             // 
             this.expiryReportToolStripMenuItem.Name = "expiryReportToolStripMenuItem";
-            this.expiryReportToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.expiryReportToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
             this.expiryReportToolStripMenuItem.Text = "Expiry Report";
             this.expiryReportToolStripMenuItem.Click += new System.EventHandler(this.expiryReportToolStripMenuItem_Click);
             // 
             // stockOnHandToolStripMenuItem
             // 
             this.stockOnHandToolStripMenuItem.Name = "stockOnHandToolStripMenuItem";
-            this.stockOnHandToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.stockOnHandToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
             this.stockOnHandToolStripMenuItem.Text = "Stock On Hand";
             this.stockOnHandToolStripMenuItem.Click += new System.EventHandler(this.stockOnHandToolStripMenuItem_Click);
             // 
             // stocToolStripMenuItem
             // 
             this.stocToolStripMenuItem.Name = "stocToolStripMenuItem";
-            this.stocToolStripMenuItem.Size = new System.Drawing.Size(292, 30);
+            this.stocToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
             this.stocToolStripMenuItem.Text = "Low Stock / Reorder";
             this.stocToolStripMenuItem.Click += new System.EventHandler(this.stocToolStripMenuItem_Click);
             // 
@@ -186,7 +186,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(13, 15);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 5, 0, 5);
-            this.menuStrip1.Size = new System.Drawing.Size(1878, 39);
+            this.menuStrip1.Size = new System.Drawing.Size(1458, 39);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -296,14 +296,14 @@
             this.MainPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
-            this.MainPanel.Size = new System.Drawing.Size(1878, 972);
+            this.MainPanel.Size = new System.Drawing.Size(1458, 892);
             this.MainPanel.TabIndex = 6;
             // 
             // MainFormReceptionist
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.ClientSize = new System.Drawing.Size(1484, 961);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

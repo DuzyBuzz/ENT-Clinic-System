@@ -59,92 +59,29 @@ namespace ENT_Clinic_System.Helpers
             if (!lastSuggestion.ContainsKey(rtb))
                 lastSuggestion[rtb] = null;
 
-            // Ensure first bullet
-            if (string.IsNullOrWhiteSpace(rtb.Text))
-            {
-                rtb.Text = "• ";
-                rtb.SelectionStart = rtb.Text.Length;
-            }
+            // --- Removed bullet insertion at start ---
+            // (If you want to start empty, leave this blank)
 
             rtb.KeyDown += (s, e) =>
             {
-                if (e.KeyCode == Keys.Enter)
+                if (e.KeyCode == Keys.Enter && !string.IsNullOrEmpty(lastSuggestion[rtb]))
                 {
-                    if (!string.IsNullOrEmpty(lastSuggestion[rtb]))
-                    {
-                        // Accept suggestion without inserting new bullet
-                        e.SuppressKeyPress = true;
-                        suspendAutocomplete[rtb] = true;
-                        lastSuggestion[rtb] = null;
-                        suspendAutocomplete[rtb] = false;
-                    }
+                    // Accept suggestion on Enter
+                    e.SuppressKeyPress = true;
+                    suspendAutocomplete[rtb] = true;
+                    lastSuggestion[rtb] = null;
+                    suspendAutocomplete[rtb] = false;
                 }
 
                 if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
                 {
-                    lastSuggestion[rtb] = null; // clear suggestion to allow deletion
+                    // Allow deletion normally
+                    lastSuggestion[rtb] = null;
                 }
             };
 
-            rtb.KeyUp += (s, e) =>
-            {
-                if (e.KeyCode == Keys.Enter)
-                {
-                    try
-                    {
-                        int currentLine = rtb.GetLineFromCharIndex(rtb.SelectionStart);
-                        int prevLine = currentLine - 1;
-
-                        if (prevLine >= 0)
-                        {
-                            string prevText = GetLineText(rtb, prevLine).Trim();
-                            if (prevText == "•" || prevText == "• ")
-                            {
-                                int prevLineStart = rtb.GetFirstCharIndexFromLine(prevLine);
-                                int currLineStart = rtb.GetFirstCharIndexFromLine(currentLine);
-                                if (currLineStart > prevLineStart)
-                                {
-                                    rtb.Select(currLineStart - Environment.NewLine.Length, Environment.NewLine.Length);
-                                    rtb.SelectedText = string.Empty;
-                                    rtb.SelectionStart = prevLineStart + (rtb.Lines[prevLine].Length);
-                                }
-                                return;
-                            }
-                            else if (!prevText.StartsWith("•"))
-                            {
-                                int prevLineStart = rtb.GetFirstCharIndexFromLine(prevLine);
-                                rtb.SelectionStart = prevLineStart;
-                                rtb.SelectionLength = 0;
-                                rtb.SelectedText = "• ";
-                            }
-                        }
-
-                        // Ensure current line starts with bullet
-                        string currText = GetLineText(rtb, currentLine).TrimStart();
-                        if (!currText.StartsWith("•"))
-                        {
-                            int currLineStart = rtb.GetFirstCharIndexFromLine(currentLine);
-                            rtb.SelectionStart = currLineStart;
-                            rtb.SelectionLength = 0;
-                            rtb.SelectedText = "• ";
-                        }
-                    }
-                    catch
-                    {
-                        if (string.IsNullOrWhiteSpace(rtb.Text))
-                        {
-                            rtb.Text = "• ";
-                            rtb.SelectionStart = rtb.Text.Length;
-                        }
-                    }
-                }
-
-                if (string.IsNullOrWhiteSpace(rtb.Text))
-                {
-                    rtb.Text = "• ";
-                    rtb.SelectionStart = rtb.Text.Length;
-                }
-            };
+            // --- Removed Enter KeyUp bullet behavior completely ---
+            // No bullet insertion logic here anymore
 
             rtb.TextChanged += (s, e) =>
             {
@@ -154,20 +91,25 @@ namespace ENT_Clinic_System.Helpers
                 try
                 {
                     int pos = rtb.SelectionStart;
-                    if (pos <= 0 || pos > rtb.Text.Length) return;
+                    if (pos <= 0 || pos > rtb.Text.Length)
+                        return;
 
-                    int lastBullet = rtb.Text.LastIndexOf('•', pos - 1);
+                    // Find start of current word
+                    int lastSpace = rtb.Text.LastIndexOf(' ', pos - 1);
                     int lastNewLine = rtb.Text.LastIndexOf('\n', pos - 1);
-                    int start = Math.Max(lastBullet, lastNewLine) + 1;
-                    if (start < 0 || start >= rtb.Text.Length) start = 0;
+                    int start = Math.Max(lastSpace, lastNewLine) + 1;
 
-                    string currentWord = rtb.Text.Substring(start, pos - start).TrimStart();
+                    if (start < 0 || start >= rtb.Text.Length)
+                        start = 0;
+
+                    string currentWord = rtb.Text.Substring(start, pos - start).Trim();
                     if (string.IsNullOrEmpty(currentWord))
                     {
                         lastSuggestion[rtb] = null;
                         return;
                     }
 
+                    // Try to match suggestion
                     string match = columnData[key]
                         .FirstOrDefault(sug => sug.StartsWith(currentWord, StringComparison.OrdinalIgnoreCase));
 
@@ -175,9 +117,12 @@ namespace ENT_Clinic_System.Helpers
                     {
                         suspendAutocomplete[rtb] = true;
 
+                        // Insert completion text
                         rtb.SelectionStart = pos;
                         rtb.SelectionLength = 0;
                         rtb.SelectedText = match.Substring(currentWord.Length);
+
+                        // Highlight suggestion text
                         rtb.SelectionStart = pos;
                         rtb.SelectionLength = match.Length - currentWord.Length;
 
@@ -191,20 +136,10 @@ namespace ENT_Clinic_System.Helpers
                 }
                 catch
                 {
-                    if (string.IsNullOrWhiteSpace(rtb.Text))
-                    {
-                        rtb.Text = "• ";
-                        rtb.SelectionStart = rtb.Text.Length;
-                    }
+                    // Prevent crash on invalid text states
+                    lastSuggestion[rtb] = null;
                 }
             };
-        }
-
-        private static string GetLineText(RichTextBox rtb, int lineIndex)
-        {
-            if (lineIndex < 0 || lineIndex >= rtb.Lines.Length)
-                return string.Empty;
-            return rtb.Lines[lineIndex];
         }
     }
 }

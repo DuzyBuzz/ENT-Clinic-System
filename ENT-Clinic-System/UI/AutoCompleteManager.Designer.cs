@@ -63,6 +63,7 @@
             this.id.FillWeight = 50.41844F;
             this.id.HeaderText = "ID";
             this.id.Name = "id";
+            this.id.Visible = false;
             // 
             // column_name
             // 
