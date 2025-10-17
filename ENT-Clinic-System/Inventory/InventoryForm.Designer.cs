@@ -186,7 +186,7 @@
             this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.sortCategoryCombobox.FormattingEnabled = true;
-            this.sortCategoryCombobox.Location = new System.Drawing.Point(579, 13);
+            this.sortCategoryCombobox.Location = new System.Drawing.Point(579, 6);
             this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.sortCategoryCombobox.Name = "sortCategoryCombobox";
             this.sortCategoryCombobox.Size = new System.Drawing.Size(204, 28);

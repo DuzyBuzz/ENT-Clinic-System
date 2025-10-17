@@ -193,6 +193,7 @@
     <Compile Include="Helpers\DBConnectionMonitor.cs" />
     <Compile Include="Helpers\DGVCrudHelper.cs" />
     <Compile Include="Helpers\DGVDeleteHelper.cs" />
+    <Compile Include="Helpers\FirstLetterUpperHelper.cs" />
     <Compile Include="Helpers\FlowLayoutHelper.cs" />
     <Compile Include="Helpers\HealthRecordHelper.cs" />
     <Compile Include="Helpers\ImageFlowHelper.cs" />

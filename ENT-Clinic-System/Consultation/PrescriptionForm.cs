@@ -15,9 +15,10 @@ namespace ENT_Clinic_System.Consultation
         private readonly int _consultationId;
         private readonly InventoryHelper _inventoryHelper;
         private DGVCrudHelper otherItemsCrudHelper;
-
+        private DGVCrudHelper _otherItemsCrudHelper;
         private DataTable _availableItemsTable;
         private DataTable _availableOtherItemsTable;
+        private ContextMenuStrip _otherItemsContextMenu;
 
         public PrescriptionForm(int patientId, int consultationId)
         {
@@ -42,6 +43,17 @@ namespace ENT_Clinic_System.Consultation
             SetupSelectedOtherDgvColumns();
             LoadAvailableItems();
             LoadAvailableOtherItems();
+            dgvOtherItems.SelectionChanged += (s, e) =>
+            {
+                if (dgvOtherItems.SelectedRows.Count > 0)
+                    PopulateOtherItemInputsFromRow(dgvOtherItems.SelectedRows[0]);
+            };
+            dgvOtherItems.CellDoubleClick += (s, e) =>
+            {
+                if (e.RowIndex >= 0)
+                    PopulateOtherItemInputsFromRow(dgvOtherItems.Rows[e.RowIndex]);
+            };
+
         }
 
         #region === GRID SETUP ===
@@ -67,7 +79,6 @@ namespace ENT_Clinic_System.Consultation
             if (selectedOtherDGV.Columns.Count == 0)
             {
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "item_id", Visible = false });
-                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "item_name", HeaderText = "Item Name", ReadOnly = true });
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "description", HeaderText = "Description", ReadOnly = true });
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "category", HeaderText = "Category", ReadOnly = true });
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "quantity", HeaderText = "Quantity", ValueType = typeof(int), Width = 70 });
@@ -190,7 +201,6 @@ namespace ENT_Clinic_System.Consultation
                 int idx = selectedOtherDGV.Rows.Add();
                 var newRow = selectedOtherDGV.Rows[idx];
                 newRow.Cells["item_id"].Value = itemId;
-                newRow.Cells["item_name"].Value = row.Cells["item_name"].Value;
                 newRow.Cells["description"].Value = row.Cells["description"].Value;
                 newRow.Cells["category"].Value = row.Cells["category"].Value;
                 newRow.Cells["quantity"].Value = 1;
@@ -216,6 +226,10 @@ namespace ENT_Clinic_System.Consultation
             menu.Items.Add(remove);
             menu.Show(dgvSelectedItems, e.Location);
         }
+        /// <summary>
+        /// Loads and enables editing for non-clinic (other) items using DGVCrudHelper.
+        /// Includes inline edit + right-click delete.
+        /// </summary>
         private void LoadAvailableOtherItems()
         {
             try
@@ -226,12 +240,16 @@ namespace ENT_Clinic_System.Consultation
 
                     string query = @"
                 SELECT 
-                    item_id, 
-                    item_name AS 'Item Name', 
-                    description AS 'Description', 
-                    category AS 'Category',
-                    quantity AS 'Available Qty'
-                FROM other_items;
+                    other_items.item_id,
+                    other_items.generic_name,
+                    other_items.brand_name,
+                    other_items.strength,
+                    other_items.dosage,
+                    other_items.description,
+                    other_items.category,
+                    other_items.created_at,
+                    other_items.updated_at
+                FROM ent_clinic_db.other_items;
             ";
 
                     using (var adapter = new MySqlDataAdapter(query, conn))
@@ -241,12 +259,36 @@ namespace ENT_Clinic_System.Consultation
                         dgvOtherItems.DataSource = _availableOtherItemsTable;
                     }
 
-                    // ✅ Hide internal IDs
-                    if (dgvOtherItems.Columns.Contains("item_id"))
-                        dgvOtherItems.Columns["item_id"].Visible = false;
+                    // ✅ Hide unnecessary columns
+                    string[] hiddenCols = { "created_at", "updated_at" };
+                    foreach (string col in hiddenCols)
+                    {
+                        if (dgvOtherItems.Columns.Contains(col))
+                            dgvOtherItems.Columns[col].Visible = false;
+                    }
 
-                    // ✅ Adjust column order and headers
-                    string[] displayOrder = { "Item Name", "Description", "Category", "Available Qty" };
+                    // ✅ Rename headers
+                    var headers = new Dictionary<string, string>
+            {
+                { "generic_name", "Generic Name" },
+                { "brand_name", "Brand Name" },
+                { "strength", "Strength" },
+                { "dosage", "Dosage" },
+                { "description", "Description" },
+                { "category", "Category" }
+            };
+
+                    foreach (var h in headers)
+                    {
+                        if (dgvOtherItems.Columns.Contains(h.Key))
+                            dgvOtherItems.Columns[h.Key].HeaderText = h.Value;
+                    }
+
+                    // ✅ Reorder columns
+                    string[] displayOrder = {
+                "generic_name", "brand_name", "strength", "dosage",
+                 "description", "category"
+            };
                     int order = 0;
                     foreach (string col in displayOrder)
                     {
@@ -254,20 +296,80 @@ namespace ENT_Clinic_System.Consultation
                             dgvOtherItems.Columns[col].DisplayIndex = order++;
                     }
 
-                    // ✅ Styling and behavior
-                    dgvOtherItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    dgvOtherItems.ReadOnly = true;
-                    dgvOtherItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                    dgvOtherItems.MultiSelect = false;
-                    dgvOtherItems.RowHeadersVisible = false;
-                    dgvOtherItems.AllowUserToAddRows = false;
+
+
+                    // Make primary key hidden but accessible for CRUD
+                    if (dgvOtherItems.Columns.Contains("item_id"))
+                        dgvOtherItems.Columns["item_id"].Visible = false;
                 }
+
+                // ✅ Attach DGVCrudHelper for inline edit support
+                _otherItemsCrudHelper = new DGVCrudHelper(
+                    dgvOtherItems,
+                    "other_items",
+                    new List<string>
+                    {
+                "generic_name",
+                "brand_name",
+                "strength",
+                "dosage",
+                "description",
+                "category"
+                    },
+                    "item_id"
+                );
+
+                // ✅ Add right-click delete option
+                InitializeOtherItemsContextMenu();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading other items: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void InitializeOtherItemsContextMenu()
+        {
+            _otherItemsContextMenu = new ContextMenuStrip();
+            var deleteItem = new ToolStripMenuItem("Delete This Item") { ForeColor = Color.Red };
+            deleteItem.Click += (s, e) =>
+            {
+                if (dgvOtherItems.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Select an item to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                var row = dgvOtherItems.SelectedRows[0];
+                var id = row.Cells["item_id"].Value;
+
+                if (MessageBox.Show("Are you sure you want to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        string sql = "DELETE FROM other_items WHERE item_id = @id";
+                        using (var conn = DBConfig.GetConnection())
+                        using (var cmd = new MySqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@id", id);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        MessageBox.Show("Item deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadAvailableOtherItems(); // Refresh grid
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Delete failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            };
+
+            _otherItemsContextMenu.Items.Add(deleteItem);
+            dgvOtherItems.ContextMenuStrip = _otherItemsContextMenu;
+        }
+
+
 
         #endregion
         private void SelectedOtherDGV_MouseDown(object sender, MouseEventArgs e)
@@ -410,6 +512,175 @@ namespace ENT_Clinic_System.Consultation
         private void btnSubmit_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void addItemButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get values and clean formatting
+                string brand = FirstLetterUpperHelper.ToFirstUpper(brandNameComboBox.Text.Trim());
+                string generic = FirstLetterUpperHelper.ToFirstUpper(genericNameComboBox.Text.Trim());
+                string strength = FirstLetterUpperHelper.ToFirstUpper(stregnthComboBox.Text.Trim());
+                string dosage = FirstLetterUpperHelper.ToFirstUpper(dosageComboBox.Text.Trim());
+                string category = FirstLetterUpperHelper.ToFirstUpper(categoryComboBox.Text.Trim());
+                string description = FirstLetterUpperHelper.ToFirstUpper(descriptionComboBox.Text.Trim());
+
+                if (string.IsNullOrWhiteSpace(brand) || string.IsNullOrWhiteSpace(generic))
+                {
+                    MessageBox.Show("Brand and Generic names are required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Check duplicate
+                string checkQuery = @"SELECT COUNT(*) FROM other_items 
+                              WHERE brand_name = @brand AND generic_name = @generic 
+                                    AND strength = @strength AND dosage = @dosage;";
+                using (var conn = DBConfig.GetConnection())
+                using (var cmd = new MySqlCommand(checkQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@brand", brand);
+                    cmd.Parameters.AddWithValue("@generic", generic);
+                    cmd.Parameters.AddWithValue("@strength", strength);
+                    cmd.Parameters.AddWithValue("@dosage", dosage);
+                    conn.Open();
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (count > 0)
+                    {
+                        MessageBox.Show("This item already exists!", "Duplicate", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+
+                // Insert
+                string insertQuery = @"INSERT INTO other_items (brand_name, generic_name, strength, dosage, category, description)
+                               VALUES (@brand, @generic, @strength, @dosage, @category, @description);";
+                using (var conn = DBConfig.GetConnection())
+                using (var cmd = new MySqlCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@brand", brand);
+                    cmd.Parameters.AddWithValue("@generic", generic);
+                    cmd.Parameters.AddWithValue("@strength", strength);
+                    cmd.Parameters.AddWithValue("@dosage", dosage);
+                    cmd.Parameters.AddWithValue("@category", category);
+                    cmd.Parameters.AddWithValue("@description", description);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Item added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadAvailableOtherItems();
+                ClearOtherItemInputs();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error adding item: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void updateItemButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvOtherItems.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select an item to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var selectedRow = dgvOtherItems.SelectedRows[0];
+                int itemId = Convert.ToInt32(selectedRow.Cells["item_id"].Value);
+
+                string brand = FirstLetterUpperHelper.ToFirstUpper(brandNameComboBox.Text.Trim());
+                string generic = FirstLetterUpperHelper.ToFirstUpper(genericNameComboBox.Text.Trim());
+                string strength = FirstLetterUpperHelper.ToFirstUpper(stregnthComboBox.Text.Trim());
+                string dosage = FirstLetterUpperHelper.ToFirstUpper(dosageComboBox.Text.Trim());
+                string category = FirstLetterUpperHelper.ToFirstUpper(categoryComboBox.Text.Trim());
+                string description = FirstLetterUpperHelper.ToFirstUpper(descriptionComboBox.Text.Trim());
+
+                if (string.IsNullOrWhiteSpace(brand) || string.IsNullOrWhiteSpace(generic))
+                {
+                    MessageBox.Show("Brand and Generic names are required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var confirm = MessageBox.Show("Are you sure you want to update this item?",
+                    "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm != DialogResult.Yes) return;
+
+                string updateQuery = @"UPDATE other_items 
+                               SET brand_name = @brand, generic_name = @generic,
+                                   strength = @strength, dosage = @dosage,
+                                   category = @category, description = @description
+                               WHERE item_id = @id;";
+                using (var conn = DBConfig.GetConnection())
+                using (var cmd = new MySqlCommand(updateQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@brand", brand);
+                    cmd.Parameters.AddWithValue("@generic", generic);
+                    cmd.Parameters.AddWithValue("@strength", strength);
+                    cmd.Parameters.AddWithValue("@dosage", dosage);
+                    cmd.Parameters.AddWithValue("@category", category);
+                    cmd.Parameters.AddWithValue("@description", description);
+                    cmd.Parameters.AddWithValue("@id", itemId);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("Item updated successfully!", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadAvailableOtherItems();
+                ClearOtherItemInputs();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error updating item: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClearOtherItemInputs();
+        }
+        /// <summary>
+        /// Clears all input ComboBoxes for other_items
+        /// </summary>
+        private void ClearOtherItemInputs()
+        {
+            brandNameComboBox.Text = "";
+            genericNameComboBox.Text = "";
+            stregnthComboBox.Text = "";
+            dosageComboBox.Text = "";
+            categoryComboBox.Text = "";
+            descriptionComboBox.Text = "";
+        }
+
+        /// <summary>
+        /// Populates input ComboBoxes from a selected DataGridView row
+        /// </summary>
+        private void PopulateOtherItemInputsFromRow(DataGridViewRow row)
+        {
+            brandNameComboBox.Text = row.Cells["brand_name"].Value?.ToString() ?? "";
+            genericNameComboBox.Text = row.Cells["generic_name"].Value?.ToString() ?? "";
+            stregnthComboBox.Text = row.Cells["strength"].Value?.ToString() ?? "";
+            dosageComboBox.Text = row.Cells["dosage"].Value?.ToString() ?? "";
+            categoryComboBox.Text = row.Cells["category"].Value?.ToString() ?? "";
+            descriptionComboBox.Text = row.Cells["description"].Value?.ToString() ?? "";
+        }
+        private void PrescriptionForm_Load(object sender, EventArgs e)
+        {
+            AutoCompleteHelper.SetupAutoComplete(sortCategoryCombobox, "items", new List<string> { "category" });
+
+
+
+
+            AutoCompleteHelper.SetupAutoComplete(brandNameComboBox, "other_items", new List<string> { "brand_name" });
+            AutoCompleteHelper.SetupAutoComplete(genericNameComboBox, "other_items", new List<string> { "generic_name" });
+            AutoCompleteHelper.SetupAutoComplete(stregnthComboBox, "other_items", new List<string> { "strength" });
+            AutoCompleteHelper.SetupAutoComplete(dosageComboBox, "other_items", new List<string> { "dosage" });
+            AutoCompleteHelper.SetupAutoComplete(categoryComboBox, "other_items", new List<string> { "category" });
+            AutoCompleteHelper.SetupAutoComplete(descriptionComboBox, "other_items", new List<string> { "description" });
         }
     }
 }

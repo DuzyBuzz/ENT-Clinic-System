@@ -40,25 +40,32 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxItem = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.addItemNameComboBox = new System.Windows.Forms.ComboBox();
-            this.addCategoryComboBox = new System.Windows.Forms.ComboBox();
-            this.addDescriptionComboBox = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblItemName = new System.Windows.Forms.Label();
-            this.lblCategory = new System.Windows.Forms.Label();
-            this.addItemButton = new System.Windows.Forms.Button();
-            this.updateItemButton = new System.Windows.Forms.Button();
             this.dgvOtherItems = new System.Windows.Forms.DataGridView();
             this.groupBoxAvailable = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.categoryCombobox = new System.Windows.Forms.ComboBox();
+            this.sortCategoryCombobox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.refreshPatientsButton = new System.Windows.Forms.Button();
             this.searchItemtButton = new System.Windows.Forms.Button();
             this.searchItemsTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.descriptionComboBox = new System.Windows.Forms.ComboBox();
+            this.updateItemButton = new System.Windows.Forms.Button();
+            this.addItemButton = new System.Windows.Forms.Button();
+            this.genericNameComboBox = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblItemName = new System.Windows.Forms.Label();
+            this.categoryComboBox = new System.Windows.Forms.ComboBox();
+            this.brandNameComboBox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lblCategory = new System.Windows.Forms.Label();
+            this.dosageComboBox = new System.Windows.Forms.ComboBox();
+            this.stregnthComboBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableItems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedItems)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -72,10 +79,11 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
-            this.groupBoxItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOtherItems)).BeginInit();
             this.groupBoxAvailable.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvAvailableItems
@@ -92,7 +100,7 @@ namespace ENT_Clinic_System.Consultation
             this.dgvAvailableItems.ReadOnly = true;
             this.dgvAvailableItems.RowHeadersVisible = false;
             this.dgvAvailableItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAvailableItems.Size = new System.Drawing.Size(760, 369);
+            this.dgvAvailableItems.Size = new System.Drawing.Size(760, 428);
             this.dgvAvailableItems.TabIndex = 0;
             // 
             // dgvSelectedItems
@@ -113,7 +121,7 @@ namespace ENT_Clinic_System.Consultation
             // btnSubmit
             // 
             this.btnSubmit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSubmit.Location = new System.Drawing.Point(544, 3);
+            this.btnSubmit.Location = new System.Drawing.Point(543, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(103, 32);
             this.btnSubmit.TabIndex = 2;
@@ -213,7 +221,7 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.18123F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.81878F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 117F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.clearButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnSubmit, 1, 0);
@@ -238,7 +246,7 @@ namespace ENT_Clinic_System.Consultation
             // clearButton
             // 
             this.clearButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.clearButton.Location = new System.Drawing.Point(418, 3);
+            this.clearButton.Location = new System.Drawing.Point(417, 3);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(120, 32);
             this.clearButton.TabIndex = 3;
@@ -258,7 +266,7 @@ namespace ENT_Clinic_System.Consultation
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 1;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.Controls.Add(this.groupBox1, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.groupBoxAvailable, 0, 0);
             this.tableLayoutPanel5.Cursor = System.Windows.Forms.Cursors.Default;
@@ -266,8 +274,8 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 42);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.59255F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 56.40745F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(772, 913);
             this.tableLayoutPanel5.TabIndex = 7;
             // 
@@ -276,9 +284,9 @@ namespace ENT_Clinic_System.Consultation
             this.groupBox1.Controls.Add(this.tableLayoutPanel7);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.Location = new System.Drawing.Point(3, 400);
+            this.groupBox1.Location = new System.Drawing.Point(3, 459);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(766, 510);
+            this.groupBox1.Size = new System.Drawing.Size(766, 451);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Others Items";
@@ -287,138 +295,21 @@ namespace ENT_Clinic_System.Consultation
             // 
             this.tableLayoutPanel7.ColumnCount = 1;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Controls.Add(this.groupBoxItem, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.groupBox4, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.dgvOtherItems, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 19);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.57377F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.42623F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 166F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(760, 488);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(760, 429);
             this.tableLayoutPanel7.TabIndex = 0;
-            // 
-            // groupBoxItem
-            // 
-            this.groupBoxItem.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBoxItem.Controls.Add(this.button1);
-            this.groupBoxItem.Controls.Add(this.addItemNameComboBox);
-            this.groupBoxItem.Controls.Add(this.addCategoryComboBox);
-            this.groupBoxItem.Controls.Add(this.addDescriptionComboBox);
-            this.groupBoxItem.Controls.Add(this.label1);
-            this.groupBoxItem.Controls.Add(this.lblItemName);
-            this.groupBoxItem.Controls.Add(this.lblCategory);
-            this.groupBoxItem.Controls.Add(this.addItemButton);
-            this.groupBoxItem.Controls.Add(this.updateItemButton);
-            this.groupBoxItem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxItem.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxItem.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBoxItem.Location = new System.Drawing.Point(4, 325);
-            this.groupBoxItem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxItem.Name = "groupBoxItem";
-            this.groupBoxItem.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBoxItem.Size = new System.Drawing.Size(752, 158);
-            this.groupBoxItem.TabIndex = 5;
-            this.groupBoxItem.TabStop = false;
-            this.groupBoxItem.Text = "Add / Update Untracked Items";
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.SystemColors.Control;
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(502, 96);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(59, 34);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Clear";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
-            // addItemNameComboBox
-            // 
-            this.addItemNameComboBox.FormattingEnabled = true;
-            this.addItemNameComboBox.Location = new System.Drawing.Point(118, 67);
-            this.addItemNameComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
-            this.addItemNameComboBox.Name = "addItemNameComboBox";
-            this.addItemNameComboBox.Size = new System.Drawing.Size(200, 26);
-            this.addItemNameComboBox.TabIndex = 14;
-            // 
-            // addCategoryComboBox
-            // 
-            this.addCategoryComboBox.FormattingEnabled = true;
-            this.addCategoryComboBox.Location = new System.Drawing.Point(117, 28);
-            this.addCategoryComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
-            this.addCategoryComboBox.Name = "addCategoryComboBox";
-            this.addCategoryComboBox.Size = new System.Drawing.Size(200, 26);
-            this.addCategoryComboBox.TabIndex = 13;
-            // 
-            // addDescriptionComboBox
-            // 
-            this.addDescriptionComboBox.FormattingEnabled = true;
-            this.addDescriptionComboBox.Location = new System.Drawing.Point(118, 106);
-            this.addDescriptionComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
-            this.addDescriptionComboBox.Name = "addDescriptionComboBox";
-            this.addDescriptionComboBox.Size = new System.Drawing.Size(200, 26);
-            this.addDescriptionComboBox.TabIndex = 12;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 33);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 18);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Category:";
-            // 
-            // lblItemName
-            // 
-            this.lblItemName.AutoSize = true;
-            this.lblItemName.Location = new System.Drawing.Point(15, 73);
-            this.lblItemName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblItemName.Name = "lblItemName";
-            this.lblItemName.Size = new System.Drawing.Size(86, 18);
-            this.lblItemName.TabIndex = 0;
-            this.lblItemName.Text = "Item Name:";
-            // 
-            // lblCategory
-            // 
-            this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(15, 112);
-            this.lblCategory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(94, 18);
-            this.lblCategory.TabIndex = 1;
-            this.lblCategory.Text = "Description:";
-            // 
-            // addItemButton
-            // 
-            this.addItemButton.BackColor = System.Drawing.SystemColors.Control;
-            this.addItemButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.addItemButton.Location = new System.Drawing.Point(587, 98);
-            this.addItemButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.addItemButton.Name = "addItemButton";
-            this.addItemButton.Size = new System.Drawing.Size(105, 34);
-            this.addItemButton.TabIndex = 8;
-            this.addItemButton.Text = "Add Item";
-            this.addItemButton.UseVisualStyleBackColor = false;
-            // 
-            // updateItemButton
-            // 
-            this.updateItemButton.BackColor = System.Drawing.SystemColors.Control;
-            this.updateItemButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.updateItemButton.Location = new System.Drawing.Point(366, 96);
-            this.updateItemButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.updateItemButton.Name = "updateItemButton";
-            this.updateItemButton.Size = new System.Drawing.Size(105, 34);
-            this.updateItemButton.TabIndex = 9;
-            this.updateItemButton.Text = "Update Item";
-            this.updateItemButton.UseVisualStyleBackColor = false;
             // 
             // dgvOtherItems
             // 
@@ -433,7 +324,7 @@ namespace ENT_Clinic_System.Consultation
             this.dgvOtherItems.Name = "dgvOtherItems";
             this.dgvOtherItems.ReadOnly = true;
             this.dgvOtherItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvOtherItems.Size = new System.Drawing.Size(754, 314);
+            this.dgvOtherItems.Size = new System.Drawing.Size(754, 257);
             this.dgvOtherItems.TabIndex = 1;
             // 
             // groupBoxAvailable
@@ -443,7 +334,7 @@ namespace ENT_Clinic_System.Consultation
             this.groupBoxAvailable.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBoxAvailable.Location = new System.Drawing.Point(3, 3);
             this.groupBoxAvailable.Name = "groupBoxAvailable";
-            this.groupBoxAvailable.Size = new System.Drawing.Size(766, 391);
+            this.groupBoxAvailable.Size = new System.Drawing.Size(766, 450);
             this.groupBoxAvailable.TabIndex = 7;
             this.groupBoxAvailable.TabStop = false;
             this.groupBoxAvailable.Text = "Available Items (Inventory)";
@@ -458,7 +349,7 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.494505F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.40171F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.42002F));
-            this.tableLayoutPanel2.Controls.Add(this.categoryCombobox, 5, 0);
+            this.tableLayoutPanel2.Controls.Add(this.sortCategoryCombobox, 5, 0);
             this.tableLayoutPanel2.Controls.Add(this.label3, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.refreshPatientsButton, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.searchItemtButton, 2, 0);
@@ -473,18 +364,18 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel2.Size = new System.Drawing.Size(772, 42);
             this.tableLayoutPanel2.TabIndex = 6;
             // 
-            // categoryCombobox
+            // sortCategoryCombobox
             // 
-            this.categoryCombobox.BackColor = System.Drawing.SystemColors.Control;
-            this.categoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(568, 13);
-            this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
-            this.categoryCombobox.Name = "categoryCombobox";
-            this.categoryCombobox.Size = new System.Drawing.Size(200, 28);
-            this.categoryCombobox.TabIndex = 6;
+            this.sortCategoryCombobox.BackColor = System.Drawing.SystemColors.Control;
+            this.sortCategoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.sortCategoryCombobox.FormattingEnabled = true;
+            this.sortCategoryCombobox.Location = new System.Drawing.Point(568, 6);
+            this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
+            this.sortCategoryCombobox.Name = "sortCategoryCombobox";
+            this.sortCategoryCombobox.Size = new System.Drawing.Size(200, 28);
+            this.sortCategoryCombobox.TabIndex = 6;
             // 
             // label3
             // 
@@ -555,6 +446,237 @@ namespace ENT_Clinic_System.Consultation
             this.label8.Text = "Search Item:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.tableLayoutPanel8);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(3, 266);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(754, 160);
+            this.groupBox4.TabIndex = 28;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "(Others) Item Management";
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 5;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.80645F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.19355F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.80645F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.19355F));
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.descriptionComboBox, 3, 1);
+            this.tableLayoutPanel8.Controls.Add(this.updateItemButton, 4, 1);
+            this.tableLayoutPanel8.Controls.Add(this.addItemButton, 4, 0);
+            this.tableLayoutPanel8.Controls.Add(this.genericNameComboBox, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.label6, 2, 1);
+            this.tableLayoutPanel8.Controls.Add(this.lblItemName, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.categoryComboBox, 3, 0);
+            this.tableLayoutPanel8.Controls.Add(this.brandNameComboBox, 1, 1);
+            this.tableLayoutPanel8.Controls.Add(this.label5, 2, 0);
+            this.tableLayoutPanel8.Controls.Add(this.lblCategory, 0, 2);
+            this.tableLayoutPanel8.Controls.Add(this.dosageComboBox, 1, 3);
+            this.tableLayoutPanel8.Controls.Add(this.stregnthComboBox, 1, 2);
+            this.tableLayoutPanel8.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel8.Controls.Add(this.button1, 4, 2);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 19);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 4;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(748, 138);
+            this.tableLayoutPanel8.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(4, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 34);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Generic Name:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // descriptionComboBox
+            // 
+            this.descriptionComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.descriptionComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descriptionComboBox.FormattingEnabled = true;
+            this.descriptionComboBox.Location = new System.Drawing.Point(405, 39);
+            this.descriptionComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
+            this.descriptionComboBox.Name = "descriptionComboBox";
+            this.descriptionComboBox.Size = new System.Drawing.Size(187, 24);
+            this.descriptionComboBox.TabIndex = 24;
+            // 
+            // updateItemButton
+            // 
+            this.updateItemButton.BackColor = System.Drawing.SystemColors.Control;
+            this.updateItemButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.updateItemButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.updateItemButton.Location = new System.Drawing.Point(600, 39);
+            this.updateItemButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.updateItemButton.Name = "updateItemButton";
+            this.updateItemButton.Size = new System.Drawing.Size(144, 24);
+            this.updateItemButton.TabIndex = 9;
+            this.updateItemButton.Text = "Update Item";
+            this.updateItemButton.UseVisualStyleBackColor = false;
+            this.updateItemButton.Click += new System.EventHandler(this.updateItemButton_Click);
+            // 
+            // addItemButton
+            // 
+            this.addItemButton.BackColor = System.Drawing.SystemColors.Control;
+            this.addItemButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addItemButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.addItemButton.Location = new System.Drawing.Point(600, 5);
+            this.addItemButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.addItemButton.Name = "addItemButton";
+            this.addItemButton.Size = new System.Drawing.Size(144, 24);
+            this.addItemButton.TabIndex = 8;
+            this.addItemButton.Text = "Add Item";
+            this.addItemButton.UseVisualStyleBackColor = false;
+            this.addItemButton.Click += new System.EventHandler(this.addItemButton_Click);
+            // 
+            // genericNameComboBox
+            // 
+            this.genericNameComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.genericNameComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.genericNameComboBox.FormattingEnabled = true;
+            this.genericNameComboBox.Location = new System.Drawing.Point(107, 5);
+            this.genericNameComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
+            this.genericNameComboBox.Name = "genericNameComboBox";
+            this.genericNameComboBox.Size = new System.Drawing.Size(187, 24);
+            this.genericNameComboBox.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(302, 34);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(95, 34);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Description:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblItemName
+            // 
+            this.lblItemName.AutoSize = true;
+            this.lblItemName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblItemName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblItemName.Location = new System.Drawing.Point(4, 34);
+            this.lblItemName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblItemName.Name = "lblItemName";
+            this.lblItemName.Size = new System.Drawing.Size(95, 34);
+            this.lblItemName.TabIndex = 0;
+            this.lblItemName.Text = "Brand Name:";
+            this.lblItemName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // categoryComboBox
+            // 
+            this.categoryComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.categoryComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.categoryComboBox.FormattingEnabled = true;
+            this.categoryComboBox.Location = new System.Drawing.Point(405, 5);
+            this.categoryComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
+            this.categoryComboBox.Name = "categoryComboBox";
+            this.categoryComboBox.Size = new System.Drawing.Size(187, 24);
+            this.categoryComboBox.TabIndex = 22;
+            // 
+            // brandNameComboBox
+            // 
+            this.brandNameComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.brandNameComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.brandNameComboBox.FormattingEnabled = true;
+            this.brandNameComboBox.Location = new System.Drawing.Point(107, 39);
+            this.brandNameComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
+            this.brandNameComboBox.Name = "brandNameComboBox";
+            this.brandNameComboBox.Size = new System.Drawing.Size(187, 24);
+            this.brandNameComboBox.TabIndex = 14;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(302, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(95, 34);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "Category:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblCategory
+            // 
+            this.lblCategory.AutoSize = true;
+            this.lblCategory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCategory.Location = new System.Drawing.Point(4, 68);
+            this.lblCategory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(95, 34);
+            this.lblCategory.TabIndex = 1;
+            this.lblCategory.Text = "Strength:";
+            this.lblCategory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // dosageComboBox
+            // 
+            this.dosageComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dosageComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dosageComboBox.FormattingEnabled = true;
+            this.dosageComboBox.Location = new System.Drawing.Point(107, 107);
+            this.dosageComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
+            this.dosageComboBox.Name = "dosageComboBox";
+            this.dosageComboBox.Size = new System.Drawing.Size(187, 24);
+            this.dosageComboBox.TabIndex = 20;
+            // 
+            // stregnthComboBox
+            // 
+            this.stregnthComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stregnthComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stregnthComboBox.FormattingEnabled = true;
+            this.stregnthComboBox.Location = new System.Drawing.Point(107, 73);
+            this.stregnthComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
+            this.stregnthComboBox.Name = "stregnthComboBox";
+            this.stregnthComboBox.Size = new System.Drawing.Size(187, 24);
+            this.stregnthComboBox.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(4, 102);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(95, 36);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Dosage:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.Control;
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.ForeColor = System.Drawing.Color.Red;
+            this.button1.Location = new System.Drawing.Point(600, 73);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(144, 24);
+            this.button1.TabIndex = 25;
+            this.button1.Text = "Clear";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // PrescriptionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 20F);
@@ -567,6 +689,7 @@ namespace ENT_Clinic_System.Consultation
             this.Name = "PrescriptionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Prescription - ENT Clinic";
+            this.Load += new System.EventHandler(this.PrescriptionForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableItems)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedItems)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -580,12 +703,13 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel5.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
-            this.groupBoxItem.ResumeLayout(false);
-            this.groupBoxItem.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOtherItems)).EndInit();
             this.groupBoxAvailable.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -607,7 +731,7 @@ namespace ENT_Clinic_System.Consultation
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button clearButton;
-        private System.Windows.Forms.ComboBox categoryCombobox;
+        private System.Windows.Forms.ComboBox sortCategoryCombobox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvOtherItems;
@@ -615,16 +739,23 @@ namespace ENT_Clinic_System.Consultation
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DataGridView selectedOtherDGV;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.GroupBox groupBoxItem;
-        private System.Windows.Forms.ComboBox addItemNameComboBox;
-        private System.Windows.Forms.ComboBox addCategoryComboBox;
-        private System.Windows.Forms.ComboBox addDescriptionComboBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblItemName;
-        private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.Button addItemButton;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button updateItemButton;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox descriptionComboBox;
+        private System.Windows.Forms.Button updateItemButton;
+        private System.Windows.Forms.Button addItemButton;
+        private System.Windows.Forms.ComboBox genericNameComboBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblItemName;
+        private System.Windows.Forms.ComboBox categoryComboBox;
+        private System.Windows.Forms.ComboBox brandNameComboBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblCategory;
+        private System.Windows.Forms.ComboBox dosageComboBox;
+        private System.Windows.Forms.ComboBox stregnthComboBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
     }
 }

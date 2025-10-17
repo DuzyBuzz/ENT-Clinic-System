@@ -195,12 +195,12 @@ namespace ENT_Clinic_System.Inventory
         {
             try
             {
-                string brandName = CamelCaseHelper.ToCamelCase(brandNameComboBox.Text.Trim());
-                string genericName = CamelCaseHelper.ToCamelCase(genericNameComboBox.Text.Trim());
-                string strength = CamelCaseHelper.ToCamelCase(stregnthComboBox.Text.Trim());
-                string dosage = CamelCaseHelper.ToCamelCase(dosageComboBox.Text.Trim());
-                string category = CamelCaseHelper.ToCamelCase(categoryComboBox.Text.Trim());
-                string description = CamelCaseHelper.ToCamelCase(descriptionComboBox.Text.Trim());
+                string brandName = FirstLetterUpperHelper.ToFirstUpper(brandNameComboBox.Text);
+                string genericName = FirstLetterUpperHelper.ToFirstUpper(genericNameComboBox.Text);
+                string strength = FirstLetterUpperHelper.ToFirstUpper(stregnthComboBox.Text);
+                string dosage = FirstLetterUpperHelper.ToFirstUpper(dosageComboBox.Text);
+                string category = FirstLetterUpperHelper.ToFirstUpper(categoryComboBox.Text);
+                string description = FirstLetterUpperHelper.ToFirstUpper(descriptionComboBox.Text);
 
                 if (string.IsNullOrWhiteSpace(brandName)) { ShowValidationError("Brand Name cannot be empty.", brandNameComboBox); return; }
                 if (string.IsNullOrWhiteSpace(genericName)) { ShowValidationError("Generic Name cannot be empty.", genericNameComboBox); return; }
@@ -210,6 +210,7 @@ namespace ENT_Clinic_System.Inventory
 
                 decimal costPrice = costPriceNumericUpDown.Value;
                 decimal sellingPrice = sellingNumericUpDown.Value;
+
                 if (costPrice < 0 || sellingPrice < 0)
                 {
                     MessageBox.Show("Prices cannot be negative.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -242,6 +243,7 @@ namespace ENT_Clinic_System.Inventory
             }
         }
 
+
         private void btnUpdateItem_Click(object sender, EventArgs e)
         {
             try
@@ -253,26 +255,29 @@ namespace ENT_Clinic_System.Inventory
                 }
 
                 int itemId = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["item_id"].Value);
-                string brandName = CamelCaseHelper.ToCamelCase(brandNameComboBox.Text.Trim());
-                string genericName = CamelCaseHelper.ToCamelCase(genericNameComboBox.Text.Trim());
-                string strength = CamelCaseHelper.ToCamelCase(stregnthComboBox.Text.Trim());
-                string dosage = CamelCaseHelper.ToCamelCase(dosageComboBox.Text.Trim());
-                string category = CamelCaseHelper.ToCamelCase(categoryComboBox.Text.Trim());
-                string description = CamelCaseHelper.ToCamelCase(descriptionComboBox.Text.Trim());
+
+                string brandName = FirstLetterUpperHelper.ToFirstUpper(brandNameComboBox.Text);
+                string genericName = FirstLetterUpperHelper.ToFirstUpper(genericNameComboBox.Text);
+                string strength = FirstLetterUpperHelper.ToFirstUpper(stregnthComboBox.Text);
+                string dosage = FirstLetterUpperHelper.ToFirstUpper(dosageComboBox.Text);
+                string category = FirstLetterUpperHelper.ToFirstUpper(categoryComboBox.Text);
+                string description = FirstLetterUpperHelper.ToFirstUpper(descriptionComboBox.Text);
                 decimal costPrice = costPriceNumericUpDown.Value;
                 decimal sellingPrice = sellingNumericUpDown.Value;
 
                 // ✅ Ask for confirmation before updating
                 var confirm = MessageBox.Show(
-                    $"Are you sure you want to update the selected item?",
+                    "Are you sure you want to update the selected item?",
                     "Confirm Update",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
                 );
 
-                if (confirm != DialogResult.Yes) return; // Stop if user chooses No
+                if (confirm != DialogResult.Yes)
+                    return;
 
-                if (_inventoryHelper.UpdateItem(itemId, brandName, genericName, strength, dosage, category, description, costPrice, sellingPrice))
+                bool success = _inventoryHelper.UpdateItem(itemId, brandName, genericName, strength, dosage, category, description, costPrice, sellingPrice);
+                if (success)
                 {
                     MessageBox.Show("Item updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadInventory();
@@ -288,6 +293,7 @@ namespace ENT_Clinic_System.Inventory
                 MessageBox.Show("Error updating item: " + ex.Message, "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         private void btnDeleteItem_Click(object sender, EventArgs e)
