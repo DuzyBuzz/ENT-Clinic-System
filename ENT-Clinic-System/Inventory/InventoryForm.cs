@@ -21,6 +21,7 @@ namespace ENT_Clinic_System.Inventory
             _inventoryHelper = new InventoryHelper();
             LoadInventory();
             SetupMovementContextMenu();
+            SetupItemContextMenu();
         }
 
         // ==========================
@@ -261,6 +262,16 @@ namespace ENT_Clinic_System.Inventory
                 decimal costPrice = costPriceNumericUpDown.Value;
                 decimal sellingPrice = sellingNumericUpDown.Value;
 
+                // ✅ Ask for confirmation before updating
+                var confirm = MessageBox.Show(
+                    $"Are you sure you want to update the selected item?",
+                    "Confirm Update",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (confirm != DialogResult.Yes) return; // Stop if user chooses No
+
                 if (_inventoryHelper.UpdateItem(itemId, brandName, genericName, strength, dosage, category, description, costPrice, sellingPrice))
                 {
                     MessageBox.Show("Item updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -277,6 +288,7 @@ namespace ENT_Clinic_System.Inventory
                 MessageBox.Show("Error updating item: " + ex.Message, "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void btnDeleteItem_Click(object sender, EventArgs e)
         {
@@ -549,7 +561,7 @@ namespace ENT_Clinic_System.Inventory
 
         private void writeOffButton_Click(object sender, EventArgs e)
         {
-            // Check if itemIdTextBox has a value
+            // Ensure the textbox has a value
             if (string.IsNullOrWhiteSpace(itemIdTextBox.Text))
             {
                 MessageBox.Show("Please select an item to write-off.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -557,7 +569,8 @@ namespace ENT_Clinic_System.Inventory
                 return;
             }
 
-            if (!int.TryParse(itemIdTextBox.Text, out int itemId))
+            // Safely parse item ID
+            if (!int.TryParse(itemIdTextBox.Text.Trim(), out int itemId) || itemId <= 0)
             {
                 MessageBox.Show("Invalid item selected. Please select a valid item.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 itemIdTextBox.Focus();
@@ -565,12 +578,17 @@ namespace ENT_Clinic_System.Inventory
             }
 
             // Open Write-Off form
-            WriteOffForm writeOffForm = new WriteOffForm(itemId);
-            writeOffForm.ShowDialog();
+            using (WriteOffForm writeOffForm = new WriteOffForm(itemId))
+            {
+                writeOffForm.ShowDialog();
 
-            // Refresh inventory after write-off
-            LoadInventory();
+                // Refresh inventory after write-off
+                LoadInventory();
+                LoadMovements();
+            }
+
         }
+
 
         private void dgvItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
