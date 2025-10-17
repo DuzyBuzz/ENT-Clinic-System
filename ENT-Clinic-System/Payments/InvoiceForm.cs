@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Payments
@@ -21,50 +22,12 @@ namespace ENT_Clinic_System.Payments
             helper = new InventoryHelper();
             LoadAvailableItems();
             HookEvents();
-            InitializeSelectedItemsTable();
         }
 
         // ================================
         // 🔹 Setup selected items table
         // ================================
-        private void InitializeSelectedItemsTable()
-        {
-            selectedItems = new DataTable();
-            selectedItems.Columns.Add("item_id", typeof(int));
-            selectedItems.Columns.Add("item_name", typeof(string));
-            selectedItems.Columns.Add("category", typeof(string));
-            selectedItems.Columns.Add("description", typeof(string));
-            selectedItems.Columns.Add("unit_price", typeof(decimal));
-            selectedItems.Columns.Add("quantity", typeof(int));
-            selectedItems.Columns.Add("prescription_id", typeof(int)); // 🔹 NEW
 
-            selectedItemsDataGridView.DataSource = selectedItems;
-
-            selectedItemsDataGridView.Columns["item_id"].Visible = false;
-            selectedItemsDataGridView.Columns["prescription_id"].Visible = false; // hide from UI
-
-            selectedItemsDataGridView.Columns["item_name"].HeaderText = "Item Name";
-            selectedItemsDataGridView.Columns["category"].HeaderText = "Category";
-            selectedItemsDataGridView.Columns["description"].HeaderText = "Description";
-            selectedItemsDataGridView.Columns["unit_price"].HeaderText = "Price";
-            selectedItemsDataGridView.Columns["quantity"].HeaderText = "Quantity";
-
-            selectedItemsDataGridView.Columns["item_name"].ReadOnly = true;
-            selectedItemsDataGridView.Columns["category"].ReadOnly = true;
-            selectedItemsDataGridView.Columns["description"].ReadOnly = true;
-            selectedItemsDataGridView.Columns["unit_price"].ReadOnly = true;
-
-            LoadPatientsFromPrescriptions();
-
-            try
-            {
-                availableItemsDataGridView.Columns["created_at"].Visible = false;
-                availableItemsDataGridView.Columns["updated_at"].Visible = false;
-            }
-            catch { }
-        }
-
-        // ================================
         // 🔹 Load patients with prescriptions
         // ================================
         private void LoadPatientsFromPrescriptions()
@@ -148,7 +111,14 @@ namespace ENT_Clinic_System.Payments
 
             int prescriptionId = row.Cells["prescription_id"] != null ? Convert.ToInt32(row.Cells["prescription_id"].Value) : 0;
             int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-            string itemName = row.Cells["item_name"].Value?.ToString() ?? "";
+
+            // Build display name from brand/generic/strength/dosage
+            string brand = row.Cells["brand_name"]?.Value?.ToString() ?? "";
+            string generic = row.Cells["generic_name"]?.Value?.ToString() ?? "";
+            string strength = row.Cells["strength"]?.Value?.ToString() ?? "";
+            string dosage = row.Cells["dosage"]?.Value?.ToString() ?? "";
+            string itemDisplayName = string.Join(" ", new[] { brand, generic, strength, dosage }.Where(s => !string.IsNullOrWhiteSpace(s)));
+
             string category = row.Cells["category"].Value?.ToString() ?? "";
             string description = row.Cells["description"].Value?.ToString() ?? "";
             decimal price = row.Cells["selling_price"].Value is DBNull ? 0m : Convert.ToDecimal(row.Cells["selling_price"].Value);
@@ -167,7 +137,7 @@ namespace ENT_Clinic_System.Payments
             if (existingRow != null)
                 existingRow["quantity"] = (int)existingRow["quantity"] + quantity;
             else
-                selectedItems.Rows.Add(itemId, itemName, category, description, price, quantity, prescriptionId);
+                selectedItems.Rows.Add(itemId, itemDisplayName, category, description, price, quantity, prescriptionId);
 
             CalculateTotals();
         }
@@ -188,11 +158,13 @@ namespace ENT_Clinic_System.Payments
                 {
                     conn.Open();
                     string sql = @"
-                        SELECT p.prescription_id, p.item_id, i.item_name, i.description, i.category, i.selling_price, SUM(p.quantity) AS quantity
+                        SELECT p.prescription_id, p.item_id,
+                               i.brand_name, i.generic_name, i.strength, i.dosage, p.sig,
+                               i.description, i.category, i.selling_price, SUM(p.quantity) AS quantity
                         FROM prescription p
                         INNER JOIN items i ON p.item_id = i.item_id
                         WHERE p.patient_id = @patientId
-                        GROUP BY p.prescription_id, p.item_id, i.item_name, i.description, i.category, i.selling_price";
+                        GROUP BY p.prescription_id, p.item_id, i.brand_name, i.generic_name, i.strength, i.dosage, i.description, i.category, i.selling_price";
 
                     using (var cmd = new MySqlCommand(sql, conn))
                     {
@@ -224,9 +196,16 @@ namespace ENT_Clinic_System.Payments
             DataGridViewRow row = availableItemsDataGridView.Rows[e.RowIndex];
 
             int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-            string itemName = row.Cells["item_name"].Value?.ToString() ?? "";
-            string category = row.Cells["category"].Value?.ToString() ?? "";
-            string description = row.Cells["description"].Value?.ToString() ?? "";
+
+            // Build display name from available items columns (brand + generic + strength + dosage)
+            string brand = row.Cells["brand_name"]?.Value?.ToString() ?? "";
+            string generic = row.Cells["generic_name"]?.Value?.ToString() ?? "";
+            string strength = row.Cells["strength"]?.Value?.ToString() ?? "";
+            string dosage = row.Cells["dosage"]?.Value?.ToString() ?? "";
+            string itemDisplayName = string.Join(" ", new[] { brand, generic, strength, dosage }.Where(s => !string.IsNullOrWhiteSpace(s)));
+
+            string category = row.Cells["category"]?.Value?.ToString() ?? "";
+            string description = row.Cells["description"]?.Value?.ToString() ?? "";
             decimal price = row.Cells["selling_price"].Value != DBNull.Value ? Convert.ToDecimal(row.Cells["selling_price"].Value) : 0m;
 
             DataRow existingRow = null;
@@ -242,7 +221,7 @@ namespace ENT_Clinic_System.Payments
             if (existingRow != null)
                 existingRow["quantity"] = (int)existingRow["quantity"] + 1;
             else
-                selectedItems.Rows.Add(itemId, itemName, category, description, price, 1, 0); // 🔹 prescription_id = 0
+                selectedItems.Rows.Add(itemId, itemDisplayName, category, description, price, 1, 0); // 🔹 prescription_id = 0
 
             CalculateTotals();
         }
@@ -439,7 +418,7 @@ namespace ENT_Clinic_System.Payments
             SearchHelper.Search(
                 dgv: availableItemsDataGridView,
                 tableName: "items",
-                columnNames: new string[] { "item_name", "description" },
+                columnNames: new string[] { "brand_name", "generic_name", "description" }, // search brand/generic instead of item_name
                 filterControl: searchItemsTextBox
             );
         }
@@ -450,6 +429,11 @@ namespace ENT_Clinic_System.Payments
         }
 
         private void saveButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveButton_Click_1(object sender, EventArgs e)
         {
 
         }

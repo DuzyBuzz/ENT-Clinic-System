@@ -341,7 +341,7 @@ namespace ENT_Clinic_System.UserControls
                 // 6️⃣ Save Consultation to DB + Files
                 var savedFiles = ConsultationSaver.SaveConsultation(
                     _patientId,
-                    $"DR. {UserCredentials.Fullname.ToUpper()}", // ← uppercase doctor name
+                    UserCredentials.UserId.ToString(), // ← uppercase doctor name
                     DateTime.Now,
                     followUpDate,
                     inputs,
@@ -1063,18 +1063,7 @@ namespace ENT_Clinic_System.UserControls
         }
         private void ConsultationControl_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show(
-                "Any unsaved consultation data will be lost. Are you sure you want to close this form?",
-                "Confirm Close",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning,
-                MessageBoxDefaultButton.Button2
-            );
 
-            if (result == DialogResult.No)
-            {
-                e.Cancel = true; // prevent closing
-            }
         }
 
     }

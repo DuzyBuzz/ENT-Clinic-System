@@ -196,7 +196,7 @@ namespace ENT_Clinic_System
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AutoCompleteManager autoCompleteManager = new AutoCompleteManager();
-            autoCompleteManager.ShowDialog();
+            autoCompleteManager.Show();
         }
 
         private void MainFormReceptionist_FormClosing(object sender, FormClosingEventArgs e)
@@ -216,13 +216,13 @@ namespace ENT_Clinic_System
         private void patientQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PatientsQueue patientsQueue = new PatientsQueue();
-            patientsQueue.ShowDialog();
+            patientsQueue.Show();
         }
 
         private void doctorPatientsQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DoctorPatientQueue doctorPatientQueue = new DoctorPatientQueue();
-            doctorPatientQueue.ShowDialog();
+            doctorPatientQueue.Show();
         }
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -254,13 +254,13 @@ namespace ENT_Clinic_System
         private void itemsDispensingPaymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InvoiceForm invoiceForm = new InvoiceForm();
-            invoiceForm.ShowDialog();
+            invoiceForm.Show();
         }
 
         private void billingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BillingInvoiceForm billingInvoiceForm = new BillingInvoiceForm();
-            billingInvoiceForm.ShowDialog();
+            billingInvoiceForm.Show();
         }
 
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
@@ -397,7 +397,7 @@ namespace ENT_Clinic_System
         private void profileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UserProfile userProfile = new UserProfile();
-            userProfile.Show();
+            userProfile.ShowDialog();
         }
     }
 

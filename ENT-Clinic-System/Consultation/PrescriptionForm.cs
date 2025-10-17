@@ -14,8 +14,7 @@ namespace ENT_Clinic_System.Consultation
         private readonly int _patientId;
         private readonly int _consultationId;
         private readonly InventoryHelper _inventoryHelper;
-        private DGVCrudHelper otherItemsCrudHelper;
-        private DGVCrudHelper _otherItemsCrudHelper;
+        // removed duplicate DGVCrudHelper declaration
         private DataTable _availableItemsTable;
         private DataTable _availableOtherItemsTable;
         private ContextMenuStrip _otherItemsContextMenu;
@@ -27,10 +26,7 @@ namespace ENT_Clinic_System.Consultation
             _consultationId = consultationId;
             _inventoryHelper = new InventoryHelper();
 
-            // Initialize Grids
-
-
-            // Event Handlers
+            // Event Handlers for medicines and other items
             dgvAvailableItems.CellDoubleClick += DgvAvailableItems_CellDoubleClick;
             dgvOtherItems.CellDoubleClick += DgvOtherItems_CellDoubleClick;
             dgvSelectedItems.MouseDown += DgvSelectedItems_MouseDown;
@@ -39,21 +35,23 @@ namespace ENT_Clinic_System.Consultation
             btnSubmit.Click += BtnSubmit_Click;
             clearButton.Click += ClearButton_Click;
             button2.Click += Button2_Click; // Close button
+
             SetupSelectedDgvColumns();
             SetupSelectedOtherDgvColumns();
+
+            // Load data
             LoadAvailableItems();
             LoadAvailableOtherItems();
+
+            // Populate inputs when selection changes (single place for populating)
             dgvOtherItems.SelectionChanged += (s, e) =>
             {
                 if (dgvOtherItems.SelectedRows.Count > 0)
                     PopulateOtherItemInputsFromRow(dgvOtherItems.SelectedRows[0]);
             };
-            dgvOtherItems.CellDoubleClick += (s, e) =>
-            {
-                if (e.RowIndex >= 0)
-                    PopulateOtherItemInputsFromRow(dgvOtherItems.Rows[e.RowIndex]);
-            };
 
+            // Initialize context menu for other items (delete)
+            InitializeOtherItemsContextMenu();
         }
 
         #region === GRID SETUP ===
@@ -71,7 +69,6 @@ namespace ENT_Clinic_System.Consultation
                 dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "description", HeaderText = "Description", ReadOnly = true });
                 dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "quantity", HeaderText = "Quantity", ValueType = typeof(int), Width = 70 });
             }
-
         }
 
         private void SetupSelectedOtherDgvColumns()
@@ -79,8 +76,12 @@ namespace ENT_Clinic_System.Consultation
             if (selectedOtherDGV.Columns.Count == 0)
             {
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "item_id", Visible = false });
-                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "description", HeaderText = "Description", ReadOnly = true });
+                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "generic_name", HeaderText = "Generic Name", ReadOnly = true });
+                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "brand_name", HeaderText = "Brand Name", ReadOnly = true });
+                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "strength", HeaderText = "Strength", ReadOnly = true });
+                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "dosage", HeaderText = "Dosage", ReadOnly = true });
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "category", HeaderText = "Category", ReadOnly = true });
+                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "description", HeaderText = "Description", ReadOnly = true });
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "quantity", HeaderText = "Quantity", ValueType = typeof(int), Width = 70 });
             }
         }
@@ -96,7 +97,7 @@ namespace ENT_Clinic_System.Consultation
                 _availableItemsTable = _inventoryHelper.GetAllItems();
                 dgvAvailableItems.DataSource = _availableItemsTable;
 
-                // ✅ Hide unnecessary columns
+                // Hide unnecessary columns if present
                 string[] hiddenCols = { "item_id", "cost_price", "selling_price", "created_at", "updated_at" };
                 foreach (string col in hiddenCols)
                 {
@@ -104,7 +105,7 @@ namespace ENT_Clinic_System.Consultation
                         dgvAvailableItems.Columns[col].Visible = false;
                 }
 
-                // ✅ Rename and reorder visible columns (to match selected DGV)
+                // Rename visible columns to user-friendly names if they exist
                 if (dgvAvailableItems.Columns.Contains("generic_name"))
                     dgvAvailableItems.Columns["generic_name"].HeaderText = "Generic Name";
                 if (dgvAvailableItems.Columns.Contains("brand_name"))
@@ -118,7 +119,7 @@ namespace ENT_Clinic_System.Consultation
                 if (dgvAvailableItems.Columns.Contains("description"))
                     dgvAvailableItems.Columns["description"].HeaderText = "Description";
 
-                // ✅ Show and format the Quantity column
+                // Format quantity column if present
                 if (dgvAvailableItems.Columns.Contains("quantity"))
                 {
                     dgvAvailableItems.Columns["quantity"].Visible = true;
@@ -127,7 +128,7 @@ namespace ENT_Clinic_System.Consultation
                     dgvAvailableItems.Columns["quantity"].ReadOnly = true;
                 }
 
-                // ✅ Adjust column display order (to mirror selected items DGV)
+                // Adjust column order to match selected DGV
                 string[] displayOrder = { "generic_name", "brand_name", "strength", "dosage", "category", "description", "quantity" };
                 int order = 0;
                 foreach (string col in displayOrder)
@@ -136,14 +137,13 @@ namespace ENT_Clinic_System.Consultation
                         dgvAvailableItems.Columns[col].DisplayIndex = order++;
                 }
 
-                // ✅ General DataGridView UI settings
+                // General UI settings
                 dgvAvailableItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dgvAvailableItems.ReadOnly = true;
                 dgvAvailableItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dgvAvailableItems.MultiSelect = false;
-                dgvAvailableItems.RowHeadersVisible = false; // cleaner look
+                dgvAvailableItems.RowHeadersVisible = false;
                 dgvAvailableItems.AllowUserToAddRows = false;
-
             }
             catch (Exception ex)
             {
@@ -151,84 +151,8 @@ namespace ENT_Clinic_System.Consultation
             }
         }
 
-
-
-
-
-        #endregion
-
-        #region === ADD / REMOVE ITEMS ===
-
-        private void DgvAvailableItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            var row = dgvAvailableItems.Rows[e.RowIndex];
-            int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-
-            var existing = dgvSelectedItems.Rows.Cast<DataGridViewRow>()
-                .FirstOrDefault(r => Convert.ToInt32(r.Cells["item_id"].Value) == itemId);
-
-            if (existing != null)
-                existing.Cells["quantity"].Value = Convert.ToInt32(existing.Cells["quantity"].Value) + 1;
-            else
-            {
-                int idx = dgvSelectedItems.Rows.Add();
-                var newRow = dgvSelectedItems.Rows[idx];
-                newRow.Cells["item_id"].Value = itemId;
-                newRow.Cells["generic_name"].Value = row.Cells["generic_name"].Value;
-                newRow.Cells["brand_name"].Value = row.Cells["brand_name"].Value;
-                newRow.Cells["strength"].Value = row.Cells["strength"].Value;
-                newRow.Cells["dosage"].Value = row.Cells["dosage"].Value;
-                newRow.Cells["category"].Value = row.Cells["category"].Value;
-                newRow.Cells["description"].Value = row.Cells["description"].Value;
-                newRow.Cells["quantity"].Value = 1;
-            }
-        }
-
-        private void DgvOtherItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            var row = dgvOtherItems.Rows[e.RowIndex];
-            int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-
-            var existing = selectedOtherDGV.Rows.Cast<DataGridViewRow>()
-                .FirstOrDefault(r => Convert.ToInt32(r.Cells["item_id"].Value) == itemId);
-
-            if (existing != null)
-                existing.Cells["quantity"].Value = Convert.ToInt32(existing.Cells["quantity"].Value) + 1;
-            else
-            {
-                int idx = selectedOtherDGV.Rows.Add();
-                var newRow = selectedOtherDGV.Rows[idx];
-                newRow.Cells["item_id"].Value = itemId;
-                newRow.Cells["description"].Value = row.Cells["description"].Value;
-                newRow.Cells["category"].Value = row.Cells["category"].Value;
-                newRow.Cells["quantity"].Value = 1;
-            }
-        }
-
-        private void DgvSelectedItems_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Right) return;
-            var hit = dgvSelectedItems.HitTest(e.X, e.Y);
-            if (hit.RowIndex < 0) return;
-
-            dgvSelectedItems.ClearSelection();
-            dgvSelectedItems.Rows[hit.RowIndex].Selected = true;
-
-            ContextMenuStrip menu = new ContextMenuStrip();
-            ToolStripMenuItem remove = new ToolStripMenuItem("Remove This Item") { ForeColor = Color.Red };
-            remove.Click += (s, ev) =>
-            {
-                if (MessageBox.Show("Remove this item?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    dgvSelectedItems.Rows.RemoveAt(hit.RowIndex);
-            };
-            menu.Items.Add(remove);
-            menu.Show(dgvSelectedItems, e.Location);
-        }
         /// <summary>
-        /// Loads and enables editing for non-clinic (other) items using DGVCrudHelper.
-        /// Includes inline edit + right-click delete.
+        /// Load other_items directly into the grid and show the real columns (no display-name column).
         /// </summary>
         private void LoadAvailableOtherItems()
         {
@@ -237,96 +161,66 @@ namespace ENT_Clinic_System.Consultation
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-
                     string query = @"
-                SELECT 
-                    other_items.item_id,
-                    other_items.generic_name,
-                    other_items.brand_name,
-                    other_items.strength,
-                    other_items.dosage,
-                    other_items.description,
-                    other_items.category,
-                    other_items.created_at,
-                    other_items.updated_at
-                FROM ent_clinic_db.other_items;
-            ";
+                        SELECT 
+                            item_id,
+                            generic_name,
+                            brand_name,
+                            strength,
+                            dosage,
+                            description,
+                            category,
+                            created_at,
+                            updated_at
+                        FROM ent_clinic_db.other_items";
 
-                    using (var adapter = new MySqlDataAdapter(query, conn))
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var adapter = new MySqlDataAdapter(cmd))
                     {
-                        _availableOtherItemsTable = new DataTable();
-                        adapter.Fill(_availableOtherItemsTable);
-                        dgvOtherItems.DataSource = _availableOtherItemsTable;
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+
+                        // Save reference for any future use
+                        _availableOtherItemsTable = dt;
+
+                        dgvOtherItems.DataSource = dt;
+
+                        // Hide internal id
+                        if (dgvOtherItems.Columns.Contains("item_id"))
+                            dgvOtherItems.Columns["item_id"].Visible = false;
+
+                        // Ensure visible columns have friendlier headers and correct order
+                        if (dgvOtherItems.Columns.Contains("generic_name"))
+                        {
+                            dgvOtherItems.Columns["generic_name"].HeaderText = "Generic Name";
+                            dgvOtherItems.Columns["generic_name"].DisplayIndex = 0;
+                        }
+                        if (dgvOtherItems.Columns.Contains("brand_name"))
+                            dgvOtherItems.Columns["brand_name"].HeaderText = "Brand Name";
+                        if (dgvOtherItems.Columns.Contains("strength"))
+                            dgvOtherItems.Columns["strength"].HeaderText = "Strength";
+                        if (dgvOtherItems.Columns.Contains("dosage"))
+                            dgvOtherItems.Columns["dosage"].HeaderText = "Dosage";
+                        if (dgvOtherItems.Columns.Contains("category"))
+                            dgvOtherItems.Columns["category"].HeaderText = "Category";
+                        if (dgvOtherItems.Columns.Contains("description"))
+                            dgvOtherItems.Columns["description"].HeaderText = "Description";
+
+                        dgvOtherItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        dgvOtherItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                        dgvOtherItems.MultiSelect = false;
+                        dgvOtherItems.ReadOnly = true;
+                        dgvOtherItems.RowHeadersVisible = false;
+                        dgvOtherItems.AllowUserToAddRows = false;
                     }
-
-                    // ✅ Hide unnecessary columns
-                    string[] hiddenCols = { "created_at", "updated_at" };
-                    foreach (string col in hiddenCols)
-                    {
-                        if (dgvOtherItems.Columns.Contains(col))
-                            dgvOtherItems.Columns[col].Visible = false;
-                    }
-
-                    // ✅ Rename headers
-                    var headers = new Dictionary<string, string>
-            {
-                { "generic_name", "Generic Name" },
-                { "brand_name", "Brand Name" },
-                { "strength", "Strength" },
-                { "dosage", "Dosage" },
-                { "description", "Description" },
-                { "category", "Category" }
-            };
-
-                    foreach (var h in headers)
-                    {
-                        if (dgvOtherItems.Columns.Contains(h.Key))
-                            dgvOtherItems.Columns[h.Key].HeaderText = h.Value;
-                    }
-
-                    // ✅ Reorder columns
-                    string[] displayOrder = {
-                "generic_name", "brand_name", "strength", "dosage",
-                 "description", "category"
-            };
-                    int order = 0;
-                    foreach (string col in displayOrder)
-                    {
-                        if (dgvOtherItems.Columns.Contains(col))
-                            dgvOtherItems.Columns[col].DisplayIndex = order++;
-                    }
-
-
-
-                    // Make primary key hidden but accessible for CRUD
-                    if (dgvOtherItems.Columns.Contains("item_id"))
-                        dgvOtherItems.Columns["item_id"].Visible = false;
                 }
-
-                // ✅ Attach DGVCrudHelper for inline edit support
-                _otherItemsCrudHelper = new DGVCrudHelper(
-                    dgvOtherItems,
-                    "other_items",
-                    new List<string>
-                    {
-                "generic_name",
-                "brand_name",
-                "strength",
-                "dosage",
-                "description",
-                "category"
-                    },
-                    "item_id"
-                );
-
-                // ✅ Add right-click delete option
-                InitializeOtherItemsContextMenu();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading other items: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void InitializeOtherItemsContextMenu()
         {
             _otherItemsContextMenu = new ContextMenuStrip();
@@ -369,9 +263,87 @@ namespace ENT_Clinic_System.Consultation
             dgvOtherItems.ContextMenuStrip = _otherItemsContextMenu;
         }
 
-
-
         #endregion
+
+        #region === ADD / REMOVE ITEMS ===
+
+        private void DgvAvailableItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            var row = dgvAvailableItems.Rows[e.RowIndex];
+            if (row.Cells["item_id"].Value == null) return;
+
+            int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
+
+            var existing = dgvSelectedItems.Rows.Cast<DataGridViewRow>()
+                .FirstOrDefault(r => Convert.ToInt32(r.Cells["item_id"].Value) == itemId);
+
+            if (existing != null)
+                existing.Cells["quantity"].Value = Convert.ToInt32(existing.Cells["quantity"].Value) + 1;
+            else
+            {
+                int idx = dgvSelectedItems.Rows.Add();
+                var newRow = dgvSelectedItems.Rows[idx];
+                newRow.Cells["item_id"].Value = itemId;
+                newRow.Cells["generic_name"].Value = row.Cells["generic_name"].Value;
+                newRow.Cells["brand_name"].Value = row.Cells["brand_name"].Value;
+                newRow.Cells["strength"].Value = row.Cells["strength"].Value;
+                newRow.Cells["dosage"].Value = row.Cells["dosage"].Value;
+                newRow.Cells["category"].Value = row.Cells["category"].Value;
+                newRow.Cells["description"].Value = row.Cells["description"].Value;
+                newRow.Cells["quantity"].Value = 1;
+            }
+        }
+
+        private void DgvOtherItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Add selected other item to selectedOtherDGV (same behaviour as medicines)
+            if (e.RowIndex < 0) return;
+            var row = dgvOtherItems.Rows[e.RowIndex];
+            if (row.Cells["item_id"].Value == null) return;
+
+            int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
+
+            var existing = selectedOtherDGV.Rows.Cast<DataGridViewRow>()
+                .FirstOrDefault(r => Convert.ToInt32(r.Cells["item_id"].Value) == itemId);
+
+            if (existing != null)
+                existing.Cells["quantity"].Value = Convert.ToInt32(existing.Cells["quantity"].Value) + 1;
+            else
+            {
+                int idx = selectedOtherDGV.Rows.Add();
+                var newRow = selectedOtherDGV.Rows[idx];
+                newRow.Cells["item_id"].Value = itemId;
+                newRow.Cells["generic_name"].Value = row.Cells["generic_name"].Value;
+                newRow.Cells["brand_name"].Value = row.Cells["brand_name"].Value;
+                newRow.Cells["strength"].Value = row.Cells["strength"].Value;
+                newRow.Cells["dosage"].Value = row.Cells["dosage"].Value;
+                newRow.Cells["category"].Value = row.Cells["category"].Value;
+                newRow.Cells["description"].Value = row.Cells["description"].Value;
+                newRow.Cells["quantity"].Value = 1;
+            }
+        }
+
+        private void DgvSelectedItems_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+            var hit = dgvSelectedItems.HitTest(e.X, e.Y);
+            if (hit.RowIndex < 0) return;
+
+            dgvSelectedItems.ClearSelection();
+            dgvSelectedItems.Rows[hit.RowIndex].Selected = true;
+
+            ContextMenuStrip menu = new ContextMenuStrip();
+            ToolStripMenuItem remove = new ToolStripMenuItem("Remove This Item") { ForeColor = Color.Red };
+            remove.Click += (s, ev) =>
+            {
+                if (MessageBox.Show("Remove this item?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    dgvSelectedItems.Rows.RemoveAt(hit.RowIndex);
+            };
+            menu.Items.Add(remove);
+            menu.Show(dgvSelectedItems, e.Location);
+        }
+
         private void SelectedOtherDGV_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right) return;
@@ -404,6 +376,7 @@ namespace ENT_Clinic_System.Consultation
             }
         }
 
+        #endregion
 
         #region === SUBMIT PRESCRIPTION ===
 
@@ -495,7 +468,6 @@ namespace ENT_Clinic_System.Consultation
             this.Close();
         }
 
-
         #endregion
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -511,7 +483,7 @@ namespace ENT_Clinic_System.Consultation
 
         private void btnSubmit_Click_1(object sender, EventArgs e)
         {
-
+            // unused auto-generated handler kept for designer compatibility
         }
 
         private void addItemButton_Click(object sender, EventArgs e)
@@ -578,7 +550,6 @@ namespace ENT_Clinic_System.Consultation
             }
         }
 
-
         private void updateItemButton_Click(object sender, EventArgs e)
         {
             try
@@ -638,11 +609,11 @@ namespace ENT_Clinic_System.Consultation
             }
         }
 
-
         private void button1_Click(object sender, EventArgs e)
         {
             ClearOtherItemInputs();
         }
+
         /// <summary>
         /// Clears all input ComboBoxes for other_items
         /// </summary>
@@ -661,6 +632,7 @@ namespace ENT_Clinic_System.Consultation
         /// </summary>
         private void PopulateOtherItemInputsFromRow(DataGridViewRow row)
         {
+            if (row == null) return;
             brandNameComboBox.Text = row.Cells["brand_name"].Value?.ToString() ?? "";
             genericNameComboBox.Text = row.Cells["generic_name"].Value?.ToString() ?? "";
             stregnthComboBox.Text = row.Cells["strength"].Value?.ToString() ?? "";
@@ -668,12 +640,11 @@ namespace ENT_Clinic_System.Consultation
             categoryComboBox.Text = row.Cells["category"].Value?.ToString() ?? "";
             descriptionComboBox.Text = row.Cells["description"].Value?.ToString() ?? "";
         }
+
         private void PrescriptionForm_Load(object sender, EventArgs e)
         {
+            // Setup autocomplete lists
             AutoCompleteHelper.SetupAutoComplete(sortCategoryCombobox, "items", new List<string> { "category" });
-
-
-
 
             AutoCompleteHelper.SetupAutoComplete(brandNameComboBox, "other_items", new List<string> { "brand_name" });
             AutoCompleteHelper.SetupAutoComplete(genericNameComboBox, "other_items", new List<string> { "generic_name" });
