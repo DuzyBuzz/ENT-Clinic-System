@@ -21,26 +21,18 @@ namespace ENT_Clinic_System.Helpers
 
         private void InitializeComponent()
         {
-            this.btnCamera = new Button();
-            this.btnFile = new Button();
-            this.btnCancel = new Button();
-            this.lblMessage = new Label();
+            this.btnCamera = new System.Windows.Forms.Button();
+            this.btnFile = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.lblMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // lblMessage
-            // 
-            this.lblMessage.AutoSize = true;
-            this.lblMessage.Location = new System.Drawing.Point(20, 20);
-            this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(200, 20);
-            this.lblMessage.TabIndex = 0;
-            this.lblMessage.Text = "How would you like to add a photo?";
             // 
             // btnCamera
             // 
-            this.btnCamera.Location = new System.Drawing.Point(25, 60);
+            this.btnCamera.Location = new System.Drawing.Point(19, 39);
+            this.btnCamera.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCamera.Name = "btnCamera";
-            this.btnCamera.Size = new System.Drawing.Size(240, 35);
+            this.btnCamera.Size = new System.Drawing.Size(180, 23);
             this.btnCamera.TabIndex = 1;
             this.btnCamera.Text = "Capture from Camera";
             this.btnCamera.UseVisualStyleBackColor = true;
@@ -48,9 +40,10 @@ namespace ENT_Clinic_System.Helpers
             // 
             // btnFile
             // 
-            this.btnFile.Location = new System.Drawing.Point(25, 105);
+            this.btnFile.Location = new System.Drawing.Point(19, 68);
+            this.btnFile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnFile.Name = "btnFile";
-            this.btnFile.Size = new System.Drawing.Size(240, 35);
+            this.btnFile.Size = new System.Drawing.Size(180, 23);
             this.btnFile.TabIndex = 2;
             this.btnFile.Text = "Upload from File";
             this.btnFile.UseVisualStyleBackColor = true;
@@ -58,33 +51,47 @@ namespace ENT_Clinic_System.Helpers
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(25, 150);
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(19, 98);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(240, 35);
+            this.btnCancel.Size = new System.Drawing.Size(180, 23);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // lblMessage
+            // 
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Location = new System.Drawing.Point(15, 13);
+            this.lblMessage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(177, 13);
+            this.lblMessage.TabIndex = 0;
+            this.lblMessage.Text = "How would you like to add a photo?";
+            // 
             // SelectPhotoOptionForm
             // 
             this.AcceptButton = this.btnCamera;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(290, 210);
+            this.ClientSize = new System.Drawing.Size(218, 136);
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnFile);
             this.Controls.Add(this.btnCamera);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SelectPhotoOptionForm";
-            this.StartPosition = FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select Photo Option";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
     }
 }

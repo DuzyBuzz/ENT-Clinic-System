@@ -362,6 +362,7 @@
             this.ClientSize = new System.Drawing.Size(900, 550);
             this.Controls.Add(this.tabControlMain);
             this.Name = "SystemAdminForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "System Admin Panel";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SystemAdminForm_FormClosing);
             this.tabControlMain.ResumeLayout(false);

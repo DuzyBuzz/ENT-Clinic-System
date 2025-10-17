@@ -12,6 +12,8 @@ namespace ENT_Clinic_System.Inventory
         private readonly InventoryHelper _inventoryHelper;
         private bool _isProcessingStockIn = false; // Prevent double stock in
         private ContextMenuStrip movementContextMenu;
+        private ContextMenuStrip itemContextMenu;
+
 
         public InventoryForm()
         {
@@ -34,6 +36,7 @@ namespace ENT_Clinic_System.Inventory
                 ComboBoxCollectionHelper.PopulateComboBox(stregnthComboBox, "items", "strength");
                 ComboBoxCollectionHelper.PopulateComboBox(dosageComboBox, "items", "dosage");
                 ComboBoxCollectionHelper.PopulateComboBox(categoryComboBox, "items", "category");
+                ComboBoxCollectionHelper.PopulateComboBox(sortCategoryCombobox, "items", "category");
                 ComboBoxCollectionHelper.PopulateComboBox(descriptionComboBox, "items", "description");
 
                 // Load inventory DataGridView
@@ -61,6 +64,63 @@ namespace ENT_Clinic_System.Inventory
                 MessageBox.Show("Error loading inventory: " + ex.Message, "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void SetupItemContextMenu()
+        {
+            itemContextMenu = new ContextMenuStrip();
+
+            var deleteItem = new ToolStripMenuItem("Delete Item")
+            {
+                ForeColor = System.Drawing.Color.Red
+            };
+            deleteItem.Click += DeleteItemMenu_Click;
+
+            itemContextMenu.Items.Add(deleteItem);
+
+            // Show menu on right-click
+            dgvItems.MouseDown += DgvItems_MouseDown;
+        }
+        private void DgvItems_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hit = dgvItems.HitTest(e.X, e.Y);
+                if (hit.RowIndex >= 0)
+                {
+                    dgvItems.ClearSelection();
+                    dgvItems.Rows[hit.RowIndex].Selected = true;
+                    itemContextMenu.Show(dgvItems, e.Location);
+                }
+            }
+        }
+        private void DeleteItemMenu_Click(object sender, EventArgs e)
+        {
+            if (dgvItems.SelectedRows.Count == 0) return;
+
+            int itemId = Convert.ToInt32(dgvItems.SelectedRows[0].Cells["item_id"].Value);
+            string brand = dgvItems.SelectedRows[0].Cells["brand_name"].Value.ToString();
+            string generic = dgvItems.SelectedRows[0].Cells["generic_name"].Value.ToString();
+
+            var confirm = MessageBox.Show(
+                $"Are you sure you want to delete the item:\n{brand} ({generic})?",
+                "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+            );
+
+            if (confirm == DialogResult.Yes)
+            {
+                bool success = _inventoryHelper.DeleteItem(itemId);
+                if (success)
+                {
+                    MessageBox.Show("Item deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadInventory();
+                    LoadMovements(); // optional: refresh related movements
+                }
+                else
+                {
+                    MessageBox.Show("Failed to delete item.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
 
         // ==========================
         // Setup Context Menu for Movements
@@ -205,6 +265,7 @@ namespace ENT_Clinic_System.Inventory
                 {
                     MessageBox.Show("Item updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadInventory();
+                    LoadMovements();
                 }
                 else
                 {
@@ -374,8 +435,10 @@ namespace ENT_Clinic_System.Inventory
                 dgv: dgvItems,
                 tableName: "items",
                 columnNames: new string[] { "category" },
-                filterControl: categoryComboBox
+                filterControl: sortCategoryCombobox
             );
+            if (dgvItems.Columns.Contains("status")) dgvItems.Columns["status"].Visible = false;
+            if (dgvItems.Columns.Contains("item_id")) dgvItems.Columns["item_id"].Visible = false;
         }
 
         // ==========================
@@ -486,8 +549,32 @@ namespace ENT_Clinic_System.Inventory
 
         private void writeOffButton_Click(object sender, EventArgs e)
         {
-            WriteOffForm writeOffForm = new WriteOffForm();
+            // Check if itemIdTextBox has a value
+            if (string.IsNullOrWhiteSpace(itemIdTextBox.Text))
+            {
+                MessageBox.Show("Please select an item to write-off.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                itemIdTextBox.Focus();
+                return;
+            }
+
+            if (!int.TryParse(itemIdTextBox.Text, out int itemId))
+            {
+                MessageBox.Show("Invalid item selected. Please select a valid item.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                itemIdTextBox.Focus();
+                return;
+            }
+
+            // Open Write-Off form
+            WriteOffForm writeOffForm = new WriteOffForm(itemId);
             writeOffForm.ShowDialog();
+
+            // Refresh inventory after write-off
+            LoadInventory();
+        }
+
+        private void dgvItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

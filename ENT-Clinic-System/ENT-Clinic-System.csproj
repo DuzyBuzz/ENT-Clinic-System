@@ -468,12 +468,18 @@
     <EmbeddedResource Include="Helpers\PurposeInputForm.resx">
       <DependentUpon>PurposeInputForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Helpers\SelectPhotoOptionForm.resx">
+      <DependentUpon>SelectPhotoOptionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Helpers\VideoCameraUI.resx" />
     <EmbeddedResource Include="InsertForms\AddAppointmentForm.resx">
       <DependentUpon>AddAppointmentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InsertForms\ConsultationForm.resx">
       <DependentUpon>ConsultationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertForms\PatientHealthRecordForm.resx">
+      <DependentUpon>PatientHealthRecordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InsertForms\PatientInfoForm.resx">
       <DependentUpon>PatientInfoForm.cs</DependentUpon>
@@ -532,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SystemAdminForm.resx">
       <DependentUpon>SystemAdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UserLoginForm.resx">
+      <DependentUpon>UserLoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UserProfile.resx">
       <DependentUpon>UserProfile.cs</DependentUpon>

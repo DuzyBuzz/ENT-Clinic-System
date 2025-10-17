@@ -191,12 +191,12 @@ namespace ENT_Clinic_System
         private void systemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SystemAdminForm systemSettingsForm = new SystemAdminForm();
-            systemSettingsForm.Show();
+            systemSettingsForm.ShowDialog();
         }
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AutoCompleteManager autoCompleteManager = new AutoCompleteManager();
-            autoCompleteManager.Show();
+            autoCompleteManager.ShowDialog();
         }
 
         private void MainFormReceptionist_FormClosing(object sender, FormClosingEventArgs e)
@@ -216,13 +216,13 @@ namespace ENT_Clinic_System
         private void patientQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PatientsQueue patientsQueue = new PatientsQueue();
-            patientsQueue.Show();
+            patientsQueue.ShowDialog();
         }
 
         private void doctorPatientsQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DoctorPatientQueue doctorPatientQueue = new DoctorPatientQueue();
-            doctorPatientQueue.Show();
+            doctorPatientQueue.ShowDialog();
         }
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -232,11 +232,6 @@ namespace ENT_Clinic_System
             login.Show();
         }
 
-        private void returnToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            WriteOffForm writeOffForm = new WriteOffForm();
-            writeOffForm.Show();
-        }
 
         private void stocToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -259,13 +254,13 @@ namespace ENT_Clinic_System
         private void itemsDispensingPaymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InvoiceForm invoiceForm = new InvoiceForm();
-            invoiceForm.Show();
+            invoiceForm.ShowDialog();
         }
 
         private void billingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BillingInvoiceForm billingInvoiceForm = new BillingInvoiceForm();
-            billingInvoiceForm.Show();
+            billingInvoiceForm.ShowDialog();
         }
 
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
@@ -391,7 +386,7 @@ namespace ENT_Clinic_System
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InventoryForm inventoryForm = new InventoryForm();
-            inventoryForm.Show();
+            inventoryForm.ShowDialog();
         }
 
         private void accountToolStripMenuItem_Click(object sender, EventArgs e)

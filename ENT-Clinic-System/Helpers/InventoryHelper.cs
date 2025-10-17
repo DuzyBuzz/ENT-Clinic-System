@@ -349,6 +349,67 @@ namespace ENT_Clinic_System.Helpers
                 return -1;
             }
         }
+        public bool AddWriteOff(int itemId, int quantity, string reason)
+        {
+            try
+            {
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        try
+                        {
+                            // Step 1: Insert into write_off_movements
+                            string writeOffQuery = @"
+                        INSERT INTO write_off_movements
+                        (item_id, quantity, reason, created_at, updated_at)
+                        VALUES (@itemId, @quantity, @reason, NOW(), NOW())";
+
+                            using (var cmd = new MySqlCommand(writeOffQuery, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@itemId", itemId);
+                                cmd.Parameters.AddWithValue("@quantity", quantity);
+                                cmd.Parameters.AddWithValue("@reason", reason);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // Step 2: Insert into stock_movements
+                            string stockMovementQuery = @"
+                        INSERT INTO stock_movements
+                        (item_id, movement_type, quantity, expiration_date)
+                        VALUES (@itemId, 'WRITE-OFF', @quantity, NULL)";
+
+                            using (var cmd = new MySqlCommand(stockMovementQuery, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@itemId", itemId);
+                                cmd.Parameters.AddWithValue("@quantity", quantity);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            MessageBox.Show("Error recording write-off: " + ex.Message, "Write-Off Error",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Database connection error: " + ex.Message, "Write-Off Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+
+
 
     }
 }

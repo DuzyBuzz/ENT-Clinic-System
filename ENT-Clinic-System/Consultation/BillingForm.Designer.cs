@@ -219,7 +219,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BillingForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.BillingForm_Load);
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
