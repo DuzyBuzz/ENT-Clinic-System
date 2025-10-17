@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace ENT_Clinic_System.Helpers
 {
@@ -23,18 +24,19 @@ namespace ENT_Clinic_System.Helpers
             string clinicEmailAdd = SettingsHelper.GetSetting("clinic_email") ?? "";
             string clinicHours = SettingsHelper.GetSetting("clinic_hours") ?? "";
             string clinicAffiliations = SettingsHelper.GetSetting("clinic_affiliations") ?? "";
+            string landMark = SettingsHelper.GetSetting("land_mark") ?? "";
 
             // Fonts for A5
             using (Font titleFont = new Font("Arial", 12, FontStyle.Bold))
-            using (Font subtitleFont = new Font("Arial", 7, FontStyle.Regular))
-            using (Font columnTitleFont = new Font("Arial", 7, FontStyle.Bold))
+            using (Font subtitleFont = new Font("Arial", 10, FontStyle.Bold))
+            using (Font columnTitleFont = new Font("Arial",8, FontStyle.Bold))
             using (Font columnFont = new Font("Arial", 7, FontStyle.Regular))
             {
                 // 1. Main title (centered)
                 SizeF titleSize = g.MeasureString(clinicName, titleFont);
                 float titleX = Math.Max((pageWidth - titleSize.Width) / 2, 0);
                 g.DrawString(clinicName, titleFont, Brushes.Black, titleX, y);
-                y += 16;
+                y += 22;
 
                 // 2. Subtitle (centered)
                 if (!string.IsNullOrWhiteSpace(clinicSubtitle))
@@ -45,13 +47,13 @@ namespace ENT_Clinic_System.Helpers
                         SizeF size = g.MeasureString(line, subtitleFont);
                         float x = Math.Max((pageWidth - size.Width) / 2, 0);
                         g.DrawString(line, subtitleFont, Brushes.Black, x, y);
-                        y += 10;
+                        y += 20;
                     }
                     y += 6;
                 }
 
                 // 3. Columns
-                int availableWidth = pageWidth - leftMargin * 2;
+                int availableWidth = pageWidth - leftMargin * 1;
                 int colCount = 3;
                 int colWidth = availableWidth / colCount;
                 int col1X = leftMargin;
@@ -64,31 +66,99 @@ namespace ENT_Clinic_System.Helpers
                 y += 12;
 
                 // Column contents
-                // Column contents
                 List<string> addressLines = new List<string>()
+        {
+            clinicAddress,
+            $"{landMark}",
+
+            $"Tel: {clinicTel}",
+            $"Mobile: {clinicMobile}",
+            $"Email: {clinicEmailAdd}",
+        };
+
+                // 🔹 Smart formatting for Clinic Hours (CSV style)
+                // 🔹 Smart formatting for Clinic Hours (CSV style)
+                string[] hoursLines;
+
+                if (string.IsNullOrEmpty(clinicHours))
+                {
+                    hoursLines = new string[0];
+                }
+                else
+                {
+                    string[] parts = clinicHours.Split(',')
+                        .Select(p => p.Trim())
+                        .Where(p => !string.IsNullOrEmpty(p))
+                        .ToArray();
+
+                    string timePart = "";
+                    List<string> days = new List<string>();
+
+                    foreach (var p in parts)
                     {
-                        clinicAddress,
-                        $"Tel: {clinicTel}",
-                        $"Mobile: {clinicMobile}",
-                        $"Email: {clinicEmailAdd}"
-                    };
+                        // Detect time by AM/PM presence
+                        if (p.IndexOf("AM", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                            p.IndexOf("PM", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            timePart = p;
+                        }
+                        else
+                        {
+                            days.Add(p);
+                        }
+                    }
 
-                // Split hours by newline (\n) instead of comma
-                string[] hoursLines = string.IsNullOrEmpty(clinicHours)
-                    ? new string[0]
-                    : clinicHours.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    List<string> formattedLines = new List<string>();
 
-                // Split affiliations by newline (\n)
-                string[] affiliationsLines = string.IsNullOrEmpty(clinicAffiliations)
-                    ? new string[0]
-                    : clinicAffiliations.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (days.Count > 3)
+                    {
+                        // Split long day list into two lines
+                        int splitIndex = (int)Math.Ceiling(days.Count / 2.0);
+                        formattedLines.Add(string.Join(", ", days.Take(splitIndex)) + ",");
+                        formattedLines.Add(string.Join(", ", days.Skip(splitIndex)));
+                    }
+                    else
+                    {
+                        formattedLines.Add(string.Join(", ", days));
+                    }
+
+                    // Add time below the days
+                    if (!string.IsNullOrEmpty(timePart))
+                        formattedLines.Add(timePart);
+
+                    hoursLines = formattedLines.ToArray();
+                }
+
+
+
+                // Split affiliations by comma only, but if no comma, keep as single line
+                string[] affiliationsLines;
+                if (string.IsNullOrEmpty(clinicAffiliations))
+                {
+                    affiliationsLines = new string[0];
+                }
+                else if (!clinicAffiliations.Contains(","))
+                {
+                    // No comma → single line
+                    affiliationsLines = new string[] { clinicAffiliations.Trim() };
+                }
+                else
+                {
+                    // Comma exists → split by comma
+                    affiliationsLines = clinicAffiliations
+                        .Split(',')
+                        .Select(a => a.Trim())
+                        .Where(a => !string.IsNullOrEmpty(a))
+                        .ToArray();
+                }
+
 
                 // Determine max lines
                 int maxLines = Math.Max(Math.Max(addressLines.Count, hoursLines.Length), affiliationsLines.Length);
 
                 // Extend shorter columns
                 while (addressLines.Count < maxLines) addressLines.Add("");
-                while (hoursLines.Length < maxLines) Array.Resize(ref hoursLines, maxLines);
+                if (hoursLines.Length < maxLines) Array.Resize(ref hoursLines, maxLines);
                 if (affiliationsLines.Length < maxLines) Array.Resize(ref affiliationsLines, maxLines);
 
                 // Draw all lines aligned
@@ -100,26 +170,35 @@ namespace ENT_Clinic_System.Helpers
                     y += 10;
                 }
 
+                y += 25;
 
-                y += 50;
-
-                // Horizontal line under header
-                using (Pen pen = new Pen(Color.Black, 1))
+                // Double line under header
+                using (Pen thickPen = new Pen(Color.Black, 2)) // thick top line
+                using (Pen thinPen = new Pen(Color.Black, 1))  // lighter/thinner bottom line
                 {
-                    g.DrawLine(pen, leftMargin, y, pageWidth - leftMargin, y);
+                    // Top thick line
+                    g.DrawLine(thickPen, leftMargin, y, pageWidth - leftMargin, y);
+
+                    // Bottom thin line, a few pixels below
+                    g.DrawLine(thinPen, leftMargin, y + 3, pageWidth - leftMargin, y + 3);
+
+                    // Move y below the double line
+                    y += 10;
                 }
+
                 y += 6;
             }
 
             return y;
         }
 
+
         /// <summary>
         /// Prints the report footer and returns the new Y position.
         /// </summary>
         public static int PrintFooter(Graphics g, int leftMargin, int startY, int pageWidth)
         {
-            int y = startY ;
+            int y = startY;
 
             string clinicName = SettingsHelper.GetSetting("clinic_name") ?? "Unknown Clinic Name";
             string licenseNumber = SettingsHelper.GetSetting("license_number") ?? "";
@@ -139,7 +218,7 @@ namespace ENT_Clinic_System.Helpers
                 // License number
                 g.DrawString("Lic. No.", labelFont, Brushes.Black, colX - 150, y);
                 g.DrawLine(linePen, colX - 100, y + 10, colX + 160, y + 10);
-                g.DrawString(licenseNumber, numberFont, Brushes.Black, colX , y - 2);
+                g.DrawString(licenseNumber, numberFont, Brushes.Black, colX, y - 2);
                 y += 16;
 
                 // PTR

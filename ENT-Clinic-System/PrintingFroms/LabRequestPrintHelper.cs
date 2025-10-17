@@ -12,36 +12,32 @@ namespace ENT_Clinic_System.PrintingForms
 {
     public class LabRequestPrintHelper
     {
-        private int consultationId;
-        private PrintDocument printDocument;
+        private int _consultationId;
+        private PrintDocument _printDocument;
 
         // Patient info
-        private string patientName = "";
-        private string patientAddress = "";
-        private string patientAge = "";
-        private string patientGender = "";
-        private DateTime requestDate;
+        private string _patientName = "";
+        private string _patientAddress = "";
+        private string _patientAge = "";
+        private string _patientGender = "";
+        private DateTime _requestDate;
 
-        // Lab tests organized by category
-        private Dictionary<string, List<(string TestName, bool IsChecked)>> labTestsByCategory
-            = new Dictionary<string, List<(string, bool)>>();
+        // Selected lab tests grouped by category
+        private Dictionary<string, List<string>> _selectedTestsByCategory = new Dictionary<string, List<string>>();
 
         public LabRequestPrintHelper(int consultationId)
         {
-            this.consultationId = consultationId;
+            _consultationId = consultationId;
             LoadData();
 
-            printDocument = new PrintDocument();
-
-            // Set A5 Portrait
-            printDocument.DefaultPageSettings.PaperSize = new PaperSize("A5", 583, 827);
-            printDocument.DefaultPageSettings.Margins = new Margins(30, 30, 30, 40);
-
-            printDocument.PrintPage += PrintDocument_PrintPage;
+            _printDocument = new PrintDocument();
+            _printDocument.DefaultPageSettings.PaperSize = new PaperSize("A5", 583, 827);
+            _printDocument.DefaultPageSettings.Margins = new Margins(40, 40, 60, 60);
+            _printDocument.PrintPage += PrintDocument_PrintPage;
         }
 
         // ===========================
-        // LOAD DATA FROM DATABASE
+        // LOAD DATA
         // ===========================
         private void LoadData()
         {
@@ -61,39 +57,45 @@ namespace ENT_Clinic_System.PrintingForms
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@consultationId", consultationId);
+                        cmd.Parameters.AddWithValue("@consultationId", _consultationId);
 
                         using (var reader = cmd.ExecuteReader())
                         {
                             if (!reader.Read())
                                 throw new Exception("No lab request found for this consultation.");
 
-                            patientName = reader["full_name"].ToString();
-                            patientAddress = reader["address"].ToString();
-                            patientAge = reader["age"].ToString();
-                            patientGender = reader["sex"].ToString();
-                            requestDate = Convert.ToDateTime(reader["request_date"]);
+                            _patientName = reader["full_name"].ToString();
+                            _patientAddress = reader["address"].ToString();
+                            _patientAge = reader["age"].ToString();
+                            _patientGender = reader["sex"].ToString();
+                            _requestDate = Convert.ToDateTime(reader["request_date"]);
 
                             string jsonTests = reader["test_ids"].ToString();
                             List<int> checkedTestIds = JsonSerializer.Deserialize<List<int>>(jsonTests) ?? new List<int>();
-
                             reader.Close();
 
-                            string testQuery = "SELECT id, category, test_name FROM lab_tests ORDER BY category, test_name";
-                            using (var testCmd = new MySqlCommand(testQuery, conn))
-                            using (var testReader = testCmd.ExecuteReader())
+                            if (checkedTestIds.Count > 0)
                             {
-                                while (testReader.Read())
+                                string ids = string.Join(",", checkedTestIds);
+                                string testQuery = $@"
+                                    SELECT category, test_name
+                                    FROM lab_tests
+                                    WHERE id IN ({ids})
+                                    ORDER BY category, test_name";
+
+                                using (var testCmd = new MySqlCommand(testQuery, conn))
+                                using (var testReader = testCmd.ExecuteReader())
                                 {
-                                    string cat = testReader["category"].ToString();
-                                    string testName = testReader["test_name"].ToString();
-                                    int testId = Convert.ToInt32(testReader["id"]);
-                                    bool isChecked = checkedTestIds.Contains(testId);
+                                    while (testReader.Read())
+                                    {
+                                        string cat = testReader["category"].ToString();
+                                        string testName = testReader["test_name"].ToString();
 
-                                    if (!labTestsByCategory.ContainsKey(cat))
-                                        labTestsByCategory[cat] = new List<(string, bool)>();
+                                        if (!_selectedTestsByCategory.ContainsKey(cat))
+                                            _selectedTestsByCategory[cat] = new List<string>();
 
-                                    labTestsByCategory[cat].Add((testName, isChecked));
+                                        _selectedTestsByCategory[cat].Add(testName);
+                                    }
                                 }
                             }
                         }
@@ -102,8 +104,8 @@ namespace ENT_Clinic_System.PrintingForms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading lab request: " + ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error loading lab request: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -113,115 +115,106 @@ namespace ENT_Clinic_System.PrintingForms
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
-            int leftMargin = e.MarginBounds.Left;
-            int y = e.MarginBounds.Top;
+            int leftMargin = 10;
+            int y = 10;
 
-            // Header
-            y = WaterMarkHelper.PrintHeader(g, leftMargin, y, e.MarginBounds.Width);
+            // 1️⃣ Header (Watermark + Clinic Info)
+            y = WaterMarkHelper.PrintHeader(g, leftMargin, y, e.PageBounds.Width);
 
-            // Patient Info
-            DrawPatientInfo(g, leftMargin, ref y, e.MarginBounds.Width);
-
-            // Lab Tests (2 columns for A5)
-            DrawLabTests(g, y + 5, e.MarginBounds.Width, 2, e.MarginBounds.Width / 2 - 10);
-
-            // Footer
-            WaterMarkHelper.PrintFooter(g, leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width);
-        }
-
-        // ===========================
-        // DRAW PATIENT INFO
-        // ===========================
-        private void DrawPatientInfo(Graphics g, int leftMargin, ref int y, int pageWidth)
-        {
-            using (Font labelFont = new Font("Arial", 9, FontStyle.Bold))
-            using (Font valueFont = new Font("Arial", 9))
+            // 2️⃣ Patient Info (with underline style like prescription)
+            using (Font labelFont = new Font("Arial", 8, FontStyle.Bold))
+            using (Font valueFont = new Font("Arial", 8))
             {
-                int sectionWidth = pageWidth - leftMargin * 2;
-                int x = leftMargin;
+                int underlineOffset = 2;
 
-                g.DrawString($"Patient: {patientName}", valueFont, Brushes.Black, x, y);
-                g.DrawString($"Date: {requestDate:MM/dd/yyyy}", valueFont, Brushes.Black, x + sectionWidth - 100, y);
-                y += 18;
+                // Patient Name
+                g.DrawString("Name:", labelFont, Brushes.Black, leftMargin, y);
+                g.DrawString(_patientName, valueFont, Brushes.Black, leftMargin + 100, y);
+                SizeF nameSize = g.MeasureString(_patientName, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 100, y + nameSize.Height + underlineOffset,
+                           leftMargin + 100 + nameSize.Width, y + nameSize.Height + underlineOffset);
 
-                g.DrawString($"Address: {patientAddress}", valueFont, Brushes.Black, x, y);
-                y += 18;
+                // Age
+                g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 350, y);
+                g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 380, y);
+                SizeF ageSize = g.MeasureString(_patientAge, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 380, y + ageSize.Height + underlineOffset,
+                           leftMargin + 380 + ageSize.Width, y + ageSize.Height + underlineOffset);
 
-                g.DrawString($"Age: {patientAge}", valueFont, Brushes.Black, x, y);
-                g.DrawString($"Gender: {patientGender}", valueFont, Brushes.Black, x + 80, y);
+                // Sex
+                g.DrawString("Sex:", labelFont, Brushes.Black, leftMargin + 420, y);
+                g.DrawString(_patientGender, valueFont, Brushes.Black, leftMargin + 450, y);
+                SizeF sexSize = g.MeasureString(_patientGender, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 450, y + sexSize.Height + underlineOffset,
+                           leftMargin + 450 + sexSize.Width, y + sexSize.Height + underlineOffset);
+
+                y += 20;
+
+                // Address
+                g.DrawString("Address:", labelFont, Brushes.Black, leftMargin, y);
+                g.DrawString(_patientAddress, valueFont, Brushes.Black, leftMargin + 100, y);
+                SizeF addressSize = g.MeasureString(_patientAddress, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 100, y + addressSize.Height + underlineOffset,
+                           leftMargin + 100 + addressSize.Width, y + addressSize.Height + underlineOffset);
+
+                // Date
+                g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 345, y);
+                string formattedDate = _requestDate.ToString("MMMM dd, yyyy");
+                g.DrawString(formattedDate, valueFont, Brushes.Black, leftMargin + 380, y);
+                SizeF dateSize = g.MeasureString(formattedDate, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 380, y + dateSize.Height + underlineOffset,
+                           leftMargin + 380 + dateSize.Width, y + dateSize.Height + underlineOffset);
+
                 y += 25;
             }
-        }
 
-        // ===========================
-        // DRAW LAB TESTS
-        // ===========================
-        // ===========================
-        // DRAW LAB TESTS (Centered horizontally, left-aligned text)
-        // ===========================
-        private void DrawLabTests(Graphics g, int yStart, int pageWidth, int colCount, int colWidth)
-        {
+            // 2️⃣.5️⃣ Title Section (LABORATORY REQUEST)
+            using (Font titleFont = new Font("Times Roman", 12, FontStyle.Bold | FontStyle.Underline))
+            {
+                string titleText = "LABORATORY REQUEST";
+                SizeF titleSize = g.MeasureString(titleText, titleFont);
+
+                // Center horizontally
+                float centerX = (e.PageBounds.Width - titleSize.Width) / 2;
+                g.DrawString(titleText, titleFont, Brushes.Black, centerX, y);
+                y += (int)titleSize.Height + 10; // move down a bit for spacing
+            }
+
+            // 3️⃣ Selected Lab Tests Section
             using (Font categoryFont = new Font("Arial", 9, FontStyle.Bold))
             using (Font testFont = new Font("Arial", 8))
             {
-                // Calculate total width of all columns
-                int totalColsWidth = colCount * colWidth;
-                int startX = (pageWidth - totalColsWidth) / 2 +20; // center columns horizontally
-
-                int colIndex = 0;
-                int currentY = yStart;
-                int maxColHeight = 0;
-
-                foreach (var category in labTestsByCategory)
+                if (_selectedTestsByCategory.Count == 0)
                 {
-                    int colX = startX + (colIndex * colWidth);
-                    int catY = currentY;
-
-                    // Draw category title
-                    g.DrawString(category.Key, categoryFont, Brushes.Black, colX, catY);
-                    catY += 16;
-
-                    // Draw tests under category
-                    foreach (var test in category.Value)
+                    g.DrawString("No lab tests selected.", testFont, Brushes.Black, leftMargin + 20, y);
+                }
+                else
+                {
+                    foreach (var category in _selectedTestsByCategory)
                     {
-                        // Checkbox rectangle
-                        Rectangle boxRect = new Rectangle(colX, catY, 10, 10);
-                        g.DrawRectangle(Pens.Black, boxRect);
+                        // Draw category title
+                        g.DrawString(category.Key, categoryFont, Brushes.Black, leftMargin + 20, y);
+                        y += 18;
 
-                        // Draw check mark if selected
-                        if (test.IsChecked)
+                        // Draw tests
+                        foreach (var testName in category.Value)
                         {
-                            g.DrawLine(Pens.Black, boxRect.Left + 2, boxRect.Top + 5,
-                                boxRect.Left + 5, boxRect.Bottom - 2);
-                            g.DrawLine(Pens.Black, boxRect.Left + 5, boxRect.Bottom - 2,
-                                boxRect.Right - 2, boxRect.Top + 2);
+                            g.DrawString($"• {testName}", testFont, Brushes.Black, leftMargin + 40, y);
+                            y += 16;
                         }
 
-                        // Draw test name left-aligned next to checkbox
-                        RectangleF textRect = new RectangleF(boxRect.Right + 4, catY - 1, colWidth - 20, 40);
-                        g.DrawString(test.TestName, testFont, Brushes.Black, textRect, new StringFormat
+                        // Light divider line after each category
+                        using (Pen dividerPen = new Pen(Color.FromArgb(120, 0, 0, 0), 1))
                         {
-                            Alignment = StringAlignment.Near, // left-aligned
-                            LineAlignment = StringAlignment.Near
-                        });
-
-                        // Measure text height to move Y
-                        SizeF size = g.MeasureString(test.TestName, testFont, (int)textRect.Width);
-                        catY += (int)size.Height + 6;
-                    }
-
-                    maxColHeight = Math.Max(maxColHeight, catY);
-                    colIndex++;
-
-                    // Move to next row if all columns filled
-                    if (colIndex >= colCount)
-                    {
-                        colIndex = 0;
-                        currentY = maxColHeight + 12;
-                        maxColHeight = 0;
+                            g.DrawLine(dividerPen, leftMargin + 50, y, e.PageBounds.Width - leftMargin - 20, y);
+                        }
+                        y += 10;
                     }
                 }
             }
+
+            // 4️⃣ Footer
+            WaterMarkHelper.PrintFooter(g, leftMargin, e.MarginBounds.Bottom - 30, e.MarginBounds.Width + 10);
         }
 
 
@@ -232,7 +225,7 @@ namespace ENT_Clinic_System.PrintingForms
         {
             PrintPreviewDialog preview = new PrintPreviewDialog
             {
-                Document = printDocument,
+                Document = _printDocument,
                 Width = 900,
                 Height = 700
             };
@@ -249,10 +242,10 @@ namespace ENT_Clinic_System.PrintingForms
                     ToolStripButton customPrint = new ToolStripButton("Print");
                     customPrint.Click += delegate
                     {
-                        using (PrintDialog dlg = new PrintDialog { Document = printDocument })
+                        using (PrintDialog dlg = new PrintDialog { Document = _printDocument })
                         {
                             if (dlg.ShowDialog() == DialogResult.OK)
-                                printDocument.Print();
+                                _printDocument.Print();
                         }
                     };
                     tool.Items.Insert(0, customPrint);

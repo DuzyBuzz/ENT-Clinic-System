@@ -34,6 +34,7 @@ namespace ENT_Clinic_System.Consultation
             this.selectedOtherDGV = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.button2 = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -58,7 +59,6 @@ namespace ENT_Clinic_System.Consultation
             this.searchItemtButton = new System.Windows.Forms.Button();
             this.searchItemsTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableItems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedItems)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -113,7 +113,7 @@ namespace ENT_Clinic_System.Consultation
             // btnSubmit
             // 
             this.btnSubmit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSubmit.Location = new System.Drawing.Point(546, 3);
+            this.btnSubmit.Location = new System.Drawing.Point(544, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(103, 32);
             this.btnSubmit.TabIndex = 2;
@@ -213,7 +213,7 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.18123F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.81878F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.clearButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnSubmit, 1, 0);
@@ -225,16 +225,25 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel4.Size = new System.Drawing.Size(767, 38);
             this.tableLayoutPanel4.TabIndex = 10;
             // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button2.Location = new System.Drawing.Point(661, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(103, 32);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Close";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // clearButton
             // 
             this.clearButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.clearButton.Location = new System.Drawing.Point(420, 3);
+            this.clearButton.Location = new System.Drawing.Point(418, 3);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(120, 32);
             this.clearButton.TabIndex = 3;
             this.clearButton.Text = "Clear";
             this.clearButton.UseVisualStyleBackColor = true;
-            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // panel1
             // 
@@ -329,7 +338,6 @@ namespace ENT_Clinic_System.Consultation
             this.button1.TabIndex = 15;
             this.button1.Text = "Clear";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // addItemNameComboBox
             // 
@@ -399,7 +407,6 @@ namespace ENT_Clinic_System.Consultation
             this.addItemButton.TabIndex = 8;
             this.addItemButton.Text = "Add Item";
             this.addItemButton.UseVisualStyleBackColor = false;
-            this.addItemButton.Click += new System.EventHandler(this.addItemButton_Click);
             // 
             // updateItemButton
             // 
@@ -412,7 +419,6 @@ namespace ENT_Clinic_System.Consultation
             this.updateItemButton.TabIndex = 9;
             this.updateItemButton.Text = "Update Item";
             this.updateItemButton.UseVisualStyleBackColor = false;
-            this.updateItemButton.Click += new System.EventHandler(this.updateItemButton_Click);
             // 
             // dgvOtherItems
             // 
@@ -429,7 +435,6 @@ namespace ENT_Clinic_System.Consultation
             this.dgvOtherItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvOtherItems.Size = new System.Drawing.Size(754, 314);
             this.dgvOtherItems.TabIndex = 1;
-            this.dgvOtherItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOtherItems_CellContentClick);
             // 
             // groupBoxAvailable
             // 
@@ -524,7 +529,6 @@ namespace ENT_Clinic_System.Consultation
             this.searchItemtButton.TabIndex = 0;
             this.searchItemtButton.Text = "🔎";
             this.searchItemtButton.UseVisualStyleBackColor = false;
-            this.searchItemtButton.Click += new System.EventHandler(this.searchItemtButton_Click);
             // 
             // searchItemsTextBox
             // 
@@ -551,17 +555,6 @@ namespace ENT_Clinic_System.Consultation
             this.label8.Text = "Search Item:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button2
-            // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button2.Location = new System.Drawing.Point(661, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(103, 32);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Close";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // PrescriptionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 20F);
@@ -574,7 +567,6 @@ namespace ENT_Clinic_System.Consultation
             this.Name = "PrescriptionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Prescription - ENT Clinic";
-            this.Load += new System.EventHandler(this.PrescriptionForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableItems)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedItems)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);

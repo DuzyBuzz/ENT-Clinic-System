@@ -21,13 +21,9 @@ namespace ENT_Clinic_System.PrintingForms
         private string _patientGender = "";
         private DateTime _prescriptionDate;
 
-        // Prescription items
-        private List<(string ItemName, string Description, int Quantity, string Note)> _medicines
-            = new List<(string, string, int, string)>();
-
-        // Other prescription items
-        private List<(string ItemName, string Category, string Description, int Quantity, string Note)> _otherItems
-            = new List<(string, string, string, int, string)>();
+        // Prescription items (medicines + other items combined)
+        private List<(string GenericName, string BrandName, string Strength, string Dosage, int Quantity, string Sig)> _items
+            = new List<(string, string, string, string, int, string)>();
 
         public PrescriptionPrintHelper(int consultationId)
         {
@@ -49,15 +45,15 @@ namespace ENT_Clinic_System.PrintingForms
                 {
                     conn.Open();
 
-                    // 🔹 1. Load patient info + medicines
+                    // 🔹 Load medicines
                     string queryMedicines = @"
                         SELECT p.full_name, p.address, p.age, p.sex, pr.created_at,
-                               i.item_name, i.description, pr.quantity, pr.note
+                               i.generic_name, i.brand_name, i.strength, i.dosage, pr.quantity, pr.sig
                         FROM prescription pr
                         JOIN patients p ON pr.patient_id = p.patient_id
                         JOIN items i ON pr.item_id = i.item_id
                         WHERE pr.consultation_id = @consultationId
-                        ORDER BY i.item_name";
+                        ORDER BY i.generic_name";
 
                     var cmd = new MySqlCommand(queryMedicines, conn);
                     cmd.Parameters.AddWithValue("@consultationId", _consultationId);
@@ -76,18 +72,21 @@ namespace ENT_Clinic_System.PrintingForms
                             firstRow = false;
                         }
 
-                        string itemName = reader["item_name"].ToString();
-                        string description = reader["description"]?.ToString() ?? "";
-                        int quantity = Convert.ToInt32(reader["quantity"]);
-                        string note = reader["note"]?.ToString() ?? "";
-
-                        _medicines.Add((itemName, description, quantity, note));
+                        _items.Add((
+                            reader["generic_name"].ToString(),
+                            reader["brand_name"].ToString(),
+                            reader["strength"].ToString(),
+                            reader["dosage"]?.ToString() ?? "",
+                            Convert.ToInt32(reader["quantity"]),
+                            reader["sig"]?.ToString() ?? ""
+                        ));
                     }
                     reader.Close();
 
-                    // 🔹 2. Load other items
+                    // 🔹 Load other items
                     string queryOthers = @"
-                        SELECT o.item_name, o.description, o.category, po.quantity, po.note
+                        SELECT o.item_name AS generic_name, o.item_name AS brand_name, '' AS strength, '' AS dosage,
+                               po.quantity, po.sig
                         FROM prescription_other po
                         JOIN other_items o ON po.item_id = o.item_id
                         WHERE po.consultation_id = @consultationId
@@ -99,17 +98,18 @@ namespace ENT_Clinic_System.PrintingForms
 
                     while (reader2.Read())
                     {
-                        string itemName = reader2["item_name"].ToString();
-                        string description = reader2["description"]?.ToString() ?? "";
-                        string category = reader2["category"].ToString();
-                        int quantity = Convert.ToInt32(reader2["quantity"]);
-                        string note = reader2["note"]?.ToString() ?? "";
-
-                        _otherItems.Add((itemName, category, description, quantity, note));
+                        _items.Add((
+                            reader2["generic_name"].ToString(),
+                            reader2["brand_name"].ToString(),
+                            reader2["strength"].ToString(),
+                            reader2["dosage"].ToString(),
+                            Convert.ToInt32(reader2["quantity"]),
+                            reader2["sig"]?.ToString() ?? ""
+                        ));
                     }
                     reader2.Close();
 
-                    if (_medicines.Count == 0 && _otherItems.Count == 0)
+                    if (_items.Count == 0)
                         throw new Exception("No prescription found for this consultation.");
                 }
             }
@@ -126,87 +126,121 @@ namespace ENT_Clinic_System.PrintingForms
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
-            int leftMargin = 50;
-            int y = 20;
+            int leftMargin =10;
+            int y = 10;
 
-            // 1️⃣ Header (clinic info)
+            // 1️⃣ Header (Watermark + clinic info)
             y = WaterMarkHelper.PrintHeader(g, leftMargin, y, e.PageBounds.Width);
 
-            // 2️⃣ Patient Info
-            using (Font labelFont = new Font("Arial", 9, FontStyle.Bold))
-            using (Font valueFont = new Font("Arial", 9))
+            // 2️⃣ Patient Info (2 columns)
+            using (Font labelFont = new Font("Arial", 8, FontStyle.Bold))
+            using (Font valueFont = new Font("Arial", 8))
             {
-                g.DrawString("Patient Name:", labelFont, Brushes.Black, leftMargin, y);
+                int underlineOffset = 2; // distance below text for underline
+
+                // Patient Name
+                g.DrawString("Name:", labelFont, Brushes.Black, leftMargin, y);
                 g.DrawString(_patientName, valueFont, Brushes.Black, leftMargin + 100, y);
-                g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 350, y); // moved left from 400
-                g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 390, y); // moved left from 440
-                y += 25;
+                SizeF nameSize = g.MeasureString(_patientName, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 100, y + nameSize.Height + underlineOffset,
+                           leftMargin + 100 + nameSize.Width, y + nameSize.Height + underlineOffset);
 
-                g.DrawString("Gender:", labelFont, Brushes.Black, leftMargin, y);
-                g.DrawString(_patientGender, valueFont, Brushes.Black, leftMargin + 60, y);
-                g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 350, y); // moved left from 400
-                g.DrawString(_prescriptionDate.ToShortDateString(), valueFont, Brushes.Black, leftMargin + 390, y); // moved left from 440
-                y += 40;
+                // Age
+                g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 350, y);
+                g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 380, y);
+                SizeF ageSize = g.MeasureString(_patientAge, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 380, y + ageSize.Height + underlineOffset,
+                           leftMargin + 380 + ageSize.Width, y + ageSize.Height + underlineOffset);
 
+                // Sex
+                g.DrawString("Sex:", labelFont, Brushes.Black, leftMargin + 420, y);
+                g.DrawString(_patientGender, valueFont, Brushes.Black, leftMargin + 450, y);
+                SizeF sexSize = g.MeasureString(_patientGender, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 450, y + sexSize.Height + underlineOffset,
+                           leftMargin + 450 + sexSize.Width, y + sexSize.Height + underlineOffset);
+
+                y += 20;
+
+                // Address
+                g.DrawString("Address:", labelFont, Brushes.Black, leftMargin, y);
+                g.DrawString(_patientAddress, valueFont, Brushes.Black, leftMargin + 100, y);
+                SizeF addressSize = g.MeasureString(_patientAddress, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 100, y + addressSize.Height + underlineOffset,
+                           leftMargin + 100 + addressSize.Width, y + addressSize.Height + underlineOffset);
+
+                // Date
+                g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 345, y);
+                string formattedDate = _prescriptionDate.ToString("MMMM dd, yyyy"); // e.g., October 17, 2025
+                g.DrawString(formattedDate, valueFont, Brushes.Black, leftMargin + 380, y);
+
+                // Draw underline
+                SizeF dateSize = g.MeasureString(formattedDate, valueFont);
+                g.DrawLine(Pens.Black, leftMargin + 380, y + dateSize.Height + underlineOffset,
+                           leftMargin + 380 + dateSize.Width, y + dateSize.Height + underlineOffset);
+
+
+                y += 10;
             }
 
-            using (Font headerFont = new Font("Arial", 9, FontStyle.Bold))
-            using (Font rowFont = new Font("Arial", 9))
+
+            // 3️⃣ Prescription Items
+            using (Font rxFont = new Font("Times New Roman", 50, FontStyle.Bold))
+            using (Font itemFont = new Font("Arial",8))
+            using (Font sigFont = new Font("Arial",8, FontStyle.Italic))
             {
-                // ================================
-                // SECTION: ALL PRESCRIPTIONS
-                // ================================
-                if (_medicines.Count + _otherItems.Count > 0)
+                bool rxPrinted = false;
+                foreach (var item in _items)
                 {
-                    g.DrawString("PRESCRIPTIONS", headerFont, Brushes.Black, leftMargin, y);
-                    y += 20;
-
-                    g.DrawString("Item Name", headerFont, Brushes.Black, leftMargin, y);
-                    g.DrawString("Qty", headerFont, Brushes.Black, leftMargin + 250, y);
-                    g.DrawString("Category / Description", headerFont, Brushes.Black, leftMargin + 300, y);
-                    y += 20;
-                    g.DrawLine(Pens.Black, leftMargin, y, e.PageBounds.Width - leftMargin, y);
-                    y += 10;
-
-                    // First print medicines
-                    foreach (var item in _medicines)
+                    // Print ℞ only once for first item
+                    if (!rxPrinted)
                     {
-                        g.DrawString(item.ItemName, rowFont, Brushes.Black, leftMargin, y);
-                        g.DrawString(item.Quantity.ToString(), rowFont, Brushes.Black, leftMargin + 250, y);
-                        g.DrawString($"Medicine - {item.Description}", rowFont, Brushes.Black, leftMargin + 300, y);
-                        y += 20;
+                        g.DrawString("\u211E", rxFont, Brushes.Black, leftMargin - 15, y);
+                        rxPrinted = true;
+                        y +=50;
+                    }
 
-                        if (!string.IsNullOrEmpty(item.Note))
+                    int xOffset = leftMargin + 90;
+                    // Define consistent vertical and horizontal spacing
+                    int lineSpacing = 20;
+                    int indentBrand = 10;  // indentation for brand name
+                    int indentQty = 180;   // horizontal position for quantity
+                    int indentDosage = 240; // horizontal position for dosage
+                    int indentSig = 10;    // deeper indent for Sig note
+
+                    // 1️⃣ Generic Name + Strength
+                    g.DrawString(item.GenericName, itemFont, Brushes.Black, xOffset, y);
+                    g.DrawString(item.Strength, itemFont, Brushes.Black, xOffset + 180, y); // adjust 120 as needed
+                    y += lineSpacing;
+
+                    // 2️⃣ Brand Name, Quantity, Dosage — all individually placed
+                    g.DrawString($"({item.BrandName})", itemFont, Brushes.Black, xOffset + indentBrand, y);
+                    g.DrawString($"#{item.Quantity}", itemFont, Brushes.Black, xOffset + indentQty, y);
+                    g.DrawString(item.Dosage, itemFont, Brushes.Black, xOffset + indentDosage, y);
+                    y += lineSpacing - 2;
+
+                    // 3️⃣ Sig (optional)
+                    if (!string.IsNullOrEmpty(item.Sig))
+                    {
+                        g.DrawString($"- Sig: {item.Sig}", sigFont, Brushes.Black, xOffset + indentSig, y);
+                        y += lineSpacing;
+                        // 🔹 Add a subtle 50% opacity divider line under the prescription entry
+                        using (Pen lightPen = new Pen(Color.FromArgb(128, 0, 0, 0), 1)) // 128 = 50% opacity
                         {
-                            g.DrawString($"- Note: {item.Note}", rowFont, Brushes.Black, leftMargin + 20, y);
-                            y += 20;
+                            int lineStartX = leftMargin + 30;
+                            int lineEndX = e.PageBounds.Width - leftMargin - 30;
+                            g.DrawLine(lightPen, lineStartX, y, lineEndX, y);
                         }
                     }
 
-                    // Then print other items
-                    foreach (var item in _otherItems)
-                    {
-                        g.DrawString(item.ItemName, rowFont, Brushes.Black, leftMargin, y);
-                        g.DrawString(item.Quantity.ToString(), rowFont, Brushes.Black, leftMargin + 250, y);
-                        g.DrawString($"{item.Category} - {item.Description}", rowFont, Brushes.Black, leftMargin + 300, y);
-                        y += 20;
+                    // 4️⃣ Extra spacing between prescription items
+                    y += 8;
 
-                        if (!string.IsNullOrEmpty(item.Note))
-                        {
-                            g.DrawString($"- Note: {item.Note}", rowFont, Brushes.Black, leftMargin + 20, y);
-                            y += 20;
-                        }
-                    }
-
-                    y += 20;
-                    g.DrawLine(Pens.Black, leftMargin, y, e.PageBounds.Width - leftMargin, y);
                 }
             }
 
-            // 3️⃣ Footer (doctor info / signature)
-            WaterMarkHelper.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width + 150);
+            // 4️⃣ Footer
+            WaterMarkHelper.PrintFooter(g, leftMargin, e.MarginBounds.Bottom , e.MarginBounds.Width + 150);
         }
-
 
         // =========================
         // SHOW PRINT PREVIEW

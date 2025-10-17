@@ -9,23 +9,23 @@ namespace ENT_Clinic_System.Consultation
 {
     public partial class PrescriptionNoteForm : Form
     {
-        // Holds notes for both medicines and other items
-        public Dictionary<int, string> ItemNotes { get; private set; } = new Dictionary<int, string>();
-        public Dictionary<int, string> OtherItemNotes { get; private set; } = new Dictionary<int, string>();
+        // Holds Sig instructions for both medicines and other items
+        public Dictionary<int, string> ItemSigs { get; private set; } = new Dictionary<int, string>();
+        public Dictionary<int, string> OtherItemSigs { get; private set; } = new Dictionary<int, string>();
 
         public PrescriptionNoteForm(DataGridView dgvSelectedItems, DataGridView selectedOtherDGV)
         {
             InitializeComponent();
-            BuildNotesForm(dgvSelectedItems, selectedOtherDGV);
+            BuildSigForm(dgvSelectedItems, selectedOtherDGV);
         }
 
-        private void BuildNotesForm(DataGridView dgvSelectedItems, DataGridView selectedOtherDGV)
+        private void BuildSigForm(DataGridView dgvSelectedItems, DataGridView selectedOtherDGV)
         {
             int y = 10;
 
             Label headerMain = new Label
             {
-                Text = "MEDICINE NOTES",
+                Text = "CLINIC ITEMS",
                 AutoSize = true,
                 Font = new Font("Segoe UI", 10F, FontStyle.Bold | FontStyle.Underline),
                 Location = new Point(10, y)
@@ -33,19 +33,19 @@ namespace ENT_Clinic_System.Consultation
             this.Controls.Add(headerMain);
             y += 30;
 
-            // ✅ Section 1: Medicines
+            // Section 1: Medicines
             foreach (DataGridViewRow row in dgvSelectedItems.Rows)
             {
                 if (row.IsNewRow) continue;
 
                 int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-                string itemName = row.Cells["item_name"].Value.ToString();
+                string itemName = $"{row.Cells["generic_name"].Value} {row.Cells["brand_name"].Value}";
                 string description = row.Cells["description"].Value.ToString();
                 int qty = Convert.ToInt32(row.Cells["quantity"].Value);
 
                 Label lbl = new Label
                 {
-                    Text = $"{itemName} ({description}) x {qty}",
+                    Text = $"{itemName} ({description}) x {qty} - Sig:",
                     AutoSize = true,
                     Location = new Point(10, y),
                     Font = new Font("Segoe UI", 9F, FontStyle.Bold)
@@ -53,25 +53,26 @@ namespace ENT_Clinic_System.Consultation
                 this.Controls.Add(lbl);
                 y += 25;
 
-                TextBox txtNote = new TextBox
+                TextBox txtSig = new TextBox
                 {
-                    Name = $"note_item_{itemId}",
+                    Name = $"sig_item_{itemId}",
                     Width = 350,
                     Location = new Point(10, y),
                     Multiline = true,
-                    Height = 50
+                    Height = 50,
+                    Font = new Font("Segoe UI", 9F)
                 };
-                this.Controls.Add(txtNote);
+                this.Controls.Add(txtSig);
                 y += 60;
             }
 
-            // ✅ Section 2: Other Items
+            // Section 2: Other Items
             if (selectedOtherDGV.Rows.Count > 0)
             {
                 y += 20;
                 Label headerOther = new Label
                 {
-                    Text = "OTHER ITEM NOTES",
+                    Text = "OTHER ITEM SIGS",
                     AutoSize = true,
                     Font = new Font("Segoe UI", 10F, FontStyle.Bold | FontStyle.Underline),
                     Location = new Point(10, y)
@@ -91,7 +92,7 @@ namespace ENT_Clinic_System.Consultation
 
                     Label lbl = new Label
                     {
-                        Text = $"{itemName} ({category}) - {description} x {qty}",
+                        Text = $"{itemName} ({category}) - {description} x {qty} - Sig:",
                         AutoSize = true,
                         Location = new Point(10, y),
                         Font = new Font("Segoe UI", 9F, FontStyle.Bold)
@@ -99,20 +100,21 @@ namespace ENT_Clinic_System.Consultation
                     this.Controls.Add(lbl);
                     y += 25;
 
-                    TextBox txtNote = new TextBox
+                    TextBox txtSig = new TextBox
                     {
-                        Name = $"note_other_{itemId}",
+                        Name = $"sig_other_{itemId}",
                         Width = 350,
                         Location = new Point(10, y),
                         Multiline = true,
-                        Height = 50
+                        Height = 50,
+                        Font = new Font("Segoe UI", 9F)
                     };
-                    this.Controls.Add(txtNote);
+                    this.Controls.Add(txtSig);
                     y += 60;
                 }
             }
 
-            // ✅ OK / Print button
+            // OK / Print button
             Button btnSubmit = new Button
             {
                 Text = "Save and Print",
@@ -133,15 +135,15 @@ namespace ENT_Clinic_System.Consultation
             {
                 if (ctl is TextBox txt)
                 {
-                    if (txt.Name.StartsWith("note_item_"))
+                    if (txt.Name.StartsWith("sig_item_"))
                     {
                         int itemId = int.Parse(txt.Name.Split('_')[2]);
-                        ItemNotes[itemId] = txt.Text.Trim();
+                        ItemSigs[itemId] = txt.Text.Trim();
                     }
-                    else if (txt.Name.StartsWith("note_other_"))
+                    else if (txt.Name.StartsWith("sig_other_"))
                     {
                         int itemId = int.Parse(txt.Name.Split('_')[2]);
-                        OtherItemNotes[itemId] = txt.Text.Trim();
+                        OtherItemSigs[itemId] = txt.Text.Trim();
                     }
                 }
             }
