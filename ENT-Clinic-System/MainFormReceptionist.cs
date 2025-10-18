@@ -386,7 +386,7 @@ namespace ENT_Clinic_System
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InventoryForm inventoryForm = new InventoryForm();
-            inventoryForm.ShowDialog();
+            inventoryForm.Show();
         }
 
         private void accountToolStripMenuItem_Click(object sender, EventArgs e)

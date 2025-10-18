@@ -9,6 +9,7 @@ namespace ENT_Clinic_System.Helpers
     {
         /// <summary>
         /// Get a single column value from patients table by patient_id.
+        /// Returns empty string if column is missing or value is null.
         /// </summary>
         public static string GetPatientValue(int patientId, string columnName)
         {
@@ -19,65 +20,62 @@ namespace ENT_Clinic_System.Helpers
             };
 
             if (Array.IndexOf(allowedColumns, columnName) == -1)
-                throw new ArgumentException("Invalid column name requested.");
-
-            string value = string.Empty;
-
-            using (var conn = DBConfig.GetConnection())
-            using (var cmd = new MySqlCommand($"SELECT {columnName} FROM patients WHERE patient_id = @id", conn))
             {
-                cmd.Parameters.AddWithValue("@id", patientId);
-
-                try
-                {
-                    conn.Open();
-                    var result = cmd.ExecuteScalar();
-                    if (result != null)
-                        value = result.ToString();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error fetching patient data: " + ex.Message);
-                }
+                // Log warning and return empty string
+                Console.WriteLine($"Warning: Requested invalid column '{columnName}' for patient {patientId}");
+                return string.Empty;
             }
 
-            return value;
+            try
+            {
+                 var conn = DBConfig.GetConnection();
+                 var cmd = new MySqlCommand($"SELECT {columnName} FROM patients WHERE patient_id = @id", conn);
+                cmd.Parameters.AddWithValue("@id", patientId);
+
+                conn.Open();
+                var result = cmd.ExecuteScalar();
+
+                return result?.ToString() ?? string.Empty; // Safe null handling
+            }
+            catch (Exception ex)
+            {
+                // Log error and return empty string
+                Console.WriteLine($"Error fetching patient data for ID {patientId}, column {columnName}: {ex.Message}");
+                return string.Empty;
+            }
         }
 
         /// <summary>
-        /// Get patient photo as Image by patient_id
+        /// Get patient photo as Image by patient_id.
+        /// Returns null if no photo or an error occurs.
         /// </summary>
         public static Image GetPatientPhoto(int patientId)
         {
-            byte[] photoBytes = null;
-
-            using (var conn = DBConfig.GetConnection())
-            using (var cmd = new MySqlCommand("SELECT photo FROM patients WHERE patient_id = @id", conn))
+            try
             {
+                 var conn = DBConfig.GetConnection();
+                 var cmd = new MySqlCommand("SELECT photo FROM patients WHERE patient_id = @id", conn);
                 cmd.Parameters.AddWithValue("@id", patientId);
 
-                try
-                {
-                    conn.Open();
-                    var result = cmd.ExecuteScalar();
-                    if (result != DBNull.Value && result != null)
-                        photoBytes = (byte[])result;
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error fetching patient photo: " + ex.Message);
-                }
-            }
+                conn.Open();
+                var result = cmd.ExecuteScalar();
 
-            if (photoBytes != null)
+                if (result == null || result == DBNull.Value)
+                    return null; // No photo
+
+                var photoBytes = result as byte[];
+                if (photoBytes == null || photoBytes.Length == 0)
+                    return null;
+
+                 var ms = new MemoryStream(photoBytes);
+                return Image.FromStream(ms);
+            }
+            catch (Exception ex)
             {
-                using (var ms = new MemoryStream(photoBytes))
-                {
-                    return Image.FromStream(ms);
-                }
+                // Log error and return null
+                Console.WriteLine($"Error fetching photo for patient {patientId}: {ex.Message}");
+                return null;
             }
-
-            return null; // return null if no photo
         }
     }
 }

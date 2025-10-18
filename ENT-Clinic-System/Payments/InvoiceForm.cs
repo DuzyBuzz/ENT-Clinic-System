@@ -349,6 +349,7 @@ namespace ENT_Clinic_System.Payments
             string note = noteComboBox.Text;
             string invoiceType = "ITEMS";
 
+            Console.WriteLine(note);
             currentInvoiceId = helper.AddInvoice(customerName, selectedItems, subtotal, discountAmount, netTotal, amountReceived, changeDue, discountPercent.ToString(), note, invoiceType);
 
             if (currentInvoiceId > 0)
