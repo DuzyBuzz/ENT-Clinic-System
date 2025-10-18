@@ -10,132 +10,58 @@ namespace ENT_Clinic_System.PrintingForms
 {
     public class BillingPrinter
     {
-        private int billingId;
+        private readonly int billingId;
 
         // Fonts
-        private Font fontRegular = new Font("Consolas", 9, FontStyle.Regular);
-        private Font fontBold = new Font("Consolas", 9, FontStyle.Bold);
-        private Font fontHeader = new Font("Consolas", 11, FontStyle.Bold);
+        private readonly Font fontRegular = new Font("Consolas", 9, FontStyle.Regular);
+        private readonly Font fontBold = new Font("Consolas", 9, FontStyle.Bold);
+        private readonly Font fontHeader = new Font("Consolas", 11, FontStyle.Bold);
+        private readonly Font fontSubtitle = new Font("Consolas", 9, FontStyle.Italic);
 
-        // Cached settings
-        private string clinicName, clinicAddress, clinicTel, clinicMobile, reportHeader, reportFooter, currencySymbol;
+        // Static Clinic Info (same as InvoicePrinter)
+        private readonly string clinicName = "MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS";
+        private readonly string clinicSubtitle = "Fellow, Phil. Society of Otolaryngology, Head & Neck Surgery";
+        private readonly string clinicAddress = "388 E. Lopez St., Jaro, Iloilo City (Front of Robinsons Jaro)";
+        private readonly string clinicTel = "329-1796";
+        private readonly string clinicMobile = "0925-5000149";
+        private readonly string reportFooter = "Thank you for visiting!";
+        private readonly string currencySymbol = "₱";
 
         public BillingPrinter(int billingId)
         {
             this.billingId = billingId;
-            LoadSystemSettings();
-        }
-
-        private void LoadSystemSettings()
-        {
-            using (var conn = DBConfig.GetConnection())
-            {
-                conn.Open();
-                string query = "SELECT setting_key, setting_value FROM system_settings";
-                using (var cmd = new MySqlCommand(query, conn))
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        string key = reader.GetString("setting_key");
-                        string value = reader.GetString("setting_value");
-
-                        switch (key)
-                        {
-                            case "clinic_name": clinicName = value; break;
-                            case "clinic_address": clinicAddress = value; break;
-                            case "clinic_tel": clinicTel = value; break;
-                            case "clinic_mobile": clinicMobile = value; break;
-                            case "report_header": reportHeader = value; break;
-                            case "report_footer": reportFooter = value; break;
-                            case "currency_symbol": currencySymbol = value; break;
-                        }
-                    }
-                }
-            }
         }
 
         public void PrintReceipt()
         {
             try
             {
-                string printerName = SettingsHelper.GetSetting("printer_name");
-
-                if (string.IsNullOrEmpty(printerName) || !PrinterExists(printerName))
+                using (PrintDialog printDialog = new PrintDialog())
                 {
-                    if (!AskAndSetPrinter(out printerName))
-                        return;
-                }
+                    printDialog.AllowSomePages = false;
+                    printDialog.UseEXDialog = true;
 
-                PrintDocument pd = new PrintDocument();
-                pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 200, 600);
-                pd.PrinterSettings.PrinterName = printerName;
-                pd.PrintPage += PrintPage;
-
-                try
-                {
-                    pd.Print();
-                }
-                catch (Exception ex)
-                {
-                    DialogResult retryChoice = MessageBox.Show(
-                        $"Printing failed with printer '{printerName}'.\n\nError: {ex.Message}\n\nChoose another printer?",
-                        "Print Error",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Error
-                    );
-
-                    if (retryChoice == DialogResult.Yes)
+                    if (printDialog.ShowDialog() != DialogResult.OK)
                     {
-                        if (AskAndSetPrinter(out printerName))
-                        {
-                            PrintDocument retryPd = new PrintDocument();
-                            retryPd.PrinterSettings.PrinterName = printerName;
-                            retryPd.PrintPage += PrintPage;
-                            retryPd.Print();
-                        }
+                        MessageBox.Show("No printer selected. Printing canceled.",
+                            "Print Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
                     }
+
+                    string printerName = printDialog.PrinterSettings.PrinterName;
+
+                    PrintDocument pd = new PrintDocument();
+                    pd.DefaultPageSettings.PaperSize = new PaperSize("Custom", 200, 600); // 58mm roll
+                    pd.PrinterSettings.PrinterName = printerName;
+                    pd.PrintPage += PrintPage;
+
+                    pd.Print();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unexpected error while printing: " + ex.Message,
-                                "Print Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private bool PrinterExists(string printerName)
-        {
-            foreach (string installedPrinter in PrinterSettings.InstalledPrinters)
-            {
-                if (installedPrinter.Equals(printerName, StringComparison.OrdinalIgnoreCase))
-                    return true;
-            }
-            return false;
-        }
-
-        private bool AskAndSetPrinter(out string printerName)
-        {
-            printerName = null;
-
-            using (PrintDialog printDialog = new PrintDialog())
-            {
-                printDialog.AllowSomePages = false;
-                printDialog.ShowHelp = false;
-                printDialog.UseEXDialog = true;
-
-                if (printDialog.ShowDialog() == DialogResult.OK)
-                {
-                    printerName = printDialog.PrinterSettings.PrinterName;
-                    SettingsHelper.UpdateSetting("printer_name", printerName);
-                    MessageBox.Show($"Printer saved: {printerName}", "Printer Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return true;
-                }
-                else
-                {
-                    MessageBox.Show("No printer selected. Printing canceled.", "Print Canceled", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return false;
-                }
+                MessageBox.Show("Unexpected error while printing:\n" + ex.Message,
+                    "Print Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -144,41 +70,21 @@ namespace ENT_Clinic_System.PrintingForms
             float y = 0;
             float leftMargin = 5;
             float lineHeight = fontRegular.GetHeight(e.Graphics);
-            // 58mm printer: usually about 180-200 pixels wide depending on DPI
-            int printerWidth = 180; // adjust according to your printer's actual DPI width
+            int printerWidth = 180;
 
-            StringFormat format = new StringFormat();
-            format.Alignment = StringAlignment.Near; // left align
-            format.FormatFlags = StringFormatFlags.LineLimit; // ensures line wraps
-            format.Trimming = StringTrimming.Word; // trim by word if too long
+            StringFormat format = new StringFormat
+            {
+                Alignment = StringAlignment.Near,
+                FormatFlags = StringFormatFlags.LineLimit,
+                Trimming = StringTrimming.Word
+            };
 
             // ================= HEADER =================
-            // Clinic Name (wrapped automatically if too long)
-            RectangleF rectClinicName = new RectangleF(leftMargin, y, printerWidth, 1000); // height large enough to accommodate multiple lines
-            e.Graphics.DrawString(clinicName, fontHeader, Brushes.Black, rectClinicName, format);
+            y = DrawHeader(e.Graphics, y, printerWidth, leftMargin, format);
 
-            // Move y to the next line after the wrapped text
-            y += e.Graphics.MeasureString(clinicName, fontHeader, printerWidth).Height;
-
-            // Clinic Address
-            RectangleF rectClinicAddress = new RectangleF(leftMargin, y, printerWidth, 1000);
-            e.Graphics.DrawString(clinicAddress, fontRegular, Brushes.Black, rectClinicAddress, format);
-            y += e.Graphics.MeasureString(clinicAddress, fontRegular, printerWidth).Height;
-
-            // Clinic Tel
-            RectangleF rectClinicTel = new RectangleF(leftMargin, y, printerWidth, 1000);
-            e.Graphics.DrawString($"Tel: {clinicTel}", fontRegular, Brushes.Black, rectClinicTel, format);
-            y += e.Graphics.MeasureString($"Tel: {clinicTel}", fontRegular, printerWidth).Height;
-
-            // Separator
-            RectangleF rectSeparator = new RectangleF(leftMargin, y, printerWidth, 1000);
-            e.Graphics.DrawString(new string('=', 40), fontRegular, Brushes.Black, rectSeparator, format);
-            y += e.Graphics.MeasureString(new string('=', 40), fontRegular, printerWidth).Height;
-
-
-            // ================= VARIABLES =================
+            // ================= BODY =================
             string patient = "", billingDate = "", paymentStatus = "";
-            decimal totalFee = 0, discountAmount = 0, netTotal = 0, amountReceived = 0, balance = 0, changeDue = 0;
+            decimal totalFee = 0, discountAmount = 0, netTotal = 0, amountReceived = 0, balance = 0;
 
             List<(DateTime date, decimal amount, decimal balance, decimal changeDue, string note)> payments
                 = new List<(DateTime, decimal, decimal, decimal, string)>();
@@ -187,7 +93,7 @@ namespace ENT_Clinic_System.PrintingForms
             {
                 conn.Open();
 
-                // --- Get billing summary ---
+                // --- Billing summary ---
                 string qBilling = @"SELECT b.billing_id, p.full_name, b.fee, 
                                    b.discount_amount, b.total_amount, 
                                    b.amount_paid, b.balance, 
@@ -214,7 +120,7 @@ namespace ENT_Clinic_System.PrintingForms
                     }
                 }
 
-                // --- Get payments history ---
+                // --- Payments history ---
                 string qPayments = @"SELECT payment_date, amount, balance, change_due, note
                              FROM billing_payments
                              WHERE billing_id=@id
@@ -240,7 +146,6 @@ namespace ENT_Clinic_System.PrintingForms
             // ================= BILLING INFO =================
             string invoiceNo = "BILL-" + billingId.ToString("D6");
             e.Graphics.DrawString($"Bill No: {invoiceNo}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
-
             e.Graphics.DrawString($"Patient: {patient}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Date: {billingDate}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
@@ -251,57 +156,63 @@ namespace ENT_Clinic_System.PrintingForms
             e.Graphics.DrawString($"Net Total: {currencySymbol}{netTotal:F2}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
-            // ================= PAYMENTS HISTORY =================
-            e.Graphics.DrawString("Payments:", fontBold, Brushes.Black, leftMargin, y);
-            y += lineHeight;
-
+            // ================= PAYMENTS =================
+            e.Graphics.DrawString("Payments:", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
             foreach (var p in payments)
             {
-                // Show payment date
-                e.Graphics.DrawString($"{p.date:MM/dd HH:mm}", fontRegular, Brushes.Black, leftMargin, y);
-                y += lineHeight;
-
-                // Amount
-                e.Graphics.DrawString($"  Amount: {currencySymbol}{p.amount:F2}", fontRegular, Brushes.Black, leftMargin, y);
-                y += lineHeight;
-
-                // Balance
-                e.Graphics.DrawString($"  Balance: {currencySymbol}{p.balance:F2}", fontRegular, Brushes.Black, leftMargin, y);
-                y += lineHeight;
-
-                // Change
-                e.Graphics.DrawString($"  Change: {currencySymbol}{p.changeDue:F2}", fontRegular, Brushes.Black, leftMargin, y);
-                y += lineHeight;
-
-                // Note (if available)
-                if (!string.IsNullOrEmpty(p.note))
-                {
-                    e.Graphics.DrawString($"  Note: {p.note}", fontRegular, Brushes.Black, leftMargin, y);
-                    y += lineHeight;
-                }
-
-                // Separator line
-                e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y);
-                y += lineHeight;
+                e.Graphics.DrawString($"{p.date:MM/dd HH:mm}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+                e.Graphics.DrawString($"  Amount: {currencySymbol}{p.amount:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+                e.Graphics.DrawString($"  Balance: {currencySymbol}{p.balance:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+                e.Graphics.DrawString($"  Change: {currencySymbol}{p.changeDue:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+                if (!string.IsNullOrEmpty(p.note)) { e.Graphics.DrawString($"  Note: {p.note}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight; }
+                e.Graphics.DrawString(new string('-', 32), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             }
-
-
-
 
             // ================= SUMMARY =================
             e.Graphics.DrawString($"Total Paid: {currencySymbol}{amountReceived:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Balance:    {currencySymbol}{balance:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Status:     {paymentStatus}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
-            e.Graphics.DrawString(new string('=', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
             // ================= FOOTER =================
-            if (!string.IsNullOrEmpty(reportFooter))
-            {
-                e.Graphics.DrawString(reportFooter, fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-                e.Graphics.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
-            }
+            y = DrawFooter(e.Graphics, y, leftMargin, format);
         }
 
+        // ===== HEADER HELPER (STATIC) =====
+        private float DrawHeader(Graphics g, float y, int printerWidth, float leftMargin, StringFormat format)
+        {
+            RectangleF rectClinicName = new RectangleF(leftMargin, y, printerWidth, 1000);
+            g.DrawString(clinicName, fontHeader, Brushes.Black, rectClinicName, format);
+            y += g.MeasureString(clinicName, fontHeader, printerWidth).Height;
 
+            RectangleF rectSubtitle = new RectangleF(leftMargin, y, printerWidth, 1000);
+            g.DrawString(clinicSubtitle, fontSubtitle, Brushes.Black, rectSubtitle, format);
+            y += g.MeasureString(clinicSubtitle, fontSubtitle, printerWidth).Height;
+
+            RectangleF rectAddress = new RectangleF(leftMargin, y, printerWidth, 1000);
+            g.DrawString(clinicAddress, fontRegular, Brushes.Black, rectAddress, format);
+            y += g.MeasureString(clinicAddress, fontRegular, printerWidth).Height;
+
+            RectangleF rectTel = new RectangleF(leftMargin, y, printerWidth, 1000);
+            g.DrawString($"Tel: {clinicTel} | Mobile: {clinicMobile}", fontRegular, Brushes.Black, rectTel, format);
+            y += g.MeasureString($"Tel: {clinicTel} | Mobile: {clinicMobile}", fontRegular, printerWidth).Height;
+
+            g.DrawString(new string('=', 40), fontRegular, Brushes.Black, leftMargin, y);
+            y += fontRegular.GetHeight(g);
+
+            return y;
+        }
+
+        // ===== FOOTER HELPER (STATIC) =====
+        private float DrawFooter(Graphics g, float y, float leftMargin, StringFormat format)
+        {
+            g.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y);
+            y += fontRegular.GetHeight(g);
+            RectangleF rectFooter = new RectangleF(leftMargin, y, 180, 1000);
+            g.DrawString(reportFooter, fontRegular, Brushes.Black, rectFooter, format);
+            y += g.MeasureString(reportFooter, fontRegular, 180).Height;
+
+
+            return y;
+        }
     }
 }

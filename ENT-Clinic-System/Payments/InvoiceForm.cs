@@ -16,19 +16,33 @@ namespace ENT_Clinic_System.Payments
         private int currentInvoiceId;
         private string customerName = string.Empty;
 
+        // Context menu for selected items
+        private ContextMenuStrip selectedItemsContextMenu;
+
         public InvoiceForm()
         {
             InitializeComponent();
             helper = new InventoryHelper();
+
+            // Setup selected items table
+            selectedItems = new DataTable();
+            selectedItems.Columns.Add("item_id", typeof(int));
+            selectedItems.Columns.Add("item_name", typeof(string));
+            selectedItems.Columns.Add("category", typeof(string));
+            selectedItems.Columns.Add("description", typeof(string));
+            selectedItems.Columns.Add("unit_price", typeof(decimal));
+            selectedItems.Columns.Add("quantity", typeof(int));
+            selectedItems.Columns.Add("prescription_id", typeof(int));
+
+            selectedItemsDataGridView.DataSource = selectedItems;
+
             LoadAvailableItems();
+            LoadPatientsFromPrescriptions();
             HookEvents();
         }
 
         // ================================
-        // 🔹 Setup selected items table
-        // ================================
-
-        // 🔹 Load patients with prescriptions
+        // Load patients with prescriptions
         // ================================
         private void LoadPatientsFromPrescriptions()
         {
@@ -37,7 +51,6 @@ namespace ENT_Clinic_System.Payments
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-
                     string sqlPatientIds = "SELECT DISTINCT patient_id FROM prescription WHERE DATE(created_at) = CURDATE()";
                     List<int> patientIds = new List<int>();
 
@@ -76,7 +89,7 @@ namespace ENT_Clinic_System.Payments
         }
 
         // ================================
-        // 🔹 Load inventory items
+        // Load inventory items
         // ================================
         private void LoadAvailableItems()
         {
@@ -84,7 +97,7 @@ namespace ENT_Clinic_System.Payments
         }
 
         // ================================
-        // 🔹 Hook events
+        // Hook events
         // ================================
         private void HookEvents()
         {
@@ -92,47 +105,71 @@ namespace ENT_Clinic_System.Payments
             selectedItemsDataGridView.CellEndEdit += DgvSelectedItems_CellEndEdit;
             selectedItemsDataGridView.KeyDown += DgvSelectedItems_KeyDown;
 
+            // Right-click context menu
+            selectedItemsContextMenu = new ContextMenuStrip();
+            ToolStripMenuItem removeItem = new ToolStripMenuItem("Remove This Item");
+            removeItem.ForeColor = System.Drawing.Color.Red;
+            removeItem.Click += RemoveItem_Click;
+            selectedItemsContextMenu.Items.Add(removeItem);
+
+            selectedItemsDataGridView.CellMouseDown += SelectedItemsDataGridView_CellMouseDown;
+
             saveButton.Click += BtnSave_Click;
-            itemsAmountRecievedNumericUpDown.TextChanged += (s, e) => UpdateChangeDue();
             patientsDataGridView.CellClick += DgvPatients_CellClick;
             prescriptionDataGridView.CellDoubleClick += DgvPrescriptions_CellDoubleClick;
-
-            // 🔹 Update totals when discount changes (real-time)
             discountPercentComboBox.TextChanged += (s, e) => CalculateTotals();
+            itemsAmountRecievedNumericUpDown.TextChanged += (s, e) => UpdateChangeDue();
         }
 
         // ================================
-        // 🔹 Add prescription item
+        // Context menu: show on right click
+        // ================================
+        private void SelectedItemsDataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                selectedItemsDataGridView.ClearSelection();
+                selectedItemsDataGridView.Rows[e.RowIndex].Selected = true;
+                selectedItemsContextMenu.Show(Cursor.Position);
+            }
+        }
+
+        // ================================
+        // Context menu: remove row
+        // ================================
+        private void RemoveItem_Click(object sender, EventArgs e)
+        {
+            if (selectedItemsDataGridView.CurrentRow != null && !selectedItemsDataGridView.CurrentRow.IsNewRow)
+            {
+                selectedItemsDataGridView.Rows.RemoveAt(selectedItemsDataGridView.CurrentRow.Index);
+                CalculateTotals();
+            }
+        }
+
+        // ================================
+        // Add prescription item
         // ================================
         private void DgvPrescriptions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
             DataGridViewRow row = prescriptionDataGridView.Rows[e.RowIndex];
 
-            int prescriptionId = row.Cells["prescription_id"] != null ? Convert.ToInt32(row.Cells["prescription_id"].Value) : 0;
+            int prescriptionId = Convert.ToInt32(row.Cells["prescription_id"].Value);
             int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
 
-            // Build display name from brand/generic/strength/dosage
             string brand = row.Cells["brand_name"]?.Value?.ToString() ?? "";
             string generic = row.Cells["generic_name"]?.Value?.ToString() ?? "";
             string strength = row.Cells["strength"]?.Value?.ToString() ?? "";
             string dosage = row.Cells["dosage"]?.Value?.ToString() ?? "";
-            string itemDisplayName = string.Join(" ", new[] { brand, generic, strength, dosage }.Where(s => !string.IsNullOrWhiteSpace(s)));
 
+            string itemDisplayName = string.Join(" ", new[] { brand, generic, strength, dosage }.Where(s => !string.IsNullOrWhiteSpace(s)));
             string category = row.Cells["category"].Value?.ToString() ?? "";
             string description = row.Cells["description"].Value?.ToString() ?? "";
-            decimal price = row.Cells["selling_price"].Value is DBNull ? 0m : Convert.ToDecimal(row.Cells["selling_price"].Value);
-            int quantity = row.Cells["quantity"] != null ? Convert.ToInt32(row.Cells["quantity"].Value) : 1;
+            decimal price = row.Cells["selling_price"].Value != DBNull.Value ? Convert.ToDecimal(row.Cells["selling_price"].Value) : 0m;
+            int quantity = row.Cells["quantity"].Value != DBNull.Value ? Convert.ToInt32(row.Cells["quantity"].Value) : 1;
 
-            DataRow existingRow = null;
-            foreach (DataRow r in selectedItems.Rows)
-            {
-                if ((int)r["item_id"] == itemId && (int)r["prescription_id"] == prescriptionId)
-                {
-                    existingRow = r;
-                    break;
-                }
-            }
+            DataRow existingRow = selectedItems.AsEnumerable()
+                .FirstOrDefault(r => (int)r["item_id"] == itemId && (int)r["prescription_id"] == prescriptionId);
 
             if (existingRow != null)
                 existingRow["quantity"] = (int)existingRow["quantity"] + quantity;
@@ -143,7 +180,7 @@ namespace ENT_Clinic_System.Payments
         }
 
         // ================================
-        // 🔹 Select patient → load prescriptions
+        // Select patient → load prescriptions
         // ================================
         private void DgvPatients_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -188,7 +225,7 @@ namespace ENT_Clinic_System.Payments
         }
 
         // ================================
-        // 🔹 Double-click inventory item
+        // Double-click inventory item
         // ================================
         private void DgvAvailableItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -196,38 +233,29 @@ namespace ENT_Clinic_System.Payments
             DataGridViewRow row = availableItemsDataGridView.Rows[e.RowIndex];
 
             int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-
-            // Build display name from available items columns (brand + generic + strength + dosage)
             string brand = row.Cells["brand_name"]?.Value?.ToString() ?? "";
             string generic = row.Cells["generic_name"]?.Value?.ToString() ?? "";
             string strength = row.Cells["strength"]?.Value?.ToString() ?? "";
             string dosage = row.Cells["dosage"]?.Value?.ToString() ?? "";
-            string itemDisplayName = string.Join(" ", new[] { brand, generic, strength, dosage }.Where(s => !string.IsNullOrWhiteSpace(s)));
 
+            string itemDisplayName = string.Join(" ", new[] { brand, generic, strength, dosage }.Where(s => !string.IsNullOrWhiteSpace(s)));
             string category = row.Cells["category"]?.Value?.ToString() ?? "";
             string description = row.Cells["description"]?.Value?.ToString() ?? "";
             decimal price = row.Cells["selling_price"].Value != DBNull.Value ? Convert.ToDecimal(row.Cells["selling_price"].Value) : 0m;
 
-            DataRow existingRow = null;
-            foreach (DataRow r in selectedItems.Rows)
-            {
-                if ((int)r["item_id"] == itemId && (int)r["prescription_id"] == 0) // 🔹 for non-prescription items
-                {
-                    existingRow = r;
-                    break;
-                }
-            }
+            DataRow existingRow = selectedItems.AsEnumerable()
+                .FirstOrDefault(r => (int)r["item_id"] == itemId && (int)r["prescription_id"] == 0);
 
             if (existingRow != null)
                 existingRow["quantity"] = (int)existingRow["quantity"] + 1;
             else
-                selectedItems.Rows.Add(itemId, itemDisplayName, category, description, price, 1, 0); // 🔹 prescription_id = 0
+                selectedItems.Rows.Add(itemId, itemDisplayName, category, description, price, 1, 0);
 
             CalculateTotals();
         }
 
         // ================================
-        // 🔹 Validate quantity edits
+        // Validate quantity edits
         // ================================
         private void DgvSelectedItems_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -253,26 +281,16 @@ namespace ENT_Clinic_System.Payments
         }
 
         // ================================
-        // 🔹 Calculate totals
+        // Calculate totals
         // ================================
         private void CalculateTotals()
         {
-            decimal subtotal = 0;
-            foreach (DataRow row in selectedItems.Rows)
-            {
-                int qty = Convert.ToInt32(row["quantity"]);
-                decimal price = Convert.ToDecimal(row["unit_price"]);
-                subtotal += price * qty;
-            }
+            decimal subtotal = selectedItems.AsEnumerable().Sum(r => Convert.ToDecimal(r["unit_price"]) * Convert.ToInt32(r["quantity"]));
 
             decimal discountPercent = 0;
-            if (!string.IsNullOrWhiteSpace(discountPercentComboBox.Text) &&
-                decimal.TryParse(discountPercentComboBox.Text, out decimal val))
-            {
-                discountPercent = val;
-            }
+            decimal.TryParse(discountPercentComboBox.Text?.Replace("%", ""), out discountPercent);
 
-            decimal discountAmount = subtotal * (discountPercent / 100);
+            decimal discountAmount = Math.Round(subtotal * (discountPercent / 100), 2);
             decimal netTotal = subtotal - discountAmount;
 
             subTotalTextBox.Text = subtotal.ToString("N2");
@@ -283,7 +301,7 @@ namespace ENT_Clinic_System.Payments
         }
 
         // ================================
-        // 🔹 Change due calculation
+        // Change due calculation
         // ================================
         private void UpdateChangeDue()
         {
@@ -300,85 +318,39 @@ namespace ENT_Clinic_System.Payments
         }
 
         // ================================
-        // 🔹 Save invoice
+        // Save invoice
         // ================================
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            // 1. Check if there are items
             if (selectedItems.Rows.Count == 0)
             {
                 MessageBox.Show("Please add items before saving.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 2. Default customer name
             if (string.IsNullOrEmpty(customerName))
                 customerName = "Walk-in";
 
-            // 3. Parse amount received
             if (!decimal.TryParse(itemsAmountRecievedNumericUpDown.Text, out decimal amountReceived) || amountReceived <= 0)
             {
                 MessageBox.Show("Enter valid amount received.", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 4. Calculate subtotal from selected items (qty × unit price)
-            decimal subtotal = 0;
-            foreach (DataRow row in selectedItems.Rows)
-            {
-                if (row["quantity"] != DBNull.Value && row["unit_price"] != DBNull.Value)
-                {
-                    subtotal += Convert.ToDecimal(row["quantity"]) * Convert.ToDecimal(row["unit_price"]);
-                }
-            }
+            decimal subtotal = selectedItems.AsEnumerable().Sum(r => Convert.ToDecimal(r["unit_price"]) * Convert.ToInt32(r["quantity"]));
 
-            // 5. Parse discount percent from ComboBox
             decimal discountPercent = 0;
-            if (decimal.TryParse(discountPercentComboBox.Text?.Replace("%", ""), out decimal parsedPercent))
-                discountPercent = parsedPercent;
+            decimal.TryParse(discountPercentComboBox.Text?.Replace("%", ""), out discountPercent);
 
-            // 6. Calculate discount amount
             decimal discountAmount = Math.Round(subtotal * (discountPercent / 100), 2);
-
-            // 7. Calculate net total
             decimal netTotal = subtotal - discountAmount;
-
-            // 8. Validate total against textbox value (optional cross-check)
-            if (!decimal.TryParse(totalAmountTextBox.Text, out decimal netTotalFromText) || netTotalFromText != netTotal)
-            {
-                // If mismatch, update the textbox so it shows the correct calculation
-                totalAmountTextBox.Text = netTotal.ToString("0.00");
-            }
-
-            // 9. Validate if received money is enough
-            if (amountReceived < netTotal)
-            {
-                MessageBox.Show("Amount received is less than total.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // 10. Calculate change due
             decimal changeDue = amountReceived - netTotal;
 
-            // 11. Prepare other values
             string note = noteComboBox.Text;
             string invoiceType = "ITEMS";
 
-            // 12. Save invoice
-            int currentInvoiceId = helper.AddInvoice(
-                customerName,
-                selectedItems,
-                subtotal,
-                discountAmount,
-                netTotal,
-                amountReceived,
-                changeDue,
-                discountPercentComboBox.Text?.ToString(),
-                note,
-                invoiceType
-            );
+            currentInvoiceId = helper.AddInvoice(customerName, selectedItems, subtotal, discountAmount, netTotal, amountReceived, changeDue, discountPercent.ToString(), note, invoiceType);
 
-            // 13. Handle result
             if (currentInvoiceId > 0)
             {
                 MessageBox.Show("Invoice saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -388,54 +360,17 @@ namespace ENT_Clinic_System.Payments
                     InvoicePrinter printer = new InvoicePrinter(currentInvoiceId);
                     printer.PrintReceipt();
                 }
+                // Clear all rows from the DataTable
+                selectedItems.Clear();
 
-                this.Close();
+                // Reset binding to refresh the DataGridView
+                selectedItemsDataGridView.DataSource = selectedItems;
+
             }
             else
             {
                 MessageBox.Show("Error saving invoice.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void InvoiceForm_Load(object sender, EventArgs e)
-        {
-            // Populate combobox items from the same column
-            ComboBoxCollectionHelper.PopulateComboBox(
-                discountPercentComboBox,
-                "invoices",
-                "discount_percent"
-            );
-            // Populate combobox items from the same column
-            ComboBoxCollectionHelper.PopulateComboBox(
-                noteComboBox,
-                "invoices",
-                "note"
-            );
-        }
-
-        private void searchItemtButton_Click(object sender, EventArgs e)
-        {
-            SearchHelper.Search(
-                dgv: availableItemsDataGridView,
-                tableName: "items",
-                columnNames: new string[] { "brand_name", "generic_name", "description" }, // search brand/generic instead of item_name
-                filterControl: searchItemsTextBox
-            );
-        }
-
-        private void refreshPatientsButton_Click(object sender, EventArgs e)
-        {
-            LoadAvailableItems();
-        }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void saveButton_Click_1(object sender, EventArgs e)
-        {
-
         }
     }
 }

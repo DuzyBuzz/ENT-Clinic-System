@@ -159,7 +159,6 @@
             this.saveButton.TabIndex = 13;
             this.saveButton.Text = "Submit";
             this.saveButton.UseVisualStyleBackColor = false;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click_1);
             // 
             // noteComboBox
             // 
@@ -492,7 +491,6 @@
             this.refreshPatientsButton.TabIndex = 3;
             this.refreshPatientsButton.Text = "⟳";
             this.refreshPatientsButton.UseVisualStyleBackColor = false;
-            this.refreshPatientsButton.Click += new System.EventHandler(this.refreshPatientsButton_Click);
             // 
             // searchItemtButton
             // 
@@ -508,7 +506,6 @@
             this.searchItemtButton.TabIndex = 0;
             this.searchItemtButton.Text = "🔎";
             this.searchItemtButton.UseVisualStyleBackColor = false;
-            this.searchItemtButton.Click += new System.EventHandler(this.searchItemtButton_Click);
             // 
             // searchItemsTextBox
             // 
@@ -528,7 +525,7 @@
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(664, 11);
+            this.categoryCombobox.Location = new System.Drawing.Point(664, 13);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(236, 23);
@@ -608,7 +605,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Items Dispensing & Payment";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.InvoiceForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.selectedItemsDataGridView)).EndInit();
             this.groupBoxSelected.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
