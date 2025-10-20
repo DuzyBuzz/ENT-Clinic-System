@@ -16,7 +16,7 @@ namespace ENT_Clinic_System.Helpers
         {
             if (Role == "Receptionist")
             {
-                ConnectionString = "server=192.168.1.100;user=lanuser;password=password;database=ent_clinic_db;";
+                ConnectionString = "server=192.168.1.25;user=lanuser;password=password;database=ent_clinic_db;";
             }
             else if (Role == "Doctor")
             {

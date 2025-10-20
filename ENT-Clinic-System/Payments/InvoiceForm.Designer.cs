@@ -15,6 +15,10 @@
 
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceForm));
             this.selectedItemsDataGridView = new System.Windows.Forms.DataGridView();
             this.groupBoxSelected = new System.Windows.Forms.GroupBox();
@@ -79,6 +83,8 @@
             // 
             this.selectedItemsDataGridView.AllowUserToAddRows = false;
             this.selectedItemsDataGridView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.selectedItemsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.selectedItemsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.selectedItemsDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.selectedItemsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -157,7 +163,7 @@
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(152, 28);
             this.saveButton.TabIndex = 13;
-            this.saveButton.Text = "Submit";
+            this.saveButton.Text = "Submit Payment";
             this.saveButton.UseVisualStyleBackColor = false;
             // 
             // noteComboBox
@@ -346,6 +352,8 @@
             // 
             this.prescriptionDataGridView.AllowUserToAddRows = false;
             this.prescriptionDataGridView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.prescriptionDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.prescriptionDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.prescriptionDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.prescriptionDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -374,6 +382,8 @@
             // 
             this.patientsDataGridView.AllowUserToAddRows = false;
             this.patientsDataGridView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.patientsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.patientsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.patientsDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.patientsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -426,6 +436,8 @@
             // 
             this.availableItemsDataGridView.AllowUserToAddRows = false;
             this.availableItemsDataGridView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.availableItemsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.availableItemsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.availableItemsDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.availableItemsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -525,7 +537,7 @@
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(664, 11);
+            this.categoryCombobox.Location = new System.Drawing.Point(664, 13);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(236, 23);

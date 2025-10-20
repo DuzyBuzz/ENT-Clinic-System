@@ -40,19 +40,6 @@
             this.searchPatientNameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.patientsDataGridView = new System.Windows.Forms.DataGridView();
-            this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addressColumnTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.birth_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.age = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.civil_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.patient_contact_number = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.emergency_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.emergency_contact_number = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.emergency_relationship = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.createdat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.photo = new System.Windows.Forms.DataGridViewImageColumn();
             this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +51,20 @@
             this.showLaboratoryRequesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showPrescriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addressColumnTextBox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.birth_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.age = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.civil_status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patient_contact_number = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.emergency_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.emergency_contact_number = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.emergency_relationship = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.referred_by = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.createdat = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.photo = new System.Windows.Forms.DataGridViewImageColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).BeginInit();
@@ -218,6 +219,7 @@
             this.emergency_name,
             this.emergency_contact_number,
             this.emergency_relationship,
+            this.referred_by,
             this.createdat,
             this.photo});
             this.patientsDataGridView.ContextMenuStrip = this.patientsContextMenuStrip;
@@ -230,92 +232,6 @@
             this.patientsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.patientsDataGridView_CellContentClick);
             this.patientsDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.patientsDataGridView_KeyDown);
             this.patientsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.patientsDataGridView_MouseDown);
-            // 
-            // patient_id
-            // 
-            this.patient_id.DataPropertyName = "patient_id";
-            this.patient_id.HeaderText = "Patient ID";
-            this.patient_id.Name = "patient_id";
-            this.patient_id.ReadOnly = true;
-            this.patient_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.patient_id.Visible = false;
-            // 
-            // full_name
-            // 
-            this.full_name.DataPropertyName = "full_name";
-            this.full_name.HeaderText = "Name";
-            this.full_name.Name = "full_name";
-            // 
-            // addressColumnTextBox
-            // 
-            this.addressColumnTextBox.DataPropertyName = "address";
-            this.addressColumnTextBox.HeaderText = "Address";
-            this.addressColumnTextBox.Name = "addressColumnTextBox";
-            // 
-            // birth_date
-            // 
-            this.birth_date.DataPropertyName = "birth_date";
-            this.birth_date.HeaderText = "Birth Date";
-            this.birth_date.Name = "birth_date";
-            // 
-            // age
-            // 
-            this.age.DataPropertyName = "age";
-            this.age.HeaderText = "Age";
-            this.age.Name = "age";
-            this.age.ReadOnly = true;
-            // 
-            // sex
-            // 
-            this.sex.DataPropertyName = "sex";
-            this.sex.HeaderText = "Sex";
-            this.sex.Name = "sex";
-            // 
-            // civil_status
-            // 
-            this.civil_status.DataPropertyName = "civil_status";
-            this.civil_status.HeaderText = "Civil Status";
-            this.civil_status.Name = "civil_status";
-            // 
-            // patient_contact_number
-            // 
-            this.patient_contact_number.DataPropertyName = "patient_contact_number";
-            this.patient_contact_number.HeaderText = "Patient Contact No.";
-            this.patient_contact_number.Name = "patient_contact_number";
-            // 
-            // emergency_name
-            // 
-            this.emergency_name.DataPropertyName = "emergency_name";
-            this.emergency_name.HeaderText = "Emergency Contact Person";
-            this.emergency_name.Name = "emergency_name";
-            // 
-            // emergency_contact_number
-            // 
-            this.emergency_contact_number.DataPropertyName = "emergency_contact_number";
-            this.emergency_contact_number.HeaderText = "Emergency Contact No.";
-            this.emergency_contact_number.Name = "emergency_contact_number";
-            // 
-            // emergency_relationship
-            // 
-            this.emergency_relationship.DataPropertyName = "emergency_relationship";
-            this.emergency_relationship.HeaderText = "Relationship";
-            this.emergency_relationship.Name = "emergency_relationship";
-            // 
-            // createdat
-            // 
-            this.createdat.DataPropertyName = "created_at";
-            this.createdat.HeaderText = "DateCreated";
-            this.createdat.Name = "createdat";
-            this.createdat.Visible = false;
-            // 
-            // photo
-            // 
-            this.photo.DataPropertyName = "photo";
-            this.photo.HeaderText = "Photo";
-            this.photo.Name = "photo";
-            this.photo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.photo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.photo.Visible = false;
             // 
             // patientsContextMenuStrip
             // 
@@ -398,7 +314,99 @@
             this.createLaboratoryRequestToolStripMenuItem,
             this.showPrescriptionsToolStripMenuItem});
             this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
-            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 136);
+            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 114);
+            // 
+            // patient_id
+            // 
+            this.patient_id.DataPropertyName = "patient_id";
+            this.patient_id.HeaderText = "Patient ID";
+            this.patient_id.Name = "patient_id";
+            this.patient_id.ReadOnly = true;
+            this.patient_id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.patient_id.Visible = false;
+            // 
+            // full_name
+            // 
+            this.full_name.DataPropertyName = "full_name";
+            this.full_name.HeaderText = "Name";
+            this.full_name.Name = "full_name";
+            // 
+            // addressColumnTextBox
+            // 
+            this.addressColumnTextBox.DataPropertyName = "address";
+            this.addressColumnTextBox.HeaderText = "Address";
+            this.addressColumnTextBox.Name = "addressColumnTextBox";
+            // 
+            // birth_date
+            // 
+            this.birth_date.DataPropertyName = "birth_date";
+            this.birth_date.HeaderText = "Birth Date";
+            this.birth_date.Name = "birth_date";
+            // 
+            // age
+            // 
+            this.age.DataPropertyName = "age";
+            this.age.HeaderText = "Age";
+            this.age.Name = "age";
+            this.age.ReadOnly = true;
+            // 
+            // sex
+            // 
+            this.sex.DataPropertyName = "sex";
+            this.sex.HeaderText = "Sex";
+            this.sex.Name = "sex";
+            // 
+            // civil_status
+            // 
+            this.civil_status.DataPropertyName = "civil_status";
+            this.civil_status.HeaderText = "Civil Status";
+            this.civil_status.Name = "civil_status";
+            // 
+            // patient_contact_number
+            // 
+            this.patient_contact_number.DataPropertyName = "patient_contact_number";
+            this.patient_contact_number.HeaderText = "Patient Contact No.";
+            this.patient_contact_number.Name = "patient_contact_number";
+            // 
+            // emergency_name
+            // 
+            this.emergency_name.DataPropertyName = "emergency_name";
+            this.emergency_name.HeaderText = "Emergency Contact Person";
+            this.emergency_name.Name = "emergency_name";
+            // 
+            // emergency_contact_number
+            // 
+            this.emergency_contact_number.DataPropertyName = "emergency_contact_number";
+            this.emergency_contact_number.HeaderText = "Emergency Contact No.";
+            this.emergency_contact_number.Name = "emergency_contact_number";
+            // 
+            // emergency_relationship
+            // 
+            this.emergency_relationship.DataPropertyName = "emergency_relationship";
+            this.emergency_relationship.HeaderText = "Relationship";
+            this.emergency_relationship.Name = "emergency_relationship";
+            // 
+            // referred_by
+            // 
+            this.referred_by.DataPropertyName = "referred_by";
+            this.referred_by.HeaderText = "Referred By";
+            this.referred_by.Name = "referred_by";
+            // 
+            // createdat
+            // 
+            this.createdat.DataPropertyName = "created_at";
+            this.createdat.HeaderText = "DateCreated";
+            this.createdat.Name = "createdat";
+            this.createdat.Visible = false;
+            // 
+            // photo
+            // 
+            this.photo.DataPropertyName = "photo";
+            this.photo.HeaderText = "Photo";
+            this.photo.Name = "photo";
+            this.photo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.photo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.photo.Visible = false;
             // 
             // PatientListControl
             // 
@@ -455,6 +463,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn emergency_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn emergency_contact_number;
         private System.Windows.Forms.DataGridViewTextBoxColumn emergency_relationship;
+        private System.Windows.Forms.DataGridViewTextBoxColumn referred_by;
         private System.Windows.Forms.DataGridViewTextBoxColumn createdat;
         private System.Windows.Forms.DataGridViewImageColumn photo;
     }

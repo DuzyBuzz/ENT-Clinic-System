@@ -199,6 +199,7 @@ namespace ENT_Clinic_System.UserControls
             sexLabel.Text = PatientDataHelper.GetPatientValue(patientId, "sex");
             civilStatusLabel.Text = PatientDataHelper.GetPatientValue(patientId, "civil_status");
             patientContactNumberLabel.Text = PatientDataHelper.GetPatientValue(patientId, "patient_contact_number");
+            referedByLabel.Text = PatientDataHelper.GetPatientValue(patientId, "referred_by");
 
 
             // Load photo
@@ -1066,5 +1067,9 @@ namespace ENT_Clinic_System.UserControls
 
         }
 
+        private void label22_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -38,7 +38,6 @@ namespace ENT_Clinic_System.Inventory
                 ComboBoxCollectionHelper.PopulateComboBox(dosageComboBox, "items", "dosage");
                 ComboBoxCollectionHelper.PopulateComboBox(categoryComboBox, "items", "category");
                 ComboBoxCollectionHelper.PopulateComboBox(sortCategoryCombobox, "items", "category");
-                ComboBoxCollectionHelper.PopulateComboBox(descriptionComboBox, "items", "description");
 
                 // Load inventory DataGridView
                 DataTable dt = _inventoryHelper.GetAllItems();
@@ -55,7 +54,6 @@ namespace ENT_Clinic_System.Inventory
                 if (dgvItems.Columns.Contains("strength")) dgvItems.Columns["strength"].HeaderText = "Strength";
                 if (dgvItems.Columns.Contains("dosage")) dgvItems.Columns["dosage"].HeaderText = "Dosage";
                 if (dgvItems.Columns.Contains("category")) dgvItems.Columns["category"].HeaderText = "Category";
-                if (dgvItems.Columns.Contains("description")) dgvItems.Columns["description"].HeaderText = "Description";
                 if (dgvItems.Columns.Contains("cost_price")) dgvItems.Columns["cost_price"].HeaderText = "Cost Price";
                 if (dgvItems.Columns.Contains("selling_price")) dgvItems.Columns["selling_price"].HeaderText = "Selling Price";
                 if (dgvItems.Columns.Contains("quantity")) dgvItems.Columns["quantity"].HeaderText = "Stock Qty";
@@ -200,7 +198,6 @@ namespace ENT_Clinic_System.Inventory
                 string strength = FirstLetterUpperHelper.ToFirstUpper(stregnthComboBox.Text);
                 string dosage = FirstLetterUpperHelper.ToFirstUpper(dosageComboBox.Text);
                 string category = FirstLetterUpperHelper.ToFirstUpper(categoryComboBox.Text);
-                string description = FirstLetterUpperHelper.ToFirstUpper(descriptionComboBox.Text);
 
                 if (string.IsNullOrWhiteSpace(brandName)) { ShowValidationError("Brand Name cannot be empty.", brandNameComboBox); return; }
                 if (string.IsNullOrWhiteSpace(genericName)) { ShowValidationError("Generic Name cannot be empty.", genericNameComboBox); return; }
@@ -225,7 +222,7 @@ namespace ENT_Clinic_System.Inventory
                     return;
                 }
 
-                bool success = _inventoryHelper.AddItem(brandName, genericName, strength, dosage, category, description, costPrice, sellingPrice);
+                bool success = _inventoryHelper.AddItem(brandName, genericName, strength, dosage, category, costPrice, sellingPrice);
                 if (success)
                 {
                     MessageBox.Show("Item added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -261,7 +258,6 @@ namespace ENT_Clinic_System.Inventory
                 string strength = FirstLetterUpperHelper.ToFirstUpper(stregnthComboBox.Text);
                 string dosage = FirstLetterUpperHelper.ToFirstUpper(dosageComboBox.Text);
                 string category = FirstLetterUpperHelper.ToFirstUpper(categoryComboBox.Text);
-                string description = FirstLetterUpperHelper.ToFirstUpper(descriptionComboBox.Text);
                 decimal costPrice = costPriceNumericUpDown.Value;
                 decimal sellingPrice = sellingNumericUpDown.Value;
 
@@ -276,7 +272,7 @@ namespace ENT_Clinic_System.Inventory
                 if (confirm != DialogResult.Yes)
                     return;
 
-                bool success = _inventoryHelper.UpdateItem(itemId, brandName, genericName, strength, dosage, category, description, costPrice, sellingPrice);
+                bool success = _inventoryHelper.UpdateItem(itemId, brandName, genericName, strength, dosage, category, costPrice, sellingPrice);
                 if (success)
                 {
                     MessageBox.Show("Item updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -393,7 +389,6 @@ namespace ENT_Clinic_System.Inventory
             stregnthComboBox.Text = row.Cells["strength"].Value.ToString();
             dosageComboBox.Text = row.Cells["dosage"].Value.ToString();
             categoryComboBox.Text = row.Cells["category"].Value.ToString();
-            descriptionComboBox.Text = row.Cells["description"].Value.ToString();
             costPriceNumericUpDown.Value = Convert.ToDecimal(row.Cells["cost_price"].Value);
             sellingNumericUpDown.Value = Convert.ToDecimal(row.Cells["selling_price"].Value);
 
@@ -412,9 +407,10 @@ namespace ENT_Clinic_System.Inventory
             stregnthComboBox.Text = "";
             dosageComboBox.Text = "";
             categoryComboBox.Text = "";
-            descriptionComboBox.Text = "";
             costPriceNumericUpDown.Value = 0;
             sellingNumericUpDown.Value = 0;
+            itemIdTextBox.Text = "";
+            quantityNumericUpDown.Value = 0;
         }
         private void ShowValidationError(string message, Control controlToFocus)
         {
@@ -440,7 +436,7 @@ namespace ENT_Clinic_System.Inventory
             SearchHelper.Search(
                 dgv: dgvItems,
                 tableName: "items",
-                columnNames: new string[] { "brand_name", "generic_name", "strength", "dosage", "category", "description" },
+                columnNames: new string[] { "brand_name", "generic_name", "strength", "dosage", "category"},
                 filterControl: searchItemsTextBox
             );
         }
@@ -472,7 +468,6 @@ namespace ENT_Clinic_System.Inventory
             AutoCompleteHelper.SetupAutoComplete(stregnthComboBox, "items", new List<string> { "strength" });
             AutoCompleteHelper.SetupAutoComplete(dosageComboBox, "items", new List<string> { "dosage" });
             AutoCompleteHelper.SetupAutoComplete(categoryComboBox, "items", new List<string> { "category" });
-            AutoCompleteHelper.SetupAutoComplete(descriptionComboBox, "items", new List<string> { "description" });
 
             movementDateFromDateTimePicker.Value = DateTime.Now.AddMonths(-1);
             SortMovementDate();
@@ -483,7 +478,7 @@ namespace ENT_Clinic_System.Inventory
             try
             {
                 string query = @"
-                    SELECT sm.movement_id, sm.item_id, i.brand_name, i.generic_name, i.strength, i.dosage, i.category, i.description,
+                    SELECT sm.movement_id, sm.item_id, i.brand_name, i.generic_name, i.strength, i.dosage, i.category,
                            sm.movement_type, sm.quantity, sm.movement_date, sm.expiration_date
                     FROM stock_movements sm
                     INNER JOIN items i ON sm.item_id = i.item_id
@@ -508,7 +503,6 @@ namespace ENT_Clinic_System.Inventory
                 if (movementDataGridView.Columns.Contains("strength")) movementDataGridView.Columns["strength"].HeaderText = "Strength";
                 if (movementDataGridView.Columns.Contains("dosage")) movementDataGridView.Columns["dosage"].HeaderText = "Dosage";
                 if (movementDataGridView.Columns.Contains("category")) movementDataGridView.Columns["category"].HeaderText = "Category";
-                if (movementDataGridView.Columns.Contains("description")) movementDataGridView.Columns["description"].HeaderText = "Description";
                 if (movementDataGridView.Columns.Contains("movement_type")) movementDataGridView.Columns["movement_type"].HeaderText = "Type";
                 if (movementDataGridView.Columns.Contains("quantity")) movementDataGridView.Columns["quantity"].HeaderText = "Qty";
                 if (movementDataGridView.Columns.Contains("movement_date")) movementDataGridView.Columns["movement_date"].HeaderText = "Date";
@@ -528,7 +522,7 @@ namespace ENT_Clinic_System.Inventory
             if (movementDateFromDateTimePicker.Value <= movementDateToDateTimePicker.Value)
             {
                 string query = @"
-                    SELECT sm.movement_id, sm.item_id, i.brand_name, i.generic_name, i.strength, i.dosage, i.category, i.description,
+                    SELECT sm.movement_id, sm.item_id, i.brand_name, i.generic_name, i.strength, i.dosage, i.category,
                            sm.movement_type, sm.quantity, sm.movement_date, sm.expiration_date
                     FROM stock_movements sm
                     INNER JOIN items i ON sm.item_id = i.item_id
@@ -597,6 +591,31 @@ namespace ENT_Clinic_System.Inventory
 
 
         private void dgvItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void descriptionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void costPriceNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvItems_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
 
         }

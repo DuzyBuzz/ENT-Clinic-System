@@ -151,7 +151,7 @@ namespace ENT_Clinic_System.PrintingForms
             e.Graphics.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
 
             // ================= FEES =================
-            e.Graphics.DrawString($"Fee: {currencySymbol}{totalFee:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
+            e.Graphics.DrawString($"MD Fee: {currencySymbol}{totalFee:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Discount: {currencySymbol}{discountAmount:F2}", fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString($"Net Total: {currencySymbol}{netTotal:F2}", fontBold, Brushes.Black, leftMargin, y); y += lineHeight;
             e.Graphics.DrawString(new string('-', 40), fontRegular, Brushes.Black, leftMargin, y); y += lineHeight;

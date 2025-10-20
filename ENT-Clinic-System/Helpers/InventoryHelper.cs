@@ -63,7 +63,7 @@ namespace ENT_Clinic_System.Helpers
         // 🔹 Add new item
         // ================================
         public bool AddItem(string brandName, string genericName, string strength, string dosage,
-            string category, string description, decimal costPrice, decimal sellingPrice)
+            string category, decimal costPrice, decimal sellingPrice)
         {
             try
             {
@@ -71,9 +71,9 @@ namespace ENT_Clinic_System.Helpers
                 {
                     conn.Open();
                     string query = @"INSERT INTO items 
-                                    (brand_name, generic_name, strength, dosage, category, description,
+                                    (brand_name, generic_name, strength, dosage, category,
                                      cost_price, selling_price, quantity, created_at, updated_at)
-                                     VALUES (@brand_name, @generic_name, @strength, @dosage, @category, @description,
+                                     VALUES (@brand_name, @generic_name, @strength, @dosage, @category,
                                              @cost_price, @selling_price, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
 
                     using (var cmd = new MySqlCommand(query, conn))
@@ -83,7 +83,6 @@ namespace ENT_Clinic_System.Helpers
                         cmd.Parameters.AddWithValue("@strength", strength);
                         cmd.Parameters.AddWithValue("@dosage", dosage);
                         cmd.Parameters.AddWithValue("@category", category);
-                        cmd.Parameters.AddWithValue("@description", description);
                         cmd.Parameters.AddWithValue("@cost_price", costPrice);
                         cmd.Parameters.AddWithValue("@selling_price", sellingPrice);
 
@@ -102,7 +101,7 @@ namespace ENT_Clinic_System.Helpers
         // 🔹 Update item
         // ================================
         public bool UpdateItem(int itemId, string brandName, string genericName, string strength, string dosage,
-            string category, string description, decimal costPrice, decimal sellingPrice)
+            string category, decimal costPrice, decimal sellingPrice)
         {
             try
             {
@@ -111,7 +110,7 @@ namespace ENT_Clinic_System.Helpers
                     conn.Open();
                     string query = @"UPDATE items 
                                      SET brand_name=@brand_name, generic_name=@generic_name, strength=@strength,
-                                         dosage=@dosage, category=@category, description=@description,
+                                         dosage=@dosage, category=@category, 
                                          cost_price=@cost_price, selling_price=@selling_price, updated_at=CURRENT_TIMESTAMP
                                      WHERE item_id=@item_id";
 
@@ -123,7 +122,6 @@ namespace ENT_Clinic_System.Helpers
                         cmd.Parameters.AddWithValue("@strength", strength);
                         cmd.Parameters.AddWithValue("@dosage", dosage);
                         cmd.Parameters.AddWithValue("@category", category);
-                        cmd.Parameters.AddWithValue("@description", description);
                         cmd.Parameters.AddWithValue("@cost_price", costPrice);
                         cmd.Parameters.AddWithValue("@selling_price", sellingPrice);
 

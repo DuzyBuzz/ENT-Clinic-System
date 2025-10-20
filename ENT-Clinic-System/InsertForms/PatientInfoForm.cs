@@ -19,10 +19,10 @@ namespace ENT_Clinic_System.Helpers
         private void TabSequence()
         {
             // Patient Info Controls
-            this.firstNameTextBox.TabIndex = 0;
-            this.MITextBox.TabIndex = 1;
-            this.lastnameTexBox.TabIndex = 2;
-            this.suffixComboBox.TabIndex = 3;
+            this.lastnameTexBox.TabIndex = 0;
+            this.firstNameTextBox.TabIndex = 1;
+            this.suffixComboBox.TabIndex = 2;
+            this.MITextBox.TabIndex = 3;
             this.addressTextBox.TabIndex = 4;
             this.dateOfBirthDateTimePicker.TabIndex = 5;
             this.sexComboBox.TabIndex = 6;
@@ -30,10 +30,10 @@ namespace ENT_Clinic_System.Helpers
             this.patientContactNumberTextBox.TabIndex = 8;
 
             // Emergency Contact Controls
-            this.contactFistNameTextBox.TabIndex = 9;
-            this.contactMiddleNameTextBox.TabIndex = 10;
-            this.contactLastNameTextBox.TabIndex = 11;
-            this.contactsuffixComboBox.TabIndex = 12;
+            this.contactLastNameTextBox.TabIndex = 9;
+            this.contactLastNameTextBox.TabIndex = 10;
+            this.contactsuffixComboBox.TabIndex = 11;
+            this.contactMiddleNameTextBox.TabIndex = 12;
 
 
 
@@ -165,18 +165,25 @@ namespace ENT_Clinic_System.Helpers
                 dateOfBirthDateTimePicker.Focus();
                 return;
             }
+            string middleName = CamelCaseHelper.ToCamelCase(MITextBox.Text).Trim();
+            string middleInitial = string.IsNullOrWhiteSpace(middleName) ? "" : $" {middleName[0]}.";
 
-            // --- Concatenate full name ---
-            string fullName = $"{CamelCaseHelper.ToCamelCase(firstNameTextBox.Text)} " +
-                              $"{CamelCaseHelper.ToCamelCase(MITextBox.Text)} " +
-                              $"{CamelCaseHelper.ToCamelCase(lastnameTexBox.Text)}. " +
-                              $"{CamelCaseHelper.ToCamelCase(suffixComboBox.Text)}".Trim();
+            string fullName = $"{CamelCaseHelper.ToCamelCase(lastnameTexBox.Text).Trim()}, " +
+                              $"{CamelCaseHelper.ToCamelCase(firstNameTextBox.Text).Trim()}" +
+                              $"{(string.IsNullOrWhiteSpace(suffixComboBox.Text) ? "" : " " + CamelCaseHelper.ToCamelCase(suffixComboBox.Text).Trim())}" +
+                              $"{middleInitial}".Trim();
 
-            // --- Concatenate emergency contact name ---
-            string contactName = $"{CamelCaseHelper.ToCamelCase(contactFistNameTextBox.Text)} " +
-                                 $"{CamelCaseHelper.ToCamelCase(contactMiddleNameTextBox.Text)} " +
-                                 $"{CamelCaseHelper.ToCamelCase(contactLastNameTextBox.Text)}. " +
-                                 $"{CamelCaseHelper.ToCamelCase(contactsuffixComboBox.Text)}".Trim();
+
+
+            // --- Concatenate Emergency Contact Name ---
+            // Same format: Lastname, Firstname Suffix M.
+            string contactMiddle = CamelCaseHelper.ToCamelCase(contactMiddleNameTextBox.Text).Trim();
+            string contactMiddleInitial = string.IsNullOrWhiteSpace(contactMiddle) ? "" : $" {contactMiddle[0]}.";
+
+            string contactName = $"{CamelCaseHelper.ToCamelCase(contactLastNameTextBox.Text).Trim()}, " +
+                                 $"{CamelCaseHelper.ToCamelCase(contactFistNameTextBox.Text).Trim()}" +
+                                 $"{(string.IsNullOrWhiteSpace(contactsuffixComboBox.Text) ? "" : " " + CamelCaseHelper.ToCamelCase(contactsuffixComboBox.Text).Trim())}" +
+                                 $"{contactMiddleInitial}".Trim();
 
             // --- Convert patient photo to byte[] ---
             byte[] photoBytes = null;
@@ -214,10 +221,10 @@ namespace ENT_Clinic_System.Helpers
             // --- SQL Insert (added photo column) ---
             string sql = @"INSERT INTO patients
         (full_name, address, birth_date, age, sex, civil_status,
-         patient_contact_number, emergency_name, emergency_contact_number, emergency_relationship, photo)
+         patient_contact_number, emergency_name, emergency_contact_number, emergency_relationship, photo, referred_by)
         VALUES
         (@full_name, @address, @birth_date, @age, @sex, @civil_status,
-         @patient_contact_number, @emergency_name, @emergency_contact_number, @emergency_relationship, @photo)";
+         @patient_contact_number, @emergency_name, @emergency_contact_number, @emergency_relationship, @photo, @referred_by)";
 
             using (var conn = DBConfig.GetConnection())
             using (var cmd = new MySqlCommand(sql, conn))
@@ -238,6 +245,7 @@ namespace ENT_Clinic_System.Helpers
                     cmd.Parameters.Add("@photo", MySqlDbType.LongBlob).Value = photoBytes;
                 else
                     cmd.Parameters.Add("@photo", MySqlDbType.LongBlob).Value = DBNull.Value;
+                cmd.Parameters.AddWithValue("@referred_by", CamelCaseHelper.ToCamelCase(referredByComboBox.Text));
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -337,6 +345,17 @@ namespace ENT_Clinic_System.Helpers
                 "patients",
                 "emergency_relationship"
             );
+            
+                            ComboBoxCollectionHelper.PopulateComboBox(
+                referredByComboBox,
+                "patients",
+                "referred_by"
+            );
+                        AutoCompleteHelper.SetupAutoComplete(
+                referredByComboBox,
+                "patients",
+                new List<string> { "referred_by" } // pass as a list
+            );
         }
         private void CaptureImagePictureBox_Click(object sender, EventArgs e)
         {
@@ -398,7 +417,39 @@ namespace ENT_Clinic_System.Helpers
             }
         }
 
+        private void label6_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void lastnameTexBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void referredByComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

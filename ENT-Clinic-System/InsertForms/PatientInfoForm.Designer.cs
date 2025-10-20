@@ -70,6 +70,8 @@
             this.contactMiddleNameTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.submitButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.referredByComboBox = new System.Windows.Forms.ComboBox();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -88,7 +90,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(734, 559);
+            this.panel2.Size = new System.Drawing.Size(734, 598);
             this.panel2.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -103,8 +105,8 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 751F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(734, 559);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 559F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(734, 598);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel3
@@ -116,11 +118,13 @@
             this.panel3.Location = new System.Drawing.Point(4, 5);
             this.panel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(726, 549);
+            this.panel3.Size = new System.Drawing.Size(726, 588);
             this.panel3.TabIndex = 1;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.referredByComboBox);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.patientContactNumberTextBox);
@@ -145,21 +149,23 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(726, 367);
+            this.groupBox1.Size = new System.Drawing.Size(726, 406);
             this.groupBox1.TabIndex = 61;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Patient Information";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(22, 63);
+            this.label4.Location = new System.Drawing.Point(20, 112);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 20);
             this.label4.TabIndex = 37;
             this.label4.Text = "First Name";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label17
             // 
@@ -184,7 +190,7 @@
             // CaptureImagePictureBox
             // 
             this.CaptureImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.CaptureImagePictureBox.Location = new System.Drawing.Point(468, 25);
+            this.CaptureImagePictureBox.Location = new System.Drawing.Point(524, 25);
             this.CaptureImagePictureBox.Name = "CaptureImagePictureBox";
             this.CaptureImagePictureBox.Size = new System.Drawing.Size(192, 192);
             this.CaptureImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -195,7 +201,7 @@
             // firstNameTextBox
             // 
             this.firstNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.firstNameTextBox.Location = new System.Drawing.Point(132, 56);
+            this.firstNameTextBox.Location = new System.Drawing.Point(132, 109);
             this.firstNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.firstNameTextBox.Name = "firstNameTextBox";
             this.firstNameTextBox.Size = new System.Drawing.Size(150, 26);
@@ -240,7 +246,7 @@
             // MITextBox
             // 
             this.MITextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MITextBox.Location = new System.Drawing.Point(356, 56);
+            this.MITextBox.Location = new System.Drawing.Point(468, 110);
             this.MITextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MITextBox.MaxLength = 1;
             this.MITextBox.Name = "MITextBox";
@@ -267,11 +273,12 @@
             // lastnameTexBox
             // 
             this.lastnameTexBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastnameTexBox.Location = new System.Drawing.Point(132, 111);
+            this.lastnameTexBox.Location = new System.Drawing.Point(132, 57);
             this.lastnameTexBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lastnameTexBox.Name = "lastnameTexBox";
             this.lastnameTexBox.Size = new System.Drawing.Size(150, 26);
             this.lastnameTexBox.TabIndex = 36;
+            this.lastnameTexBox.TextChanged += new System.EventHandler(this.lastnameTexBox_TextChanged);
             // 
             // label11
             // 
@@ -288,7 +295,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(318, 63);
+            this.label5.Location = new System.Drawing.Point(430, 117);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(23, 20);
@@ -313,12 +320,13 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(22, 121);
+            this.label6.Location = new System.Drawing.Point(20, 63);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(72, 20);
             this.label6.TabIndex = 39;
             this.label6.Text = "Last Name";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label10
             // 
@@ -401,7 +409,7 @@
             this.panel4.Controls.Add(this.groupBox2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel4.Location = new System.Drawing.Point(0, 367);
+            this.panel4.Location = new System.Drawing.Point(0, 406);
             this.panel4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(726, 182);
@@ -428,6 +436,7 @@
             this.groupBox2.TabIndex = 68;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Person to Contact in Case of Emergency";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // label16
             // 
@@ -444,7 +453,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(610, 56);
+            this.label1.Location = new System.Drawing.Point(515, 56);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(28, 20);
@@ -488,7 +497,7 @@
             // contactNumberTextBox
             // 
             this.contactNumberTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contactNumberTextBox.Location = new System.Drawing.Point(130, 100);
+            this.contactNumberTextBox.Location = new System.Drawing.Point(101, 100);
             this.contactNumberTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.contactNumberTextBox.Name = "contactNumberTextBox";
             this.contactNumberTextBox.Size = new System.Drawing.Size(244, 26);
@@ -498,7 +507,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(372, 56);
+            this.label2.Location = new System.Drawing.Point(265, 56);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 20);
@@ -508,7 +517,7 @@
             // contactFistNameTextBox
             // 
             this.contactFistNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contactFistNameTextBox.Location = new System.Drawing.Point(130, 49);
+            this.contactFistNameTextBox.Location = new System.Drawing.Point(101, 46);
             this.contactFistNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.contactFistNameTextBox.Name = "contactFistNameTextBox";
             this.contactFistNameTextBox.Size = new System.Drawing.Size(150, 26);
@@ -518,7 +527,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(290, 56);
+            this.label18.Location = new System.Drawing.Point(637, 54);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(23, 20);
@@ -544,7 +553,7 @@
             "VIII",
             "IX",
             "X"});
-            this.contactsuffixComboBox.Location = new System.Drawing.Point(647, 46);
+            this.contactsuffixComboBox.Location = new System.Drawing.Point(552, 46);
             this.contactsuffixComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.contactsuffixComboBox.Name = "contactsuffixComboBox";
             this.contactsuffixComboBox.Size = new System.Drawing.Size(56, 28);
@@ -553,7 +562,7 @@
             // contactLastNameTextBox
             // 
             this.contactLastNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contactLastNameTextBox.Location = new System.Drawing.Point(452, 50);
+            this.contactLastNameTextBox.Location = new System.Drawing.Point(345, 50);
             this.contactLastNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.contactLastNameTextBox.Name = "contactLastNameTextBox";
             this.contactLastNameTextBox.Size = new System.Drawing.Size(150, 26);
@@ -562,7 +571,7 @@
             // contactMiddleNameTextBox
             // 
             this.contactMiddleNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contactMiddleNameTextBox.Location = new System.Drawing.Point(328, 49);
+            this.contactMiddleNameTextBox.Location = new System.Drawing.Point(675, 47);
             this.contactMiddleNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.contactMiddleNameTextBox.MaxLength = 1;
             this.contactMiddleNameTextBox.Name = "contactMiddleNameTextBox";
@@ -575,11 +584,12 @@
             this.panel1.Controls.Add(this.submitButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel1.Location = new System.Drawing.Point(0, 559);
+            this.panel1.Location = new System.Drawing.Point(0, 598);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(734, 69);
+            this.panel1.Size = new System.Drawing.Size(734, 66);
             this.panel1.TabIndex = 2;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // submitButton
             // 
@@ -598,11 +608,35 @@
             this.submitButton.UseVisualStyleBackColor = false;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(22, 369);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 20);
+            this.label3.TabIndex = 62;
+            this.label3.Text = "Referred by";
+            // 
+            // referredByComboBox
+            // 
+            this.referredByComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.referredByComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.referredByComboBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.referredByComboBox.FormattingEnabled = true;
+            this.referredByComboBox.Location = new System.Drawing.Point(129, 361);
+            this.referredByComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.referredByComboBox.Name = "referredByComboBox";
+            this.referredByComboBox.Size = new System.Drawing.Size(531, 28);
+            this.referredByComboBox.TabIndex = 61;
+            this.referredByComboBox.SelectedIndexChanged += new System.EventHandler(this.referredByComboBox_SelectedIndexChanged);
+            // 
             // PatientInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 628);
+            this.ClientSize = new System.Drawing.Size(734, 664);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -672,5 +706,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox referredByComboBox;
     }
 }

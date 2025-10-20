@@ -50,7 +50,7 @@ namespace ENT_Clinic_System.InsertForms
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
-                string sql = "SELECT patient_id, full_name FROM patients";
+                string sql = "SELECT patient_id, full_name, referred_by FROM patients";
                 var adapter = new MySqlDataAdapter(sql, conn);
                 patientsTable = new DataTable();
                 adapter.Fill(patientsTable);
@@ -65,6 +65,9 @@ namespace ENT_Clinic_System.InsertForms
 
             if (dgvPatients.Columns.Contains("full_name"))
                 dgvPatients.Columns["full_name"].HeaderText = "Full Name";
+
+            if (dgvPatients.Columns.Contains("referred_by"))
+                dgvPatients.Columns["referred_by"].HeaderText = "Referred By";
         }
 
         private void LoadQueue()
@@ -75,25 +78,28 @@ namespace ENT_Clinic_System.InsertForms
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
+
                     string sql = @"
-                        SELECT 
-                            q.queue_id,
-                            q.patient_id,           -- ✅ Added to retrieve patient_id
-                            q.queue_number,
-                            p.full_name AS patient_name,
-                            q.status
-                        FROM queue q
-                        INNER JOIN patients p ON q.patient_id = p.patient_id
-                        WHERE DATE(q.created_at) = CURDATE()
-                        ORDER BY
-                            CASE q.status
-                                WHEN 'examining' THEN 1
-                                WHEN 'waiting' THEN 2
-                                WHEN 'done' THEN 3
-                                WHEN 'skipped' THEN 4
-                                ELSE 5
-                            END,
-                            q.queue_number ASC";
+                SELECT 
+                    q.queue_id,
+                    q.patient_id,
+                    q.queue_number,
+                    p.full_name AS patient_name,
+                    q.status,
+                    q.created_at,
+                    q.finished_at-- ✅ Added column
+                FROM queue q
+                INNER JOIN patients p ON q.patient_id = p.patient_id
+                WHERE DATE(q.created_at) = CURDATE()
+                ORDER BY
+                    CASE q.status
+                        WHEN 'examining' THEN 1
+                        WHEN 'waiting' THEN 2
+                        WHEN 'done' THEN 3
+                        WHEN 'skipped' THEN 4
+                        ELSE 5
+                    END,
+                    q.queue_number ASC";
 
                     var adapter = new MySqlDataAdapter(sql, conn);
                     queueTable = new DataTable();
@@ -103,13 +109,14 @@ namespace ENT_Clinic_System.InsertForms
 
                 SetupStatusColumn();
 
+                // Hide unneeded technical columns
                 if (dgvQueue.Columns.Contains("queue_id"))
                     dgvQueue.Columns["queue_id"].Visible = false;
 
-                // ✅ Hide patient_id column from UI
                 if (dgvQueue.Columns.Contains("patient_id"))
                     dgvQueue.Columns["patient_id"].Visible = false;
 
+                // ✅ Setup readable column headers
                 if (dgvQueue.Columns.Contains("queue_number"))
                     dgvQueue.Columns["queue_number"].HeaderText = "Queue #";
 
@@ -119,10 +126,21 @@ namespace ENT_Clinic_System.InsertForms
                 if (dgvQueue.Columns.Contains("status"))
                     dgvQueue.Columns["status"].HeaderText = "Current Status";
 
+                if (dgvQueue.Columns.Contains("created_at"))
+                {
+                    dgvQueue.Columns["created_at"].HeaderText = "Queued At";
+                    dgvQueue.Columns["created_at"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"; // ✅ Format date/time
+                }
+                if (dgvQueue.Columns.Contains("created_at"))
+                {
+                    dgvQueue.Columns["finished_at"].HeaderText = "Finished Time";
+                    dgvQueue.Columns["finished_at"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"; // ✅ Format date/time
+                }
 
+                // Make only status editable
                 foreach (DataGridViewColumn col in dgvQueue.Columns)
                 {
-                    col.ReadOnly = col.Name != "status"; // only status editable
+                    col.ReadOnly = col.Name != "status";
                 }
             }
             finally
@@ -130,6 +148,7 @@ namespace ENT_Clinic_System.InsertForms
                 suppressEvents = false;
             }
         }
+
 
         private void SetupStatusColumn()
         {
@@ -286,7 +305,28 @@ namespace ENT_Clinic_System.InsertForms
 
         private void txtSearchPatient_TextChanged(object sender, EventArgs e)
         {
+            if (patientsTable == null || patientsTable.Rows.Count == 0)
+                return;
+
+            try
+            {
+                // Escape special characters for LIKE (e.g., ', %, [, ])
+                string searchText = txtSearchPatient.Text.Replace("'", "''")
+                                                         .Replace("[", "[[]")
+                                                         .Replace("%", "[%]")
+                                                         .Replace("*", "[*]");
+
+                // Apply filter in real-time
+                patientsTable.DefaultView.RowFilter = $"full_name LIKE '%{searchText}%'";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error filtering patients: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
 
         // ✅ Handles row selection when right-clicking
         private void dgvQueue_MouseDown(object sender, MouseEventArgs e)
@@ -370,6 +410,34 @@ namespace ENT_Clinic_System.InsertForms
             }
         }
 
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvQueue_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvPatients_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

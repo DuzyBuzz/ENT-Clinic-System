@@ -406,5 +406,10 @@ namespace ENT_Clinic_System.Payments
         {
             SortBillingDate();
         }
+
+        private void balanceTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

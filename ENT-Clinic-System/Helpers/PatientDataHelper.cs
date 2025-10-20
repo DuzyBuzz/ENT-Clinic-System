@@ -16,7 +16,7 @@ namespace ENT_Clinic_System.Helpers
             string[] allowedColumns = {
                 "patient_id", "full_name", "address", "birth_date", "age",
                 "sex", "civil_status", "patient_contact_number",
-                "emergency_name", "emergency_contact_number", "emergency_relationship"
+                "emergency_name", "emergency_contact_number", "emergency_relationship", "referred_by"
             };
 
             if (Array.IndexOf(allowedColumns, columnName) == -1)

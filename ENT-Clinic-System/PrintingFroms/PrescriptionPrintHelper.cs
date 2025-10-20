@@ -163,34 +163,67 @@ namespace ENT_Clinic_System.PrintingForms
             {
                 int underlineOffset = 2;
 
-                // Name
+                // --- Name ---
                 g.DrawString("Name:", labelFont, Brushes.Black, leftMargin, y);
                 g.DrawString(_patientName, valueFont, Brushes.Black, leftMargin + 100, y);
-                SizeF nameSize = g.MeasureString(_patientName, valueFont);
-                g.DrawLine(Pens.Black, leftMargin + 100, y + nameSize.Height + underlineOffset,
-                    leftMargin + 100 + nameSize.Width, y + nameSize.Height + underlineOffset);
 
-                // Age
+                SizeF nameSize = g.MeasureString(_patientName, valueFont);
+                g.DrawLine(Pens.Black,
+                    leftMargin + 100,
+                    y + nameSize.Height + underlineOffset,
+                    leftMargin + 100 + nameSize.Width,
+                    y + nameSize.Height + underlineOffset);
+
+                // --- Age ---
                 g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 350, y);
                 g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 380, y);
 
-                // Sex
+                SizeF ageSize = g.MeasureString(_patientAge, valueFont);
+                g.DrawLine(Pens.Black,
+                    leftMargin + 380,
+                    y + ageSize.Height + underlineOffset,
+                    leftMargin + 380 + ageSize.Width,
+                    y + ageSize.Height + underlineOffset);
+
+                // --- Sex ---
                 g.DrawString("Sex:", labelFont, Brushes.Black, leftMargin + 420, y);
                 g.DrawString(_patientGender, valueFont, Brushes.Black, leftMargin + 450, y);
 
+                SizeF sexSize = g.MeasureString(_patientGender, valueFont);
+                g.DrawLine(Pens.Black,
+                    leftMargin + 450,
+                    y + sexSize.Height + underlineOffset,
+                    leftMargin + 450 + sexSize.Width,
+                    y + sexSize.Height + underlineOffset);
+
                 y += 20;
 
-                // Address
+                // --- Address ---
                 g.DrawString("Address:", labelFont, Brushes.Black, leftMargin, y);
                 g.DrawString(_patientAddress, valueFont, Brushes.Black, leftMargin + 100, y);
 
-                // Date
+                SizeF addressSize = g.MeasureString(_patientAddress, valueFont);
+                g.DrawLine(Pens.Black,
+                    leftMargin + 100,
+                    y + addressSize.Height + underlineOffset,
+                    leftMargin + 100 + addressSize.Width,
+                    y + addressSize.Height + underlineOffset);
+
+                // --- Date ---
                 g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 345, y);
                 string formattedDate = _prescriptionDate.ToString("MMMM dd, yyyy");
                 g.DrawString(formattedDate, valueFont, Brushes.Black, leftMargin + 380, y);
 
+                SizeF dateSize = g.MeasureString(formattedDate, valueFont);
+                g.DrawLine(Pens.Black,
+                    leftMargin + 380,
+                    y + dateSize.Height + underlineOffset,
+                    leftMargin + 380 + dateSize.Width,
+                    y + dateSize.Height + underlineOffset);
+
                 y += 15;
             }
+
 
             // 3️⃣ Prescription Items
             using (Font rxFont = new Font("Times New Roman", 50, FontStyle.Bold))

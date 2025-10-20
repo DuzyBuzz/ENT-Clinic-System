@@ -38,14 +38,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.clearButton = new System.Windows.Forms.Button();
             this.writeOffButton = new System.Windows.Forms.Button();
-            this.descriptionComboBox = new System.Windows.Forms.ComboBox();
             this.sellingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.updateItemButton = new System.Windows.Forms.Button();
             this.addItemButton = new System.Windows.Forms.Button();
             this.genericNameComboBox = new System.Windows.Forms.ComboBox();
             this.costPriceNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.lblSellingPrice = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.lblItemName = new System.Windows.Forms.Label();
             this.lblCostPrice = new System.Windows.Forms.Label();
             this.categoryComboBox = new System.Windows.Forms.ComboBox();
@@ -77,6 +75,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.movementDateToDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.movementDateFromDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -186,7 +185,7 @@
             this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.sortCategoryCombobox.FormattingEnabled = true;
-            this.sortCategoryCombobox.Location = new System.Drawing.Point(579, 6);
+            this.sortCategoryCombobox.Location = new System.Drawing.Point(579, 13);
             this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.sortCategoryCombobox.Name = "sortCategoryCombobox";
             this.sortCategoryCombobox.Size = new System.Drawing.Size(204, 28);
@@ -256,6 +255,8 @@
             this.dgvItems.BackgroundColor = System.Drawing.Color.White;
             this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.description});
             this.dgvItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvItems.Location = new System.Drawing.Point(3, 21);
             this.dgvItems.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -269,6 +270,7 @@
             this.dgvItems.Size = new System.Drawing.Size(781, 615);
             this.dgvItems.TabIndex = 28;
             this.dgvItems.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_CellClick);
+            this.dgvItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvItems_CellContentClick_1);
             // 
             // groupBox3
             // 
@@ -292,16 +294,10 @@
             this.tableLayoutPanel4.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.clearButton, 4, 3);
             this.tableLayoutPanel4.Controls.Add(this.writeOffButton, 4, 2);
-            this.tableLayoutPanel4.Controls.Add(this.descriptionComboBox, 3, 1);
-            this.tableLayoutPanel4.Controls.Add(this.sellingNumericUpDown, 3, 3);
             this.tableLayoutPanel4.Controls.Add(this.updateItemButton, 4, 1);
             this.tableLayoutPanel4.Controls.Add(this.addItemButton, 4, 0);
             this.tableLayoutPanel4.Controls.Add(this.genericNameComboBox, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.costPriceNumericUpDown, 3, 2);
-            this.tableLayoutPanel4.Controls.Add(this.lblSellingPrice, 2, 3);
-            this.tableLayoutPanel4.Controls.Add(this.label6, 2, 1);
             this.tableLayoutPanel4.Controls.Add(this.lblItemName, 0, 1);
-            this.tableLayoutPanel4.Controls.Add(this.lblCostPrice, 2, 2);
             this.tableLayoutPanel4.Controls.Add(this.categoryComboBox, 3, 0);
             this.tableLayoutPanel4.Controls.Add(this.brandNameComboBox, 1, 1);
             this.tableLayoutPanel4.Controls.Add(this.label5, 2, 0);
@@ -309,6 +305,10 @@
             this.tableLayoutPanel4.Controls.Add(this.dosageComboBox, 1, 3);
             this.tableLayoutPanel4.Controls.Add(this.stregnthComboBox, 1, 2);
             this.tableLayoutPanel4.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel4.Controls.Add(this.costPriceNumericUpDown, 3, 1);
+            this.tableLayoutPanel4.Controls.Add(this.sellingNumericUpDown, 3, 2);
+            this.tableLayoutPanel4.Controls.Add(this.lblCostPrice, 2, 1);
+            this.tableLayoutPanel4.Controls.Add(this.lblSellingPrice, 2, 2);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 21);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -319,6 +319,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(775, 157);
             this.tableLayoutPanel4.TabIndex = 0;
+            this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
             // label1
             // 
@@ -361,23 +362,12 @@
             this.writeOffButton.UseVisualStyleBackColor = false;
             this.writeOffButton.Click += new System.EventHandler(this.writeOffButton_Click);
             // 
-            // descriptionComboBox
-            // 
-            this.descriptionComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.descriptionComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descriptionComboBox.FormattingEnabled = true;
-            this.descriptionComboBox.Location = new System.Drawing.Point(419, 44);
-            this.descriptionComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
-            this.descriptionComboBox.Name = "descriptionComboBox";
-            this.descriptionComboBox.Size = new System.Drawing.Size(195, 24);
-            this.descriptionComboBox.TabIndex = 24;
-            // 
             // sellingNumericUpDown
             // 
             this.sellingNumericUpDown.DecimalPlaces = 2;
             this.sellingNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sellingNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sellingNumericUpDown.Location = new System.Drawing.Point(418, 120);
+            this.sellingNumericUpDown.Location = new System.Drawing.Point(418, 81);
             this.sellingNumericUpDown.Maximum = new decimal(new int[] {
             99999999,
             0,
@@ -431,7 +421,7 @@
             this.costPriceNumericUpDown.DecimalPlaces = 2;
             this.costPriceNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
             this.costPriceNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.costPriceNumericUpDown.Location = new System.Drawing.Point(418, 81);
+            this.costPriceNumericUpDown.Location = new System.Drawing.Point(418, 42);
             this.costPriceNumericUpDown.Maximum = new decimal(new int[] {
             99999999,
             0,
@@ -440,32 +430,20 @@
             this.costPriceNumericUpDown.Name = "costPriceNumericUpDown";
             this.costPriceNumericUpDown.Size = new System.Drawing.Size(197, 22);
             this.costPriceNumericUpDown.TabIndex = 16;
+            this.costPriceNumericUpDown.ValueChanged += new System.EventHandler(this.costPriceNumericUpDown_ValueChanged);
             // 
             // lblSellingPrice
             // 
             this.lblSellingPrice.AutoSize = true;
             this.lblSellingPrice.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSellingPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSellingPrice.Location = new System.Drawing.Point(313, 117);
+            this.lblSellingPrice.Location = new System.Drawing.Point(313, 78);
             this.lblSellingPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSellingPrice.Name = "lblSellingPrice";
-            this.lblSellingPrice.Size = new System.Drawing.Size(98, 40);
+            this.lblSellingPrice.Size = new System.Drawing.Size(98, 39);
             this.lblSellingPrice.TabIndex = 3;
             this.lblSellingPrice.Text = "Selling Price:";
             this.lblSellingPrice.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(313, 39);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(98, 39);
-            this.label6.TabIndex = 23;
-            this.label6.Text = "Description:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblItemName
             // 
@@ -485,7 +463,7 @@
             this.lblCostPrice.AutoSize = true;
             this.lblCostPrice.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCostPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCostPrice.Location = new System.Drawing.Point(313, 78);
+            this.lblCostPrice.Location = new System.Drawing.Point(313, 39);
             this.lblCostPrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCostPrice.Name = "lblCostPrice";
             this.lblCostPrice.Size = new System.Drawing.Size(98, 39);
@@ -905,6 +883,15 @@
             this.movementDateFromDateTimePicker.TabIndex = 8;
             this.movementDateFromDateTimePicker.ValueChanged += new System.EventHandler(this.movementDateFromDateTimePicker_ValueChanged);
             // 
+            // description
+            // 
+            this.description.DataPropertyName = "description";
+            this.description.HeaderText = "description";
+            this.description.Name = "description";
+            this.description.ReadOnly = true;
+            this.description.Visible = false;
+            this.description.Width = 104;
+            // 
             // InventoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 20F);
@@ -984,14 +971,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button clearButton;
         private System.Windows.Forms.Button writeOffButton;
-        private System.Windows.Forms.ComboBox descriptionComboBox;
         private System.Windows.Forms.NumericUpDown sellingNumericUpDown;
         private System.Windows.Forms.Button updateItemButton;
         private System.Windows.Forms.Button addItemButton;
         private System.Windows.Forms.ComboBox genericNameComboBox;
         private System.Windows.Forms.NumericUpDown costPriceNumericUpDown;
         private System.Windows.Forms.Label lblSellingPrice;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblItemName;
         private System.Windows.Forms.Label lblCostPrice;
         private System.Windows.Forms.ComboBox categoryComboBox;
@@ -1004,5 +989,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.DataGridView dgvItems;
+        private System.Windows.Forms.DataGridViewTextBoxColumn description;
     }
 }

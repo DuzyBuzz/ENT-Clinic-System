@@ -47,6 +47,7 @@ namespace ENT_Clinic_System.UserControls
                 "emergency_name",
                 "emergency_contact_number",
                 "emergency_relationship",
+                            "referred_by",
                 "created_at",
                 "photo"
             };
@@ -72,6 +73,31 @@ namespace ENT_Clinic_System.UserControls
 
         private void searchPatientNameTextBox_TextChanged(object sender, EventArgs e)
         {
+            // Define which columns you want to show when searching
+            string[] displayColumns = {
+        "patient_id",
+        "full_name",
+        "age",
+        "sex",
+        "address",
+        "civil_status",
+        "patient_contact_number",
+                    "referred_by"
+    };
+
+            // Perform search with limited columns
+            SearchHelper.Search(
+                dgv: patientsDataGridView,
+                tableName: "patients",
+                columnNames: new string[] { "full_name" },
+                filterControl: searchPatientNameTextBox,
+                columns: displayColumns
+            );
+
+            // Disable pagination when showing search results
+            prevButton.Enabled = false;
+            nextButton.Enabled = false;
+            pageLabel.Text = "Search results";
 
         }
         private void searchPatientButton_Click(object sender, EventArgs e)
@@ -84,7 +110,8 @@ namespace ENT_Clinic_System.UserControls
         "sex",
         "address",
         "civil_status",
-        "patient_contact_number"
+        "patient_contact_number",
+                    "referred_by"
     };
 
             // Perform search with limited columns
@@ -185,7 +212,8 @@ namespace ENT_Clinic_System.UserControls
             "sex",
             "address",
             "civil_status",
-            "patient_contact_number"
+            "patient_contact_number",
+            "referred_by"
         };
 
                 SearchHelper.Search(
