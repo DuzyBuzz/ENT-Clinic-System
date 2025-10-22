@@ -93,7 +93,7 @@
             this.selectedItemsDataGridView.MultiSelect = false;
             this.selectedItemsDataGridView.Name = "selectedItemsDataGridView";
             this.selectedItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.selectedItemsDataGridView.Size = new System.Drawing.Size(651, 336);
+            this.selectedItemsDataGridView.Size = new System.Drawing.Size(651, 314);
             this.selectedItemsDataGridView.TabIndex = 0;
             this.selectedItemsDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.selectedItemsDataGridView_EditingControlShowing);
             // 
@@ -104,7 +104,7 @@
             this.groupBoxSelected.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBoxSelected.Location = new System.Drawing.Point(3, 3);
             this.groupBoxSelected.Name = "groupBoxSelected";
-            this.groupBoxSelected.Size = new System.Drawing.Size(657, 358);
+            this.groupBoxSelected.Size = new System.Drawing.Size(657, 336);
             this.groupBoxSelected.TabIndex = 1;
             this.groupBoxSelected.TabStop = false;
             this.groupBoxSelected.Text = "Selected Items ";
@@ -114,9 +114,9 @@
             this.groupBox3.Controls.Add(this.tableLayoutPanel4);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(3, 367);
+            this.groupBox3.Location = new System.Drawing.Point(3, 345);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(657, 234);
+            this.groupBox3.Size = new System.Drawing.Size(657, 256);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Customer Payment (Walk-in)";
@@ -149,9 +149,9 @@
             this.tableLayoutPanel4.RowCount = 4;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(651, 212);
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.20513F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(651, 234);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // saveButton
@@ -160,7 +160,7 @@
             this.saveButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.saveButton.ForeColor = System.Drawing.Color.White;
-            this.saveButton.Location = new System.Drawing.Point(489, 162);
+            this.saveButton.Location = new System.Drawing.Point(489, 184);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(159, 47);
             this.saveButton.TabIndex = 13;
@@ -171,7 +171,7 @@
             // 
             this.noteComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.noteComboBox.FormattingEnabled = true;
-            this.noteComboBox.Location = new System.Drawing.Point(489, 109);
+            this.noteComboBox.Location = new System.Drawing.Point(489, 119);
             this.noteComboBox.Name = "noteComboBox";
             this.noteComboBox.Size = new System.Drawing.Size(159, 23);
             this.noteComboBox.TabIndex = 15;
@@ -180,12 +180,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(327, 106);
+            this.label5.Location = new System.Drawing.Point(327, 116);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(156, 53);
+            this.label5.Size = new System.Drawing.Size(156, 65);
             this.label5.TabIndex = 16;
             this.label5.Text = "Note:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // itemsAmountRecievedNumericUpDown
             // 
@@ -206,10 +205,9 @@
             this.lblSubtotal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSubtotal.Location = new System.Drawing.Point(3, 0);
             this.lblSubtotal.Name = "lblSubtotal";
-            this.lblSubtotal.Size = new System.Drawing.Size(156, 53);
+            this.lblSubtotal.Size = new System.Drawing.Size(156, 58);
             this.lblSubtotal.TabIndex = 1;
             this.lblSubtotal.Text = "Subtotal:";
-            this.lblSubtotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // subTotalTextBox
             // 
@@ -223,7 +221,7 @@
             // changeTextBox
             // 
             this.changeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.changeTextBox.Location = new System.Drawing.Point(489, 56);
+            this.changeTextBox.Location = new System.Drawing.Point(489, 61);
             this.changeTextBox.Name = "changeTextBox";
             this.changeTextBox.ReadOnly = true;
             this.changeTextBox.Size = new System.Drawing.Size(159, 23);
@@ -234,23 +232,21 @@
             this.lblNetTotal.AutoSize = true;
             this.lblNetTotal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblNetTotal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblNetTotal.Location = new System.Drawing.Point(3, 159);
+            this.lblNetTotal.Location = new System.Drawing.Point(3, 181);
             this.lblNetTotal.Name = "lblNetTotal";
             this.lblNetTotal.Size = new System.Drawing.Size(156, 53);
             this.lblNetTotal.TabIndex = 7;
             this.lblNetTotal.Text = "Grand Total:";
-            this.lblNetTotal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblChange
             // 
             this.lblChange.AutoSize = true;
             this.lblChange.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblChange.Location = new System.Drawing.Point(327, 53);
+            this.lblChange.Location = new System.Drawing.Point(327, 58);
             this.lblChange.Name = "lblChange";
-            this.lblChange.Size = new System.Drawing.Size(156, 53);
+            this.lblChange.Size = new System.Drawing.Size(156, 58);
             this.lblChange.TabIndex = 11;
             this.lblChange.Text = "Change Due:";
-            this.lblChange.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblAmountReceived
             // 
@@ -258,15 +254,14 @@
             this.lblAmountReceived.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAmountReceived.Location = new System.Drawing.Point(327, 0);
             this.lblAmountReceived.Name = "lblAmountReceived";
-            this.lblAmountReceived.Size = new System.Drawing.Size(156, 53);
+            this.lblAmountReceived.Size = new System.Drawing.Size(156, 58);
             this.lblAmountReceived.TabIndex = 9;
             this.lblAmountReceived.Text = "Amount Received:";
-            this.lblAmountReceived.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // totalAmountTextBox
             // 
             this.totalAmountTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.totalAmountTextBox.Location = new System.Drawing.Point(165, 162);
+            this.totalAmountTextBox.Location = new System.Drawing.Point(165, 184);
             this.totalAmountTextBox.Name = "totalAmountTextBox";
             this.totalAmountTextBox.ReadOnly = true;
             this.totalAmountTextBox.Size = new System.Drawing.Size(156, 23);
@@ -276,12 +271,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 53);
+            this.label2.Location = new System.Drawing.Point(3, 58);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(156, 53);
+            this.label2.Size = new System.Drawing.Size(156, 58);
             this.label2.TabIndex = 14;
             this.label2.Text = "Discount:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel5
             // 
@@ -291,11 +285,11 @@
             this.tableLayoutPanel5.Controls.Add(this.discountPercentComboBox, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.label1, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(165, 56);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(165, 61);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(156, 47);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(156, 52);
             this.tableLayoutPanel5.TabIndex = 15;
             // 
             // discountPercentComboBox
@@ -313,26 +307,24 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(126, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 47);
+            this.label1.Size = new System.Drawing.Size(27, 52);
             this.label1.TabIndex = 18;
             this.label1.Text = "%";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblDiscount
             // 
             this.lblDiscount.AutoSize = true;
             this.lblDiscount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDiscount.Location = new System.Drawing.Point(3, 106);
+            this.lblDiscount.Location = new System.Drawing.Point(3, 116);
             this.lblDiscount.Name = "lblDiscount";
-            this.lblDiscount.Size = new System.Drawing.Size(156, 53);
+            this.lblDiscount.Size = new System.Drawing.Size(156, 65);
             this.lblDiscount.TabIndex = 3;
             this.lblDiscount.Text = "Discount Amount:";
-            this.lblDiscount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // discountTextBox
             // 
             this.discountTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.discountTextBox.Location = new System.Drawing.Point(165, 109);
+            this.discountTextBox.Location = new System.Drawing.Point(165, 119);
             this.discountTextBox.Name = "discountTextBox";
             this.discountTextBox.Size = new System.Drawing.Size(156, 23);
             this.discountTextBox.TabIndex = 4;
@@ -538,7 +530,7 @@
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(717, 11);
+            this.categoryCombobox.Location = new System.Drawing.Point(717, 13);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(217, 23);
@@ -599,8 +591,8 @@
             this.tableLayoutPanel7.Location = new System.Drawing.Point(959, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.2649F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.7351F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 56.62252F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.37748F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(663, 604);
             this.tableLayoutPanel7.TabIndex = 16;
             // 

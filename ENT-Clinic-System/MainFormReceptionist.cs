@@ -55,6 +55,13 @@ namespace ENT_Clinic_System
             {
                 if (form is T)
                 {
+                    // If the form is minimized, restore it
+                    if (form.WindowState == FormWindowState.Minimized)
+                    {
+                        form.WindowState = FormWindowState.Maximized;
+                    }
+
+                    // Bring the form to front and focus it
                     form.BringToFront();
                     form.Focus();
                     return;
@@ -65,6 +72,7 @@ namespace ENT_Clinic_System
             var instance = new T();
             instance.Show();
         }
+
 
 
         private void LoadUserControl(UserControl uc)
@@ -226,12 +234,11 @@ namespace ENT_Clinic_System
 
         private void doctorPatientsQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowSingleInstanceForm<DoctorPatientQueue>();
         }
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
             Login login = new Login();
             login.Show();
         }
@@ -267,8 +274,7 @@ namespace ENT_Clinic_System
 
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PaymentsControl paymentsControl = new PaymentsControl();
-            paymentsControl.Show();
+            ShowSingleInstanceForm<PaymentsControl>();
         }   
 
         private void billingToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -400,6 +406,16 @@ namespace ENT_Clinic_System
         {
             UserProfile userProfile = new UserProfile();
             userProfile.ShowDialog();
+        }
+
+        private void patientsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void consultationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

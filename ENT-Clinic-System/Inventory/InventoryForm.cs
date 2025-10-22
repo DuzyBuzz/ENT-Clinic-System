@@ -29,6 +29,7 @@ namespace ENT_Clinic_System.Inventory
         // ==========================
         private void LoadInventory()
         {
+            DGVColumnHeaderFilterHelper.ResetFilters(movementDataGridView);
             try
             {
                 // Populate combo boxes from database
@@ -57,6 +58,8 @@ namespace ENT_Clinic_System.Inventory
                 if (dgvItems.Columns.Contains("cost_price")) dgvItems.Columns["cost_price"].HeaderText = "Cost Price";
                 if (dgvItems.Columns.Contains("selling_price")) dgvItems.Columns["selling_price"].HeaderText = "Selling Price";
                 if (dgvItems.Columns.Contains("quantity")) dgvItems.Columns["quantity"].HeaderText = "Stock Qty";
+                ClearInputs();
+                DGVColumnHeaderFilterHelper.ResetFilters(dgvItems);
             }
             catch (Exception ex)
             {
@@ -172,7 +175,7 @@ namespace ENT_Clinic_System.Inventory
 
             if (confirm == DialogResult.Yes)
             {
-                bool success = _inventoryHelper.DeleteStockMovement(movementId); // Implement in InventoryHelper
+                bool success = _inventoryHelper.DeleteStockMovement(movementId, UserCredentials.UserId); // Implement in InventoryHelper
                 if (success)
                 {
                     MessageBox.Show("Movement deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -468,10 +471,17 @@ namespace ENT_Clinic_System.Inventory
             AutoCompleteHelper.SetupAutoComplete(stregnthComboBox, "items", new List<string> { "strength" });
             AutoCompleteHelper.SetupAutoComplete(dosageComboBox, "items", new List<string> { "dosage" });
             AutoCompleteHelper.SetupAutoComplete(categoryComboBox, "items", new List<string> { "category" });
-
+            AutoCompleteHelper.SetupAutoComplete(searchItemsTextBox, "items", new List<string> { "generic_name", "brand_name" });
             movementDateFromDateTimePicker.Value = DateTime.Now.AddMonths(-1);
             SortMovementDate();
+
+            // Attach to any DataGridView
+            DGVColumnHeaderFilterHelper.Attach(movementDataGridView);
+            DGVColumnHeaderFilterHelper.Attach(dgvItems);
+
+
         }
+
 
         private void LoadMovements()
         {
@@ -503,10 +513,19 @@ namespace ENT_Clinic_System.Inventory
                 if (movementDataGridView.Columns.Contains("strength")) movementDataGridView.Columns["strength"].HeaderText = "Strength";
                 if (movementDataGridView.Columns.Contains("dosage")) movementDataGridView.Columns["dosage"].HeaderText = "Dosage";
                 if (movementDataGridView.Columns.Contains("category")) movementDataGridView.Columns["category"].HeaderText = "Category";
-                if (movementDataGridView.Columns.Contains("movement_type")) movementDataGridView.Columns["movement_type"].HeaderText = "Type";
-                if (movementDataGridView.Columns.Contains("quantity")) movementDataGridView.Columns["quantity"].HeaderText = "Qty";
-                if (movementDataGridView.Columns.Contains("movement_date")) movementDataGridView.Columns["movement_date"].HeaderText = "Date";
-                if (movementDataGridView.Columns.Contains("expiration_date")) movementDataGridView.Columns["expiration_date"].HeaderText = "Expiration";
+                if (movementDataGridView.Columns.Contains("movement_type")) movementDataGridView.Columns["movement_type"].HeaderText = "Movement Type";
+                if (movementDataGridView.Columns.Contains("quantity")) movementDataGridView.Columns["quantity"].HeaderText = "Quantity";
+                if (movementDataGridView.Columns.Contains("movement_date"))
+                {
+                    movementDataGridView.Columns["movement_date"].HeaderText = "Date";
+                    movementDataGridView.Columns["movement_date"].DefaultCellStyle.Format = "dd/MM/yyyy"; // format with slashes
+                }
+                if (movementDataGridView.Columns.Contains("expiration_date"))
+                {
+                    movementDataGridView.Columns["expiration_date"].HeaderText = "Expiration";
+                    movementDataGridView.Columns["expiration_date"].DefaultCellStyle.Format = "dd/MM/yyyy"; // format with slashes
+                }
+
             }
             catch (Exception ex)
             {
@@ -618,6 +637,24 @@ namespace ENT_Clinic_System.Inventory
         private void dgvItems_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void searchItemsTextBox_TextChanged(object sender, EventArgs e)
+        {
+            SearchHelper.Search(
+dgv: dgvItems,
+tableName: "items",
+columnNames: new string[] { "generic_name", "brand_name" },
+filterControl: searchItemsTextBox
+);
+        }
+
+        private void clearFilterButton_Click(object sender, EventArgs e)
+        {
+            // Reset filters anywhere
+            DGVColumnHeaderFilterHelper.ResetFilters(movementDataGridView);
+            movementDateFromDateTimePicker.Value = DateTime.Now.AddMonths(-1);
+            movementDateToDateTimePicker.Value = DateTime.Now;
         }
     }
 }

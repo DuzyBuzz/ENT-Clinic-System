@@ -91,6 +91,9 @@ namespace ENT_Clinic_System.Payments
             });
 
             _prescriptionWatcher.Start();
+
+            DGVColumnHeaderFilterHelper.Attach(availableItemsDataGridView);
+            DGVColumnHeaderFilterHelper.ResetFilters(availableItemsDataGridView);
         }
 
         // ================================
@@ -500,7 +503,7 @@ namespace ENT_Clinic_System.Payments
         {
             subTotalTextBox.Text = "0.00";
             discountTextBox.Text = "0.00";
-            discountPercentComboBox.Text = "0";
+            discountPercentComboBox.Text = "";
             totalAmountTextBox.Text = "0.00";
             itemsAmountRecievedNumericUpDown.Text = "0.00";
             changeTextBox.Text = "0.00";
@@ -508,11 +511,7 @@ namespace ENT_Clinic_System.Payments
 
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            _prescriptionWatcher?.Stop();
-            base.OnFormClosing(e);
-        }
+
 
         // ================================
         // GRID FORMATTING HELPERS

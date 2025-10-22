@@ -34,21 +34,24 @@ namespace ENT_Clinic_System.Helpers
             }
             return dt;
         }
-        public bool DeleteStockMovement(int movementId)
+        public bool DeleteStockMovement(int movementId, int userId)
         {
             try
             {
-                using (MySqlConnection conn = DBConfig.GetConnection())
+                using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = "DELETE FROM stock_movements WHERE movement_id=@movementId";
 
-                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var cmd = new MySqlCommand("DeleteStockMovement", conn))
                     {
-                        cmd.Parameters.AddWithValue("@movementId", movementId);
-                        return cmd.ExecuteNonQuery() > 0;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@p_movement_id", movementId);
+                        cmd.Parameters.AddWithValue("@p_user_id", userId);
+                        cmd.ExecuteNonQuery();
                     }
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -57,6 +60,7 @@ namespace ENT_Clinic_System.Helpers
                 return false;
             }
         }
+
 
 
         // ================================

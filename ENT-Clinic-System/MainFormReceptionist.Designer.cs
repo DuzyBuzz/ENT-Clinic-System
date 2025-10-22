@@ -135,6 +135,7 @@
             this.consultationsToolStripMenuItem.Name = "consultationsToolStripMenuItem";
             this.consultationsToolStripMenuItem.Size = new System.Drawing.Size(123, 29);
             this.consultationsToolStripMenuItem.Text = "Appointment";
+            this.consultationsToolStripMenuItem.Click += new System.EventHandler(this.consultationsToolStripMenuItem_Click);
             // 
             // scheduleToolStripMenuItem
             // 
@@ -165,6 +166,7 @@
             this.patientsToolStripMenuItem.Name = "patientsToolStripMenuItem";
             this.patientsToolStripMenuItem.Size = new System.Drawing.Size(79, 29);
             this.patientsToolStripMenuItem.Text = "Patient";
+            this.patientsToolStripMenuItem.Click += new System.EventHandler(this.patientsToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 

@@ -646,8 +646,6 @@ namespace ENT_Clinic_System.Consultation
 
         private void PrescriptionForm_Load(object sender, EventArgs e)
         {
-            // Setup autocomplete lists
-            AutoCompleteHelper.SetupAutoComplete(sortCategoryCombobox, "items", new List<string> { "category" });
 
             AutoCompleteHelper.SetupAutoComplete(brandNameComboBox, "other_items", new List<string> { "brand_name" });
             AutoCompleteHelper.SetupAutoComplete(genericNameComboBox, "other_items", new List<string> { "generic_name" });
@@ -655,6 +653,15 @@ namespace ENT_Clinic_System.Consultation
             AutoCompleteHelper.SetupAutoComplete(dosageComboBox, "other_items", new List<string> { "dosage" });
             AutoCompleteHelper.SetupAutoComplete(categoryComboBox, "other_items", new List<string> { "category" });
             AutoCompleteHelper.SetupAutoComplete(descriptionComboBox, "other_items", new List<string> { "description" });
+            DGVColumnHeaderFilterHelper.Attach(dgvAvailableItems);
+            DGVColumnHeaderFilterHelper.Attach(dgvOtherItems);
+        }
+
+        private void refreshPatientsButton_Click(object sender, EventArgs e)
+        {
+            DGVColumnHeaderFilterHelper.ResetFilters(dgvAvailableItems);
+            DGVColumnHeaderFilterHelper.ResetFilters(dgvOtherItems);
+
         }
     }
 }

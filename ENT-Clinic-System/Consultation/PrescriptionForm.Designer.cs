@@ -60,8 +60,6 @@ namespace ENT_Clinic_System.Consultation
             this.dgvOtherItems = new System.Windows.Forms.DataGridView();
             this.groupBoxAvailable = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.sortCategoryCombobox = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.refreshPatientsButton = new System.Windows.Forms.Button();
             this.searchItemtButton = new System.Windows.Forms.Button();
             this.searchItemsTextBox = new System.Windows.Forms.TextBox();
@@ -121,7 +119,7 @@ namespace ENT_Clinic_System.Consultation
             // btnSubmit
             // 
             this.btnSubmit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSubmit.Location = new System.Drawing.Point(540, 3);
+            this.btnSubmit.Location = new System.Drawing.Point(539, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(102, 32);
             this.btnSubmit.TabIndex = 2;
@@ -221,7 +219,7 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.18123F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.81878F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 121F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.clearButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnSubmit, 1, 0);
@@ -246,7 +244,7 @@ namespace ENT_Clinic_System.Consultation
             // clearButton
             // 
             this.clearButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.clearButton.Location = new System.Drawing.Point(414, 3);
+            this.clearButton.Location = new System.Drawing.Point(413, 3);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(120, 32);
             this.clearButton.TabIndex = 3;
@@ -573,15 +571,11 @@ namespace ENT_Clinic_System.Consultation
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel2.ColumnCount = 6;
+            this.tableLayoutPanel2.ColumnCount = 4;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.38461F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.34978F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.250305F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.494505F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.40171F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.42002F));
-            this.tableLayoutPanel2.Controls.Add(this.sortCategoryCombobox, 5, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label3, 4, 0);
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.88083F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.56477F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.5285F));
             this.tableLayoutPanel2.Controls.Add(this.refreshPatientsButton, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.searchItemtButton, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.searchItemsTextBox, 1, 0);
@@ -595,33 +589,6 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel2.Size = new System.Drawing.Size(772, 42);
             this.tableLayoutPanel2.TabIndex = 6;
             // 
-            // sortCategoryCombobox
-            // 
-            this.sortCategoryCombobox.BackColor = System.Drawing.SystemColors.Control;
-            this.sortCategoryCombobox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.sortCategoryCombobox.FormattingEnabled = true;
-            this.sortCategoryCombobox.Location = new System.Drawing.Point(568, 6);
-            this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
-            this.sortCategoryCombobox.Name = "sortCategoryCombobox";
-            this.sortCategoryCombobox.Size = new System.Drawing.Size(200, 28);
-            this.sortCategoryCombobox.TabIndex = 6;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(489, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 42);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Category:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // refreshPatientsButton
             // 
             this.refreshPatientsButton.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -629,13 +596,14 @@ namespace ENT_Clinic_System.Consultation
             this.refreshPatientsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.refreshPatientsButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.refreshPatientsButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.refreshPatientsButton.Location = new System.Drawing.Point(443, 5);
+            this.refreshPatientsButton.Location = new System.Drawing.Point(686, 5);
             this.refreshPatientsButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.refreshPatientsButton.Name = "refreshPatientsButton";
-            this.refreshPatientsButton.Size = new System.Drawing.Size(38, 32);
+            this.refreshPatientsButton.Size = new System.Drawing.Size(82, 32);
             this.refreshPatientsButton.TabIndex = 3;
-            this.refreshPatientsButton.Text = "⟳";
+            this.refreshPatientsButton.Text = "Refresh";
             this.refreshPatientsButton.UseVisualStyleBackColor = false;
+            this.refreshPatientsButton.Click += new System.EventHandler(this.refreshPatientsButton_Click);
             // 
             // searchItemtButton
             // 
@@ -644,12 +612,12 @@ namespace ENT_Clinic_System.Consultation
             this.searchItemtButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.searchItemtButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchItemtButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchItemtButton.Location = new System.Drawing.Point(399, 5);
+            this.searchItemtButton.Location = new System.Drawing.Point(590, 5);
             this.searchItemtButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchItemtButton.Name = "searchItemtButton";
-            this.searchItemtButton.Size = new System.Drawing.Size(36, 32);
+            this.searchItemtButton.Size = new System.Drawing.Size(88, 32);
             this.searchItemtButton.TabIndex = 0;
-            this.searchItemtButton.Text = "🔎";
+            this.searchItemtButton.Text = "Search";
             this.searchItemtButton.UseVisualStyleBackColor = false;
             // 
             // searchItemsTextBox
@@ -657,10 +625,10 @@ namespace ENT_Clinic_System.Consultation
             this.searchItemsTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchItemsTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchItemsTextBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchItemsTextBox.Location = new System.Drawing.Point(134, 11);
+            this.searchItemsTextBox.Location = new System.Drawing.Point(122, 11);
             this.searchItemsTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchItemsTextBox.Name = "searchItemsTextBox";
-            this.searchItemsTextBox.Size = new System.Drawing.Size(257, 26);
+            this.searchItemsTextBox.Size = new System.Drawing.Size(460, 26);
             this.searchItemsTextBox.TabIndex = 1;
             // 
             // label8
@@ -672,7 +640,7 @@ namespace ENT_Clinic_System.Consultation
             this.label8.Location = new System.Drawing.Point(4, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(122, 42);
+            this.label8.Size = new System.Drawing.Size(110, 42);
             this.label8.TabIndex = 2;
             this.label8.Text = "Search Item:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -722,7 +690,6 @@ namespace ENT_Clinic_System.Consultation
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBoxAvailable;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button refreshPatientsButton;
         private System.Windows.Forms.Button searchItemtButton;
         private System.Windows.Forms.TextBox searchItemsTextBox;
@@ -731,7 +698,6 @@ namespace ENT_Clinic_System.Consultation
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button clearButton;
-        private System.Windows.Forms.ComboBox sortCategoryCombobox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvOtherItems;

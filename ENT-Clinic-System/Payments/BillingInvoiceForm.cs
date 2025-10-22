@@ -48,7 +48,7 @@ namespace ENT_Clinic_System.Payments
 
             // Start watching
             _billingWatcher.Start();
-
+            DGVColumnHeaderFilterHelper.Attach(billingDataGridView);
         }
 
 
@@ -437,6 +437,7 @@ namespace ENT_Clinic_System.Payments
         private void refreshPatientsButton_Click(object sender, EventArgs e)
         {
             RefreshBilling();
+            DGVColumnHeaderFilterHelper.ResetFilters(billingDataGridView);
 
         }
         private void RefreshBilling()

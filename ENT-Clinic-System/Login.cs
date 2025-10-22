@@ -117,8 +117,8 @@ namespace ENT_Clinic_System
                     if (UserCredentials.ValidateLogin(loginForm.EnteredUsername, loginForm.EnteredPassword, out string msg))
                     {
 
-                        MainFormReceptionist mainFormReceptionist = new MainFormReceptionist();
-                        mainFormReceptionist.Show();
+                        MainFormDoctor mainFormDoctor = new MainFormDoctor();
+                        mainFormDoctor.Show();
                         this.Hide();
                     }
                     else

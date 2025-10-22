@@ -76,6 +76,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.movementDateToDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.movementDateFromDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.clearFilterButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -101,11 +102,11 @@
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel2.ColumnCount = 6;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.38461F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.34978F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.250305F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5.494505F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.40171F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.42002F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.6052F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.338061F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.04728F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.00236F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.40425F));
             this.tableLayoutPanel2.Controls.Add(this.label2, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.refreshPatientsButton, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.searchPatientButton, 2, 0);
@@ -127,10 +128,10 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label2.Location = new System.Drawing.Point(498, 0);
+            this.label2.Location = new System.Drawing.Point(502, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 42);
+            this.label2.Size = new System.Drawing.Size(94, 42);
             this.label2.TabIndex = 5;
             this.label2.Text = "Category:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -142,12 +143,12 @@
             this.refreshPatientsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.refreshPatientsButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.refreshPatientsButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.refreshPatientsButton.Location = new System.Drawing.Point(451, 5);
+            this.refreshPatientsButton.Location = new System.Drawing.Point(423, 5);
             this.refreshPatientsButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.refreshPatientsButton.Name = "refreshPatientsButton";
-            this.refreshPatientsButton.Size = new System.Drawing.Size(39, 32);
+            this.refreshPatientsButton.Size = new System.Drawing.Size(71, 32);
             this.refreshPatientsButton.TabIndex = 3;
-            this.refreshPatientsButton.Text = "⟳";
+            this.refreshPatientsButton.Text = "Refresh";
             this.refreshPatientsButton.UseVisualStyleBackColor = false;
             this.refreshPatientsButton.Click += new System.EventHandler(this.refreshPatientsButton_Click);
             // 
@@ -158,12 +159,12 @@
             this.searchPatientButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.searchPatientButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchPatientButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchPatientButton.Location = new System.Drawing.Point(406, 5);
+            this.searchPatientButton.Location = new System.Drawing.Point(350, 5);
             this.searchPatientButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchPatientButton.Name = "searchPatientButton";
-            this.searchPatientButton.Size = new System.Drawing.Size(37, 32);
+            this.searchPatientButton.Size = new System.Drawing.Size(65, 32);
             this.searchPatientButton.TabIndex = 0;
-            this.searchPatientButton.Text = "🔎";
+            this.searchPatientButton.Text = "Search";
             this.searchPatientButton.UseVisualStyleBackColor = false;
             this.searchPatientButton.Click += new System.EventHandler(this.searchPatientButton_Click);
             // 
@@ -172,11 +173,12 @@
             this.searchItemsTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchItemsTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchItemsTextBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchItemsTextBox.Location = new System.Drawing.Point(136, 11);
+            this.searchItemsTextBox.Location = new System.Drawing.Point(125, 11);
             this.searchItemsTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchItemsTextBox.Name = "searchItemsTextBox";
-            this.searchItemsTextBox.Size = new System.Drawing.Size(262, 26);
+            this.searchItemsTextBox.Size = new System.Drawing.Size(217, 26);
             this.searchItemsTextBox.TabIndex = 1;
+            this.searchItemsTextBox.TextChanged += new System.EventHandler(this.searchItemsTextBox_TextChanged);
             // 
             // sortCategoryCombobox
             // 
@@ -185,10 +187,10 @@
             this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.sortCategoryCombobox.FormattingEnabled = true;
-            this.sortCategoryCombobox.Location = new System.Drawing.Point(579, 6);
+            this.sortCategoryCombobox.Location = new System.Drawing.Point(604, 13);
             this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.sortCategoryCombobox.Name = "sortCategoryCombobox";
-            this.sortCategoryCombobox.Size = new System.Drawing.Size(204, 28);
+            this.sortCategoryCombobox.Size = new System.Drawing.Size(179, 28);
             this.sortCategoryCombobox.TabIndex = 4;
             this.sortCategoryCombobox.SelectedIndexChanged += new System.EventHandler(this.categoryCombobox_SelectedIndexChanged);
             // 
@@ -201,7 +203,7 @@
             this.label8.Location = new System.Drawing.Point(4, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(124, 42);
+            this.label8.Size = new System.Drawing.Size(113, 42);
             this.label8.TabIndex = 2;
             this.label8.Text = "Search Item:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -250,7 +252,7 @@
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
             this.dgvItems.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvItems.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvItems.BackgroundColor = System.Drawing.Color.White;
             this.dgvItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -279,7 +281,6 @@
             this.description.Name = "description";
             this.description.ReadOnly = true;
             this.description.Visible = false;
-            this.description.Width = 104;
             // 
             // groupBox3
             // 
@@ -799,7 +800,7 @@
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
             this.movementDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.movementDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.movementDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.movementDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.movementDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.movementDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -820,15 +821,13 @@
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel3.ColumnCount = 4;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.68996F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.51207F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.767471F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.90343F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.ColumnCount = 5;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.Controls.Add(this.clearFilterButton, 4, 0);
             this.tableLayoutPanel3.Controls.Add(this.label11, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.label10, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.movementDateToDateTimePicker, 3, 0);
@@ -848,10 +847,10 @@
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label11.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label11.Location = new System.Drawing.Point(344, 0);
+            this.label11.Location = new System.Drawing.Point(318, 0);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(61, 42);
+            this.label11.Size = new System.Drawing.Size(149, 42);
             this.label11.TabIndex = 14;
             this.label11.Text = "Date To:";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -865,7 +864,7 @@
             this.label10.Location = new System.Drawing.Point(4, 0);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(84, 42);
+            this.label10.Size = new System.Drawing.Size(149, 42);
             this.label10.TabIndex = 13;
             this.label10.Text = "Date From:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -874,7 +873,7 @@
             // 
             this.movementDateToDateTimePicker.Dock = System.Windows.Forms.DockStyle.Left;
             this.movementDateToDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.movementDateToDateTimePicker.Location = new System.Drawing.Point(419, 10);
+            this.movementDateToDateTimePicker.Location = new System.Drawing.Point(481, 10);
             this.movementDateToDateTimePicker.Margin = new System.Windows.Forms.Padding(10);
             this.movementDateToDateTimePicker.Name = "movementDateToDateTimePicker";
             this.movementDateToDateTimePicker.Size = new System.Drawing.Size(110, 25);
@@ -885,12 +884,28 @@
             // 
             this.movementDateFromDateTimePicker.Dock = System.Windows.Forms.DockStyle.Left;
             this.movementDateFromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.movementDateFromDateTimePicker.Location = new System.Drawing.Point(102, 10);
+            this.movementDateFromDateTimePicker.Location = new System.Drawing.Point(167, 10);
             this.movementDateFromDateTimePicker.Margin = new System.Windows.Forms.Padding(10);
             this.movementDateFromDateTimePicker.Name = "movementDateFromDateTimePicker";
             this.movementDateFromDateTimePicker.Size = new System.Drawing.Size(110, 25);
             this.movementDateFromDateTimePicker.TabIndex = 8;
             this.movementDateFromDateTimePicker.ValueChanged += new System.EventHandler(this.movementDateFromDateTimePicker_ValueChanged);
+            // 
+            // clearFilterButton
+            // 
+            this.clearFilterButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.clearFilterButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.clearFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.clearFilterButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearFilterButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.clearFilterButton.Location = new System.Drawing.Point(632, 5);
+            this.clearFilterButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.clearFilterButton.Name = "clearFilterButton";
+            this.clearFilterButton.Size = new System.Drawing.Size(151, 32);
+            this.clearFilterButton.TabIndex = 15;
+            this.clearFilterButton.Text = "Clear Filter";
+            this.clearFilterButton.UseVisualStyleBackColor = false;
+            this.clearFilterButton.Click += new System.EventHandler(this.clearFilterButton_Click);
             // 
             // InventoryForm
             // 
@@ -990,5 +1005,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.DataGridView dgvItems;
         private System.Windows.Forms.DataGridViewTextBoxColumn description;
+        private System.Windows.Forms.Button clearFilterButton;
     }
 }

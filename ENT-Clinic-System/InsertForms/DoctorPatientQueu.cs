@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ENT_Clinic_System.InsertForms
 {
-    public partial class PatientsQueue : Form
+    public partial class DoctorPatientsQueu : Form
     {
         private DataTable patientsTable;
         private DataTable queueTable;
@@ -19,7 +19,7 @@ namespace ENT_Clinic_System.InsertForms
         // Realtime watcher
         private TableChangeWatcher queueWatcher;
 
-        public PatientsQueue()
+        public DoctorPatientsQueu()
         {
             InitializeComponent();
 
@@ -28,6 +28,7 @@ namespace ENT_Clinic_System.InsertForms
             // ✅ Add Context Menu for right click
             var contextMenu = new ContextMenuStrip();
             var viewConsultationItem = new ToolStripMenuItem("View Consultation");
+            viewConsultationItem.Click += viewConsultationItem_Click;
             contextMenu.Items.Add(viewConsultationItem);
             dgvQueue.ContextMenuStrip = contextMenu;
 
@@ -375,7 +376,69 @@ namespace ENT_Clinic_System.InsertForms
             }
         }
 
+        // ✅ Opens ConsultationControl safely
+        private void viewConsultationItem_Click(object sender, EventArgs e)
+        {
+            if (dgvQueue.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a patient from the queue first.", "No selection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            try
+            {
+                var selectedRow = dgvQueue.SelectedRows[0];
+
+                // ✅ Check if patient_id column exists
+                if (!dgvQueue.Columns.Contains("patient_id"))
+                {
+                    MessageBox.Show("The queue does not contain a patient_id column.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var patientIdObj = selectedRow.Cells["patient_id"].Value;
+                if (patientIdObj == null || patientIdObj == DBNull.Value)
+                {
+                    MessageBox.Show("This queue entry is not linked to a patient.", "Information",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                int patientId = Convert.ToInt32(patientIdObj);
+
+                // ✅ Update status to 'examining'
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    string updateSql = @"
+                UPDATE queue 
+                SET status = 'examining', called_at = NOW() 
+                WHERE patient_id = @pid AND DATE(created_at) = CURDATE();
+            ";
+
+                    using (var cmd = new MySqlCommand(updateSql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@pid", patientId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // ✅ Open consultation window
+                ConsultationControl consultation = new ConsultationControl(patientId);
+                consultation.Show();
+
+                // ✅ Refresh queue display to reflect updated status
+                LoadQueue();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
