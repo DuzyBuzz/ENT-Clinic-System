@@ -75,6 +75,7 @@ namespace ENT_Clinic_System
         }
 
 
+
         private void LoadUserControl(UserControl uc)
         {
             MainPanel.Controls.Clear();     

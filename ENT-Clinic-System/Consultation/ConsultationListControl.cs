@@ -48,14 +48,14 @@ namespace ENT_Clinic_System.Consultation
         c.ear_exam,
         c.nose_exam,
         c.throat_exam,
+        c.others_exam,
         c.diagnosis,
         c.recommendations,
         c.notes,
         c.follow_up_date,
         c.age,
         c.doctor_id,
-        u.username AS doctor_name,  -- replace doctor_id with actual name
-        c.others_exam
+        u.full_name AS doctor_name  -- replace doctor_id with actual name
     FROM consultation c
     INNER JOIN patients p ON c.patient_id = p.patient_id
     LEFT JOIN user u ON c.doctor_name = u.user_id  -- join using doctor_name column which actually stores the id

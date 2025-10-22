@@ -66,7 +66,7 @@ namespace ENT_Clinic_System.Consultation
                 dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "strength", HeaderText = "Strength", ReadOnly = true });
                 dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "dosage", HeaderText = "Dosage", ReadOnly = true });
                 dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "category", HeaderText = "Category", ReadOnly = true });
-                dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "description", HeaderText = "Description", ReadOnly = true });
+                dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "description", HeaderText = "Description", Visible = false });
                 dgvSelectedItems.Columns.Add(new DataGridViewTextBoxColumn { Name = "quantity", HeaderText = "Quantity", ValueType = typeof(int), Width = 70 });
             }
         }
@@ -81,7 +81,7 @@ namespace ENT_Clinic_System.Consultation
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "strength", HeaderText = "Strength", ReadOnly = true });
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "dosage", HeaderText = "Dosage", ReadOnly = true });
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "category", HeaderText = "Category", ReadOnly = true });
-                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "description", HeaderText = "Description", ReadOnly = true });
+                selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "description", HeaderText = "Description", Visible = false });
                 selectedOtherDGV.Columns.Add(new DataGridViewTextBoxColumn { Name = "quantity", HeaderText = "Quantity", ValueType = typeof(int), Width = 70 });
             }
         }
@@ -119,8 +119,10 @@ namespace ENT_Clinic_System.Consultation
                 if (dgvAvailableItems.Columns.Contains("description"))
                     dgvAvailableItems.Columns["description"].Visible = false;
                 dgvAvailableItems.Columns["description"].HeaderText = "Description";
-
-
+                if (dgvAvailableItems.Columns.Contains("created_at"))
+                    dgvAvailableItems.Columns["created_at"].Visible = false;
+                if (dgvAvailableItems.Columns.Contains("updated_at"))
+                    dgvAvailableItems.Columns["updated_at"].Visible = false;
                 // Format quantity column if present
                 if (dgvAvailableItems.Columns.Contains("quantity"))
                 {
@@ -208,6 +210,10 @@ namespace ENT_Clinic_System.Consultation
                         if (dgvOtherItems.Columns.Contains("description"))
                             dgvOtherItems.Columns["description"].Visible = false;
                         dgvOtherItems.Columns["description"].HeaderText = "Description";
+                        if (dgvOtherItems.Columns.Contains("created_at"))
+                            dgvOtherItems.Columns["created_at"].Visible = false;
+                        if (dgvOtherItems.Columns.Contains("updated_at"))
+                            dgvOtherItems.Columns["updated_at"].Visible = false;
 
                         dgvOtherItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                         dgvOtherItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
