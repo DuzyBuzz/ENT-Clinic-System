@@ -12,7 +12,8 @@ namespace ENT_Clinic_System.Helpers
         private string tableName;
         private List<string> columns;
         private string primaryKeyColumn;
-        private Dictionary<int, object> oldCellValues = new Dictionary<int, object>();
+        // use composite key "row:col" so multiple edited cells per row tracked correctly
+        private Dictionary<string, object> oldCellValues = new Dictionary<string, object>();
 
         private int pageSize = 100;
         private int currentPage = 1;
@@ -84,7 +85,11 @@ namespace ENT_Clinic_System.Helpers
 
                 int offset = (currentPage - 1) * pageSize;
                 string columnsString = string.Join(",", columns);
-                string sql = $"SELECT {columnsString}, {primaryKeyColumn} FROM {tableName} LIMIT @limit OFFSET @offset";
+                // ensure primary key is selected (avoid duplicate if included in columns)
+                if (!columns.Contains(primaryKeyColumn))
+                    columnsString = columnsString + (string.IsNullOrWhiteSpace(columnsString) ? "" : ",") + primaryKeyColumn;
+
+                string sql = $"SELECT {columnsString} FROM {tableName} LIMIT @limit OFFSET @offset";
 
                 using (var conn = DBConfig.GetConnection())
                 using (var cmd = new MySqlCommand(sql, conn))
@@ -113,7 +118,8 @@ namespace ENT_Clinic_System.Helpers
             try
             {
                 var cell = dgv[e.ColumnIndex, e.RowIndex];
-                oldCellValues[e.RowIndex] = cell.Value;
+                string key = $"{e.RowIndex}:{e.ColumnIndex}";
+                oldCellValues[key] = cell.Value;
             }
             catch { /* silently ignore */ }
         }
@@ -123,12 +129,21 @@ namespace ENT_Clinic_System.Helpers
             try
             {
                 var cell = dgv[e.ColumnIndex, e.RowIndex];
-                object oldValue = oldCellValues.ContainsKey(e.RowIndex) ? oldCellValues[e.RowIndex] : null;
+                string key = $"{e.RowIndex}:{e.ColumnIndex}";
+                object oldValue = oldCellValues.ContainsKey(key) ? oldCellValues[key] : null;
 
-                if ((cell.Value == null && oldValue != null) || (cell.Value != null && !cell.Value.Equals(oldValue)))
+                // Determine actual column/property name for this grid column
+                string gridColumnName = GetColumnDataPropertyName(e.ColumnIndex);
+
+                bool changed;
+                if (cell.Value == null && oldValue == null) changed = false;
+                else if (cell.Value == null || oldValue == null) changed = true;
+                else changed = !cell.Value.Equals(oldValue);
+
+                if (changed)
                 {
                     DialogResult result = MessageBox.Show(
-                        $"Do you want to save changes for {columns[e.ColumnIndex]}?",
+                        $"Do you want to save changes for {gridColumnName}?",
                         "Confirm Update",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question);
@@ -137,7 +152,7 @@ namespace ENT_Clinic_System.Helpers
                     {
                         try
                         {
-                            UpdateCellValueSafe(e.RowIndex, e.ColumnIndex);
+                            UpdateCellValueSafe(e.RowIndex, e.ColumnIndex, gridColumnName);
                             LoadData(currentPage);
                         }
                         catch (Exception ex)
@@ -151,15 +166,47 @@ namespace ENT_Clinic_System.Helpers
                         cell.Value = oldValue;
                     }
                 }
+
+                // cleanup stored old value
+                if (oldCellValues.ContainsKey(key))
+                    oldCellValues.Remove(key);
             }
             catch { /* ignore unexpected errors */ }
         }
 
-        private void UpdateCellValueSafe(int rowIndex, int colIndex)
+        // helper to get the DataPropertyName (column name in bound DataTable) for a given grid column index
+        private string GetColumnDataPropertyName(int colIndex)
         {
-            string columnName = columns[colIndex];
+            var col = dgv.Columns[colIndex];
+            // prefer DataPropertyName if set (bound columns), otherwise use Name
+            if (!string.IsNullOrWhiteSpace(col.DataPropertyName))
+                return col.DataPropertyName;
+            return col.Name;
+        }
+
+        // Update now uses the actual bound column name instead of relying on original columns list index
+        private void UpdateCellValueSafe(int rowIndex, int colIndex, string columnNameOverride = null)
+        {
+            // determine column name to update (use override from grid mapping)
+            string columnName = columnNameOverride ?? GetColumnDataPropertyName(colIndex);
+
             object value = dgv[colIndex, rowIndex].Value;
-            object id = dgv[primaryKeyColumn, rowIndex].Value;
+            object id = null;
+            // Try to get primary key value from the row using column name if present, otherwise fallback to primaryKeyColumn
+            if (dgv.Columns.Contains(primaryKeyColumn))
+                id = dgv[primaryKeyColumn, rowIndex].Value;
+            else if (dgv.Columns.Contains(primaryKeyColumn))
+                id = dgv[primaryKeyColumn, rowIndex].Value;
+            else
+            {
+                // try to read from underlying DataRow if available
+                var drv = dgv.Rows[rowIndex].DataBoundItem as DataRowView;
+                if (drv != null && drv.Row.Table.Columns.Contains(primaryKeyColumn))
+                    id = drv.Row[primaryKeyColumn];
+            }
+
+            if (id == null)
+                throw new Exception("Unable to determine primary key value for the selected row.");
 
             // Handle empty values
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
@@ -195,7 +242,7 @@ namespace ENT_Clinic_System.Helpers
                 }
             }
 
-            string sql = $"UPDATE {tableName} SET {columnName}=@value WHERE {primaryKeyColumn}=@id";
+            string sql = $"UPDATE {tableName} SET `{columnName}`=@value WHERE {primaryKeyColumn}=@id";
 
             using (var conn = DBConfig.GetConnection())
             using (var cmd = new MySqlCommand(sql, conn))

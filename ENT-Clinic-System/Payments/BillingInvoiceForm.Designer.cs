@@ -50,28 +50,28 @@ namespace ENT_Clinic_System.Payments
             this.paymentHistoryDataGridView = new System.Windows.Forms.DataGridView();
             this.panelRight = new System.Windows.Forms.Panel();
             this.groupBoxPayment = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.saveButton = new System.Windows.Forms.Button();
             this.balanceTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.amountRecievedNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.changeTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.changeTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxSummary = new System.Windows.Forms.GroupBox();
-            this.paymentStatusLabel = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.noteTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.totalBillTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.discountAmountTextBox = new System.Windows.Forms.TextBox();
-            this.discountPercentLabel = new System.Windows.Forms.Label();
-            this.doctorsFeeTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.labelRemainingBalance = new System.Windows.Forms.Label();
-            this.remainingBalanceTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.labelRemainingBalance = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.paymentStatusLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.remainingBalanceTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.doctorsFeeTextBox = new System.Windows.Forms.TextBox();
+            this.discountPercentLabel = new System.Windows.Forms.Label();
+            this.noteTextBox = new System.Windows.Forms.TextBox();
+            this.discountAmountTextBox = new System.Windows.Forms.TextBox();
+            this.totalBillTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -86,10 +86,10 @@ namespace ENT_Clinic_System.Payments
             ((System.ComponentModel.ISupportInitialize)(this.paymentHistoryDataGridView)).BeginInit();
             this.panelRight.SuspendLayout();
             this.groupBoxPayment.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.amountRecievedNumericUpDown)).BeginInit();
             this.groupBoxSummary.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -474,6 +474,42 @@ namespace ENT_Clinic_System.Payments
             this.groupBoxPayment.TabStop = false;
             this.groupBoxPayment.Text = "Payment Entry";
             // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.Controls.Add(this.saveButton, 1, 3);
+            this.tableLayoutPanel6.Controls.Add(this.balanceTextBox, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label10, 0, 2);
+            this.tableLayoutPanel6.Controls.Add(this.amountRecievedNumericUpDown, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.label7, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.changeTextBox, 1, 1);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 19);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 4;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(402, 161);
+            this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // saveButton
+            // 
+            this.saveButton.BackColor = System.Drawing.SystemColors.Control;
+            this.saveButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.saveButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.saveButton.Location = new System.Drawing.Point(204, 123);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(195, 35);
+            this.saveButton.TabIndex = 28;
+            this.saveButton.Text = "Submit Payment";
+            this.saveButton.UseVisualStyleBackColor = false;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
             // balanceTextBox
             // 
             this.balanceTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -483,6 +519,17 @@ namespace ENT_Clinic_System.Payments
             this.balanceTextBox.Size = new System.Drawing.Size(195, 23);
             this.balanceTextBox.TabIndex = 31;
             this.balanceTextBox.TextChanged += new System.EventHandler(this.balanceTextBox_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(195, 40);
+            this.label6.TabIndex = 24;
+            this.label6.Text = "Amount Received:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label10
             // 
@@ -508,28 +555,6 @@ namespace ENT_Clinic_System.Payments
             this.amountRecievedNumericUpDown.Size = new System.Drawing.Size(195, 23);
             this.amountRecievedNumericUpDown.TabIndex = 29;
             // 
-            // saveButton
-            // 
-            this.saveButton.BackColor = System.Drawing.SystemColors.Control;
-            this.saveButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.saveButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.saveButton.Location = new System.Drawing.Point(204, 123);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(195, 35);
-            this.saveButton.TabIndex = 28;
-            this.saveButton.Text = "Submit Payment";
-            this.saveButton.UseVisualStyleBackColor = false;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // changeTextBox
-            // 
-            this.changeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.changeTextBox.Location = new System.Drawing.Point(204, 43);
-            this.changeTextBox.Name = "changeTextBox";
-            this.changeTextBox.ReadOnly = true;
-            this.changeTextBox.Size = new System.Drawing.Size(195, 23);
-            this.changeTextBox.TabIndex = 26;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -541,16 +566,14 @@ namespace ENT_Clinic_System.Payments
             this.label7.Text = "Change:";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label6
+            // changeTextBox
             // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Location = new System.Drawing.Point(3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(195, 40);
-            this.label6.TabIndex = 24;
-            this.label6.Text = "Amount Received:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.changeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.changeTextBox.Location = new System.Drawing.Point(204, 43);
+            this.changeTextBox.Name = "changeTextBox";
+            this.changeTextBox.ReadOnly = true;
+            this.changeTextBox.Size = new System.Drawing.Size(195, 23);
+            this.changeTextBox.TabIndex = 26;
             // 
             // groupBoxSummary
             // 
@@ -563,131 +586,6 @@ namespace ENT_Clinic_System.Payments
             this.groupBoxSummary.TabIndex = 0;
             this.groupBoxSummary.TabStop = false;
             this.groupBoxSummary.Text = "Billing Summary";
-            // 
-            // paymentStatusLabel
-            // 
-            this.paymentStatusLabel.AutoSize = true;
-            this.paymentStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paymentStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.paymentStatusLabel.Location = new System.Drawing.Point(204, 132);
-            this.paymentStatusLabel.Name = "paymentStatusLabel";
-            this.paymentStatusLabel.Size = new System.Drawing.Size(195, 33);
-            this.paymentStatusLabel.TabIndex = 10;
-            this.paymentStatusLabel.Text = "N/A";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(3, 132);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(195, 33);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Payment Status:";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // noteTextBox
-            // 
-            this.noteTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.noteTextBox.Location = new System.Drawing.Point(204, 102);
-            this.noteTextBox.Name = "noteTextBox";
-            this.noteTextBox.ReadOnly = true;
-            this.noteTextBox.Size = new System.Drawing.Size(195, 23);
-            this.noteTextBox.TabIndex = 8;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(3, 99);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(195, 33);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Note:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // totalBillTextBox
-            // 
-            this.totalBillTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.totalBillTextBox.Location = new System.Drawing.Point(204, 69);
-            this.totalBillTextBox.Name = "totalBillTextBox";
-            this.totalBillTextBox.ReadOnly = true;
-            this.totalBillTextBox.Size = new System.Drawing.Size(195, 23);
-            this.totalBillTextBox.TabIndex = 6;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(3, 66);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(195, 33);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Total Bill:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // discountAmountTextBox
-            // 
-            this.discountAmountTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.discountAmountTextBox.Location = new System.Drawing.Point(204, 36);
-            this.discountAmountTextBox.Name = "discountAmountTextBox";
-            this.discountAmountTextBox.ReadOnly = true;
-            this.discountAmountTextBox.Size = new System.Drawing.Size(195, 23);
-            this.discountAmountTextBox.TabIndex = 4;
-            // 
-            // discountPercentLabel
-            // 
-            this.discountPercentLabel.AutoSize = true;
-            this.discountPercentLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.discountPercentLabel.Location = new System.Drawing.Point(3, 33);
-            this.discountPercentLabel.Name = "discountPercentLabel";
-            this.discountPercentLabel.Size = new System.Drawing.Size(195, 33);
-            this.discountPercentLabel.TabIndex = 3;
-            this.discountPercentLabel.Text = "Discount (0%):";
-            this.discountPercentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // doctorsFeeTextBox
-            // 
-            this.doctorsFeeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.doctorsFeeTextBox.Location = new System.Drawing.Point(204, 3);
-            this.doctorsFeeTextBox.Name = "doctorsFeeTextBox";
-            this.doctorsFeeTextBox.ReadOnly = true;
-            this.doctorsFeeTextBox.Size = new System.Drawing.Size(195, 23);
-            this.doctorsFeeTextBox.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(195, 33);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Doctor\'s Fee:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelRemainingBalance
-            // 
-            this.labelRemainingBalance.AutoSize = true;
-            this.labelRemainingBalance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelRemainingBalance.Location = new System.Drawing.Point(3, 165);
-            this.labelRemainingBalance.Name = "labelRemainingBalance";
-            this.labelRemainingBalance.Size = new System.Drawing.Size(195, 38);
-            this.labelRemainingBalance.TabIndex = 11;
-            this.labelRemainingBalance.Text = "Remaining Balance:";
-            this.labelRemainingBalance.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelRemainingBalance.Visible = false;
-            this.labelRemainingBalance.Click += new System.EventHandler(this.labelRemainingBalance_Click);
-            // 
-            // remainingBalanceTextBox
-            // 
-            this.remainingBalanceTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.remainingBalanceTextBox.Location = new System.Drawing.Point(204, 168);
-            this.remainingBalanceTextBox.Name = "remainingBalanceTextBox";
-            this.remainingBalanceTextBox.ReadOnly = true;
-            this.remainingBalanceTextBox.Size = new System.Drawing.Size(195, 23);
-            this.remainingBalanceTextBox.TabIndex = 12;
-            this.remainingBalanceTextBox.Visible = false;
             // 
             // tableLayoutPanel5
             // 
@@ -719,28 +617,130 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel5.Size = new System.Drawing.Size(402, 203);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
-            // tableLayoutPanel6
+            // labelRemainingBalance
             // 
-            this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Controls.Add(this.saveButton, 1, 3);
-            this.tableLayoutPanel6.Controls.Add(this.balanceTextBox, 1, 2);
-            this.tableLayoutPanel6.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label10, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.amountRecievedNumericUpDown, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label7, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.changeTextBox, 1, 1);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 19);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 4;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(402, 161);
-            this.tableLayoutPanel6.TabIndex = 0;
+            this.labelRemainingBalance.AutoSize = true;
+            this.labelRemainingBalance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelRemainingBalance.Location = new System.Drawing.Point(3, 165);
+            this.labelRemainingBalance.Name = "labelRemainingBalance";
+            this.labelRemainingBalance.Size = new System.Drawing.Size(195, 38);
+            this.labelRemainingBalance.TabIndex = 11;
+            this.labelRemainingBalance.Text = "Remaining Balance:";
+            this.labelRemainingBalance.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelRemainingBalance.Visible = false;
+            this.labelRemainingBalance.Click += new System.EventHandler(this.labelRemainingBalance_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(3, 132);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(195, 33);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "Payment Status:";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // paymentStatusLabel
+            // 
+            this.paymentStatusLabel.AutoSize = true;
+            this.paymentStatusLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paymentStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.paymentStatusLabel.Location = new System.Drawing.Point(204, 132);
+            this.paymentStatusLabel.Name = "paymentStatusLabel";
+            this.paymentStatusLabel.Size = new System.Drawing.Size(195, 33);
+            this.paymentStatusLabel.TabIndex = 10;
+            this.paymentStatusLabel.Text = "N/A";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 99);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(195, 33);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Note:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // remainingBalanceTextBox
+            // 
+            this.remainingBalanceTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.remainingBalanceTextBox.Location = new System.Drawing.Point(204, 168);
+            this.remainingBalanceTextBox.Name = "remainingBalanceTextBox";
+            this.remainingBalanceTextBox.ReadOnly = true;
+            this.remainingBalanceTextBox.Size = new System.Drawing.Size(195, 23);
+            this.remainingBalanceTextBox.TabIndex = 12;
+            this.remainingBalanceTextBox.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(195, 33);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Doctor\'s Fee:";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Location = new System.Drawing.Point(3, 66);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(195, 33);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Total Bill:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // doctorsFeeTextBox
+            // 
+            this.doctorsFeeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.doctorsFeeTextBox.Location = new System.Drawing.Point(204, 3);
+            this.doctorsFeeTextBox.Name = "doctorsFeeTextBox";
+            this.doctorsFeeTextBox.ReadOnly = true;
+            this.doctorsFeeTextBox.Size = new System.Drawing.Size(195, 23);
+            this.doctorsFeeTextBox.TabIndex = 2;
+            // 
+            // discountPercentLabel
+            // 
+            this.discountPercentLabel.AutoSize = true;
+            this.discountPercentLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.discountPercentLabel.Location = new System.Drawing.Point(3, 33);
+            this.discountPercentLabel.Name = "discountPercentLabel";
+            this.discountPercentLabel.Size = new System.Drawing.Size(195, 33);
+            this.discountPercentLabel.TabIndex = 3;
+            this.discountPercentLabel.Text = "Discount (0%):";
+            this.discountPercentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // noteTextBox
+            // 
+            this.noteTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.noteTextBox.Location = new System.Drawing.Point(204, 102);
+            this.noteTextBox.Name = "noteTextBox";
+            this.noteTextBox.ReadOnly = true;
+            this.noteTextBox.Size = new System.Drawing.Size(195, 23);
+            this.noteTextBox.TabIndex = 8;
+            // 
+            // discountAmountTextBox
+            // 
+            this.discountAmountTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.discountAmountTextBox.Location = new System.Drawing.Point(204, 36);
+            this.discountAmountTextBox.Name = "discountAmountTextBox";
+            this.discountAmountTextBox.ReadOnly = true;
+            this.discountAmountTextBox.Size = new System.Drawing.Size(195, 23);
+            this.discountAmountTextBox.TabIndex = 4;
+            // 
+            // totalBillTextBox
+            // 
+            this.totalBillTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.totalBillTextBox.Location = new System.Drawing.Point(204, 69);
+            this.totalBillTextBox.Name = "totalBillTextBox";
+            this.totalBillTextBox.ReadOnly = true;
+            this.totalBillTextBox.Size = new System.Drawing.Size(195, 23);
+            this.totalBillTextBox.TabIndex = 6;
             // 
             // BillingInvoiceForm
             // 
@@ -770,12 +770,12 @@ namespace ENT_Clinic_System.Payments
             ((System.ComponentModel.ISupportInitialize)(this.paymentHistoryDataGridView)).EndInit();
             this.panelRight.ResumeLayout(false);
             this.groupBoxPayment.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.amountRecievedNumericUpDown)).EndInit();
             this.groupBoxSummary.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
 
         }

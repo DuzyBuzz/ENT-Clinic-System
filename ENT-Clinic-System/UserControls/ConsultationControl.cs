@@ -1071,5 +1071,15 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
+
+        private void pastMedicalHistoryDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void groupBox9_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

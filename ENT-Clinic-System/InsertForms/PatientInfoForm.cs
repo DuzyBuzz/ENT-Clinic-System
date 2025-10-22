@@ -169,8 +169,8 @@ namespace ENT_Clinic_System.Helpers
             string middleInitial = string.IsNullOrWhiteSpace(middleName) ? "" : $" {middleName[0]}.";
 
             string fullName = $"{CamelCaseHelper.ToCamelCase(lastnameTexBox.Text).Trim()}, " +
-                              $"{CamelCaseHelper.ToCamelCase(firstNameTextBox.Text).Trim()}" +
-                              $"{(string.IsNullOrWhiteSpace(suffixComboBox.Text) ? "" : " " + CamelCaseHelper.ToCamelCase(suffixComboBox.Text).Trim())}" +
+                              $"{CamelCaseHelper.ToCamelCase(firstNameTextBox.Text).Trim()} " +
+                              $"{(string.IsNullOrWhiteSpace(suffixComboBox.Text) ? "" : " " + CamelCaseHelper.ToCamelCase(suffixComboBox.Text).Trim())} " +
                               $"{middleInitial}".Trim();
 
 
@@ -181,8 +181,8 @@ namespace ENT_Clinic_System.Helpers
             string contactMiddleInitial = string.IsNullOrWhiteSpace(contactMiddle) ? "" : $" {contactMiddle[0]}.";
 
             string contactName = $"{CamelCaseHelper.ToCamelCase(contactLastNameTextBox.Text).Trim()}, " +
-                                 $"{CamelCaseHelper.ToCamelCase(contactFistNameTextBox.Text).Trim()}" +
-                                 $"{(string.IsNullOrWhiteSpace(contactsuffixComboBox.Text) ? "" : " " + CamelCaseHelper.ToCamelCase(contactsuffixComboBox.Text).Trim())}" +
+                                 $"{CamelCaseHelper.ToCamelCase(contactFistNameTextBox.Text).Trim()} " +
+                                 $"{(string.IsNullOrWhiteSpace(contactsuffixComboBox.Text) ? "" : " " + CamelCaseHelper.ToCamelCase(contactsuffixComboBox.Text).Trim())} " +
                                  $"{contactMiddleInitial}".Trim();
 
             // --- Convert patient photo to byte[] ---

@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.InsertForms
@@ -14,6 +15,9 @@ namespace ENT_Clinic_System.InsertForms
         private DataTable patientsTable;
         private DataTable queueTable;
         private bool suppressEvents = false;
+
+        // Realtime watcher
+        private TableChangeWatcher queueWatcher;
 
         public PatientsQueue()
         {
@@ -32,6 +36,9 @@ namespace ENT_Clinic_System.InsertForms
             dgvQueue.CurrentCellDirtyStateChanged += dgvQueue_CurrentCellDirtyStateChanged;
             dgvQueue.CellValueChanged += dgvQueue_CellValueChanged;
             dgvQueue.MouseDown += dgvQueue_MouseDown;
+
+            // Ensure watcher cleaned up on close
+            this.FormClosing += PatientsQueue_FormClosing;
         }
 
         private void PatientsQueue_Load(object sender, EventArgs e)
@@ -43,6 +50,10 @@ namespace ENT_Clinic_System.InsertForms
                 "patients",
                 new List<string> { "full_name" }
             );
+
+            // Start the realtime watcher after initial load
+            queueWatcher = new TableChangeWatcher(new[] { "queue" }, LoadQueue);
+            queueWatcher.Start();
         }
 
         private void LoadPatients()
@@ -85,19 +96,21 @@ namespace ENT_Clinic_System.InsertForms
                     q.patient_id,
                     q.queue_number,
                     p.full_name AS patient_name,
+                    p.patient_contact_number,
+                    p.emergency_name,
                     q.status,
                     q.created_at,
-                    q.finished_at-- ✅ Added column
+                    q.finished_at
                 FROM queue q
                 INNER JOIN patients p ON q.patient_id = p.patient_id
                 WHERE DATE(q.created_at) = CURDATE()
                 ORDER BY
                     CASE q.status
-                        WHEN 'examining' THEN 1
-                        WHEN 'waiting' THEN 2
-                        WHEN 'done' THEN 3
-                        WHEN 'skipped' THEN 4
-                        ELSE 5
+                        WHEN 'Examining' THEN 1
+                        WHEN 'Waiting' THEN 2
+                        WHEN 'Done' THEN 3
+                        WHEN 'Skipped' THEN 4
+                        WHEN 'Cancelled' THEN 5
                     END,
                     q.queue_number ASC";
 
@@ -123,8 +136,8 @@ namespace ENT_Clinic_System.InsertForms
                 if (dgvQueue.Columns.Contains("patient_name"))
                     dgvQueue.Columns["patient_name"].HeaderText = "Patient Name";
 
-                if (dgvQueue.Columns.Contains("status"))
-                    dgvQueue.Columns["status"].HeaderText = "Current Status";
+                if (dgvQueue.Columns.Contains("patient_contact_number"))
+                    dgvQueue.Columns["patient_contact_number"].HeaderText = "Contact Number";
 
                 if (dgvQueue.Columns.Contains("created_at"))
                 {
@@ -136,6 +149,12 @@ namespace ENT_Clinic_System.InsertForms
                     dgvQueue.Columns["finished_at"].HeaderText = "Finished Time";
                     dgvQueue.Columns["finished_at"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss"; // ✅ Format date/time
                 }
+
+                if (dgvQueue.Columns.Contains("status"))
+                    dgvQueue.Columns["status"].HeaderText = "Current Status";
+
+                if (dgvQueue.Columns.Contains("emergency_contact_number"))
+                    dgvQueue.Columns["emergency_contact_number"].HeaderText = "Emergency Contact Number";
 
                 // Make only status editable
                 foreach (DataGridViewColumn col in dgvQueue.Columns)
@@ -160,17 +179,28 @@ namespace ENT_Clinic_System.InsertForms
             int idx = dgvQueue.Columns["status"].Index;
             dgvQueue.Columns.Remove("status");
 
+            // Create combo column
             var combo = new DataGridViewComboBoxColumn
             {
                 Name = "status",
                 HeaderText = "Current Status",
                 DataPropertyName = "status",
                 ValueType = typeof(string),
-                DataSource = new string[] { "examining", "waiting", "done", "skipped" },
+                DataSource = new string[] { "Examining", "Waiting", "Done", "Skipped", "Cancelled" },
                 FlatStyle = FlatStyle.Standard
             };
 
             dgvQueue.Columns.Insert(idx, combo);
+
+            // ✅ Handle coloring when data is shown or status changes
+            dgvQueue.CellFormatting -= dgvQueue_CellFormatting;
+            dgvQueue.CellFormatting += dgvQueue_CellFormatting;
+
+            dgvQueue.CurrentCellDirtyStateChanged -= dgvQueue_CurrentCellDirtyStateChanged;
+            dgvQueue.CurrentCellDirtyStateChanged += dgvQueue_CurrentCellDirtyStateChanged;
+
+            dgvQueue.CellValueChanged -= dgvQueue_CellValueChanged;
+            dgvQueue.CellValueChanged += dgvQueue_CellValueChanged;
         }
 
         private void dgvQueue_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -436,6 +466,71 @@ namespace ENT_Clinic_System.InsertForms
         }
 
         private void dgvPatients_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void PatientsQueue_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (queueWatcher != null)
+            {
+                queueWatcher.Stop();
+                queueWatcher.Dispose();
+                queueWatcher = null;
+            }
+        }
+
+        private void dgvQueue_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvQueue.Columns[e.ColumnIndex].Name == "status" || dgvQueue.Columns.Contains("status"))
+            {
+                var row = dgvQueue.Rows[e.RowIndex];
+                var statusValue = row.Cells["status"].Value?.ToString();
+
+                if (string.IsNullOrEmpty(statusValue)) return;
+
+                // Apply color based on status
+                switch (statusValue)
+                {
+                    case "Examining":
+                        row.DefaultCellStyle.BackColor = Color.LightBlue;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                        break;
+                    case "Waiting":
+                        row.DefaultCellStyle.BackColor = Color.LightYellow;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                        break;
+                    case "Done":
+                        row.DefaultCellStyle.BackColor = Color.LightGreen;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                        break;
+                    case "Skipped":
+                        row.DefaultCellStyle.BackColor = Color.LightGray;
+                        row.DefaultCellStyle.ForeColor = Color.Black;
+                        break;
+                    case "Cancelled":
+                        row.DefaultCellStyle.BackColor = Color.LightCoral;
+                        row.DefaultCellStyle.ForeColor = Color.White;
+                        break;
+                    default:
+                        row.DefaultCellStyle.BackColor = dgvQueue.DefaultCellStyle.BackColor;
+                        row.DefaultCellStyle.ForeColor = dgvQueue.DefaultCellStyle.ForeColor;
+                        break;
+                }
+
+            }
+        }
+
+        private void dgvQueue_CurrentCellDirtyStateChanged_1(object sender, EventArgs e)
+        {
+            if (dgvQueue.IsCurrentCellDirty)
+            {
+                dgvQueue.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+
+        }
+
+        private void dgvQueue_CellValueChanged_1(object sender, DataGridViewCellEventArgs e)
         {
 
         }

@@ -117,7 +117,9 @@ namespace ENT_Clinic_System.Consultation
                 if (dgvAvailableItems.Columns.Contains("category"))
                     dgvAvailableItems.Columns["category"].HeaderText = "Category";
                 if (dgvAvailableItems.Columns.Contains("description"))
-                    dgvAvailableItems.Columns["description"].HeaderText = "Description";
+                    dgvAvailableItems.Columns["description"].Visible = false;
+                dgvAvailableItems.Columns["description"].HeaderText = "Description";
+
 
                 // Format quantity column if present
                 if (dgvAvailableItems.Columns.Contains("quantity"))
@@ -204,7 +206,8 @@ namespace ENT_Clinic_System.Consultation
                         if (dgvOtherItems.Columns.Contains("category"))
                             dgvOtherItems.Columns["category"].HeaderText = "Category";
                         if (dgvOtherItems.Columns.Contains("description"))
-                            dgvOtherItems.Columns["description"].HeaderText = "Description";
+                            dgvOtherItems.Columns["description"].Visible = false;
+                        dgvOtherItems.Columns["description"].HeaderText = "Description";
 
                         dgvOtherItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                         dgvOtherItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

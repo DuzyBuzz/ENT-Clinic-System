@@ -207,6 +207,7 @@
     <Compile Include="Helpers\PatientCamera.Designer.cs">
       <DependentUpon>PatientCamera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PatientsQueue.cs" />
     <Compile Include="Helpers\PhysicalExamLoader.cs" />
     <Compile Include="Helpers\PurposeInputForm.cs">
       <SubType>Form</SubType>
@@ -223,6 +224,7 @@
     </Compile>
     <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\TableChangeWatcher.cs" />
     <Compile Include="Helpers\UpdateHelper.cs" />
     <Compile Include="Helpers\WaterMarkHelper.cs" />
     <Compile Include="Helpers\WaterMarkHelperA4.cs" />

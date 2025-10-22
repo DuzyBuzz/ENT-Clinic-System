@@ -15,6 +15,7 @@ namespace ENT_Clinic_System.Payments
         private decimal discountPercent = 0;
         private decimal discountAmount = 0;
         private decimal currentBalance = 0; // track remaining balance
+        private TableChangeWatcher _billingWatcher;
 
         public BillingInvoiceForm()
         {
@@ -32,8 +33,13 @@ namespace ENT_Clinic_System.Payments
             // Setup auto-complete
             AutoCompleteHelper.SetupAutoComplete(searchPatientTextBox, "patients", new List<string> { "full_name" });
 
-            billingDateFromDateTimePicker.Value = DateTime.Now.AddMonths(-1);
+            billingtDateToDateTimePicker.Value = DateTime.Now.AddDays(+1);
             SortBillingDate();
+            // Initialize watcher: table name + what to do when it changes
+            _billingWatcher = new TableChangeWatcher(new[] { "billing" }, LoadAllBilling);
+
+            // Start watching
+            _billingWatcher.Start();
         }
 
 
@@ -393,8 +399,7 @@ namespace ENT_Clinic_System.Payments
         private void refreshPatientsButton_Click(object sender, EventArgs e)
         {
             SortBillingDate();
-            billingDateFromDateTimePicker.Value = DateTime.Now.AddMonths(-1);
-            billingtDateToDateTimePicker.Value = DateTime.Now;
+            billingtDateToDateTimePicker.Value = DateTime.Now.AddDays(+1);
         }
 
         private void billingDateFromDateTimePicker_ValueChanged(object sender, EventArgs e)

@@ -14,7 +14,7 @@
         private System.Windows.Forms.DateTimePicker datePicker;
         private System.Windows.Forms.Button selectAllButton;
         private System.Windows.Forms.Button deselectAllButton;
-        private System.Windows.Forms.Button printButton;
+        private System.Windows.Forms.Button refreshButton;
 
         // Right Panel - CRUD
         private System.Windows.Forms.DataGridView labTestsDGV;
@@ -48,7 +48,7 @@
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.selectAllButton = new System.Windows.Forms.Button();
             this.deselectAllButton = new System.Windows.Forms.Button();
-            this.printButton = new System.Windows.Forms.Button();
+            this.refreshButton = new System.Windows.Forms.Button();
             this.labTestsDGV = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -158,29 +158,31 @@
             // selectAllButton
             // 
             this.selectAllButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.selectAllButton.Location = new System.Drawing.Point(324, 3);
+            this.selectAllButton.Location = new System.Drawing.Point(323, 3);
             this.selectAllButton.Name = "selectAllButton";
             this.selectAllButton.Size = new System.Drawing.Size(120, 31);
             this.selectAllButton.TabIndex = 9;
             this.selectAllButton.Text = "Select All";
+            this.selectAllButton.Click += new System.EventHandler(this.selectAllButton_Click);
             // 
             // deselectAllButton
             // 
             this.deselectAllButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.deselectAllButton.Location = new System.Drawing.Point(581, 3);
+            this.deselectAllButton.Location = new System.Drawing.Point(580, 3);
             this.deselectAllButton.Name = "deselectAllButton";
             this.deselectAllButton.Size = new System.Drawing.Size(105, 31);
             this.deselectAllButton.TabIndex = 10;
             this.deselectAllButton.Text = "Clear";
             // 
-            // printButton
+            // refreshButton
             // 
-            this.printButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.printButton.Location = new System.Drawing.Point(455, 3);
-            this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(120, 31);
-            this.printButton.TabIndex = 11;
-            this.printButton.Text = "Refresh";
+            this.refreshButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.refreshButton.Location = new System.Drawing.Point(454, 3);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(120, 31);
+            this.refreshButton.TabIndex = 11;
+            this.refreshButton.Text = "Refresh";
+            this.refreshButton.Click += new System.EventHandler(this.printButton_Click);
             // 
             // labTestsDGV
             // 
@@ -367,8 +369,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.30376F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.69625F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 187F));
-            this.tableLayoutPanel1.Controls.Add(this.printButton, 1, 0);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 188F));
+            this.tableLayoutPanel1.Controls.Add(this.refreshButton, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.deselectAllButton, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.saveRequestButton, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.selectAllButton, 0, 0);

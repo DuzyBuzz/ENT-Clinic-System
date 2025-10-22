@@ -38,7 +38,6 @@ namespace ENT_Clinic_System.Consultation
             prevPageButton.Click += (s, e) => crudHelper.PreviousPage();
             addTestsButton.Click += (s, e) => AddTests();
 
-            printButton.Click += (s, e) => PrintLabRequest();
         }
 
         private void LoadPatientLabels(int patientId)
@@ -260,6 +259,16 @@ namespace ENT_Clinic_System.Consultation
         {
             SaveRequest();
            
+        }
+
+        private void selectAllButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void printButton_Click(object sender, EventArgs e)
+        {
+            LoadLabTests();
         }
     }
 }

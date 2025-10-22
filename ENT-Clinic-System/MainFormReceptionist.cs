@@ -39,25 +39,31 @@ namespace ENT_Clinic_System
 
         private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Check if CreateConcessionaireForm is already open
-            foreach (Form form in Application.OpenForms)
-            {
-                if (form is PatientInfoForm)
-                {
-                    form.BringToFront();   // bring it to front
-                    form.Focus();          // set focus
-                    return;                // stop, don’t open another
-                }
-            }
-
-            // If not open, create and show new instance
-            var addConcessionaireForm = new PatientInfoForm();
-            addConcessionaireForm.Show();
+            ShowSingleInstanceForm<PatientInfoForm>();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
 
+        }
+        /// <summary>
+        /// Opens a single-instance form. If already open, brings it to front.
+        /// </summary>
+        private void ShowSingleInstanceForm<T>() where T : Form, new()
+        {
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is T)
+                {
+                    form.BringToFront();
+                    form.Focus();
+                    return;
+                }
+            }
+
+            // Otherwise, create and show a new instance
+            var instance = new T();
+            instance.Show();
         }
 
 
@@ -215,14 +221,12 @@ namespace ENT_Clinic_System
 
         private void patientQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PatientsQueue patientsQueue = new PatientsQueue();
-            patientsQueue.Show();
+            ShowSingleInstanceForm<PatientsQueue>();
         }
 
         private void doctorPatientsQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoctorPatientQueue doctorPatientQueue = new DoctorPatientQueue();
-            doctorPatientQueue.Show();
+            ShowSingleInstanceForm<DoctorPatientQueue>();
         }
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -253,14 +257,12 @@ namespace ENT_Clinic_System
 
         private void itemsDispensingPaymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InvoiceForm invoiceForm = new InvoiceForm();
-            invoiceForm.Show();
+            ShowSingleInstanceForm<InvoiceForm>();
         }
 
         private void billingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BillingInvoiceForm billingInvoiceForm = new BillingInvoiceForm();
-            billingInvoiceForm.Show();
+            ShowSingleInstanceForm<BillingInvoiceForm>();
         }
 
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
@@ -385,8 +387,7 @@ namespace ENT_Clinic_System
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InventoryForm inventoryForm = new InventoryForm();
-            inventoryForm.Show();
+            ShowSingleInstanceForm<InventoryForm>();
         }
 
         private void accountToolStripMenuItem_Click(object sender, EventArgs e)
