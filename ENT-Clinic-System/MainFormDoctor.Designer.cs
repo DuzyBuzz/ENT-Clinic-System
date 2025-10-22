@@ -280,6 +280,7 @@
             this.consultationsToolStripMenuItem1.Name = "consultationsToolStripMenuItem1";
             this.consultationsToolStripMenuItem1.Size = new System.Drawing.Size(132, 29);
             this.consultationsToolStripMenuItem1.Text = "Consultations";
+            this.consultationsToolStripMenuItem1.Click += new System.EventHandler(this.consultationsToolStripMenuItem1_Click);
             // 
             // MainFormDoctor
             // 

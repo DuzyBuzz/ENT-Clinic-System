@@ -83,12 +83,18 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.9, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.9\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Data.Sqlite, Version=9.0.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Sqlite.Core.9.0.10\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MySql.Data, Version=9.4.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.9.4.0\lib\net48\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.3\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=2.1.10.2445, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.2.1.10\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Core.WinForms, Version=31.1462.19.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.Core.WinForms.31.1.19\lib\net462\Syncfusion.Core.WinForms.dll</HintPath>
@@ -111,6 +117,9 @@
       <HintPath>..\packages\System.Configuration.ConfigurationManager.8.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=2.0.2.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.2.0.2\lib\net471\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Design" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
@@ -164,6 +173,12 @@
     <Compile Include="Consultation\BillingForm.Designer.cs">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Consultation\ConsultationListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Consultation\ConsultationListControl.Designer.cs">
+      <DependentUpon>ConsultationListControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomUI\BaseForm .cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +201,7 @@
     <Compile Include="Helpers\CleanupHelper.cs" />
     <Compile Include="Helpers\ComboBoxCollectionHelper.cs" />
     <Compile Include="Helpers\DGVColumnHeaderFilter.cs" />
+    <Compile Include="Helpers\DGVViewCRUDHelper.cs" />
     <Compile Include="Helpers\DGVViewHelper.cs" />
     <Compile Include="Helpers\DynamicToolStripMenuItemHelper.cs" />
     <Compile Include="Helpers\FireflyHelper.cs" />
@@ -202,6 +218,8 @@
     <Compile Include="Helpers\InsertHelper.cs" />
     <Compile Include="Helpers\InventoryHelper.cs" />
     <Compile Include="Helpers\LatestIdHelper.cs" />
+    <Compile Include="Helpers\OfflineDatabase.cs" />
+    <Compile Include="Helpers\OfflineDbCommand.cs" />
     <Compile Include="Helpers\PatientCamera.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -314,12 +332,6 @@
     <Compile Include="Helpers\UserCredentials.cs" />
     <Compile Include="Helpers\VideoFlowHelper.cs" />
     <Compile Include="Helpers\VideoFolderHelper.cs" />
-    <Compile Include="InsertForms\ConsultationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="InsertForms\ConsultationForm.Designer.cs">
-      <DependentUpon>ConsultationForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="InsertForms\PatientInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -426,6 +438,12 @@
     <Compile Include="UI\UserProfile.Designer.cs">
       <DependentUpon>UserProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\WelcomeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\WelcomeForm.Designer.cs">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\AppointmentsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -467,6 +485,9 @@
     <EmbeddedResource Include="Consultation\BillingForm.resx">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Consultation\ConsultationListControl.resx">
+      <DependentUpon>ConsultationListControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Consultation\PrescriptionNoteForm .resx">
       <DependentUpon>PrescriptionNoteForm .cs</DependentUpon>
     </EmbeddedResource>
@@ -485,9 +506,6 @@
     <EmbeddedResource Include="Helpers\VideoCameraUI.resx" />
     <EmbeddedResource Include="InsertForms\AddAppointmentForm.resx">
       <DependentUpon>AddAppointmentForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="InsertForms\ConsultationForm.resx">
-      <DependentUpon>ConsultationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InsertForms\PatientHealthRecordForm.resx">
       <DependentUpon>PatientHealthRecordForm.cs</DependentUpon>
@@ -558,6 +576,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UserProfile.resx">
       <DependentUpon>UserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WelcomeForm.resx">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\AppointmentsUserControl.resx">
       <DependentUpon>AppointmentsUserControl.cs</DependentUpon>

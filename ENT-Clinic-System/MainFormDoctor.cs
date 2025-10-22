@@ -1,4 +1,5 @@
-﻿using ENT_Clinic_System.Helpers;
+﻿using ENT_Clinic_System.Consultation;
+using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.InsertForms;
 using ENT_Clinic_System.Inventory;
 using ENT_Clinic_System.Payments;
@@ -416,6 +417,12 @@ namespace ENT_Clinic_System
         private void consultationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void consultationsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ConsultationListControl consultationList = new ConsultationListControl();
+            LoadUserControl(consultationList);
         }
     }
 

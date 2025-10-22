@@ -72,11 +72,11 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.movementDataGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.clearFilterButton = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.movementDateToDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.movementDateFromDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.clearFilterButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -187,7 +187,7 @@
             this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.sortCategoryCombobox.FormattingEnabled = true;
-            this.sortCategoryCombobox.Location = new System.Drawing.Point(604, 13);
+            this.sortCategoryCombobox.Location = new System.Drawing.Point(604, 6);
             this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.sortCategoryCombobox.Name = "sortCategoryCombobox";
             this.sortCategoryCombobox.Size = new System.Drawing.Size(179, 28);
@@ -841,6 +841,22 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(787, 42);
             this.tableLayoutPanel3.TabIndex = 7;
             // 
+            // clearFilterButton
+            // 
+            this.clearFilterButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.clearFilterButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.clearFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.clearFilterButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearFilterButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.clearFilterButton.Location = new System.Drawing.Point(632, 5);
+            this.clearFilterButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.clearFilterButton.Name = "clearFilterButton";
+            this.clearFilterButton.Size = new System.Drawing.Size(151, 32);
+            this.clearFilterButton.TabIndex = 15;
+            this.clearFilterButton.Text = "Clear Filter";
+            this.clearFilterButton.UseVisualStyleBackColor = false;
+            this.clearFilterButton.Click += new System.EventHandler(this.clearFilterButton_Click);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -890,22 +906,6 @@
             this.movementDateFromDateTimePicker.Size = new System.Drawing.Size(110, 25);
             this.movementDateFromDateTimePicker.TabIndex = 8;
             this.movementDateFromDateTimePicker.ValueChanged += new System.EventHandler(this.movementDateFromDateTimePicker_ValueChanged);
-            // 
-            // clearFilterButton
-            // 
-            this.clearFilterButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.clearFilterButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.clearFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.clearFilterButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearFilterButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.clearFilterButton.Location = new System.Drawing.Point(632, 5);
-            this.clearFilterButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.clearFilterButton.Name = "clearFilterButton";
-            this.clearFilterButton.Size = new System.Drawing.Size(151, 32);
-            this.clearFilterButton.TabIndex = 15;
-            this.clearFilterButton.Text = "Clear Filter";
-            this.clearFilterButton.UseVisualStyleBackColor = false;
-            this.clearFilterButton.Click += new System.EventHandler(this.clearFilterButton_Click);
             // 
             // InventoryForm
             // 

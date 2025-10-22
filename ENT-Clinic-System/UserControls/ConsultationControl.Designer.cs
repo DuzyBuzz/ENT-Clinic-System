@@ -30,18 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
@@ -134,6 +134,9 @@
             this.recentIllnessRichTextBox = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.othersDGV = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.throatDGV = new System.Windows.Forms.DataGridView();
             this.throat = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -180,9 +183,6 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
@@ -216,6 +216,8 @@
             this.groupBox4.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.othersDGV)).BeginInit();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).BeginInit();
             this.groupBox7.SuspendLayout();
@@ -237,8 +239,6 @@
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -530,7 +530,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15019F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84981F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 321F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 323F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel6, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel13, 2, 0);
@@ -1154,8 +1154,8 @@
             // 
             // personal_social_history
             // 
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personal_social_history.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personal_social_history.DefaultCellStyle = dataGridViewCellStyle14;
             this.personal_social_history.HeaderText = "";
             this.personal_social_history.Name = "personal_social_history";
             this.personal_social_history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1192,8 +1192,8 @@
             // 
             // family_history
             // 
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.family_history.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.family_history.DefaultCellStyle = dataGridViewCellStyle15;
             this.family_history.HeaderText = "";
             this.family_history.Name = "family_history";
             this.family_history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1232,8 +1232,8 @@
             // 
             // allergies
             // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.allergies.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.allergies.DefaultCellStyle = dataGridViewCellStyle16;
             this.allergies.HeaderText = "";
             this.allergies.Name = "allergies";
             this.allergies.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1253,8 +1253,8 @@
             // consultationDateDataGridView
             // 
             this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
             this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1340,7 +1340,7 @@
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.83721F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.16279F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1128, 891);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1126, 891);
             this.tableLayoutPanel6.TabIndex = 1;
             // 
             // tableLayoutPanel4
@@ -1356,7 +1356,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1120, 649);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1118, 649);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // tableLayoutPanel7
@@ -1371,7 +1371,7 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1112, 317);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1110, 317);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // groupBox9
@@ -1379,9 +1379,9 @@
             this.groupBox9.Controls.Add(this.pastMedicalHistoryDGV);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox9.Location = new System.Drawing.Point(559, 3);
+            this.groupBox9.Location = new System.Drawing.Point(558, 3);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(550, 311);
+            this.groupBox9.Size = new System.Drawing.Size(549, 311);
             this.groupBox9.TabIndex = 13;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Past Medical History";
@@ -1401,14 +1401,14 @@
             this.pastMedicalHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
             this.pastMedicalHistoryDGV.Name = "pastMedicalHistoryDGV";
             this.pastMedicalHistoryDGV.RowHeadersWidth = 25;
-            this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(544, 286);
+            this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(543, 286);
             this.pastMedicalHistoryDGV.TabIndex = 8;
             this.pastMedicalHistoryDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.pastMedicalHistoryDGV_CellContentClick);
             // 
             // past_medical_history
             // 
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.past_medical_history.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.past_medical_history.DefaultCellStyle = dataGridViewCellStyle4;
             this.past_medical_history.HeaderText = "";
             this.past_medical_history.Name = "past_medical_history";
             this.past_medical_history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1420,7 +1420,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(550, 311);
+            this.groupBox4.Size = new System.Drawing.Size(549, 311);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Recent Illness";
@@ -1431,7 +1431,7 @@
             this.recentIllnessRichTextBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recentIllnessRichTextBox.Location = new System.Drawing.Point(3, 22);
             this.recentIllnessRichTextBox.Name = "recentIllnessRichTextBox";
-            this.recentIllnessRichTextBox.Size = new System.Drawing.Size(544, 286);
+            this.recentIllnessRichTextBox.Size = new System.Drawing.Size(543, 286);
             this.recentIllnessRichTextBox.TabIndex = 12;
             this.recentIllnessRichTextBox.Text = "";
             // 
@@ -1449,7 +1449,7 @@
             this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.61049F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.38951F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1112, 317);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1110, 317);
             this.tableLayoutPanel8.TabIndex = 2;
             // 
             // tableLayoutPanel5
@@ -1468,17 +1468,55 @@
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1104, 272);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1102, 272);
             this.tableLayoutPanel5.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.othersDGV);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(828, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(271, 266);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Others";
+            // 
+            // othersDGV
+            // 
+            this.othersDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.othersDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.othersDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.othersDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.othersDGV.ColumnHeadersVisible = false;
+            this.othersDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn2});
+            this.othersDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.othersDGV.Location = new System.Drawing.Point(3, 22);
+            this.othersDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.othersDGV.Name = "othersDGV";
+            this.othersDGV.RowHeadersWidth = 25;
+            this.othersDGV.Size = new System.Drawing.Size(265, 241);
+            this.othersDGV.TabIndex = 8;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle13;
+            this.dataGridViewTextBoxColumn2.HeaderText = "";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.throatDGV);
             this.groupBox8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox8.Location = new System.Drawing.Point(555, 3);
+            this.groupBox8.Location = new System.Drawing.Point(553, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(270, 266);
+            this.groupBox8.Size = new System.Drawing.Size(269, 266);
             this.groupBox8.TabIndex = 3;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Throat";
@@ -1497,13 +1535,13 @@
             this.throatDGV.Margin = new System.Windows.Forms.Padding(0);
             this.throatDGV.Name = "throatDGV";
             this.throatDGV.RowHeadersWidth = 25;
-            this.throatDGV.Size = new System.Drawing.Size(264, 241);
+            this.throatDGV.Size = new System.Drawing.Size(263, 241);
             this.throatDGV.TabIndex = 8;
             // 
             // throat
             // 
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.throat.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.throat.DefaultCellStyle = dataGridViewCellStyle18;
             this.throat.HeaderText = "";
             this.throat.Name = "throat";
             this.throat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1514,9 +1552,9 @@
             this.groupBox7.Controls.Add(this.noseDGV);
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox7.Location = new System.Drawing.Point(279, 3);
+            this.groupBox7.Location = new System.Drawing.Point(278, 3);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(270, 266);
+            this.groupBox7.Size = new System.Drawing.Size(269, 266);
             this.groupBox7.TabIndex = 2;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Nose";
@@ -1535,13 +1573,13 @@
             this.noseDGV.Margin = new System.Windows.Forms.Padding(0);
             this.noseDGV.Name = "noseDGV";
             this.noseDGV.RowHeadersWidth = 25;
-            this.noseDGV.Size = new System.Drawing.Size(264, 241);
+            this.noseDGV.Size = new System.Drawing.Size(263, 241);
             this.noseDGV.TabIndex = 8;
             // 
             // nose
             // 
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nose.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nose.DefaultCellStyle = dataGridViewCellStyle19;
             this.nose.HeaderText = "";
             this.nose.Name = "nose";
             this.nose.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1554,7 +1592,7 @@
             this.groupBox6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox6.Location = new System.Drawing.Point(3, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(270, 266);
+            this.groupBox6.Size = new System.Drawing.Size(269, 266);
             this.groupBox6.TabIndex = 1;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Ears";
@@ -1573,14 +1611,14 @@
             this.earsDGV.Margin = new System.Windows.Forms.Padding(0);
             this.earsDGV.Name = "earsDGV";
             this.earsDGV.RowHeadersWidth = 25;
-            this.earsDGV.Size = new System.Drawing.Size(264, 241);
+            this.earsDGV.Size = new System.Drawing.Size(263, 241);
             this.earsDGV.TabIndex = 8;
             this.earsDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.earsDGV_CellContentClick);
             // 
             // ears
             // 
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ears.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ears.DefaultCellStyle = dataGridViewCellStyle20;
             this.ears.HeaderText = "";
             this.ears.Name = "ears";
             this.ears.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1593,7 +1631,7 @@
             this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(4, 1);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(1104, 36);
+            this.label3.Size = new System.Drawing.Size(1102, 36);
             this.label3.TabIndex = 0;
             this.label3.Text = "ENT Examination and Findings";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1614,7 +1652,7 @@
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(1120, 227);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(1118, 227);
             this.tableLayoutPanel9.TabIndex = 2;
             this.tableLayoutPanel9.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel9_Paint);
             // 
@@ -1625,7 +1663,7 @@
             this.groupBox10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox10.Location = new System.Drawing.Point(4, 4);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(435, 219);
+            this.groupBox10.Size = new System.Drawing.Size(434, 219);
             this.groupBox10.TabIndex = 3;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Diagnosis";
@@ -1644,13 +1682,13 @@
             this.diagnosisDGV.Margin = new System.Windows.Forms.Padding(0);
             this.diagnosisDGV.Name = "diagnosisDGV";
             this.diagnosisDGV.RowHeadersWidth = 25;
-            this.diagnosisDGV.Size = new System.Drawing.Size(429, 194);
+            this.diagnosisDGV.Size = new System.Drawing.Size(428, 194);
             this.diagnosisDGV.TabIndex = 8;
             // 
             // diagnosis
             // 
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle21;
             this.diagnosis.HeaderText = "";
             this.diagnosis.Name = "diagnosis";
             this.diagnosis.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1667,7 +1705,7 @@
             this.followUpTablePanel.Controls.Add(this.tableLayoutPanel16, 0, 4);
             this.followUpTablePanel.Controls.Add(this.noteRichTextBox, 0, 3);
             this.followUpTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.followUpTablePanel.Location = new System.Drawing.Point(888, 4);
+            this.followUpTablePanel.Location = new System.Drawing.Point(886, 4);
             this.followUpTablePanel.Name = "followUpTablePanel";
             this.followUpTablePanel.RowCount = 5;
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.7619F));
@@ -1779,9 +1817,9 @@
             this.groupBox11.Controls.Add(this.recommendationsDGV);
             this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox11.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox11.Location = new System.Drawing.Point(446, 4);
+            this.groupBox11.Location = new System.Drawing.Point(445, 4);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(435, 219);
+            this.groupBox11.Size = new System.Drawing.Size(434, 219);
             this.groupBox11.TabIndex = 5;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Recommendations";
@@ -1800,13 +1838,13 @@
             this.recommendationsDGV.Margin = new System.Windows.Forms.Padding(0);
             this.recommendationsDGV.Name = "recommendationsDGV";
             this.recommendationsDGV.RowHeadersWidth = 25;
-            this.recommendationsDGV.Size = new System.Drawing.Size(429, 194);
+            this.recommendationsDGV.Size = new System.Drawing.Size(428, 194);
             this.recommendationsDGV.TabIndex = 8;
             // 
             // recommendations
             // 
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recommendations.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recommendations.DefaultCellStyle = dataGridViewCellStyle22;
             this.recommendations.HeaderText = "";
             this.recommendations.Name = "recommendations";
             this.recommendations.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1824,7 +1862,7 @@
             this.tableLayoutPanel13.Controls.Add(this.imageFlowLayoutPanel, 0, 2);
             this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel26, 0, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(1559, 3);
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(1557, 3);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 5;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.306604F));
@@ -1832,7 +1870,7 @@
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.94948F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.13318F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.50287F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(316, 891);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(318, 891);
             this.tableLayoutPanel13.TabIndex = 2;
             // 
             // tableLayoutPanel14
@@ -1864,7 +1902,7 @@
             this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 691);
             this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
-            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(308, 196);
+            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(310, 196);
             this.videoFlowLayoutPanel.TabIndex = 6;
             // 
             // tableLayoutPanel17
@@ -1877,7 +1915,7 @@
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 1;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(308, 30);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(310, 30);
             this.tableLayoutPanel17.TabIndex = 5;
             // 
             // label5
@@ -1897,7 +1935,7 @@
             this.imageFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageFlowLayoutPanel.Location = new System.Drawing.Point(4, 85);
             this.imageFlowLayoutPanel.Name = "imageFlowLayoutPanel";
-            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(308, 562);
+            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(310, 562);
             this.imageFlowLayoutPanel.TabIndex = 4;
             // 
             // tableLayoutPanel26
@@ -1912,7 +1950,7 @@
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
             this.tableLayoutPanel26.RowCount = 1;
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel26.Size = new System.Drawing.Size(308, 41);
+            this.tableLayoutPanel26.Size = new System.Drawing.Size(310, 41);
             this.tableLayoutPanel26.TabIndex = 4;
             // 
             // label1
@@ -1933,9 +1971,9 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2});
-            this.toolStrip1.Location = new System.Drawing.Point(152, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(153, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(156, 41);
+            this.toolStrip1.Size = new System.Drawing.Size(157, 41);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1989,8 +2027,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle23;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -2035,44 +2073,6 @@
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(142, 39);
             this.miniToolStrip.TabIndex = 3;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.dataGridView2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(831, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(270, 266);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Others";
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.ColumnHeadersVisible = false;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn2});
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 22);
-            this.dataGridView2.Margin = new System.Windows.Forms.Padding(0);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersWidth = 25;
-            this.dataGridView2.Size = new System.Drawing.Size(264, 241);
-            this.dataGridView2.TabIndex = 8;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridViewTextBoxColumn2.HeaderText = "";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ConsultationControl
             // 
@@ -2126,6 +2126,8 @@
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.othersDGV)).EndInit();
             this.groupBox8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).EndInit();
             this.groupBox7.ResumeLayout(false);
@@ -2153,8 +2155,6 @@
             this.toolStrip1.PerformLayout();
             this.tableLayoutPanel18.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2300,7 +2300,7 @@
         private System.Windows.Forms.Label referedByLabel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView othersDGV;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     }
 }

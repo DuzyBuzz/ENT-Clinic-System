@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Helpers
 {
@@ -12,37 +13,39 @@ namespace ENT_Clinic_System.Helpers
         public static string Role { get; set; }
         public static string ConnectionString { get; set; }
 
+        /// <summary>
+        /// Sets the connection string based on the user role.
+        /// </summary>
         public static void SetConnectionString()
         {
             if (Role == "Receptionist")
-            {
-                ConnectionString = "server=localhost;user=lanuser;password=password;database=ent_clinic_db;";
-            }
+                ConnectionString = "server=192.168.1.25;user=lanuser;password=password;database=ent_clinic_db;";
             else if (Role == "Doctor")
-            {
                 ConnectionString = "server=localhost;user=root;password=password;database=ent_clinic_db;";
-            }
             else if (Role == "Admin")
-            {
                 ConnectionString = "server=localhost;user=root;password=password;database=ent_clinic_db;";
-            }
         }
 
         /// <summary>
         /// Validates the user credentials against the database.
-        /// Assumes there is a `users` table with columns: id, username, password, fullname, role
+        /// Case-sensitive login using BINARY comparison.
         /// </summary>
         public static bool ValidateLogin(string username, string password, out string message)
         {
             SetConnectionString(); // ensure connection string is ready
 
-            using (var conn = new MySqlConnection(ConnectionString))
+            try
             {
-                try
+                using (var conn = new MySqlConnection(ConnectionString))
                 {
                     conn.Open();
-                    string query = "SELECT user_id, full_name, role FROM user WHERE username=@username AND password=@password AND role=@role LIMIT 1";
 
+                    // Use BINARY to enforce case-sensitive comparison
+                    string query = @"
+SELECT user_id, full_name, role 
+FROM user 
+WHERE BINARY username=@username AND BINARY password=@password AND role=@role 
+LIMIT 1";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
@@ -61,7 +64,6 @@ namespace ENT_Clinic_System.Helpers
 
                                 message = $"✅ Login successful. Welcome {Fullname}!";
                                 Debug.WriteLine(message);
-
                                 return true;
                             }
                             else
@@ -72,11 +74,16 @@ namespace ENT_Clinic_System.Helpers
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    message = "❌ Database error: " + ex.Message;
-                    return false;
-                }
+            }
+            catch (MySqlException)
+            {
+                message = "⚠️ Unable to connect to the database. Please check your internet or server connection.";
+                return false;
+            }
+            catch (Exception ex)
+            {
+                message = "⚠️ Unexpected error: " + ex.Message;
+                return false;
             }
         }
     }

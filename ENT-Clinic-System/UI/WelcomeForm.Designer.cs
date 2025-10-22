@@ -1,6 +1,6 @@
-﻿namespace ENT_Clinic_System.InsertForms
+﻿namespace ENT_Clinic_System.UI
 {
-    partial class ConsultationForm
+    partial class WelcomeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,15 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // ConsultationForm
+            // WelcomeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "ConsultationForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ConsultationForm";
+            this.ClientSize = new System.Drawing.Size(1329, 886);
+            this.Name = "WelcomeForm";
+            this.Text = "WelcomeForm";
             this.ResumeLayout(false);
 
         }

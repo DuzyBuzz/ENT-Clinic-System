@@ -130,12 +130,12 @@ namespace ENT_Clinic_System.Helpers
                         (patient_id, doctor_name, consultation_date, 
                          chief_complaint, history, ear_exam, nose_exam, throat_exam,
                          diagnosis, recommendations, notes, follow_up_date, 
-                         follow_up_notes, age)
+                         follow_up_notes, age, others_exam)
                     VALUES
                         (@patient_id, @doctor_name, @consultation_date, 
                          @chief_complaint, @history, @ear_exam, @nose_exam, @throat_exam,
                          @diagnosis, @recommendations, @notes, @follow_up_date, 
-                         @follow_up_notes, @age);
+                         @follow_up_notes, @age, @others_exam);
                     SELECT LAST_INSERT_ID();
                 ";
 
@@ -153,6 +153,7 @@ namespace ENT_Clinic_System.Helpers
                     cmd.Parameters.AddWithValue("@ear_exam", inputs.EarsCsv ?? "");
                     cmd.Parameters.AddWithValue("@nose_exam", inputs.NoseCsv ?? "");
                     cmd.Parameters.AddWithValue("@throat_exam", inputs.ThroatCsv ?? "");
+                    cmd.Parameters.AddWithValue("@others_exam", inputs.OthersCsv ?? "");
                     cmd.Parameters.AddWithValue("@diagnosis", inputs.DiagnosisCsv ?? "");
                     cmd.Parameters.AddWithValue("@recommendations", inputs.RecommendationsCsv ?? "");
 
@@ -280,6 +281,7 @@ namespace ENT_Clinic_System.Helpers
         public string EarsCsv { get; set; }
         public string NoseCsv { get; set; }
         public string ThroatCsv { get; set; }
+        public string OthersCsv { get; set; }
         public string DiagnosisCsv { get; set; }
         public string ProceduresCsv { get; set; }
         public string RecommendationsCsv { get; set; }

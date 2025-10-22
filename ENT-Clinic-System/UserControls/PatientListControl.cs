@@ -67,7 +67,7 @@ namespace ENT_Clinic_System.UserControls
             }
 
 
-            DGVColumnHeaderFilterHelper.Attach(patientsDataGridView);
+
 
         }
 
@@ -134,7 +134,6 @@ namespace ENT_Clinic_System.UserControls
         {
             searchPatientNameTextBox.Text = "";
             patientCrud.LoadData();
-            DGVColumnHeaderFilterHelper.ResetFilters(patientsDataGridView);
         }
         private void UpdatePaginationButtons()
         {

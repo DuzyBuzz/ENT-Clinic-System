@@ -110,8 +110,7 @@ namespace ENT_Clinic_System.Helpers
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving autocomplete entries:\n{ex.Message}",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             }
         }
 

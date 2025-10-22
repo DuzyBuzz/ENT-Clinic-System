@@ -309,6 +309,7 @@ namespace ENT_Clinic_System.UserControls
                     EarsCsv = GetDgvValuesAsCsv(earsDGV),
                     NoseCsv = GetDgvValuesAsCsv(noseDGV),
                     ThroatCsv = GetDgvValuesAsCsv(throatDGV),
+                    OthersCsv = GetDgvValuesAsCsv(othersDGV),
                     DiagnosisCsv = GetDgvValuesAsCsv(diagnosisDGV),
                     RecommendationsCsv = GetDgvValuesAsCsv(recommendationsDGV),
 
@@ -326,6 +327,7 @@ namespace ENT_Clinic_System.UserControls
                     !string.IsNullOrEmpty(inputs.EarsCsv) ||
                     !string.IsNullOrEmpty(inputs.NoseCsv) ||
                     !string.IsNullOrEmpty(inputs.ThroatCsv) ||
+                    !string.IsNullOrEmpty(inputs.OthersCsv) ||
                     !string.IsNullOrEmpty(inputs.DiagnosisCsv) ||
                     !string.IsNullOrEmpty(inputs.ProceduresCsv) ||
                     !string.IsNullOrEmpty(inputs.RecommendationsCsv) ||
