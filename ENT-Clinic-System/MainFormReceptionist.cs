@@ -267,8 +267,9 @@ namespace ENT_Clinic_System
 
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
+            PaymentsControl paymentsControl = new PaymentsControl();
+            paymentsControl.Show();
+        }   
 
         private void billingToolStripMenuItem_Click_1(object sender, EventArgs e)
         {

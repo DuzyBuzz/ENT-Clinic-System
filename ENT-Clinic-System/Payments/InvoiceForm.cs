@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -11,34 +12,85 @@ namespace ENT_Clinic_System.Payments
 {
     public partial class InvoiceForm : Form
     {
-        private InventoryHelper helper;
-        private DataTable selectedItems;
+        private readonly InventoryHelper helper;
+        private readonly DataTable selectedItems;
         private int currentInvoiceId;
         private string customerName = string.Empty;
+        private TableChangeWatcher _prescriptionWatcher;
+
+        // Fonts reused for all grids
+        private readonly Font _boldHeaderFont = new Font("Segoe UI", 9F, FontStyle.Bold);
+        private readonly Font _regularFont = new Font("Segoe UI", 9F, FontStyle.Regular);
 
         // Context menu for selected items
-        private ContextMenuStrip selectedItemsContextMenu;
+        private readonly ContextMenuStrip selectedItemsContextMenu;
 
         public InvoiceForm()
         {
             InitializeComponent();
             helper = new InventoryHelper();
 
-            // Setup selected items table
+            // =============================
+            // Setup DataTable for selected items
+            // =============================
             selectedItems = new DataTable();
             selectedItems.Columns.Add("item_id", typeof(int));
-            selectedItems.Columns.Add("item_name", typeof(string));
+            selectedItems.Columns.Add("brand_name", typeof(string));
+            selectedItems.Columns.Add("generic_name", typeof(string));
+            selectedItems.Columns.Add("strength", typeof(string));
+            selectedItems.Columns.Add("dosage", typeof(string));
             selectedItems.Columns.Add("category", typeof(string));
             selectedItems.Columns.Add("description", typeof(string));
             selectedItems.Columns.Add("unit_price", typeof(decimal));
             selectedItems.Columns.Add("quantity", typeof(int));
             selectedItems.Columns.Add("prescription_id", typeof(int));
 
+
             selectedItemsDataGridView.DataSource = selectedItems;
 
+            // Context menu setup (done ONCE)
+            selectedItemsContextMenu = new ContextMenuStrip();
+            var removeItem = new ToolStripMenuItem("Remove This Item")
+            {
+                ForeColor = Color.Red
+            };
+            removeItem.Click += RemoveItem_Click;
+            selectedItemsContextMenu.Items.Add(removeItem);
+
+            // Initial load
             LoadAvailableItems();
             LoadPatientsFromPrescriptions();
+
+            // Hook UI events
             HookEvents();
+        }
+
+        // ================================
+        // FORM LOAD EVENT
+        // ================================
+        private void InvoiceForm_Load(object sender, EventArgs e)
+        {
+            // Setup autocomplete and combo boxes
+            AutoCompleteHelper.SetupAutoComplete(searchItemsTextBox, "items", new List<string> { "generic_name", "brand_name" });
+            ComboBoxCollectionHelper.PopulateComboBox(categoryCombobox, "items", "category");
+            AutoCompleteHelper.SetupAutoComplete(categoryCombobox, "items", new List<string> { "category" });
+
+            ComboBoxCollectionHelper.PopulateComboBox(discountPercentComboBox, "invoices", "discount_percent");
+
+            // Start table watcher only once
+            _prescriptionWatcher = new TableChangeWatcher(new[] { "prescription" }, () =>
+            {
+                if (this.IsHandleCreated)
+                {
+                    this.Invoke((Action)(() =>
+                    {
+                        RefreshInvoice();
+                        Console.WriteLine("Watcher triggered → Refreshed invoice data");
+                    }));
+                }
+            });
+
+            _prescriptionWatcher.Start();
         }
 
         // ================================
@@ -52,15 +104,13 @@ namespace ENT_Clinic_System.Payments
                 {
                     conn.Open();
                     string sqlPatientIds = "SELECT DISTINCT patient_id FROM prescription WHERE DATE(created_at) = CURDATE()";
-                    List<int> patientIds = new List<int>();
+                    var patientIds = new List<int>();
 
                     using (var cmd = new MySqlCommand(sqlPatientIds, conn))
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
-                        {
                             patientIds.Add(reader.GetInt32("patient_id"));
-                        }
                     }
 
                     if (patientIds.Count > 0)
@@ -71,9 +121,10 @@ namespace ENT_Clinic_System.Payments
                         using (var cmd = new MySqlCommand(sqlPatients, conn))
                         using (var adapter = new MySqlDataAdapter(cmd))
                         {
-                            DataTable dtPatients = new DataTable();
+                            var dtPatients = new DataTable();
                             adapter.Fill(dtPatients);
                             patientsDataGridView.DataSource = dtPatients;
+                            FormatPatientsGrid();
                         }
                     }
                     else
@@ -88,41 +139,92 @@ namespace ENT_Clinic_System.Payments
             }
         }
 
+        private void FormatPatientsGrid()
+        {
+            var dgv = patientsDataGridView;
+            if (dgv.Columns.Count == 0) return;
+
+            if (dgv.Columns.Contains("patient_id"))
+                dgv.Columns["patient_id"].Visible = false;
+
+            if (dgv.Columns.Contains("full_name"))
+                dgv.Columns["full_name"].HeaderText = "Patient Name";
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.ColumnHeadersDefaultCellStyle.Font = _boldHeaderFont;
+            dgv.DefaultCellStyle.Font = _regularFont;
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
         // ================================
-        // Load inventory items
+        // Load available inventory items
         // ================================
         private void LoadAvailableItems()
         {
             availableItemsDataGridView.DataSource = helper.GetAllItems();
+            FormatAvailableItemsGrid();
+            FormatSelectedItemsGrid();
         }
 
         // ================================
-        // Hook events
+        // Hook UI Events (called ONCE)
         // ================================
         private void HookEvents()
         {
             availableItemsDataGridView.CellDoubleClick += DgvAvailableItems_CellDoubleClick;
             selectedItemsDataGridView.CellEndEdit += DgvSelectedItems_CellEndEdit;
             selectedItemsDataGridView.KeyDown += DgvSelectedItems_KeyDown;
-
-            // Right-click context menu
-            selectedItemsContextMenu = new ContextMenuStrip();
-            ToolStripMenuItem removeItem = new ToolStripMenuItem("Remove This Item");
-            removeItem.ForeColor = System.Drawing.Color.Red;
-            removeItem.Click += RemoveItem_Click;
-            selectedItemsContextMenu.Items.Add(removeItem);
-
             selectedItemsDataGridView.CellMouseDown += SelectedItemsDataGridView_CellMouseDown;
-
             saveButton.Click += BtnSave_Click;
             patientsDataGridView.CellClick += DgvPatients_CellClick;
             prescriptionDataGridView.CellDoubleClick += DgvPrescriptions_CellDoubleClick;
             discountPercentComboBox.TextChanged += (s, e) => CalculateTotals();
             itemsAmountRecievedNumericUpDown.TextChanged += (s, e) => UpdateChangeDue();
+            refreshPatientsButton.Click += (s, e) => RefreshInvoice();
+            searchItemsTextBox.TextChanged += (s, e) => FilterAvailableItems();
+            categoryCombobox.SelectedIndexChanged += (s, e) => FilterAvailableItems();
+        }
+        /// <summary>
+        /// When the user double-clicks a prescription, it will automatically add
+        /// that item into the Selected Items list for billing.
+        /// </summary>
+        private void DgvPrescriptions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            var row = prescriptionDataGridView.Rows[e.RowIndex];
+
+            int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
+            int prescriptionId = Convert.ToInt32(row.Cells["prescription_id"].Value);
+
+            var existingRow = selectedItems.AsEnumerable()
+                .FirstOrDefault(r => (int)r["item_id"] == itemId && (int)r["prescription_id"] == prescriptionId);
+
+            if (existingRow != null)
+            {
+                existingRow["quantity"] = (int)existingRow["quantity"] + Convert.ToInt32(row.Cells["quantity"].Value);
+            }
+            else
+            {
+                selectedItems.Rows.Add(
+                    itemId,
+                    row.Cells["brand_name"].Value,
+                    row.Cells["generic_name"].Value,
+                    row.Cells["strength"].Value,
+                    row.Cells["dosage"].Value,
+                    row.Cells["category"].Value,
+                    row.Cells["description"].Value,
+                    row.Cells["selling_price"].Value,
+                    row.Cells["quantity"].Value,
+                    prescriptionId
+                );
+            }
+
+            CalculateTotals();
         }
 
+
         // ================================
-        // Context menu: show on right click
+        // Right-click context menu
         // ================================
         private void SelectedItemsDataGridView_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -134,9 +236,6 @@ namespace ENT_Clinic_System.Payments
             }
         }
 
-        // ================================
-        // Context menu: remove row
-        // ================================
         private void RemoveItem_Click(object sender, EventArgs e)
         {
             if (selectedItemsDataGridView.CurrentRow != null && !selectedItemsDataGridView.CurrentRow.IsNewRow)
@@ -144,39 +243,6 @@ namespace ENT_Clinic_System.Payments
                 selectedItemsDataGridView.Rows.RemoveAt(selectedItemsDataGridView.CurrentRow.Index);
                 CalculateTotals();
             }
-        }
-
-        // ================================
-        // Add prescription item
-        // ================================
-        private void DgvPrescriptions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-            DataGridViewRow row = prescriptionDataGridView.Rows[e.RowIndex];
-
-            int prescriptionId = Convert.ToInt32(row.Cells["prescription_id"].Value);
-            int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-
-            string brand = row.Cells["brand_name"]?.Value?.ToString() ?? "";
-            string generic = row.Cells["generic_name"]?.Value?.ToString() ?? "";
-            string strength = row.Cells["strength"]?.Value?.ToString() ?? "";
-            string dosage = row.Cells["dosage"]?.Value?.ToString() ?? "";
-
-            string itemDisplayName = string.Join(" ", new[] { brand, generic, strength, dosage }.Where(s => !string.IsNullOrWhiteSpace(s)));
-            string category = row.Cells["category"].Value?.ToString() ?? "";
-            string description = row.Cells["description"].Value?.ToString() ?? "";
-            decimal price = row.Cells["selling_price"].Value != DBNull.Value ? Convert.ToDecimal(row.Cells["selling_price"].Value) : 0m;
-            int quantity = row.Cells["quantity"].Value != DBNull.Value ? Convert.ToInt32(row.Cells["quantity"].Value) : 1;
-
-            DataRow existingRow = selectedItems.AsEnumerable()
-                .FirstOrDefault(r => (int)r["item_id"] == itemId && (int)r["prescription_id"] == prescriptionId);
-
-            if (existingRow != null)
-                existingRow["quantity"] = (int)existingRow["quantity"] + quantity;
-            else
-                selectedItems.Rows.Add(itemId, itemDisplayName, category, description, price, quantity, prescriptionId);
-
-            CalculateTotals();
         }
 
         // ================================
@@ -190,6 +256,7 @@ namespace ENT_Clinic_System.Payments
             {
                 int patientId = Convert.ToInt32(patientsDataGridView.Rows[e.RowIndex].Cells["patient_id"].Value);
                 customerName = patientsDataGridView.Rows[e.RowIndex].Cells["full_name"].Value?.ToString();
+                groupBox3.Text = $"Payment of {customerName}";
 
                 using (var conn = DBConfig.GetConnection())
                 {
@@ -208,15 +275,16 @@ namespace ENT_Clinic_System.Payments
                         cmd.Parameters.AddWithValue("@patientId", patientId);
                         using (var adapter = new MySqlDataAdapter(cmd))
                         {
-                            DataTable dtPrescriptions = new DataTable();
+                            var dtPrescriptions = new DataTable();
                             adapter.Fill(dtPrescriptions);
                             prescriptionDataGridView.DataSource = dtPrescriptions;
-
                             if (prescriptionDataGridView.Columns.Contains("item_id"))
                                 prescriptionDataGridView.Columns["item_id"].Visible = false;
                         }
                     }
                 }
+
+                FormatPrescriptionGrid();
             }
             catch (Exception ex)
             {
@@ -224,38 +292,89 @@ namespace ENT_Clinic_System.Payments
             }
         }
 
+        private void FormatPrescriptionGrid()
+        {
+            var dgv = prescriptionDataGridView;
+            if (dgv.Columns.Count == 0) return;
+
+            string[] hiddenCols = { "prescription_id", "item_id", "created_at", "updated_at" };
+            foreach (var col in hiddenCols)
+                if (dgv.Columns.Contains(col))
+                    dgv.Columns[col].Visible = false;
+
+            void SetHeader(string column, string header)
+            {
+                if (dgv.Columns.Contains(column))
+                    dgv.Columns[column].HeaderText = header;
+            }
+
+            SetHeader("brand_name", "Brand Name");
+            SetHeader("generic_name", "Generic Name");
+            SetHeader("strength", "Strength");
+            SetHeader("dosage", "Dosage");
+            SetHeader("sig", "Prescription Sig");
+            SetHeader("category", "Category");
+            SetHeader("selling_price", "Unit Price");
+            SetHeader("quantity", "Qty");
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.ColumnHeadersDefaultCellStyle.Font = _boldHeaderFont;
+            dgv.DefaultCellStyle.Font = _regularFont;
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            if (dgv.Columns.Contains("selling_price"))
+            {
+                dgv.Columns["selling_price"].DefaultCellStyle.Format = "N2";
+                dgv.Columns["selling_price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+
+            if (dgv.Columns.Contains("quantity"))
+                dgv.Columns["quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
+            dgv.RowHeadersVisible = false;
+        }
+
         // ================================
-        // Double-click inventory item
+        // Double-click → add item to invoice
         // ================================
         private void DgvAvailableItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            DataGridViewRow row = availableItemsDataGridView.Rows[e.RowIndex];
+            var row = availableItemsDataGridView.Rows[e.RowIndex];
 
             int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
-            string brand = row.Cells["brand_name"]?.Value?.ToString() ?? "";
-            string generic = row.Cells["generic_name"]?.Value?.ToString() ?? "";
-            string strength = row.Cells["strength"]?.Value?.ToString() ?? "";
-            string dosage = row.Cells["dosage"]?.Value?.ToString() ?? "";
 
-            string itemDisplayName = string.Join(" ", new[] { brand, generic, strength, dosage }.Where(s => !string.IsNullOrWhiteSpace(s)));
-            string category = row.Cells["category"]?.Value?.ToString() ?? "";
-            string description = row.Cells["description"]?.Value?.ToString() ?? "";
-            decimal price = row.Cells["selling_price"].Value != DBNull.Value ? Convert.ToDecimal(row.Cells["selling_price"].Value) : 0m;
-
-            DataRow existingRow = selectedItems.AsEnumerable()
+            // Check if already exists
+            var existingRow = selectedItems.AsEnumerable()
                 .FirstOrDefault(r => (int)r["item_id"] == itemId && (int)r["prescription_id"] == 0);
 
             if (existingRow != null)
+            {
                 existingRow["quantity"] = (int)existingRow["quantity"] + 1;
+            }
             else
-                selectedItems.Rows.Add(itemId, itemDisplayName, category, description, price, 1, 0);
+            {
+                selectedItems.Rows.Add(
+                    itemId,
+                    row.Cells["brand_name"].Value,
+                    row.Cells["generic_name"].Value,
+                    row.Cells["strength"].Value,
+                    row.Cells["dosage"].Value,
+                    row.Cells["category"].Value,
+                    row.Cells["description"].Value,
+                    row.Cells["selling_price"].Value,
+                    1,
+                    0 // prescription_id = 0 for direct items
+                );
+            }
 
             CalculateTotals();
         }
 
+
         // ================================
-        // Validate quantity edits
+        // Validate edited quantities
         // ================================
         private void DgvSelectedItems_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -281,14 +400,14 @@ namespace ENT_Clinic_System.Payments
         }
 
         // ================================
-        // Calculate totals
+        // Totals, Change Due, and Save Invoice
         // ================================
         private void CalculateTotals()
         {
             decimal subtotal = selectedItems.AsEnumerable().Sum(r => Convert.ToDecimal(r["unit_price"]) * Convert.ToInt32(r["quantity"]));
 
             decimal discountPercent = 0;
-            decimal.TryParse(discountPercentComboBox.Text?.Replace("%", ""), out discountPercent);
+            decimal.TryParse(discountPercentComboBox.Text?.Replace("%", "").Trim(), out discountPercent);
 
             decimal discountAmount = Math.Round(subtotal * (discountPercent / 100), 2);
             decimal netTotal = subtotal - discountAmount;
@@ -300,9 +419,6 @@ namespace ENT_Clinic_System.Payments
             UpdateChangeDue();
         }
 
-        // ================================
-        // Change due calculation
-        // ================================
         private void UpdateChangeDue()
         {
             if (decimal.TryParse(itemsAmountRecievedNumericUpDown.Text, out decimal received) &&
@@ -317,9 +433,6 @@ namespace ENT_Clinic_System.Payments
             }
         }
 
-        // ================================
-        // Save invoice
-        // ================================
         private void BtnSave_Click(object sender, EventArgs e)
         {
             if (selectedItems.Rows.Count == 0)
@@ -338,10 +451,8 @@ namespace ENT_Clinic_System.Payments
             }
 
             decimal subtotal = selectedItems.AsEnumerable().Sum(r => Convert.ToDecimal(r["unit_price"]) * Convert.ToInt32(r["quantity"]));
-
             decimal discountPercent = 0;
-            decimal.TryParse(discountPercentComboBox.Text?.Replace("%", ""), out discountPercent);
-
+            decimal.TryParse(discountPercentComboBox.Text?.Replace("%", "").Trim(), out discountPercent);
             decimal discountAmount = Math.Round(subtotal * (discountPercent / 100), 2);
             decimal netTotal = subtotal - discountAmount;
             decimal changeDue = amountReceived - netTotal;
@@ -349,28 +460,189 @@ namespace ENT_Clinic_System.Payments
             string note = noteComboBox.Text;
             string invoiceType = "ITEMS";
 
-            Console.WriteLine(note);
             currentInvoiceId = helper.AddInvoice(customerName, selectedItems, subtotal, discountAmount, netTotal, amountReceived, changeDue, discountPercent.ToString(), note, invoiceType);
-
+            Console.WriteLine("customer name "+customerName);
             if (currentInvoiceId > 0)
             {
                 MessageBox.Show("Invoice saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 if (MessageBox.Show("Print receipt?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    InvoicePrinter printer = new InvoicePrinter(currentInvoiceId);
+                    var printer = new InvoicePrinter(currentInvoiceId);
                     printer.PrintReceipt();
                 }
-                // Clear all rows from the DataTable
+
                 selectedItems.Clear();
-
-                // Reset binding to refresh the DataGridView
-                selectedItemsDataGridView.DataSource = selectedItems;
-
+                RefreshInvoice();
             }
             else
             {
                 MessageBox.Show("Error saving invoice.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ================================
+        // Refresh invoice data safely
+        // ================================
+        private void RefreshInvoice()
+        {
+            LoadAvailableItems();
+            LoadPatientsFromPrescriptions();
+            customerName = string.Empty;
+            groupBox3.Text = "Customer Payment (Walk-in)";
+
+            selectedItems.Rows.Clear();
+            prescriptionDataGridView.DataSource = null;
+            ClearInvoiceFields();
+
+        }
+        private void ClearInvoiceFields()
+        {
+            subTotalTextBox.Text = "0.00";
+            discountTextBox.Text = "0.00";
+            discountPercentComboBox.Text = "0";
+            totalAmountTextBox.Text = "0.00";
+            itemsAmountRecievedNumericUpDown.Text = "0.00";
+            changeTextBox.Text = "0.00";
+            noteComboBox.Text = "";
+
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            _prescriptionWatcher?.Stop();
+            base.OnFormClosing(e);
+        }
+
+        // ================================
+        // GRID FORMATTING HELPERS
+        // ================================
+        private void FormatAvailableItemsGrid()
+        {
+            var dgv = availableItemsDataGridView;
+            if (dgv.Columns.Count == 0) return;
+
+            string[] hideCols = { "item_id", "created_at", "updated_at", "description", "cost_price" };
+            foreach (var c in hideCols)
+                if (dgv.Columns.Contains(c))
+                    dgv.Columns[c].Visible = false;
+
+            void SetHeader(string column, string header)
+            {
+                if (dgv.Columns.Contains(column))
+                    dgv.Columns[column].HeaderText = header;
+            }
+
+            SetHeader("brand_name", "Brand Name");
+            SetHeader("generic_name", "Generic Name");
+            SetHeader("strength", "Strength");
+            SetHeader("dosage", "Dosage");
+            SetHeader("category", "Category");
+            SetHeader("selling_price", "Unit Price");
+            SetHeader("stock_qty", "Stock Qty");
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.ColumnHeadersDefaultCellStyle.Font = _boldHeaderFont;
+            dgv.DefaultCellStyle.Font = _regularFont;
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            if (dgv.Columns.Contains("selling_price"))
+            {
+                dgv.Columns["selling_price"].DefaultCellStyle.Format = "N2";
+                dgv.Columns["selling_price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+
+            if (dgv.Columns.Contains("stock_qty"))
+                dgv.Columns["stock_qty"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
+        private void FormatSelectedItemsGrid()
+        {
+            var dgv = selectedItemsDataGridView;
+            if (dgv.Columns.Count == 0) return;
+
+            // Hide IDs
+            dgv.Columns["item_id"].Visible = false;
+            dgv.Columns["prescription_id"].Visible = false;
+            dgv.Columns["description"].Visible = false;
+
+            // Set headers
+            dgv.Columns["brand_name"].HeaderText = "Brand Name";
+            dgv.Columns["generic_name"].HeaderText = "Generic Name";
+            dgv.Columns["strength"].HeaderText = "Strength";
+            dgv.Columns["dosage"].HeaderText = "Dosage";
+            dgv.Columns["category"].HeaderText = "Category";
+            dgv.Columns["unit_price"].HeaderText = "Unit Price";
+            dgv.Columns["quantity"].HeaderText = "Quantity";
+
+            // Set ReadOnly: all columns except quantity
+            foreach (DataGridViewColumn col in dgv.Columns)
+            {
+                col.ReadOnly = col.Name != "quantity";
+            }
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dgv.DefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgv.Columns["unit_price"].DefaultCellStyle.Format = "N2";
+            dgv.Columns["unit_price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dgv.Columns["quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
+            
+        }
+
+
+        // ================================
+        // Search & Filter Functions
+        // ================================
+        private void FilterAvailableItems()
+        {
+            string searchText = searchItemsTextBox.Text.Trim().ToLower();
+            string selectedCategory = categoryCombobox.Text.Trim().ToLower();
+
+            var dt = helper.GetAllItems();
+
+            var filteredRows = dt.AsEnumerable()
+                .Where(row =>
+                    (string.IsNullOrWhiteSpace(searchText) ||
+                     row["brand_name"].ToString().ToLower().Contains(searchText) ||
+                     row["generic_name"].ToString().ToLower().Contains(searchText)) &&
+                    (string.IsNullOrWhiteSpace(selectedCategory) ||
+                     row["category"].ToString().ToLower().Equals(selectedCategory))
+                );
+
+            if (filteredRows.Any())
+                availableItemsDataGridView.DataSource = filteredRows.CopyToDataTable();
+            else
+                availableItemsDataGridView.DataSource = null;
+
+            FormatAvailableItemsGrid();
+        }
+
+        private void selectedItemsDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            // Only apply to the quantity column
+            if (selectedItemsDataGridView.CurrentCell.ColumnIndex == selectedItemsDataGridView.Columns["quantity"].Index)
+            {
+                if (e.Control is TextBox tb)
+                {
+                    tb.KeyPress -= QuantityColumn_KeyPress; // remove previous handler to avoid duplicates
+                    tb.KeyPress += QuantityColumn_KeyPress;
+                }
+            }
+        }
+
+        // Allow only digits
+        private void QuantityColumn_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow only digits and control keys (backspace)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // ignore input
+                System.Media.SystemSounds.Beep.Play(); // optional feedback
             }
         }
     }

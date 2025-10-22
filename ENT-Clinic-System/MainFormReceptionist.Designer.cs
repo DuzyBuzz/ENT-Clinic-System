@@ -46,8 +46,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.paymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.billingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.dispensingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.maximizeMaximizeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -199,27 +197,10 @@
             // 
             // paymentToolStripMenuItem
             // 
-            this.paymentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.billingToolStripMenuItem1,
-            this.dispensingToolStripMenuItem});
             this.paymentToolStripMenuItem.Name = "paymentToolStripMenuItem";
             this.paymentToolStripMenuItem.Size = new System.Drawing.Size(93, 29);
             this.paymentToolStripMenuItem.Text = "Payment";
             this.paymentToolStripMenuItem.Click += new System.EventHandler(this.paymentToolStripMenuItem_Click);
-            // 
-            // billingToolStripMenuItem1
-            // 
-            this.billingToolStripMenuItem1.Name = "billingToolStripMenuItem1";
-            this.billingToolStripMenuItem1.Size = new System.Drawing.Size(172, 30);
-            this.billingToolStripMenuItem1.Text = "Billing";
-            this.billingToolStripMenuItem1.Click += new System.EventHandler(this.billingToolStripMenuItem_Click);
-            // 
-            // dispensingToolStripMenuItem
-            // 
-            this.dispensingToolStripMenuItem.Name = "dispensingToolStripMenuItem";
-            this.dispensingToolStripMenuItem.Size = new System.Drawing.Size(172, 30);
-            this.dispensingToolStripMenuItem.Text = "Dispensing";
-            this.dispensingToolStripMenuItem.Click += new System.EventHandler(this.itemsDispensingPaymentToolStripMenuItem_Click);
             // 
             // closeButton
             // 
@@ -345,8 +326,6 @@
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stocToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paymentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem dispensingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expiryReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dispensingReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem;

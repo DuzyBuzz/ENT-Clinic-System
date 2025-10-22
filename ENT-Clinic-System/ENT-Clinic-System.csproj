@@ -278,11 +278,11 @@
     <Compile Include="Payments\BillingInvoiceForm.Designer.cs">
       <DependentUpon>BillingInvoiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Payments\PaymentForm.cs">
+    <Compile Include="Payments\PaymentsControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Payments\PaymentForm.Designer.cs">
-      <DependentUpon>PaymentForm.cs</DependentUpon>
+    <Compile Include="Payments\PaymentsControl.Designer.cs">
+      <DependentUpon>PaymentsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="PrintingFroms\BillingPrinter.cs" />
     <Compile Include="PrintingFroms\LabRequestPrintHelper.cs" />
@@ -521,6 +521,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainFormDoctor.resx">
       <DependentUpon>MainFormDoctor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payments\PaymentsControl.resx">
+      <DependentUpon>PaymentsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrintingFroms\LabResultsForm.resx">
       <DependentUpon>LabResultsForm.cs</DependentUpon>

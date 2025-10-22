@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace ENT_Clinic_System.Payments
 {
@@ -28,7 +29,9 @@ namespace ENT_Clinic_System.Payments
 
         private void BillingInvoiceForm_Load(object sender, EventArgs e)
         {
+
             LoadAllBilling();
+
 
             // Setup auto-complete
             AutoCompleteHelper.SetupAutoComplete(searchPatientTextBox, "patients", new List<string> { "full_name" });
@@ -36,10 +39,16 @@ namespace ENT_Clinic_System.Payments
             billingtDateToDateTimePicker.Value = DateTime.Now.AddDays(+1);
             SortBillingDate();
             // Initialize watcher: table name + what to do when it changes
-            _billingWatcher = new TableChangeWatcher(new[] { "billing" }, LoadAllBilling);
+            _billingWatcher = new TableChangeWatcher(new[] { "billing" }, () =>
+            {
+                LoadAllBilling();
+                Console.WriteLine("Watcher triggered → Refreshed billing data");
+            });
+
 
             // Start watching
             _billingWatcher.Start();
+
         }
 
 
@@ -48,6 +57,7 @@ namespace ENT_Clinic_System.Payments
         /// </summary>
         private void LoadAllBilling()
         {
+            
             var columns = new List<string>
             {
                 "billing_id", "patient_name", "consultation_id", "fee", "discount_percent", "discount_amount",
@@ -56,6 +66,8 @@ namespace ENT_Clinic_System.Payments
 
             var helper = new DGVViewHelper(billingDataGridView, "billing_with_patient", columns, "billing_id");
             helper.LoadAllData();
+            billingtDateToDateTimePicker.Value = DateTime.Now.AddDays(+1);
+            billingDateFromDateTimePicker.Value = DateTime.Now;
         }
 
         /// <summary>
@@ -88,6 +100,8 @@ namespace ENT_Clinic_System.Payments
             noteTextBox.Text = row.Cells["note"].Value?.ToString() ?? "";
            string paymentStatus = row.Cells["payment_status"].Value?.ToString() ?? "";
 
+            string patientName = row.Cells["patient_name"].Value?.ToString() ?? "";
+
             // Payment status
             paymentStatusLabel.Text = row.Cells["payment_status"].Value?.ToString() ?? "N/A";
 
@@ -97,7 +111,7 @@ namespace ENT_Clinic_System.Payments
                 : totalBill;
 
             balanceTextBox.Text = currentBalance.ToString("0.00");
-
+            groupBox1.Text = $"Billing History of {patientName}";
             // Reset payment entry
             amountRecievedNumericUpDown.Value = 0;
             changeTextBox.Text = "0.00";
@@ -153,7 +167,7 @@ namespace ENT_Clinic_System.Payments
             {
                 string sql = @"SELECT 
                             payment_date AS 'Date',
-                            amount AS 'Amount',
+                            amount AS 'Amount Paid',
                             balance AS 'Balance',
                             change_due AS 'Change',
                             note AS 'Note'
@@ -183,6 +197,24 @@ namespace ENT_Clinic_System.Payments
                 MessageBox.Show("Failed to load payment history: " + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        private void ClearFields()
+        {
+            billingId = 0;
+            doctorsFeeTextBox.Text = "0.00";
+            discountPercentLabel.Text = "Discount (%):";
+            discountAmountTextBox.Text = "0.00";
+            totalBillTextBox.Text = "0.00";
+            noteTextBox.Text = "";
+            paymentStatusLabel.Text = "N/A";
+            currentBalance = 0;
+            balanceTextBox.Text = "0.00";
+            amountRecievedNumericUpDown.Value = 0;
+            changeTextBox.Text = "0.00";
+            remainingBalanceTextBox.Text = "0.00";
+            labelRemainingBalance.Visible = false;
+            remainingBalanceTextBox.Visible = false;
+            paymentHistoryDataGridView.DataSource = null;
         }
 
         /// <summary>
@@ -271,8 +303,7 @@ namespace ENT_Clinic_System.Payments
 
                 var printer = new BillingPrinter(billingId);
                 printer.PrintReceipt();
-
-                this.Close();
+                RefreshBilling();
             }
             catch (Exception ex)
             {
@@ -324,7 +355,11 @@ namespace ENT_Clinic_System.Payments
                 "billing_payments",
                 "note"
             );
-
+            AutoCompleteHelper.SetupAutoComplete(
+                comboBox,
+                "billing_payments",
+                new List<string> { "note" } // pass as a list
+            );
 
             Button confirmation = new Button()
             {
@@ -354,6 +389,10 @@ namespace ENT_Clinic_System.Payments
 
             return prompt.ShowDialog() == DialogResult.OK ? comboBox.Text.ToString() : null;
         }
+        /// <summary>
+        /// Applies color formatting to rows in billingDataGridView based on payment status.
+        /// </summary>
+
 
 
         private void searchPatientButton_Click(object sender, EventArgs e)
@@ -364,7 +403,6 @@ namespace ENT_Clinic_System.Payments
                 columnNames: new string[] { "patient_name" },
                 filterControl: searchPatientTextBox
             );
-
 
 
         }
@@ -398,10 +436,16 @@ namespace ENT_Clinic_System.Payments
 
         private void refreshPatientsButton_Click(object sender, EventArgs e)
         {
+            RefreshBilling();
+
+        }
+        private void RefreshBilling()
+        {
             SortBillingDate();
             billingtDateToDateTimePicker.Value = DateTime.Now.AddDays(+1);
+            billingDateFromDateTimePicker.Value = DateTime.Now;
+            ClearFields();
         }
-
         private void billingDateFromDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             SortBillingDate();
@@ -413,6 +457,36 @@ namespace ENT_Clinic_System.Payments
         }
 
         private void balanceTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBoxPayment_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void billingDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void searchPatientTextBox_TextChanged(object sender, EventArgs e)
+        {
+            SearchHelper.Search(
+    dgv: billingDataGridView,
+    tableName: "billing_with_patient",
+    columnNames: new string[] { "patient_name" },
+    filterControl: searchPatientTextBox
+);
+        }
+
+        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
 
         }

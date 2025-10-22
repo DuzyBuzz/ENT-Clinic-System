@@ -524,7 +524,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15019F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84981F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 318F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 320F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel6, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel13, 2, 0);
@@ -549,7 +549,7 @@
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 887F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(415, 887);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(414, 887);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // tabControl1
@@ -560,7 +560,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(409, 881);
+            this.tabControl1.Size = new System.Drawing.Size(408, 881);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -569,7 +569,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(401, 848);
+            this.tabPage1.Size = new System.Drawing.Size(400, 848);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
@@ -587,7 +587,7 @@
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.8076F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.907364F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.16627F));
-            this.tableLayoutPanel25.Size = new System.Drawing.Size(395, 842);
+            this.tableLayoutPanel25.Size = new System.Drawing.Size(394, 842);
             this.tableLayoutPanel25.TabIndex = 0;
             this.tableLayoutPanel25.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel25_Paint);
             // 
@@ -598,7 +598,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(3, 590);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(389, 249);
+            this.groupBox3.Size = new System.Drawing.Size(388, 249);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Physical Examination";
@@ -643,7 +643,7 @@
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(383, 224);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(382, 224);
             this.tableLayoutPanel10.TabIndex = 0;
             this.tableLayoutPanel10.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel10_Paint);
             // 
@@ -652,7 +652,7 @@
             this.neurologicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.neurologicComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.neurologicComboBox.FormattingEnabled = true;
-            this.neurologicComboBox.Location = new System.Drawing.Point(192, 199);
+            this.neurologicComboBox.Location = new System.Drawing.Point(191, 199);
             this.neurologicComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.neurologicComboBox.Name = "neurologicComboBox";
             this.neurologicComboBox.Size = new System.Drawing.Size(190, 24);
@@ -664,7 +664,7 @@
             this.extremetiesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.extremetiesComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.extremetiesComboBox.FormattingEnabled = true;
-            this.extremetiesComboBox.Location = new System.Drawing.Point(192, 177);
+            this.extremetiesComboBox.Location = new System.Drawing.Point(191, 177);
             this.extremetiesComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.extremetiesComboBox.Name = "extremetiesComboBox";
             this.extremetiesComboBox.Size = new System.Drawing.Size(190, 24);
@@ -676,7 +676,7 @@
             this.abdomenComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.abdomenComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.abdomenComboBox.FormattingEnabled = true;
-            this.abdomenComboBox.Location = new System.Drawing.Point(192, 155);
+            this.abdomenComboBox.Location = new System.Drawing.Point(191, 155);
             this.abdomenComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.abdomenComboBox.Name = "abdomenComboBox";
             this.abdomenComboBox.Size = new System.Drawing.Size(190, 24);
@@ -688,7 +688,7 @@
             this.heartComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.heartComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.heartComboBox.FormattingEnabled = true;
-            this.heartComboBox.Location = new System.Drawing.Point(192, 133);
+            this.heartComboBox.Location = new System.Drawing.Point(191, 133);
             this.heartComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.heartComboBox.Name = "heartComboBox";
             this.heartComboBox.Size = new System.Drawing.Size(190, 24);
@@ -700,7 +700,7 @@
             this.chestLungsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chestLungsComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chestLungsComboBox.FormattingEnabled = true;
-            this.chestLungsComboBox.Location = new System.Drawing.Point(192, 111);
+            this.chestLungsComboBox.Location = new System.Drawing.Point(191, 111);
             this.chestLungsComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.chestLungsComboBox.Name = "chestLungsComboBox";
             this.chestLungsComboBox.Size = new System.Drawing.Size(190, 24);
@@ -712,7 +712,7 @@
             this.neckComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.neckComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.neckComboBox.FormattingEnabled = true;
-            this.neckComboBox.Location = new System.Drawing.Point(192, 89);
+            this.neckComboBox.Location = new System.Drawing.Point(191, 89);
             this.neckComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.neckComboBox.Name = "neckComboBox";
             this.neckComboBox.Size = new System.Drawing.Size(190, 24);
@@ -724,7 +724,7 @@
             this.eyesComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.eyesComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.eyesComboBox.FormattingEnabled = true;
-            this.eyesComboBox.Location = new System.Drawing.Point(192, 67);
+            this.eyesComboBox.Location = new System.Drawing.Point(191, 67);
             this.eyesComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.eyesComboBox.Name = "eyesComboBox";
             this.eyesComboBox.Size = new System.Drawing.Size(190, 24);
@@ -736,7 +736,7 @@
             this.headAndFaceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.headAndFaceComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.headAndFaceComboBox.FormattingEnabled = true;
-            this.headAndFaceComboBox.Location = new System.Drawing.Point(192, 45);
+            this.headAndFaceComboBox.Location = new System.Drawing.Point(191, 45);
             this.headAndFaceComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.headAndFaceComboBox.Name = "headAndFaceComboBox";
             this.headAndFaceComboBox.Size = new System.Drawing.Size(190, 24);
@@ -748,7 +748,7 @@
             this.skinComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skinComboBox.FormattingEnabled = true;
-            this.skinComboBox.Location = new System.Drawing.Point(192, 23);
+            this.skinComboBox.Location = new System.Drawing.Point(191, 23);
             this.skinComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.skinComboBox.Name = "skinComboBox";
             this.skinComboBox.Size = new System.Drawing.Size(190, 24);
@@ -762,7 +762,7 @@
             this.label42.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label42.Location = new System.Drawing.Point(4, 199);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(184, 24);
+            this.label42.Size = new System.Drawing.Size(183, 24);
             this.label42.TabIndex = 18;
             this.label42.Text = "Neurologic";
             this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -774,7 +774,7 @@
             this.label40.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label40.Location = new System.Drawing.Point(4, 177);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(184, 21);
+            this.label40.Size = new System.Drawing.Size(183, 21);
             this.label40.TabIndex = 16;
             this.label40.Text = "Extremities:";
             this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -786,7 +786,7 @@
             this.label38.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label38.Location = new System.Drawing.Point(4, 155);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(184, 21);
+            this.label38.Size = new System.Drawing.Size(183, 21);
             this.label38.TabIndex = 14;
             this.label38.Text = "Abdomen:";
             this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -798,7 +798,7 @@
             this.label36.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label36.Location = new System.Drawing.Point(4, 133);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(184, 21);
+            this.label36.Size = new System.Drawing.Size(183, 21);
             this.label36.TabIndex = 12;
             this.label36.Text = "Heart:";
             this.label36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -810,7 +810,7 @@
             this.label32.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label32.Location = new System.Drawing.Point(4, 111);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(184, 21);
+            this.label32.Size = new System.Drawing.Size(183, 21);
             this.label32.TabIndex = 10;
             this.label32.Text = "Chest/Lungs:";
             this.label32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -822,7 +822,7 @@
             this.label27.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.Location = new System.Drawing.Point(4, 89);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(184, 21);
+            this.label27.Size = new System.Drawing.Size(183, 21);
             this.label27.TabIndex = 8;
             this.label27.Text = "Neck:";
             this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -834,7 +834,7 @@
             this.label19.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.Location = new System.Drawing.Point(4, 67);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(184, 21);
+            this.label19.Size = new System.Drawing.Size(183, 21);
             this.label19.TabIndex = 6;
             this.label19.Text = "Eyes:";
             this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -846,7 +846,7 @@
             this.label15.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(4, 45);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(184, 21);
+            this.label15.Size = new System.Drawing.Size(183, 21);
             this.label15.TabIndex = 4;
             this.label15.Text = "Head:";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -858,7 +858,7 @@
             this.label10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(4, 23);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(184, 21);
+            this.label10.Size = new System.Drawing.Size(183, 21);
             this.label10.TabIndex = 2;
             this.label10.Text = "Skin:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -870,7 +870,7 @@
             this.label8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(4, 1);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(184, 21);
+            this.label8.Size = new System.Drawing.Size(183, 21);
             this.label8.TabIndex = 0;
             this.label8.Text = "General Appearance:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -880,7 +880,7 @@
             this.generalApperanceComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.generalApperanceComboBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.generalApperanceComboBox.FormattingEnabled = true;
-            this.generalApperanceComboBox.Location = new System.Drawing.Point(192, 1);
+            this.generalApperanceComboBox.Location = new System.Drawing.Point(191, 1);
             this.generalApperanceComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.generalApperanceComboBox.Name = "generalApperanceComboBox";
             this.generalApperanceComboBox.Size = new System.Drawing.Size(190, 24);
@@ -894,7 +894,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(3, 515);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(389, 69);
+            this.groupBox2.Size = new System.Drawing.Size(388, 69);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Vital Signs";
@@ -927,7 +927,7 @@
             this.tableLayoutPanel29.RowCount = 2;
             this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel29.Size = new System.Drawing.Size(383, 44);
+            this.tableLayoutPanel29.Size = new System.Drawing.Size(382, 44);
             this.tableLayoutPanel29.TabIndex = 0;
             // 
             // wtTextBox
@@ -937,7 +937,7 @@
             this.wtTextBox.Location = new System.Drawing.Point(300, 22);
             this.wtTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.wtTextBox.Name = "wtTextBox";
-            this.wtTextBox.Size = new System.Drawing.Size(83, 22);
+            this.wtTextBox.Size = new System.Drawing.Size(82, 22);
             this.wtTextBox.TabIndex = 16;
             this.wtTextBox.TextChanged += new System.EventHandler(this.wtTextBox_TextChanged);
             // 
@@ -970,7 +970,7 @@
             this.prTextBox.Location = new System.Drawing.Point(300, 0);
             this.prTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.prTextBox.Name = "prTextBox";
-            this.prTextBox.Size = new System.Drawing.Size(83, 22);
+            this.prTextBox.Size = new System.Drawing.Size(82, 22);
             this.prTextBox.TabIndex = 13;
             this.prTextBox.TextChanged += new System.EventHandler(this.prTextBox_TextChanged);
             // 
@@ -1091,7 +1091,7 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(389, 506);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(388, 506);
             this.tableLayoutPanel11.TabIndex = 3;
             // 
             // groupBox5
@@ -1101,7 +1101,7 @@
             this.groupBox5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(383, 120);
+            this.groupBox5.Size = new System.Drawing.Size(382, 120);
             this.groupBox5.TabIndex = 12;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Chief Complaints";
@@ -1112,7 +1112,7 @@
             this.complaintsRichTextBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.complaintsRichTextBox.Location = new System.Drawing.Point(3, 22);
             this.complaintsRichTextBox.Name = "complaintsRichTextBox";
-            this.complaintsRichTextBox.Size = new System.Drawing.Size(377, 95);
+            this.complaintsRichTextBox.Size = new System.Drawing.Size(376, 95);
             this.complaintsRichTextBox.TabIndex = 11;
             this.complaintsRichTextBox.Text = "";
             // 
@@ -1123,7 +1123,7 @@
             this.groupBox14.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox14.Location = new System.Drawing.Point(3, 381);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(383, 122);
+            this.groupBox14.Size = new System.Drawing.Size(382, 122);
             this.groupBox14.TabIndex = 15;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Personal/Social History";
@@ -1143,7 +1143,7 @@
             this.personalSocialHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
             this.personalSocialHistoryDGV.Name = "personalSocialHistoryDGV";
             this.personalSocialHistoryDGV.RowHeadersWidth = 25;
-            this.personalSocialHistoryDGV.Size = new System.Drawing.Size(377, 97);
+            this.personalSocialHistoryDGV.Size = new System.Drawing.Size(376, 97);
             this.personalSocialHistoryDGV.TabIndex = 9;
             // 
             // personal_social_history
@@ -1162,7 +1162,7 @@
             this.groupBox13.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox13.Location = new System.Drawing.Point(3, 255);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(383, 120);
+            this.groupBox13.Size = new System.Drawing.Size(382, 120);
             this.groupBox13.TabIndex = 14;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Family History";
@@ -1181,7 +1181,7 @@
             this.familyHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
             this.familyHistoryDGV.Name = "familyHistoryDGV";
             this.familyHistoryDGV.RowHeadersWidth = 25;
-            this.familyHistoryDGV.Size = new System.Drawing.Size(377, 95);
+            this.familyHistoryDGV.Size = new System.Drawing.Size(376, 95);
             this.familyHistoryDGV.TabIndex = 9;
             // 
             // family_history
@@ -1200,7 +1200,7 @@
             this.groupBox15.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox15.Location = new System.Drawing.Point(3, 129);
             this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(383, 120);
+            this.groupBox15.Size = new System.Drawing.Size(382, 120);
             this.groupBox15.TabIndex = 16;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Allergies";
@@ -1220,7 +1220,7 @@
             this.allergiesDGV.Margin = new System.Windows.Forms.Padding(0);
             this.allergiesDGV.Name = "allergiesDGV";
             this.allergiesDGV.RowHeadersWidth = 25;
-            this.allergiesDGV.Size = new System.Drawing.Size(377, 95);
+            this.allergiesDGV.Size = new System.Drawing.Size(376, 95);
             this.allergiesDGV.TabIndex = 8;
             this.allergiesDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.allergiesDGV_CellContentClick);
             // 
@@ -1329,12 +1329,12 @@
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel9, 0, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(426, 3);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(425, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.83721F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.16279F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1130, 891);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1129, 891);
             this.tableLayoutPanel6.TabIndex = 1;
             // 
             // tableLayoutPanel4
@@ -1350,7 +1350,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1122, 649);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1121, 649);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // tableLayoutPanel7
@@ -1365,7 +1365,7 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1114, 317);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1113, 317);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // groupBox9
@@ -1373,7 +1373,7 @@
             this.groupBox9.Controls.Add(this.pastMedicalHistoryDGV);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox9.Location = new System.Drawing.Point(560, 3);
+            this.groupBox9.Location = new System.Drawing.Point(559, 3);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(551, 311);
             this.groupBox9.TabIndex = 13;
@@ -1414,7 +1414,7 @@
             this.groupBox4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(551, 311);
+            this.groupBox4.Size = new System.Drawing.Size(550, 311);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Recent Illness";
@@ -1425,7 +1425,7 @@
             this.recentIllnessRichTextBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recentIllnessRichTextBox.Location = new System.Drawing.Point(3, 22);
             this.recentIllnessRichTextBox.Name = "recentIllnessRichTextBox";
-            this.recentIllnessRichTextBox.Size = new System.Drawing.Size(545, 286);
+            this.recentIllnessRichTextBox.Size = new System.Drawing.Size(544, 286);
             this.recentIllnessRichTextBox.TabIndex = 12;
             this.recentIllnessRichTextBox.Text = "";
             // 
@@ -1443,7 +1443,7 @@
             this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.61049F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.38951F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1114, 317);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1113, 317);
             this.tableLayoutPanel8.TabIndex = 2;
             // 
             // tableLayoutPanel5
@@ -1461,7 +1461,7 @@
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 272F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1106, 272);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1105, 272);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // groupBox8
@@ -1471,7 +1471,7 @@
             this.groupBox8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox8.Location = new System.Drawing.Point(739, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(364, 266);
+            this.groupBox8.Size = new System.Drawing.Size(363, 266);
             this.groupBox8.TabIndex = 3;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Throat";
@@ -1490,7 +1490,7 @@
             this.throatDGV.Margin = new System.Windows.Forms.Padding(0);
             this.throatDGV.Name = "throatDGV";
             this.throatDGV.RowHeadersWidth = 25;
-            this.throatDGV.Size = new System.Drawing.Size(358, 241);
+            this.throatDGV.Size = new System.Drawing.Size(357, 241);
             this.throatDGV.TabIndex = 8;
             // 
             // throat
@@ -1586,7 +1586,7 @@
             this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(4, 1);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(1106, 36);
+            this.label3.Size = new System.Drawing.Size(1105, 36);
             this.label3.TabIndex = 0;
             this.label3.Text = "ENT Examination and Findings";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1607,7 +1607,7 @@
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(1122, 227);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(1121, 227);
             this.tableLayoutPanel9.TabIndex = 2;
             this.tableLayoutPanel9.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel9_Paint);
             // 
@@ -1618,7 +1618,7 @@
             this.groupBox10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox10.Location = new System.Drawing.Point(4, 4);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(436, 219);
+            this.groupBox10.Size = new System.Drawing.Size(435, 219);
             this.groupBox10.TabIndex = 3;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Diagnosis";
@@ -1637,7 +1637,7 @@
             this.diagnosisDGV.Margin = new System.Windows.Forms.Padding(0);
             this.diagnosisDGV.Name = "diagnosisDGV";
             this.diagnosisDGV.RowHeadersWidth = 25;
-            this.diagnosisDGV.Size = new System.Drawing.Size(430, 194);
+            this.diagnosisDGV.Size = new System.Drawing.Size(429, 194);
             this.diagnosisDGV.TabIndex = 8;
             // 
             // diagnosis
@@ -1660,7 +1660,7 @@
             this.followUpTablePanel.Controls.Add(this.tableLayoutPanel16, 0, 4);
             this.followUpTablePanel.Controls.Add(this.noteRichTextBox, 0, 3);
             this.followUpTablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.followUpTablePanel.Location = new System.Drawing.Point(890, 4);
+            this.followUpTablePanel.Location = new System.Drawing.Point(888, 4);
             this.followUpTablePanel.Name = "followUpTablePanel";
             this.followUpTablePanel.RowCount = 5;
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.7619F));
@@ -1669,7 +1669,7 @@
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.followUpTablePanel.Size = new System.Drawing.Size(228, 219);
+            this.followUpTablePanel.Size = new System.Drawing.Size(229, 219);
             this.followUpTablePanel.TabIndex = 2;
             this.followUpTablePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.followUpTablePanel_Paint);
             // 
@@ -1709,7 +1709,7 @@
             this.tableLayoutPanel15.Name = "tableLayoutPanel15";
             this.tableLayoutPanel15.RowCount = 1;
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(220, 32);
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(221, 32);
             this.tableLayoutPanel15.TabIndex = 6;
             // 
             // followUpDateTimePicker
@@ -1718,7 +1718,7 @@
             this.followUpDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.followUpDateTimePicker.Location = new System.Drawing.Point(95, 3);
             this.followUpDateTimePicker.Name = "followUpDateTimePicker";
-            this.followUpDateTimePicker.Size = new System.Drawing.Size(122, 26);
+            this.followUpDateTimePicker.Size = new System.Drawing.Size(123, 26);
             this.followUpDateTimePicker.TabIndex = 0;
             // 
             // label13
@@ -1744,7 +1744,7 @@
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 1;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(220, 48);
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(221, 48);
             this.tableLayoutPanel16.TabIndex = 8;
             // 
             // saveConsultationButton
@@ -1752,7 +1752,7 @@
             this.saveConsultationButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveConsultationButton.Location = new System.Drawing.Point(3, 3);
             this.saveConsultationButton.Name = "saveConsultationButton";
-            this.saveConsultationButton.Size = new System.Drawing.Size(214, 42);
+            this.saveConsultationButton.Size = new System.Drawing.Size(215, 42);
             this.saveConsultationButton.TabIndex = 1;
             this.saveConsultationButton.Text = "Save Consultation";
             this.saveConsultationButton.UseVisualStyleBackColor = true;
@@ -1763,7 +1763,7 @@
             this.noteRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.noteRichTextBox.Location = new System.Drawing.Point(4, 102);
             this.noteRichTextBox.Name = "noteRichTextBox";
-            this.noteRichTextBox.Size = new System.Drawing.Size(220, 58);
+            this.noteRichTextBox.Size = new System.Drawing.Size(221, 58);
             this.noteRichTextBox.TabIndex = 9;
             this.noteRichTextBox.Text = "";
             // 
@@ -1772,9 +1772,9 @@
             this.groupBox11.Controls.Add(this.recommendationsDGV);
             this.groupBox11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox11.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox11.Location = new System.Drawing.Point(447, 4);
+            this.groupBox11.Location = new System.Drawing.Point(446, 4);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(436, 219);
+            this.groupBox11.Size = new System.Drawing.Size(435, 219);
             this.groupBox11.TabIndex = 5;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Recommendations";
@@ -1793,7 +1793,7 @@
             this.recommendationsDGV.Margin = new System.Windows.Forms.Padding(0);
             this.recommendationsDGV.Name = "recommendationsDGV";
             this.recommendationsDGV.RowHeadersWidth = 25;
-            this.recommendationsDGV.Size = new System.Drawing.Size(430, 194);
+            this.recommendationsDGV.Size = new System.Drawing.Size(429, 194);
             this.recommendationsDGV.TabIndex = 8;
             // 
             // recommendations
@@ -1817,7 +1817,7 @@
             this.tableLayoutPanel13.Controls.Add(this.imageFlowLayoutPanel, 0, 2);
             this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel26, 0, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(1562, 3);
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(1560, 3);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 5;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.306604F));
@@ -1825,7 +1825,7 @@
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.94948F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.13318F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.50287F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(313, 891);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(315, 891);
             this.tableLayoutPanel13.TabIndex = 2;
             // 
             // tableLayoutPanel14
@@ -1857,7 +1857,7 @@
             this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 691);
             this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
-            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(305, 196);
+            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(307, 196);
             this.videoFlowLayoutPanel.TabIndex = 6;
             // 
             // tableLayoutPanel17
@@ -1870,7 +1870,7 @@
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 1;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(305, 30);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(307, 30);
             this.tableLayoutPanel17.TabIndex = 5;
             // 
             // label5
@@ -1890,7 +1890,7 @@
             this.imageFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageFlowLayoutPanel.Location = new System.Drawing.Point(4, 85);
             this.imageFlowLayoutPanel.Name = "imageFlowLayoutPanel";
-            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(305, 562);
+            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(307, 562);
             this.imageFlowLayoutPanel.TabIndex = 4;
             // 
             // tableLayoutPanel26
@@ -1905,7 +1905,7 @@
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
             this.tableLayoutPanel26.RowCount = 1;
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel26.Size = new System.Drawing.Size(305, 41);
+            this.tableLayoutPanel26.Size = new System.Drawing.Size(307, 41);
             this.tableLayoutPanel26.TabIndex = 4;
             // 
             // label1
@@ -1926,9 +1926,9 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2});
-            this.toolStrip1.Location = new System.Drawing.Point(151, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(152, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(154, 41);
+            this.toolStrip1.Size = new System.Drawing.Size(155, 41);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
