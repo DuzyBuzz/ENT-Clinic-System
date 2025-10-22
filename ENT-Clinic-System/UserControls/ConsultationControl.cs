@@ -252,6 +252,16 @@ namespace ENT_Clinic_System.UserControls
         {
             try
             {
+                // 🔹 Ask the user for confirmation before proceeding
+                DialogResult confirmResult = MessageBox.Show(
+                    "Are you sure you want to submit this consultation?",
+                    "Confirm Submission",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (confirmResult != DialogResult.Yes)
+                    return; // user clicked No → stop execution
                 // 1️⃣ Helper: Convert a DataGridView to a comma-separated uppercase string
                 string GetDgvValuesAsCsv(DataGridView dgv)
                 {
@@ -382,15 +392,13 @@ namespace ENT_Clinic_System.UserControls
                     neurologicComboBox
                 );
 
-                // 9️⃣ Success
-                MessageBox.Show("Consultation saved successfully!", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 int latestConsultationId = LatestIdHelper.GetLatestId("consultation", "consultation_id");
 
                 // 🔟 Ask to open Prescription and Billing
                 var result = MessageBox.Show(
-                    "Do you want to open the Prescription and Billing forms?",
-                    "Open Forms",
+                    "Do you want to open the Prescription Form?",
+                    "Open Prescription Form",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
                 );

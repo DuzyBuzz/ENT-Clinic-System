@@ -121,7 +121,7 @@ namespace ENT_Clinic_System.Consultation
             // btnSubmit
             // 
             this.btnSubmit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSubmit.Location = new System.Drawing.Point(541, 3);
+            this.btnSubmit.Location = new System.Drawing.Point(540, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(102, 32);
             this.btnSubmit.TabIndex = 2;
@@ -221,7 +221,7 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.18123F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.81878F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 121F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.clearButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnSubmit, 1, 0);
@@ -246,7 +246,7 @@ namespace ENT_Clinic_System.Consultation
             // clearButton
             // 
             this.clearButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.clearButton.Location = new System.Drawing.Point(415, 3);
+            this.clearButton.Location = new System.Drawing.Point(414, 3);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(120, 32);
             this.clearButton.TabIndex = 3;
@@ -602,7 +602,7 @@ namespace ENT_Clinic_System.Consultation
             this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.sortCategoryCombobox.FormattingEnabled = true;
-            this.sortCategoryCombobox.Location = new System.Drawing.Point(568, 13);
+            this.sortCategoryCombobox.Location = new System.Drawing.Point(568, 6);
             this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.sortCategoryCombobox.Name = "sortCategoryCombobox";
             this.sortCategoryCombobox.Size = new System.Drawing.Size(200, 28);

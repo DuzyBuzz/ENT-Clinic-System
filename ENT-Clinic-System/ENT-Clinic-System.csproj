@@ -223,6 +223,7 @@
       <DependentUpon>SelectPhotoOptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SettingsHelper.cs" />
+    <Compile Include="Helpers\SigSuggestionHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TableChangeWatcher.cs" />
     <Compile Include="Helpers\UpdateHelper.cs" />
@@ -276,6 +277,12 @@
     </Compile>
     <Compile Include="Payments\BillingInvoiceForm.Designer.cs">
       <DependentUpon>BillingInvoiceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Payments\PaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payments\PaymentForm.Designer.cs">
+      <DependentUpon>PaymentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PrintingFroms\BillingPrinter.cs" />
     <Compile Include="PrintingFroms\LabRequestPrintHelper.cs" />

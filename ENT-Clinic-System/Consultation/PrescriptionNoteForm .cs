@@ -1,15 +1,17 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using ENT_Clinic_System.Helpers;
 
 namespace ENT_Clinic_System.Consultation
 {
     public partial class PrescriptionNoteForm : Form
     {
-        // Holds Sig instructions for both medicines and other items
+        // Holds SIG values for both clinic items and other items
         public Dictionary<int, string> ItemSigs { get; private set; } = new Dictionary<int, string>();
         public Dictionary<int, string> OtherItemSigs { get; private set; } = new Dictionary<int, string>();
 
@@ -26,7 +28,7 @@ namespace ENT_Clinic_System.Consultation
         {
             int y = 10;
 
-            // 🔹 Section Header for Main Clinic Items
+            // 🔹 Header: Clinic Items Section
             Label headerMain = new Label
             {
                 Text = "CLINIC ITEMS",
@@ -38,7 +40,7 @@ namespace ENT_Clinic_System.Consultation
             y += 30;
 
             // =========================================================
-            // SECTION 1: MEDICINES
+            // SECTION 1: CLINIC ITEMS
             // =========================================================
             foreach (DataGridViewRow row in dgvSelectedItems.Rows)
             {
@@ -52,11 +54,11 @@ namespace ENT_Clinic_System.Consultation
                 string description = SafeString(row.Cells["description"].Value);
                 int qty = SafeInt(row.Cells["quantity"].Value);
 
-                // 🧠 Determine display name
                 string itemDisplay = !string.IsNullOrWhiteSpace(genericName)
                     ? genericName
                     : (!string.IsNullOrWhiteSpace(brandName) ? brandName : description);
 
+                // Label for the item
                 Label lbl = new Label
                 {
                     Text = $"{itemDisplay} ({strength} {dosage}) x {qty} - Sig:",
@@ -67,23 +69,29 @@ namespace ENT_Clinic_System.Consultation
                 this.Controls.Add(lbl);
                 y += 25;
 
-                // Textbox for Sig
-                TextBox txtSig = new TextBox
+                // ComboBox for SIG (auto-suggest + auto-complete)
+                ComboBox comboSig = new ComboBox
                 {
                     Name = $"sig_item_{itemId}",
                     Tag = itemId,
                     Width = 350,
                     Location = new Point(10, y),
-                    Multiline = true,
-                    Height = 50,
-                    Font = new Font("Segoe UI", 9F)
+                    Font = new Font("Segoe UI", 9F),
+                    DropDownStyle = ComboBoxStyle.DropDown
                 };
-                this.Controls.Add(txtSig);
+
+                // 🔹 Load smart SIG suggestions
+                var suggestions = SigSuggestionHelper.GetSigSuggestions(itemId);
+                comboSig.Items.AddRange(suggestions.ToArray());
+                comboSig.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                comboSig.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+                this.Controls.Add(comboSig);
                 y += 60;
             }
 
             // =========================================================
-            // SECTION 2: OTHER ITEMS (for non-medicine items)
+            // SECTION 2: OTHER ITEMS
             // =========================================================
             if (selectedOtherDGV.Rows.Count > 0)
             {
@@ -112,7 +120,6 @@ namespace ENT_Clinic_System.Consultation
                     string description = SafeString(row.Cells["description"].Value);
                     int qty = SafeInt(row.Cells["quantity"].Value);
 
-                    // 🧠 Display name logic
                     string itemDisplay = !string.IsNullOrWhiteSpace(genericName)
                         ? genericName
                         : (!string.IsNullOrWhiteSpace(brandName) ? brandName : "(Unnamed Item)");
@@ -127,23 +134,29 @@ namespace ENT_Clinic_System.Consultation
                     this.Controls.Add(lbl);
                     y += 25;
 
-                    TextBox txtSig = new TextBox
+                    ComboBox comboSig = new ComboBox
                     {
                         Name = $"sig_other_{itemId}",
                         Tag = itemId,
                         Width = 350,
                         Location = new Point(10, y),
-                        Multiline = true,
-                        Height = 50,
-                        Font = new Font("Segoe UI", 9F)
+                        Font = new Font("Segoe UI", 9F),
+                        DropDownStyle = ComboBoxStyle.DropDown
                     };
-                    this.Controls.Add(txtSig);
+
+                    // 🔹 Load smart SIG suggestions for OTHER ITEMS
+                    var suggestions = SigSuggestionHelper.GetSigSuggestions(itemId);
+                    comboSig.Items.AddRange(suggestions.ToArray());
+                    comboSig.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    comboSig.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+                    this.Controls.Add(comboSig);
                     y += 60;
                 }
             }
 
             // =========================================================
-            // SAVE AND PRINT BUTTON
+            // SAVE BUTTON
             // =========================================================
             Button btnSubmit = new Button
             {
@@ -167,17 +180,17 @@ namespace ENT_Clinic_System.Consultation
         {
             foreach (Control ctl in this.Controls)
             {
-                if (ctl is TextBox txt)
+                if (ctl is ComboBox combo)
                 {
-                    if (txt.Name.StartsWith("sig_item_"))
+                    if (combo.Name.StartsWith("sig_item_"))
                     {
-                        int itemId = SafeInt(txt.Tag);
-                        ItemSigs[itemId] = txt.Text.Trim();
+                        int itemId = SafeInt(combo.Tag);
+                        ItemSigs[itemId] = combo.Text.Trim();
                     }
-                    else if (txt.Name.StartsWith("sig_other_"))
+                    else if (combo.Name.StartsWith("sig_other_"))
                     {
-                        int itemId = SafeInt(txt.Tag);
-                        OtherItemSigs[itemId] = txt.Text.Trim();
+                        int itemId = SafeInt(combo.Tag);
+                        OtherItemSigs[itemId] = combo.Text.Trim();
                     }
                 }
             }

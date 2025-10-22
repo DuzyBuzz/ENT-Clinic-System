@@ -21,7 +21,10 @@ namespace ENT_Clinic_System.PrintingForms
         private string _patientGender = "";
         private DateTime _prescriptionDate = DateTime.Now;
 
-        // Prescription items (combined list)
+        // 🔹 NEW: Follow-up date field
+        private DateTime? _followUpDate = null;
+
+        // Prescription items
         private readonly List<(string GenericName, string BrandName, string Strength, string Dosage, int Quantity, string Sig)>
             _items = new List<(string, string, string, string, int, string)>();
 
@@ -47,13 +50,25 @@ namespace ENT_Clinic_System.PrintingForms
 
                     // 🔹 Load medicines
                     string queryMedicines = @"
-                        SELECT p.full_name, p.address, p.age, p.sex, pr.created_at,
-                               i.generic_name, i.brand_name, i.strength, i.dosage, pr.quantity, pr.sig
-                        FROM prescription pr
-                        JOIN patients p ON pr.patient_id = p.patient_id
-                        JOIN items i ON pr.item_id = i.item_id
-                        WHERE pr.consultation_id = @consultationId
-                        ORDER BY i.generic_name";
+                      SELECT 
+                        p.full_name,
+                        p.address,
+                        c.age,
+                        p.sex,
+                        pr.created_at,
+                        i.generic_name,
+                        i.brand_name,
+                        i.strength,
+                        i.dosage,
+                        pr.quantity,
+                        pr.sig
+                    FROM prescription pr
+                    JOIN patients p ON pr.patient_id = p.patient_id
+                    JOIN consultation c ON pr.consultation_id = c.consultation_id
+                    JOIN items i ON pr.item_id = i.item_id
+                    WHERE pr.consultation_id = @consultationId
+                    ORDER BY i.generic_name;
+                    ";
 
                     using (var cmd = new MySqlCommand(queryMedicines, conn))
                     {
@@ -86,7 +101,7 @@ namespace ENT_Clinic_System.PrintingForms
                         }
                     }
 
-                    // 🔹 Load other items (use generic_name instead of item_name)
+                    // 🔹 Load other items (from prescription_other)
                     string queryOthers = @"
                         SELECT o.generic_name, o.brand_name, o.strength, o.dosage,
                                po.quantity, po.sig
@@ -114,10 +129,25 @@ namespace ENT_Clinic_System.PrintingForms
                         }
                     }
 
-                    if (_items.Count == 0)
+                    // 🔹 Load follow-up date from consultation
+                    string queryFollowUp = @"
+                        SELECT follow_up_date 
+                        FROM consultation
+                        WHERE consultation_id = @consultationId
+                        LIMIT 1";
+
+                    using (var cmdFollow = new MySqlCommand(queryFollowUp, conn))
                     {
-                        throw new Exception("No prescription items found for this consultation.");
+                        cmdFollow.Parameters.AddWithValue("@consultationId", _consultationId);
+                        object result = cmdFollow.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            _followUpDate = Convert.ToDateTime(result);
+                        }
                     }
+
+                    if (_items.Count == 0)
+                        throw new Exception("No prescription items found for this consultation.");
                 }
             }
             catch (Exception ex)
@@ -129,20 +159,12 @@ namespace ENT_Clinic_System.PrintingForms
 
         // ✅ Safe conversion helpers
         private string SafeString(object value)
-        {
-            return value == null || value == DBNull.Value ? string.Empty : value.ToString().Trim();
-        }
+            => value == null || value == DBNull.Value ? string.Empty : value.ToString().Trim();
 
         private int SafeInt(object value)
         {
-            try
-            {
-                return value == null || value == DBNull.Value ? 0 : Convert.ToInt32(value);
-            }
-            catch
-            {
-                return 0;
-            }
+            try { return value == null || value == DBNull.Value ? 0 : Convert.ToInt32(value); }
+            catch { return 0; }
         }
 
         // =========================
@@ -154,47 +176,25 @@ namespace ENT_Clinic_System.PrintingForms
             int leftMargin = 10;
             int y = 10;
 
-            // 1️⃣ Header (Watermark + clinic info)
+            // Header
             y = WaterMarkHelper.PrintHeader(g, leftMargin, y, e.PageBounds.Width);
 
-            // 2️⃣ Patient Info
+            // Patient Info
+            // 🧾 Patient Info Section (with underlined values)
             using (Font labelFont = new Font("Arial", 8, FontStyle.Bold))
-            using (Font valueFont = new Font("Arial", 8))
+            using (Font valueFont = new Font("Arial", 8, FontStyle.Underline))
             {
-                int underlineOffset = 2;
-
                 // --- Name ---
                 g.DrawString("Name:", labelFont, Brushes.Black, leftMargin, y);
                 g.DrawString(_patientName, valueFont, Brushes.Black, leftMargin + 100, y);
 
-                SizeF nameSize = g.MeasureString(_patientName, valueFont);
-                g.DrawLine(Pens.Black,
-                    leftMargin + 100,
-                    y + nameSize.Height + underlineOffset,
-                    leftMargin + 100 + nameSize.Width,
-                    y + nameSize.Height + underlineOffset);
-
                 // --- Age ---
-                g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 350, y);
-                g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 380, y);
-
-                SizeF ageSize = g.MeasureString(_patientAge, valueFont);
-                g.DrawLine(Pens.Black,
-                    leftMargin + 380,
-                    y + ageSize.Height + underlineOffset,
-                    leftMargin + 380 + ageSize.Width,
-                    y + ageSize.Height + underlineOffset);
+                g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 400, y);
+                g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 430, y);
 
                 // --- Sex ---
-                g.DrawString("Sex:", labelFont, Brushes.Black, leftMargin + 420, y);
-                g.DrawString(_patientGender, valueFont, Brushes.Black, leftMargin + 450, y);
-
-                SizeF sexSize = g.MeasureString(_patientGender, valueFont);
-                g.DrawLine(Pens.Black,
-                    leftMargin + 450,
-                    y + sexSize.Height + underlineOffset,
-                    leftMargin + 450 + sexSize.Width,
-                    y + sexSize.Height + underlineOffset);
+                g.DrawString("Sex:", labelFont, Brushes.Black, leftMargin + 470, y);
+                g.DrawString(_patientGender, valueFont, Brushes.Black, leftMargin + 500, y);
 
                 y += 20;
 
@@ -202,30 +202,16 @@ namespace ENT_Clinic_System.PrintingForms
                 g.DrawString("Address:", labelFont, Brushes.Black, leftMargin, y);
                 g.DrawString(_patientAddress, valueFont, Brushes.Black, leftMargin + 100, y);
 
-                SizeF addressSize = g.MeasureString(_patientAddress, valueFont);
-                g.DrawLine(Pens.Black,
-                    leftMargin + 100,
-                    y + addressSize.Height + underlineOffset,
-                    leftMargin + 100 + addressSize.Width,
-                    y + addressSize.Height + underlineOffset);
-
                 // --- Date ---
-                g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 345, y);
+                g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 400, y);
                 string formattedDate = _prescriptionDate.ToString("MMMM dd, yyyy");
-                g.DrawString(formattedDate, valueFont, Brushes.Black, leftMargin + 380, y);
-
-                SizeF dateSize = g.MeasureString(formattedDate, valueFont);
-                g.DrawLine(Pens.Black,
-                    leftMargin + 380,
-                    y + dateSize.Height + underlineOffset,
-                    leftMargin + 380 + dateSize.Width,
-                    y + dateSize.Height + underlineOffset);
+                g.DrawString(formattedDate, valueFont, Brushes.Black, leftMargin + 435, y);
 
                 y += 15;
             }
 
 
-            // 3️⃣ Prescription Items
+            // Prescription items
             using (Font rxFont = new Font("Times New Roman", 50, FontStyle.Bold))
             using (Font itemFont = new Font("Arial", 8))
             using (Font sigFont = new Font("Arial", 8, FontStyle.Italic))
@@ -243,8 +229,7 @@ namespace ENT_Clinic_System.PrintingForms
                     int xOffset = leftMargin + 90;
                     int lineSpacing = 15;
 
-                    g.DrawString(item.GenericName, itemFont, Brushes.Black, xOffset, y);
-                    g.DrawString(item.Strength, itemFont, Brushes.Black, xOffset + 180, y);
+                    g.DrawString($"{item.GenericName} - {item.Strength}", itemFont, Brushes.Black, xOffset, y);
                     y += lineSpacing;
 
                     g.DrawString("(" + item.BrandName + ")", itemFont, Brushes.Black, xOffset + 10, y);
@@ -256,19 +241,40 @@ namespace ENT_Clinic_System.PrintingForms
                     {
                         g.DrawString("Sig: " + item.Sig, sigFont, Brushes.Black, xOffset + 10, y);
                         y += lineSpacing;
-
-                        using (Pen lightPen = new Pen(Color.FromArgb(128, 0, 0, 0), 1))
+                        using (Pen lightPen = new Pen(Color.FromArgb(60, 100, 100, 100), 0.8f))
                         {
                             g.DrawLine(lightPen, leftMargin + 30, y, e.PageBounds.Width - leftMargin - 30, y);
                         }
-                    }
 
+                    }
                     y += 8;
                 }
             }
 
-            // 4️⃣ Footer
+            // Footer
             WaterMarkHelper.PrintFooter(g, leftMargin, e.MarginBounds.Bottom, e.MarginBounds.Width + 150);
+            // 🔹 Always show the "Follow-up visit on:" label
+            using (Font labelFont = new Font("Arial", 9, FontStyle.Bold))
+            {
+                string labelText = "Follow-up visit on:";
+                float footerY = e.PageBounds.Bottom - 70; // position near footer
+
+                // Draw label text
+                g.DrawString(labelText, labelFont, Brushes.Black, leftMargin + 30, footerY);
+
+                // 🔹 If follow-up date exists, draw it below the label and underline it
+                if (_followUpDate.HasValue)
+                {
+                    using (Font dateFont = new Font("Arial", 9, FontStyle.Underline))
+                    {
+                        string dateText = _followUpDate.Value.ToString("MMMM dd, yyyy");
+                        float dateY = footerY + 18; // put date below the label
+                        g.DrawString(dateText, dateFont, Brushes.Black, leftMargin + 30, dateY);
+                    }
+                }
+            }
+
+
         }
 
         // =========================
