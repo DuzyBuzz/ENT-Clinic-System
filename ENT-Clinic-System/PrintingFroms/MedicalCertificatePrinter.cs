@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -28,12 +29,16 @@ namespace ENT_Clinic_System.PrintingForms
         {
             this.patientId = patientId;
             this.consultationId = consultationId;
-            this.requester = requester;
+            this.requester = ToTitleCase(requester);
 
             LoadData();
 
             printDocument = new PrintDocument();
-            printDocument.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
+
+            // Set A5 Landscape
+            PaperSize a5 = new PaperSize("A5", 583, 827); // A5 = 148mm x 210mm ~ 583x827 pixels at 96 DPI
+            printDocument.DefaultPageSettings.PaperSize = a5;
+            printDocument.DefaultPageSettings.Landscape = true;
 
             printDocument.PrintPage += PrintDocument_PrintPage;
         }
@@ -44,7 +49,7 @@ namespace ENT_Clinic_System.PrintingForms
 
             string cleaned = Regex.Replace(text, @"^[•\-\*]\s*", "", RegexOptions.Multiline);
             cleaned = cleaned.Replace("\r\n", ", ").Replace("\n", ", ");
-            return cleaned.Trim().TrimEnd(',');
+            return ToTitleCase(cleaned.Trim().TrimEnd(','));
         }
 
         private void LoadData()
@@ -72,8 +77,8 @@ namespace ENT_Clinic_System.PrintingForms
                                 ? ((patientCivilStatus.ToLower() == "married") ? "Mrs." : "Ms.")
                                 : "Mr.";
 
-                            patientName = salutation + " " + reader["full_name"]?.ToString();
-                            patientAddress = reader["address"]?.ToString() ?? "";
+                            patientName = salutation + " " + ToTitleCase(reader["full_name"]?.ToString());
+                            patientAddress = ToTitleCase(reader["address"]?.ToString() ?? "");
                             int.TryParse(reader["age"]?.ToString(), out patientAge);
                         }
                     }
@@ -104,60 +109,56 @@ namespace ENT_Clinic_System.PrintingForms
         {
             Graphics g = e.Graphics;
 
-            // Page setup
-            float leftMargin = 50;
-            float rightMargin = 50;
+            // Margins for A5 landscape
+            float leftMargin = 30;
+            float rightMargin = 30;
             float contentWidth = e.PageBounds.Width - leftMargin - rightMargin;
-            float y = 50;
+            float y = 30;
 
-            Font titleFont = new Font("Arial", 16, FontStyle.Bold);
-            Font bodyFont = new Font("Arial", 11, FontStyle.Regular);
-            Font boldFont = new Font("Arial", 11, FontStyle.Bold);
+            Font titleFont = new Font("Arial", 14, FontStyle.Bold);
+            Font bodyFont = new Font("Arial", 10, FontStyle.Regular);
+            Font boldFont = new Font("Arial", 10, FontStyle.Bold);
             Brush brush = Brushes.Black;
 
             StringFormat centerFormat = new StringFormat() { Alignment = StringAlignment.Center };
 
             // Header
-            y = WaterMarkHelperA4.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
+            y = WaterMarkHelper.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
 
             // Title
-            g.DrawString("MEDICAL CERTIFICATE", titleFont, brush, new RectangleF(leftMargin, y, contentWidth, 30), centerFormat);
-            y += 60;
+            g.DrawString("MEDICAL CERTIFICATE", titleFont, brush, new RectangleF(leftMargin, y, contentWidth, 25), centerFormat);
+            y += 40;
 
             // Date (top-right)
             string currentDate = DateTime.Now.ToString("MMMM dd, yyyy");
             SizeF dateSize = g.MeasureString(currentDate, bodyFont);
             g.DrawString(currentDate, bodyFont, brush, e.PageBounds.Width - rightMargin - dateSize.Width, y);
-            y += 40;
+            y += 30;
 
-            // Salutation & pronouns
             string pronounSubject = (patientSex.ToLower() == "f") ? "She" : "He";
             string pronounObject = (patientSex.ToLower() == "f") ? "her" : "him";
 
             // Letter body
             g.DrawString("To Whom It May Concern,", bodyFont, brush, leftMargin, y);
-            y += 30;
+            y += 25;
 
-            y = DrawUnderlinedText(g, $"This is to certify that", patientName, bodyFont, brush, leftMargin, y, contentWidth);
+            y = DrawUnderlinedText(g, "This is to certify that", patientName, bodyFont, brush, leftMargin, y, contentWidth);
             y = DrawUnderlinedText(g, "of", patientAddress, bodyFont, brush, leftMargin, y, contentWidth);
             y = DrawUnderlinedText(g, "consulted my clinic due to", chiefComplaint, bodyFont, brush, leftMargin, y, contentWidth);
             y = DrawUnderlinedText(g, $"{pronounSubject} was diagnosed and/or managed as a case of", diagnosis, bodyFont, brush, leftMargin, y, contentWidth);
             y = DrawUnderlinedText(g, $"{pronounSubject} was advised", recommendations, bodyFont, brush, leftMargin, y, contentWidth);
             y = DrawUnderlinedText(g, "This certificate is issued upon the request of", requester, bodyFont, brush, leftMargin, y, contentWidth);
 
-            g.DrawString($"for whatever purpose it may serve {pronounObject} best.", bodyFont, brush, leftMargin, y + 20);
-            y += 50;
+            g.DrawString($"for whatever purpose it may serve {pronounObject} best.", bodyFont, brush, leftMargin, y + 15);
+            y += 40;
             g.DrawString("Thank you.", bodyFont, brush, leftMargin, y);
 
-            // Footer (aligned to the right)
-            int footerWidth = 200; // adjust based on footer text
-            int footerX = (int)(e.PageBounds.Width - footerWidth - rightMargin);
-            WaterMarkHelperA4.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom - 60, e.MarginBounds.Width);
+            // Footer
+            WaterMarkHelperA4.PrintFooter(g, (int)leftMargin, e.MarginBounds.Bottom + 30, e.MarginBounds.Width);
         }
 
         private float DrawUnderlinedText(Graphics g, string label, string value, Font font, Brush brush, float x, float y, float lineWidth)
         {
-            // Draw label
             g.DrawString(label, font, brush, x, y);
 
             float labelWidth = g.MeasureString(label + " ", font).Width;
@@ -169,7 +170,40 @@ namespace ENT_Clinic_System.PrintingForms
             float underlineY = y + valueSize.Height;
             g.DrawLine(Pens.Black, valueX, underlineY, x + lineWidth, underlineY);
 
-            return y + valueSize.Height + 20;
+            return y + valueSize.Height + 15;
+        }
+
+        private static string ToTitleCase(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return text;
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text.ToLower());
+        }
+
+        public static void SaveIssuedMedicalCertificate(int consultationId)
+        {
+            using (var conn = DBConfig.GetConnection())
+            {
+                conn.Open();
+
+                string insertSql = @"
+                    INSERT INTO issued_medical_certificate (consultation_id)
+                    VALUES (@consultationId)";
+
+                using (var cmd = new MySqlCommand(insertSql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@consultationId", consultationId);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        if (ex.Number != 1062)
+                            throw;
+                    }
+                }
+            }
         }
 
         public void ShowPreview()
@@ -186,12 +220,10 @@ namespace ENT_Clinic_System.PrintingForms
                 ToolStrip tool = preview.Controls.OfType<ToolStrip>().FirstOrDefault();
                 if (tool != null)
                 {
-                    // Hide default Print button
                     foreach (ToolStripItem item in tool.Items)
                         if (item is ToolStripButton btn && btn.ToolTipText.ToLower().Contains("print"))
                             btn.Visible = false;
 
-                    // Add custom Print button
                     ToolStripButton customPrint = new ToolStripButton("Print");
                     customPrint.Click += (sender, args) =>
                     {
@@ -199,6 +231,7 @@ namespace ENT_Clinic_System.PrintingForms
                         {
                             if (printDialog.ShowDialog() == DialogResult.OK)
                                 printDocument.Print();
+                            SaveIssuedMedicalCertificate(consultationId);
                         }
                     };
                     tool.Items.Insert(0, customPrint);
