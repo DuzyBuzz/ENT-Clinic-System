@@ -401,8 +401,8 @@ namespace ENT_Clinic_System.Consultation
             PrescriptionNoteForm sigForm = new PrescriptionNoteForm(dgvSelectedItems, selectedOtherDGV);
             if (sigForm.ShowDialog() != DialogResult.OK) return;
 
-            var itemSigs = sigForm.ItemSigs;        // Use ItemSigs
-            var otherSigs = sigForm.OtherItemSigs;  // Use OtherItemSigs
+            var itemSigs = sigForm.ItemSigs;        // SIGs for regular items
+            var otherSigs = sigForm.OtherItemSigs;  // SIGs for "other" items
 
             try
             {
@@ -413,44 +413,67 @@ namespace ENT_Clinic_System.Consultation
 
                     try
                     {
-                        // Insert medicines
+                        // ✅ Step 1: Delete existing prescriptions for this consultation
+                        string deletePrescriptionQuery = "DELETE FROM prescription WHERE consultation_id = @consultation_id";
+                        string deleteOtherQuery = "DELETE FROM prescription_other WHERE consultation_id = @consultation_id";
+
+                        using (var deleteCmd1 = new MySqlCommand(deletePrescriptionQuery, conn, transaction))
+                        using (var deleteCmd2 = new MySqlCommand(deleteOtherQuery, conn, transaction))
+                        {
+                            deleteCmd1.Parameters.AddWithValue("@consultation_id", _consultationId);
+                            deleteCmd2.Parameters.AddWithValue("@consultation_id", _consultationId);
+
+                            deleteCmd1.ExecuteNonQuery();
+                            deleteCmd2.ExecuteNonQuery();
+                        }
+
+                        // ✅ Step 2: Insert new prescription items
                         foreach (DataGridViewRow row in dgvSelectedItems.Rows)
                         {
                             if (row.IsNewRow) continue;
+
                             int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
                             int qty = Convert.ToInt32(row.Cells["quantity"].Value);
 
                             string query = @"INSERT INTO prescription 
                                      (patient_id, item_id, consultation_id, quantity, sig)
                                      VALUES (@patient_id, @item_id, @consultation_id, @quantity, @sig)";
-                            var cmd = new MySqlCommand(query, conn, transaction);
-                            cmd.Parameters.AddWithValue("@patient_id", _patientId);
-                            cmd.Parameters.AddWithValue("@item_id", itemId);
-                            cmd.Parameters.AddWithValue("@consultation_id", _consultationId);
-                            cmd.Parameters.AddWithValue("@quantity", qty);
-                            cmd.Parameters.AddWithValue("@sig", itemSigs.ContainsKey(itemId) ? itemSigs[itemId] : "");
-                            cmd.ExecuteNonQuery();
+
+                            using (var cmd = new MySqlCommand(query, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@patient_id", _patientId);
+                                cmd.Parameters.AddWithValue("@item_id", itemId);
+                                cmd.Parameters.AddWithValue("@consultation_id", _consultationId);
+                                cmd.Parameters.AddWithValue("@quantity", qty);
+                                cmd.Parameters.AddWithValue("@sig", itemSigs.ContainsKey(itemId) ? itemSigs[itemId] : "");
+                                cmd.ExecuteNonQuery();
+                            }
                         }
 
-                        // Insert other items
+                        // ✅ Step 3: Insert other prescription items
                         foreach (DataGridViewRow row in selectedOtherDGV.Rows)
                         {
                             if (row.IsNewRow) continue;
+
                             int itemId = Convert.ToInt32(row.Cells["item_id"].Value);
                             int qty = Convert.ToInt32(row.Cells["quantity"].Value);
 
                             string query = @"INSERT INTO prescription_other 
                                      (patient_id, consultation_id, item_id, quantity, sig)
                                      VALUES (@patient_id, @consultation_id, @item_id, @quantity, @sig)";
-                            var cmd = new MySqlCommand(query, conn, transaction);
-                            cmd.Parameters.AddWithValue("@patient_id", _patientId);
-                            cmd.Parameters.AddWithValue("@consultation_id", _consultationId);
-                            cmd.Parameters.AddWithValue("@item_id", itemId);
-                            cmd.Parameters.AddWithValue("@quantity", qty);
-                            cmd.Parameters.AddWithValue("@sig", otherSigs.ContainsKey(itemId) ? otherSigs[itemId] : "");
-                            cmd.ExecuteNonQuery();
+
+                            using (var cmd = new MySqlCommand(query, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@patient_id", _patientId);
+                                cmd.Parameters.AddWithValue("@consultation_id", _consultationId);
+                                cmd.Parameters.AddWithValue("@item_id", itemId);
+                                cmd.Parameters.AddWithValue("@quantity", qty);
+                                cmd.Parameters.AddWithValue("@sig", otherSigs.ContainsKey(itemId) ? otherSigs[itemId] : "");
+                                cmd.ExecuteNonQuery();
+                            }
                         }
 
+                        // ✅ Step 4: Commit all changes
                         transaction.Commit();
                         MessageBox.Show("Prescription submitted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -467,15 +490,16 @@ namespace ENT_Clinic_System.Consultation
                 return;
             }
 
-            // Print
+            // ✅ Step 5: Print preview
             var printer = new PrintingForms.PrescriptionPrintHelper(_consultationId);
             printer.ShowPreview();
 
-            // Clear grids and close form
+            // ✅ Step 6: Clear UI and close form
             dgvSelectedItems.Rows.Clear();
             selectedOtherDGV.Rows.Clear();
             this.Close();
         }
+
 
         #endregion
 
@@ -507,11 +531,11 @@ namespace ENT_Clinic_System.Consultation
                 string category = FirstLetterUpperHelper.ToFirstUpper(categoryComboBox.Text.Trim());
                 string description = FirstLetterUpperHelper.ToFirstUpper(descriptionComboBox.Text.Trim());
 
-                if (string.IsNullOrWhiteSpace(brand) || string.IsNullOrWhiteSpace(generic))
-                {
-                    MessageBox.Show("Brand and Generic names are required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //if (string.IsNullOrWhiteSpace(brand) || string.IsNullOrWhiteSpace(generic))
+                //{
+                //    MessageBox.Show("Brand and Generic names are required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
 
                 // Check duplicate
                 string checkQuery = @"SELECT COUNT(*) FROM other_items 
@@ -667,6 +691,26 @@ namespace ENT_Clinic_System.Consultation
         {
             DGVColumnHeaderFilterHelper.ResetFilters(dgvAvailableItems);
             DGVColumnHeaderFilterHelper.ResetFilters(dgvOtherItems);
+
+        }
+
+        private void searchItemsTextBox_TextChanged(object sender, EventArgs e)
+        {
+            SearchHelper.Search(
+dgv: dgvAvailableItems,
+tableName: "items",
+columnNames: new string[] { "generic_name", "brand_name" },
+filterControl: searchItemsTextBox
+);
+        }
+
+        private void dgvAvailableItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnSubmit_Click_2(object sender, EventArgs e)
+        {
 
         }
     }

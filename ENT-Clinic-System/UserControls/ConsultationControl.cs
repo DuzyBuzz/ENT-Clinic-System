@@ -27,6 +27,7 @@ namespace ENT_Clinic_System.UserControls
         public ConsultationControl(int patientId)
         {
             InitializeComponent();
+            CenterTabContent();
             _patientId = patientId;
 
             LoadPatientLabels(_patientId);
@@ -71,6 +72,103 @@ namespace ENT_Clinic_System.UserControls
                 neurologicComboBox
             );
 
+        }
+        // This method intercepts all Tab key presses globally in the form
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Tab)
+            {
+                Control active = this.ActiveControl;
+
+                // Only handle tabbing if we're inside your consultation sequence
+                if (IsInCustomSequence(active))
+                {
+                    MoveToNextCustomControl();
+                    return true; // stop default tab behavior
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        // === Main custom tab sequence logic ===
+        private void MoveToNextCustomControl()
+        {
+            // Define your sequence in the exact desired order
+            Control[] sequence = new Control[]
+            {
+        complaintsRichTextBox,
+        recentIllnessRichTextBox,
+        pastMedicalHistoryDGV,
+        earsDGV,
+        noseDGV,
+        throatDGV,
+        othersDGV,
+        diagnosisDGV,
+        recommendationsDGV,
+        followUpCheckBox,
+        followUpDateTimePicker,
+        noteRichTextBox,
+        saveConsultationButton
+            };
+
+            Control active = this.ActiveControl;
+            int index = Array.IndexOf(sequence, active);
+
+            if (index == -1) return; // current not part of sequence
+
+            int nextIndex = (index + 1) % sequence.Length;
+            Control nextControl = sequence[nextIndex];
+
+            // ✅ If the next control is inside a TabPage, make sure its TabPage is selected
+            var tabPage = GetParentTabPage(nextControl);
+            if (tabPage != null)
+            {
+                var tabControl = tabPage.Parent as TabControl;
+                if (tabControl != null)
+                {
+                    tabControl.SelectedTab = tabPage;
+                }
+            }
+
+            // ✅ Now focus the next control
+            nextControl.Focus();
+        }
+
+        // === Helper: check if control is part of our sequence ===
+        private bool IsInCustomSequence(Control ctrl)
+        {
+            return ctrl == complaintsRichTextBox ||
+                   ctrl == recentIllnessRichTextBox ||
+                   ctrl == pastMedicalHistoryDGV ||
+                   ctrl == earsDGV ||
+                   ctrl == noseDGV ||
+                   ctrl == throatDGV ||
+                   ctrl == othersDGV ||
+                   ctrl == diagnosisDGV ||
+                   ctrl == recommendationsDGV ||
+                   ctrl == followUpCheckBox ||
+                   ctrl == followUpDateTimePicker ||
+                   ctrl == noteRichTextBox ||
+                   ctrl == saveConsultationButton;
+        }
+
+        // === Helper: find which TabPage a control belongs to (if any) ===
+        private TabPage GetParentTabPage(Control control)
+        {
+            Control parent = control.Parent;
+            while (parent != null)
+            {
+                if (parent is TabPage)
+                    return (TabPage)parent;
+                parent = parent.Parent;
+            }
+            return null;
+        }
+
+
+        private void TabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
 
         }
         private void LoadComboBoxes()
@@ -100,6 +198,7 @@ namespace ENT_Clinic_System.UserControls
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(earsDGV, "ears", "ear_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(noseDGV, "nose", "nose_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(throatDGV, "throat", "throat_exam");
+            AutoCompleteDgvHelper.InitializeAutocompleteColumn(othersDGV, "others", "others_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(diagnosisDGV, "diagnosis", "diagnosis");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(recommendationsDGV, "recommendations", "recommendations");
         }
@@ -114,6 +213,8 @@ namespace ENT_Clinic_System.UserControls
             AutoCompleteDgvHelper.SaveAllAutocompleteEntries(earsDGV, "ears", "ear_exam");
             AutoCompleteDgvHelper.SaveAllAutocompleteEntries(noseDGV, "nose", "nose_exam");
             AutoCompleteDgvHelper.SaveAllAutocompleteEntries(throatDGV, "throat", "throat_exam");
+            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(othersDGV, "others", "others_exam");
+
             AutoCompleteDgvHelper.SaveAllAutocompleteEntries(diagnosisDGV, "diagnosis", "diagnosis");
             AutoCompleteDgvHelper.SaveAllAutocompleteEntries(recommendationsDGV, "recommendations", "recommendations");
         }
@@ -1081,6 +1182,41 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
+        private void CenterTabContent()
+        {
+            foreach (TabPage page in entTabControl.TabPages)
+            {
+                // Create a panel to hold your content
+                Panel centerPanel = new Panel
+                {
+                    Size = new Size(400, 200), // size of your content area
+                    Anchor = AnchorStyles.None, // don't auto-stick to edges
+                };
+
+                // Example: Add controls to the panel
+                Label lbl = new Label { Text = page.Text, AutoSize = true, Font = new Font("Segoe UI", 14, FontStyle.Bold) };
+                centerPanel.Controls.Add(lbl);
+                lbl.Location = new Point((centerPanel.Width - lbl.Width) / 2, (centerPanel.Height - lbl.Height) / 2);
+
+                // Add panel to tab page
+                page.Controls.Add(centerPanel);
+
+                // Position the panel centered inside the tab page
+                centerPanel.Location = new Point(
+                    (page.ClientSize.Width - centerPanel.Width) / 2,
+                    (page.ClientSize.Height - centerPanel.Height) / 2
+                );
+
+                // Re-center when tab resizes
+                page.Resize += (s, e) =>
+                {
+                    centerPanel.Location = new Point(
+                        (page.ClientSize.Width - centerPanel.Width) / 2,
+                        (page.ClientSize.Height - centerPanel.Height) / 2
+                    );
+                };
+            }
+        }
 
         private void pastMedicalHistoryDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1088,6 +1224,144 @@ namespace ENT_Clinic_System.UserControls
         }
 
         private void groupBox9_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel14_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel13_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void othersDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void groupBox6_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void throatDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void groupBox8_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void noseDGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void groupBox7_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void entTabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            // Get TabControl and the current tab
+            TabControl tabControl = sender as TabControl;
+            TabPage tabPage = tabControl.TabPages[e.Index];
+            Rectangle tabRect = tabControl.GetTabRect(e.Index);
+
+            // Enable smooth drawing for better text quality
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+
+            // Default font and color
+            Font font = tabControl.Font;
+            Brush textBrush = Brushes.Gray;
+
+            // If this is the selected tab
+            if (tabControl.SelectedIndex == e.Index)
+            {
+                // Change font and color for selected tab
+                font = new Font("Arial Black", tabControl.Font.Size, FontStyle.Regular);
+                textBrush = Brushes.Black;
+            }
+
+            // Optional: background color for clarity
+            e.Graphics.FillRectangle(SystemBrushes.Control, tabRect);
+
+            // Center text alignment
+            StringFormat stringFormat = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+
+            // Draw tab text
+            e.Graphics.DrawString(tabPage.Text, font, textBrush, tabRect, stringFormat);
+
+            // Clean up custom font object (only if you created one)
+            if (tabControl.SelectedIndex == e.Index)
+                font.Dispose();
+        }
+
+
+
+        private void ConsultationControl_Resize(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ageLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sexLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void civilStatusLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void patientContactNumberLabel_Click(object sender, EventArgs e)
         {
 
         }

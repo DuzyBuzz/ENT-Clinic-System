@@ -133,7 +133,31 @@ namespace ENT_Clinic_System.UserControls
         private void refreshPatientsButton_Click(object sender, EventArgs e)
         {
             searchPatientNameTextBox.Text = "";
-            patientCrud.LoadData();
+            // Define which columns you want to show when searching
+            string[] displayColumns = {
+        "patient_id",
+        "full_name",
+        "age",
+        "sex",
+        "address",
+        "civil_status",
+        "patient_contact_number",
+                    "referred_by"
+    };
+
+            // Perform search with limited columns
+            SearchHelper.Search(
+                dgv: patientsDataGridView,
+                tableName: "patients",
+                columnNames: new string[] { "full_name" },
+                filterControl: searchPatientNameTextBox,
+                columns: displayColumns
+            );
+
+            // Disable pagination when showing search results
+            prevButton.Enabled = false;
+            nextButton.Enabled = false;
+            pageLabel.Text = "Search results";
         }
         private void UpdatePaginationButtons()
         {
@@ -345,13 +369,35 @@ namespace ENT_Clinic_System.UserControls
                 }
             })
         },
-        { "Show Prescriptions", new Action<int>(consultationId =>
+{
+            // ✅ Prescription submenu
+            "Prescription", new Func<int, ToolStripMenuItem>(consultationId =>
             {
-                var printer = new PrescriptionPrintHelper(consultationId);
-                printer.ShowPreview();
+                var prescriptionMenu = new ToolStripMenuItem("Prescription");
 
+                // 🩺 Submenu: Create Prescription
+                var createPrescription = new ToolStripMenuItem("Create Prescription");
+                createPrescription.Click += (s, args) =>
+                {
+                    // Assuming you have a form for creating prescriptions
+                    var prescriptionForm = new PrescriptionForm(patientId, consultationId);
+                    prescriptionForm.ShowDialog();
+                };
+                prescriptionMenu.DropDownItems.Add(createPrescription);
+
+                // 📄 Submenu: Show Prescriptions
+                var showPrescriptions = new ToolStripMenuItem("Show Prescriptions");
+                showPrescriptions.Click += (s, args) =>
+                {
+                    var printer = new PrescriptionPrintHelper(consultationId);
+                    printer.ShowPreview();
+                };
+                prescriptionMenu.DropDownItems.Add(showPrescriptions);
+
+                return prescriptionMenu;
             })
         },
+
         // ✅ Laboratory Request nested submenu
         { "Laboratory Request", new Func<int, ToolStripMenuItem>(consultationId =>
             {
@@ -408,6 +454,11 @@ namespace ENT_Clinic_System.UserControls
         }
 
         private void showLaboratoryRequesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

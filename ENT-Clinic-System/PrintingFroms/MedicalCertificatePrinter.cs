@@ -171,15 +171,22 @@ namespace ENT_Clinic_System.PrintingForms
             g.DrawString("To Whom It May Concern,", bodyFont, brush, leftMargin, y);
             y += 25;
 
-            y = DrawUnderlinedText(g, "This is to certify that", patientName, bodyFont, brush, leftMargin, y, contentWidth);
-            y = DrawUnderlinedText(g, "of", patientAddress, bodyFont, brush, leftMargin, y, contentWidth);
-            y = DrawUnderlinedText(g, "consulted my clinic due to", chiefComplaint, bodyFont, brush, leftMargin, y, contentWidth);
-            y = DrawUnderlinedText(g, $"{pronounSubject} was diagnosed and/or managed as a case of", diagnosis, bodyFont, brush, leftMargin, y, contentWidth);
-            y = DrawUnderlinedText(g, $"{pronounSubject} was advised", recommendations, bodyFont, brush, leftMargin, y, contentWidth);
-            y = DrawUnderlinedText(g, "This certificate is issued upon the request of", requester, bodyFont, brush, leftMargin, y, contentWidth);
+            y = DrawUnderlinedText(g, bodyFont, brush, leftMargin, y, contentWidth,
+                "This is to certify that", patientName, "of", patientAddress,
+                "consulted my clinic due to", $"{chiefComplaint}.", $" {pronounSubject} was diagnosed and/or managed as a case of", $"{diagnosis}.",
+                $" {pronounSubject} was advised", $"{recommendations}.");
+            y = DrawUnderlinedText(g, bodyFont, brush, leftMargin, y, contentWidth,
+                " This certificate is issued upon the request of", requester,
+                $"for whatever purpose it may serve {pronounObject} best.");
+            //y = DrawUnderlinedText(g, "This is to certify that", patientName, bodyFont, brush, leftMargin, y, contentWidth);
+            //y = DrawUnderlinedText(g, "of", patientAddress, bodyFont, brush, leftMargin, y, contentWidth);
+            //y = DrawUnderlinedText(g, "consulted my clinic due to", chiefComplaint, bodyFont, brush, leftMargin, y, contentWidth);
+            //y = DrawUnderlinedText(g, $"{pronounSubject} was diagnosed and/or managed as a case of", diagnosis, bodyFont, brush, leftMargin, y, contentWidth);
+            //y = DrawUnderlinedText(g, $"{pronounSubject} was advised", recommendations, bodyFont, brush, leftMargin, y, contentWidth);
+            //y = DrawUnderlinedText(g, "This certificate is issued upon the request of", requester, bodyFont, brush, leftMargin, y, contentWidth);
 
-            g.DrawString($"for whatever purpose it may serve {pronounObject} best.", bodyFont, brush, leftMargin, y + 15);
-            y += 40;
+            //g.DrawString($"for whatever purpose it may serve {pronounObject} best.", bodyFont, brush, leftMargin, y + 15);
+            //y += 40;
             g.DrawString("Thank you.", bodyFont, brush, leftMargin, y);
 
             // Footer
@@ -189,20 +196,99 @@ namespace ENT_Clinic_System.PrintingForms
         /// <summary>
         /// Draws text with a line underneath to indicate a filled-in blank.
         /// </summary>
-        private float DrawUnderlinedText(Graphics g, string label, string value, Font font, Brush brush, float x, float y, float lineWidth)
+        /// <summary>
+        /// Draws alternating label-value segments (label not underlined, value underlined),
+        /// with automatic wrapping at right margin.
+        /// Example usage:
+        /// DrawUnderlinedText(g, font, brush, x, y, lineWidth,
+        ///     "This is to certify that", patientName, "of", patientAddress, "consulted my clinic due to", chiefComplaint);
+        /// </summary>
+        /// <summary>
+        /// Draws alternating label-value segments (label normal, value underlined),
+        /// automatically wrapping text when it reaches the right margin.
+        /// Example usage:
+        /// DrawUnderlinedText(g, font, brush, x, y, width,
+        ///   "This is to certify that", patientName,
+        ///   "of", patientAddress,
+        ///   "consulted my clinic due to", chiefComplaint, ...);
+        /// </summary>
+        /// <summary>
+        /// Draws alternating label-value segments (label normal, value underlined),
+        /// with automatic word wrapping and bold underline.
+        /// </summary>
+        private float DrawUnderlinedText(Graphics g, Font font, Brush brush, float x, float y, float lineWidth, params string[] parts)
         {
-            g.DrawString(label, font, brush, x, y);
-            float labelWidth = g.MeasureString(label + " ", font).Width;
-            float valueX = x + labelWidth;
+            float startX = x;
+            float currentX = x;
+            float maxHeight = 0;
 
-            g.DrawString(value, font, brush, valueX, y);
-            SizeF valueSize = g.MeasureString(value, font);
+            using (Pen underlinePen = new Pen(Color.Black, 0.5f)) // ✅ bold underline (2px thick)
+            {
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    string text = parts[i] ?? "";
+                    bool isUnderlined = (i % 2 == 1); // every second string is underlined (value)
 
-            float underlineY = y + valueSize.Height;
-            g.DrawLine(Pens.Black, valueX, underlineY, x + lineWidth, underlineY);
+                    // Split text into words for wrapping
+                    string[] words = text.Split(' ');
+                    string line = "";
 
-            return y + valueSize.Height + 15;
+                    foreach (string word in words)
+                    {
+                        string testLine = (line.Length > 0 ? line + " " : "") + word;
+                        SizeF testSize = g.MeasureString(testLine, font);
+
+                        // Wrap to next line if text exceeds right margin
+                        if (currentX + testSize.Width > startX + lineWidth)
+                        {
+                            if (!string.IsNullOrEmpty(line))
+                            {
+                                g.DrawString(line, font, brush, currentX, y);
+                                SizeF lineSize = g.MeasureString(line, font);
+
+                                if (isUnderlined)
+                                {
+                                    float underlineY = y + lineSize.Height;
+                                    g.DrawLine(underlinePen, currentX, underlineY, currentX + lineSize.Width, underlineY);
+                                }
+
+                                // Move to new line
+                                y += lineSize.Height + 5;
+                                currentX = startX;
+                                line = word;
+                                maxHeight = 0;
+                            }
+                        }
+                        else
+                        {
+                            line = testLine;
+                        }
+                    }
+
+                    // Draw remaining text
+                    if (!string.IsNullOrEmpty(line))
+                    {
+                        g.DrawString(line, font, brush, currentX, y);
+                        SizeF lineSize = g.MeasureString(line, font);
+
+                        if (isUnderlined)
+                        {
+                            float underlineY = y + lineSize.Height;
+                            g.DrawLine(underlinePen, currentX, underlineY, currentX + lineSize.Width, underlineY);
+                        }
+
+                        currentX += lineSize.Width + 10; // spacing between segments
+                        if (lineSize.Height > maxHeight)
+                            maxHeight = lineSize.Height;
+                    }
+                }
+            }
+
+            return y + maxHeight + 15; // return updated Y position
         }
+
+
+
 
         /// <summary>
         /// Saves an entry in the issued_medical_certificate table.

@@ -93,7 +93,7 @@
             this.selectedItemsDataGridView.MultiSelect = false;
             this.selectedItemsDataGridView.Name = "selectedItemsDataGridView";
             this.selectedItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.selectedItemsDataGridView.Size = new System.Drawing.Size(651, 314);
+            this.selectedItemsDataGridView.Size = new System.Drawing.Size(521, 314);
             this.selectedItemsDataGridView.TabIndex = 0;
             this.selectedItemsDataGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.selectedItemsDataGridView_EditingControlShowing);
             // 
@@ -104,7 +104,7 @@
             this.groupBoxSelected.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBoxSelected.Location = new System.Drawing.Point(3, 3);
             this.groupBoxSelected.Name = "groupBoxSelected";
-            this.groupBoxSelected.Size = new System.Drawing.Size(657, 336);
+            this.groupBoxSelected.Size = new System.Drawing.Size(527, 336);
             this.groupBoxSelected.TabIndex = 1;
             this.groupBoxSelected.TabStop = false;
             this.groupBoxSelected.Text = "Selected Items ";
@@ -116,7 +116,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(3, 345);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(657, 256);
+            this.groupBox3.Size = new System.Drawing.Size(527, 256);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Customer Payment (Walk-in)";
@@ -151,7 +151,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.20513F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.22222F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(651, 234);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(521, 234);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // saveButton
@@ -160,9 +160,9 @@
             this.saveButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.saveButton.ForeColor = System.Drawing.Color.White;
-            this.saveButton.Location = new System.Drawing.Point(489, 184);
+            this.saveButton.Location = new System.Drawing.Point(393, 184);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(159, 47);
+            this.saveButton.Size = new System.Drawing.Size(125, 47);
             this.saveButton.TabIndex = 13;
             this.saveButton.Text = "Submit Payment";
             this.saveButton.UseVisualStyleBackColor = false;
@@ -171,32 +171,32 @@
             // 
             this.noteComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.noteComboBox.FormattingEnabled = true;
-            this.noteComboBox.Location = new System.Drawing.Point(489, 119);
+            this.noteComboBox.Location = new System.Drawing.Point(393, 119);
             this.noteComboBox.Name = "noteComboBox";
-            this.noteComboBox.Size = new System.Drawing.Size(159, 23);
+            this.noteComboBox.Size = new System.Drawing.Size(125, 23);
             this.noteComboBox.TabIndex = 15;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(327, 116);
+            this.label5.Location = new System.Drawing.Point(263, 116);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(156, 65);
+            this.label5.Size = new System.Drawing.Size(124, 65);
             this.label5.TabIndex = 16;
             this.label5.Text = "Note:";
             // 
             // itemsAmountRecievedNumericUpDown
             // 
             this.itemsAmountRecievedNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.itemsAmountRecievedNumericUpDown.Location = new System.Drawing.Point(489, 3);
+            this.itemsAmountRecievedNumericUpDown.Location = new System.Drawing.Point(393, 3);
             this.itemsAmountRecievedNumericUpDown.Maximum = new decimal(new int[] {
             10000000,
             0,
             0,
             0});
             this.itemsAmountRecievedNumericUpDown.Name = "itemsAmountRecievedNumericUpDown";
-            this.itemsAmountRecievedNumericUpDown.Size = new System.Drawing.Size(159, 23);
+            this.itemsAmountRecievedNumericUpDown.Size = new System.Drawing.Size(125, 23);
             this.itemsAmountRecievedNumericUpDown.TabIndex = 19;
             // 
             // lblSubtotal
@@ -205,26 +205,26 @@
             this.lblSubtotal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSubtotal.Location = new System.Drawing.Point(3, 0);
             this.lblSubtotal.Name = "lblSubtotal";
-            this.lblSubtotal.Size = new System.Drawing.Size(156, 58);
+            this.lblSubtotal.Size = new System.Drawing.Size(124, 58);
             this.lblSubtotal.TabIndex = 1;
             this.lblSubtotal.Text = "Subtotal:";
             // 
             // subTotalTextBox
             // 
             this.subTotalTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.subTotalTextBox.Location = new System.Drawing.Point(165, 3);
+            this.subTotalTextBox.Location = new System.Drawing.Point(133, 3);
             this.subTotalTextBox.Name = "subTotalTextBox";
             this.subTotalTextBox.ReadOnly = true;
-            this.subTotalTextBox.Size = new System.Drawing.Size(156, 23);
+            this.subTotalTextBox.Size = new System.Drawing.Size(124, 23);
             this.subTotalTextBox.TabIndex = 2;
             // 
             // changeTextBox
             // 
             this.changeTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.changeTextBox.Location = new System.Drawing.Point(489, 61);
+            this.changeTextBox.Location = new System.Drawing.Point(393, 61);
             this.changeTextBox.Name = "changeTextBox";
             this.changeTextBox.ReadOnly = true;
-            this.changeTextBox.Size = new System.Drawing.Size(159, 23);
+            this.changeTextBox.Size = new System.Drawing.Size(125, 23);
             this.changeTextBox.TabIndex = 12;
             // 
             // lblNetTotal
@@ -234,7 +234,7 @@
             this.lblNetTotal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblNetTotal.Location = new System.Drawing.Point(3, 181);
             this.lblNetTotal.Name = "lblNetTotal";
-            this.lblNetTotal.Size = new System.Drawing.Size(156, 53);
+            this.lblNetTotal.Size = new System.Drawing.Size(124, 53);
             this.lblNetTotal.TabIndex = 7;
             this.lblNetTotal.Text = "Grand Total:";
             // 
@@ -242,9 +242,9 @@
             // 
             this.lblChange.AutoSize = true;
             this.lblChange.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblChange.Location = new System.Drawing.Point(327, 58);
+            this.lblChange.Location = new System.Drawing.Point(263, 58);
             this.lblChange.Name = "lblChange";
-            this.lblChange.Size = new System.Drawing.Size(156, 58);
+            this.lblChange.Size = new System.Drawing.Size(124, 58);
             this.lblChange.TabIndex = 11;
             this.lblChange.Text = "Change Due:";
             // 
@@ -252,19 +252,19 @@
             // 
             this.lblAmountReceived.AutoSize = true;
             this.lblAmountReceived.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblAmountReceived.Location = new System.Drawing.Point(327, 0);
+            this.lblAmountReceived.Location = new System.Drawing.Point(263, 0);
             this.lblAmountReceived.Name = "lblAmountReceived";
-            this.lblAmountReceived.Size = new System.Drawing.Size(156, 58);
+            this.lblAmountReceived.Size = new System.Drawing.Size(124, 58);
             this.lblAmountReceived.TabIndex = 9;
             this.lblAmountReceived.Text = "Amount Received:";
             // 
             // totalAmountTextBox
             // 
             this.totalAmountTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.totalAmountTextBox.Location = new System.Drawing.Point(165, 184);
+            this.totalAmountTextBox.Location = new System.Drawing.Point(133, 184);
             this.totalAmountTextBox.Name = "totalAmountTextBox";
             this.totalAmountTextBox.ReadOnly = true;
-            this.totalAmountTextBox.Size = new System.Drawing.Size(156, 23);
+            this.totalAmountTextBox.Size = new System.Drawing.Size(124, 23);
             this.totalAmountTextBox.TabIndex = 8;
             // 
             // label2
@@ -273,7 +273,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 58);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(156, 58);
+            this.label2.Size = new System.Drawing.Size(124, 58);
             this.label2.TabIndex = 14;
             this.label2.Text = "Discount:";
             // 
@@ -285,11 +285,11 @@
             this.tableLayoutPanel5.Controls.Add(this.discountPercentComboBox, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.label1, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(165, 61);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(133, 61);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(156, 52);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(124, 52);
             this.tableLayoutPanel5.TabIndex = 15;
             // 
             // discountPercentComboBox
@@ -298,16 +298,16 @@
             this.discountPercentComboBox.FormattingEnabled = true;
             this.discountPercentComboBox.Location = new System.Drawing.Point(3, 3);
             this.discountPercentComboBox.Name = "discountPercentComboBox";
-            this.discountPercentComboBox.Size = new System.Drawing.Size(117, 23);
+            this.discountPercentComboBox.Size = new System.Drawing.Size(92, 23);
             this.discountPercentComboBox.TabIndex = 13;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(126, 0);
+            this.label1.Location = new System.Drawing.Point(101, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 52);
+            this.label1.Size = new System.Drawing.Size(20, 52);
             this.label1.TabIndex = 18;
             this.label1.Text = "%";
             // 
@@ -317,16 +317,16 @@
             this.lblDiscount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDiscount.Location = new System.Drawing.Point(3, 116);
             this.lblDiscount.Name = "lblDiscount";
-            this.lblDiscount.Size = new System.Drawing.Size(156, 65);
+            this.lblDiscount.Size = new System.Drawing.Size(124, 65);
             this.lblDiscount.TabIndex = 3;
             this.lblDiscount.Text = "Discount Amount:";
             // 
             // discountTextBox
             // 
             this.discountTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.discountTextBox.Location = new System.Drawing.Point(165, 119);
+            this.discountTextBox.Location = new System.Drawing.Point(133, 119);
             this.discountTextBox.Name = "discountTextBox";
-            this.discountTextBox.Size = new System.Drawing.Size(156, 23);
+            this.discountTextBox.Size = new System.Drawing.Size(124, 23);
             this.discountTextBox.TabIndex = 4;
             // 
             // groupBox1
@@ -334,9 +334,9 @@
             this.groupBox1.Controls.Add(this.prescriptionDataGridView);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.Location = new System.Drawing.Point(317, 3);
+            this.groupBox1.Location = new System.Drawing.Point(451, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(624, 228);
+            this.groupBox1.Size = new System.Drawing.Size(893, 228);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Prescriptions";
@@ -356,7 +356,7 @@
             this.prescriptionDataGridView.Name = "prescriptionDataGridView";
             this.prescriptionDataGridView.ReadOnly = true;
             this.prescriptionDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.prescriptionDataGridView.Size = new System.Drawing.Size(618, 206);
+            this.prescriptionDataGridView.Size = new System.Drawing.Size(887, 206);
             this.prescriptionDataGridView.TabIndex = 0;
             // 
             // groupBox2
@@ -366,7 +366,7 @@
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(308, 228);
+            this.groupBox2.Size = new System.Drawing.Size(442, 228);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Patients";
@@ -385,7 +385,7 @@
             this.patientsDataGridView.MultiSelect = false;
             this.patientsDataGridView.Name = "patientsDataGridView";
             this.patientsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.patientsDataGridView.Size = new System.Drawing.Size(302, 206);
+            this.patientsDataGridView.Size = new System.Drawing.Size(436, 206);
             this.patientsDataGridView.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -400,7 +400,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.28169F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.71831F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(950, 604);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1353, 604);
             this.tableLayoutPanel1.TabIndex = 15;
             // 
             // panel1
@@ -409,7 +409,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(944, 358);
+            this.panel1.Size = new System.Drawing.Size(1347, 358);
             this.panel1.TabIndex = 0;
             // 
             // groupBoxAvailable
@@ -420,7 +420,7 @@
             this.groupBoxAvailable.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBoxAvailable.Location = new System.Drawing.Point(0, 0);
             this.groupBoxAvailable.Name = "groupBoxAvailable";
-            this.groupBoxAvailable.Size = new System.Drawing.Size(944, 358);
+            this.groupBoxAvailable.Size = new System.Drawing.Size(1347, 358);
             this.groupBoxAvailable.TabIndex = 5;
             this.groupBoxAvailable.TabStop = false;
             this.groupBoxAvailable.Text = "Available Items (Inventory)";
@@ -440,7 +440,7 @@
             this.availableItemsDataGridView.Name = "availableItemsDataGridView";
             this.availableItemsDataGridView.ReadOnly = true;
             this.availableItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.availableItemsDataGridView.Size = new System.Drawing.Size(938, 294);
+            this.availableItemsDataGridView.Size = new System.Drawing.Size(1341, 294);
             this.availableItemsDataGridView.TabIndex = 2;
             // 
             // tableLayoutPanel2
@@ -465,7 +465,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(938, 42);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1341, 42);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // label3
@@ -474,10 +474,10 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(628, 0);
+            this.label3.Location = new System.Drawing.Point(897, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(81, 42);
+            this.label3.Size = new System.Drawing.Size(120, 42);
             this.label3.TabIndex = 5;
             this.label3.Text = "Category:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -489,10 +489,10 @@
             this.refreshPatientsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.refreshPatientsButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.refreshPatientsButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.refreshPatientsButton.Location = new System.Drawing.Point(533, 5);
+            this.refreshPatientsButton.Location = new System.Drawing.Point(760, 5);
             this.refreshPatientsButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.refreshPatientsButton.Name = "refreshPatientsButton";
-            this.refreshPatientsButton.Size = new System.Drawing.Size(87, 32);
+            this.refreshPatientsButton.Size = new System.Drawing.Size(129, 32);
             this.refreshPatientsButton.TabIndex = 3;
             this.refreshPatientsButton.Text = "Refresh";
             this.refreshPatientsButton.UseVisualStyleBackColor = false;
@@ -504,10 +504,10 @@
             this.searchItemtButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.searchItemtButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchItemtButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchItemtButton.Location = new System.Drawing.Point(450, 5);
+            this.searchItemtButton.Location = new System.Drawing.Point(642, 5);
             this.searchItemtButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchItemtButton.Name = "searchItemtButton";
-            this.searchItemtButton.Size = new System.Drawing.Size(75, 32);
+            this.searchItemtButton.Size = new System.Drawing.Size(110, 32);
             this.searchItemtButton.TabIndex = 0;
             this.searchItemtButton.Text = "Search";
             this.searchItemtButton.UseVisualStyleBackColor = false;
@@ -517,10 +517,10 @@
             this.searchItemsTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchItemsTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchItemsTextBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchItemsTextBox.Location = new System.Drawing.Point(147, 11);
+            this.searchItemsTextBox.Location = new System.Drawing.Point(209, 11);
             this.searchItemsTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchItemsTextBox.Name = "searchItemsTextBox";
-            this.searchItemsTextBox.Size = new System.Drawing.Size(295, 26);
+            this.searchItemsTextBox.Size = new System.Drawing.Size(425, 26);
             this.searchItemsTextBox.TabIndex = 1;
             // 
             // categoryCombobox
@@ -530,10 +530,10 @@
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(717, 11);
+            this.categoryCombobox.Location = new System.Drawing.Point(1025, 13);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
-            this.categoryCombobox.Size = new System.Drawing.Size(217, 23);
+            this.categoryCombobox.Size = new System.Drawing.Size(312, 23);
             this.categoryCombobox.TabIndex = 4;
             // 
             // label8
@@ -545,7 +545,7 @@
             this.label8.Location = new System.Drawing.Point(4, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(135, 42);
+            this.label8.Size = new System.Drawing.Size(197, 42);
             this.label8.TabIndex = 2;
             this.label8.Text = "Search Item:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -562,14 +562,14 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(944, 234);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1347, 234);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.83109F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.16891F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.60168F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.39831F));
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel7, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -577,7 +577,7 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1625, 610);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1898, 610);
             this.tableLayoutPanel6.TabIndex = 16;
             // 
             // tableLayoutPanel7
@@ -588,12 +588,12 @@
             this.tableLayoutPanel7.Controls.Add(this.groupBox3, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.groupBoxSelected, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(959, 3);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(1362, 3);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 2;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 56.62252F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.37748F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(663, 604);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(533, 604);
             this.tableLayoutPanel7.TabIndex = 16;
             // 
             // InvoiceForm
@@ -603,7 +603,7 @@
             this.AutoScroll = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1625, 610);
+            this.ClientSize = new System.Drawing.Size(1898, 610);
             this.Controls.Add(this.tableLayoutPanel6);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

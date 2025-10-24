@@ -147,6 +147,7 @@ namespace ENT_Clinic_System.Consultation
 
         private void SaveRequest()
         {
+            // 🧩 Step 1: Validation
             if (string.IsNullOrWhiteSpace(patientNameTextBox.Text))
             {
                 MessageBox.Show("Please enter patient name.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -163,26 +164,56 @@ namespace ENT_Clinic_System.Consultation
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
-                string jsonTestIds = JsonSerializer.Serialize(selectedTestIds);
 
-                using (var cmd = new MySqlCommand(
-                    "INSERT INTO lab_requests (patient_id, consultation_id, test_ids, request_date) VALUES (@patient, @consultation, @tests, @date)", conn))
+                // 🧩 Step 2: Optional - start a transaction for data safety
+                using (var transaction = conn.BeginTransaction())
                 {
-                    cmd.Parameters.AddWithValue("@patient", patientId);
-                    cmd.Parameters.AddWithValue("@consultation", consultationId);
-                    cmd.Parameters.AddWithValue("@tests", jsonTestIds);
-                    cmd.Parameters.AddWithValue("@date", datePicker.Value.Date);
-                    cmd.ExecuteNonQuery();
+                    try
+                    {
+                        // 🧩 Step 3: Delete any existing lab request with the same consultation_id
+                        using (var deleteCmd = new MySqlCommand(
+                            "DELETE FROM lab_requests WHERE consultation_id = @consultation", conn, transaction))
+                        {
+                            deleteCmd.Parameters.AddWithValue("@consultation", consultationId);
+                            deleteCmd.ExecuteNonQuery();
+                        }
+
+                        // 🧩 Step 4: Prepare the new record to insert
+                        string jsonTestIds = JsonSerializer.Serialize(selectedTestIds);
+
+                        using (var insertCmd = new MySqlCommand(
+                            @"INSERT INTO lab_requests 
+                      (patient_id, consultation_id, test_ids, request_date) 
+                      VALUES (@patient, @consultation, @tests, @date)", conn, transaction))
+                        {
+                            insertCmd.Parameters.AddWithValue("@patient", patientId);
+                            insertCmd.Parameters.AddWithValue("@consultation", consultationId);
+                            insertCmd.Parameters.AddWithValue("@tests", jsonTestIds);
+                            insertCmd.Parameters.AddWithValue("@date", datePicker.Value.Date);
+                            insertCmd.ExecuteNonQuery();
+                        }
+
+                        // 🧩 Step 5: Commit transaction
+                        transaction.Commit();
+
+                        MessageBox.Show("Lab request saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        crudHelper.LoadData();
+
+                        // 🧩 Step 6: Print preview and close
+                        PrintLabRequest();
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Rollback if something failed
+                        transaction.Rollback();
+                        MessageBox.Show($"Error saving lab request:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-
-            MessageBox.Show("Lab request saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            crudHelper.LoadData();
-
-            // Use helper to show preview
-            PrintLabRequest();
-            this.Close();
         }
+
 
         private void AddTests()
         {

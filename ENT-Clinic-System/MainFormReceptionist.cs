@@ -46,6 +46,24 @@ namespace ENT_Clinic_System
         {
 
         }
+        private void LoadFormIntoPanel(Form form, Panel targetPanel)
+        {
+            if (form == null || targetPanel == null)
+                return;
+
+            // Clear previous content to prevent overlap
+            targetPanel.Controls.Clear();
+
+            // Setup form for embedding
+            form.TopLevel = false;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.Dock = DockStyle.Fill;  // fills the entire panel
+            form.AutoScroll = true;
+
+            // Add to panel and show
+            targetPanel.Controls.Add(form);
+            form.Show();
+        }
         /// <summary>
         /// Opens a single-instance form. If already open, brings it to front.
         /// </summary>

@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaymentsControl));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.billingPanel = new System.Windows.Forms.Panel();
             this.dispensingPanel = new System.Windows.Forms.Panel();
+            this.billingPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,8 +48,18 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1484, 961);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1814, 853);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // dispensingPanel
+            // 
+            this.dispensingPanel.AutoScroll = true;
+            this.dispensingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dispensingPanel.Location = new System.Drawing.Point(3, 429);
+            this.dispensingPanel.Name = "dispensingPanel";
+            this.dispensingPanel.Size = new System.Drawing.Size(1808, 421);
+            this.dispensingPanel.TabIndex = 1;
+            this.dispensingPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.dispensingPanel_Paint);
             // 
             // billingPanel
             // 
@@ -57,24 +67,14 @@
             this.billingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.billingPanel.Location = new System.Drawing.Point(3, 3);
             this.billingPanel.Name = "billingPanel";
-            this.billingPanel.Size = new System.Drawing.Size(1478, 474);
+            this.billingPanel.Size = new System.Drawing.Size(1808, 420);
             this.billingPanel.TabIndex = 0;
-            // 
-            // dispensingPanel
-            // 
-            this.dispensingPanel.AutoScroll = true;
-            this.dispensingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dispensingPanel.Location = new System.Drawing.Point(3, 483);
-            this.dispensingPanel.Name = "dispensingPanel";
-            this.dispensingPanel.Size = new System.Drawing.Size(1478, 475);
-            this.dispensingPanel.TabIndex = 1;
-            this.dispensingPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.dispensingPanel_Paint);
             // 
             // PaymentsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1484, 961);
+            this.ClientSize = new System.Drawing.Size(1814, 853);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PaymentsControl";

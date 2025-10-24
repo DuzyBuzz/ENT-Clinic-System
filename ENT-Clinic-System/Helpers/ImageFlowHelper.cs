@@ -32,8 +32,8 @@ public class ImageFlowHelper
         // Container for image + note + category
         Panel container = new Panel
         {
-            Width = 150,
-            Height = 200,
+            Width = 300,
+            Height = 300,
             Margin = new Padding(5),
             BorderStyle = BorderStyle.FixedSingle
         };
@@ -43,8 +43,9 @@ public class ImageFlowHelper
         {
             Image = LoadImageSafe(imagePath),
             Dock = DockStyle.Top,
-            Height = 120,
-            SizeMode = PictureBoxSizeMode.Zoom,
+            Width = 300,
+            Height = 290,
+            SizeMode = PictureBoxSizeMode.StretchImage,
             Cursor = Cursors.Hand // show clickable cursor
         };
 

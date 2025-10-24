@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ENT_Clinic_System.Helpers;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -24,7 +25,7 @@ namespace ENT_Clinic_System.UI
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.White;
             this.Width = 400;
-            this.Height = 150;
+            this.Height = 300;
 
             Label welcomeLabel = new Label();
             welcomeLabel.Name = "welcomeLabel";
@@ -36,7 +37,7 @@ namespace ENT_Clinic_System.UI
 
             string greeting;
             if (role == "Doctor")
-                greeting = $"Welcome Dr. \n{fullName}";
+                greeting = $"Welcome \n Dr. {UserCredentials.Fullname}";
             else if (role == "Receptionist")
                 greeting = $"Welcome {fullName}";
             else if (role == "Admin")

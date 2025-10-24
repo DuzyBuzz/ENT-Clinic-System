@@ -15,8 +15,8 @@ namespace ENT_Clinic_System.Helpers
 
         private void SetupUI()
         {
-            this.Text = "Enter Purpose";
-            this.Width = 400;
+            this.Text = "Enter Name of Requester";
+            this.Width = 600;
             this.Height = 150;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.StartPosition = FormStartPosition.CenterParent;
@@ -26,9 +26,7 @@ namespace ENT_Clinic_System.Helpers
             // Label
             Label lbl = new Label()
             {
-                Text = "For the purpose of:",
-                Left = 10,
-                Top = 20,
+                Text = "This certificate is issued upon the request of ",
                 AutoSize = true
             };
             this.Controls.Add(lbl);
@@ -37,9 +35,7 @@ namespace ENT_Clinic_System.Helpers
             TextBox txtPurpose = new TextBox()
             {
                 Name = "txtPurpose",
-                Left = 150,
-                Top = 18,
-                Width = 200
+                Width = 300
             };
             this.Controls.Add(txtPurpose);
 
@@ -47,8 +43,7 @@ namespace ENT_Clinic_System.Helpers
             Button btnOk = new Button()
             {
                 Text = "OK",
-                Left = 150,
-                Top = 60,
+                Width = 100,
                 DialogResult = DialogResult.OK
             };
             this.Controls.Add(btnOk);
@@ -57,14 +52,34 @@ namespace ENT_Clinic_System.Helpers
             Button btnCancel = new Button()
             {
                 Text = "Cancel",
-                Left = 230,
-                Top = 60,
+                Width = 100,
                 DialogResult = DialogResult.Cancel
             };
             this.Controls.Add(btnCancel);
 
             this.AcceptButton = btnOk;
             this.CancelButton = btnCancel;
+
+            // === Center elements horizontally ===
+            int formWidth = this.ClientSize.Width;
+
+            // Label position
+            lbl.Top = 20;
+            lbl.Left = (formWidth - (lbl.PreferredWidth + txtPurpose.Width)) / 2;
+
+            // TextBox position (next to label)
+            txtPurpose.Top = lbl.Top - 2;
+            txtPurpose.Left = lbl.Left + lbl.PreferredWidth + 5;
+
+            // Buttons centered below
+            int totalButtonWidth = btnOk.Width + btnCancel.Width + 20;
+            int buttonsLeft = (formWidth - totalButtonWidth) / 2;
+
+            btnOk.Top = 60;
+            btnOk.Left = buttonsLeft;
+
+            btnCancel.Top = 60;
+            btnCancel.Left = btnOk.Right + 20;
 
             // Capture input when OK is pressed
             btnOk.Click += (s, e) =>

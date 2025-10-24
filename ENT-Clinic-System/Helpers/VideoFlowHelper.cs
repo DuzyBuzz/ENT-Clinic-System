@@ -27,8 +27,8 @@ public class VideoFlowHelper
 
         Panel container = new Panel
         {
-            Width = 150,
-            Height = 200,
+            Width = 300,
+            Height = 300,
             Margin = new Padding(5),
             BorderStyle = BorderStyle.FixedSingle
         };
@@ -37,7 +37,8 @@ public class VideoFlowHelper
         PictureBox videoThumb = new PictureBox
         {
             Dock = DockStyle.Top,
-            Height = 120,
+            Width = 300,
+            Height = 290,
             SizeMode = PictureBoxSizeMode.Zoom,
             BackColor = Color.Black,
             Cursor = Cursors.Hand
@@ -74,7 +75,7 @@ public class VideoFlowHelper
 
         Label noteLabel = new Label
         {
-            Text = string.IsNullOrEmpty(initialNote) ? "(double-click to add note)" : initialNote,
+            Text = string.IsNullOrEmpty(initialNote) ? "" : initialNote,
             Dock = DockStyle.Bottom,
             Height = 40,
             TextAlign = ContentAlignment.MiddleCenter,
@@ -177,7 +178,7 @@ public class VideoFlowHelper
                 string newCategory = cbCategory.SelectedItem?.ToString() ?? categories[0];
 
                 videoNotes[container] = (data.VideoPath, data.NoteLabel, data.CategoryLabel, newNote, newCategory);
-                data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "(double-click to add note)" : newNote;
+                data.NoteLabel.Text = string.IsNullOrEmpty(newNote) ? "" : newNote;
                 data.CategoryLabel.Text = newCategory;
 
                 editForm.Close();

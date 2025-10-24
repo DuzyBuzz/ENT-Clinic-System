@@ -21,7 +21,7 @@ namespace ENT_Clinic_System.Consultation
         private void ConsultationListControl_Load(object sender, EventArgs e)
         {
             // Specify read-only columns (IDs, Patient ID, Patient Name)
-            List<string> readonlyCols = new List<string> { "consultation_id", "patient_id", "patient_name", "consultation_date" };
+            List<string> readonlyCols = new List<string> { "consultation_id", "patient_id", "patient_name", "consultation_date", "age"};
 
             AutoCompleteHelper.SetupAutoComplete(
                 searchPatientNameTextBox,

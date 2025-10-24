@@ -217,6 +217,7 @@ namespace ENT_Clinic_System.PrintingForms
             using (Font sigFont = new Font("Arial", 8, FontStyle.Italic))
             {
                 bool rxPrinted = false;
+
                 foreach (var item in _items)
                 {
                     if (!rxPrinted)
@@ -229,6 +230,7 @@ namespace ENT_Clinic_System.PrintingForms
                     int xOffset = leftMargin + 90;
                     int lineSpacing = 15;
 
+                    // --- Medicine name and details ---
                     g.DrawString($"{item.GenericName} - {item.Strength}", itemFont, Brushes.Black, xOffset, y);
                     y += lineSpacing;
 
@@ -237,19 +239,45 @@ namespace ENT_Clinic_System.PrintingForms
                     g.DrawString(item.Dosage, itemFont, Brushes.Black, xOffset + 240, y);
                     y += lineSpacing - 2;
 
+                    // --- Sig: multi-line ---
                     if (!string.IsNullOrEmpty(item.Sig))
                     {
-                        g.DrawString("Sig: " + item.Sig, sigFont, Brushes.Black, xOffset + 10, y);
-                        y += lineSpacing;
+                        // Define the area where the Sig will be printed
+                        float sigX = xOffset + 10;
+                        float sigWidth = e.PageBounds.Width - sigX - leftMargin - 30; // dynamic width based on page
+                        float sigHeight = 100; // max height allowed before overflow
+
+                        RectangleF sigRect = new RectangleF(sigX, y, sigWidth, sigHeight);
+
+                        // StringFormat for wrapping text
+                        StringFormat format = new StringFormat
+                        {
+                            Alignment = StringAlignment.Near,
+                            LineAlignment = StringAlignment.Near,
+                            Trimming = StringTrimming.Word,
+                            FormatFlags = StringFormatFlags.LineLimit
+                        };
+
+                        // Draw Sig text (auto-wraps within the rectangle)
+                        g.DrawString("Sig: " + item.Sig, sigFont, Brushes.Black, sigRect, format);
+
+                        // Measure how much space it used
+                        SizeF sigSize = g.MeasureString("Sig: " + item.Sig, sigFont, (int)sigWidth, format);
+
+                        // Advance Y position correctly
+                        y += (int)sigSize.Height + 5;
+
+                        // Optional: draw separator line after Sig
                         using (Pen lightPen = new Pen(Color.FromArgb(60, 100, 100, 100), 0.8f))
                         {
                             g.DrawLine(lightPen, leftMargin + 30, y, e.PageBounds.Width - leftMargin - 30, y);
                         }
-
                     }
-                    y += 8;
+
+                    y += 8; // small gap before next item
                 }
             }
+
 
             // Footer
             WaterMarkHelper.PrintFooter(g, leftMargin, e.MarginBounds.Bottom, e.MarginBounds.Width + 150);

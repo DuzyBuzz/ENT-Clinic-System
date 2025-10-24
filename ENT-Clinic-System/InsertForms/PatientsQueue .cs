@@ -96,7 +96,7 @@ namespace ENT_Clinic_System.InsertForms
                     q.queue_number,
                     p.full_name AS patient_name,
                     p.patient_contact_number,
-                    p.emergency_name,
+                    p.emergency_contact_number,
                     q.status,
                     q.created_at,
                     q.finished_at
