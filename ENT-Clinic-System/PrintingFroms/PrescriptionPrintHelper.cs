@@ -259,7 +259,7 @@ namespace ENT_Clinic_System.PrintingForms
                         };
 
                         // Draw Sig text (auto-wraps within the rectangle)
-                        g.DrawString("Sig: " + item.Sig, sigFont, Brushes.Black, sigRect, format);
+                        g.DrawString("Sig: " + item.Sig.ToLower(), sigFont, Brushes.Black, sigRect, format);
 
                         // Measure how much space it used
                         SizeF sigSize = g.MeasureString("Sig: " + item.Sig, sigFont, (int)sigWidth, format);

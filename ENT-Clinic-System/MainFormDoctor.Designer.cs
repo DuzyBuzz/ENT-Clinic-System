@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFormDoctor));
             this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.salesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dispensingReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expiryReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +44,7 @@
             this.patientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultationsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.closeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.maximizeMaximizeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,29 +54,24 @@
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.consultationsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.paymentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.writeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // reportsToolStripMenuItem
             // 
             this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.salesToolStripMenuItem,
             this.billingToolStripMenuItem,
             this.dispensingReportToolStripMenuItem,
             this.expiryReportToolStripMenuItem,
             this.stockOnHandToolStripMenuItem,
+            this.writeToolStripMenuItem,
             this.stocToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
             this.reportsToolStripMenuItem.Text = "Report";
-            // 
-            // salesToolStripMenuItem
-            // 
-            this.salesToolStripMenuItem.Name = "salesToolStripMenuItem";
-            this.salesToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.salesToolStripMenuItem.Text = "Sales";
-            this.salesToolStripMenuItem.Click += new System.EventHandler(this.salesToolStripMenuItem_Click);
+            this.reportsToolStripMenuItem.Click += new System.EventHandler(this.reportsToolStripMenuItem_Click);
             // 
             // billingToolStripMenuItem
             // 
@@ -96,7 +91,7 @@
             // 
             this.expiryReportToolStripMenuItem.Name = "expiryReportToolStripMenuItem";
             this.expiryReportToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.expiryReportToolStripMenuItem.Text = "Expiry Report";
+            this.expiryReportToolStripMenuItem.Text = "Near Expiration";
             this.expiryReportToolStripMenuItem.Click += new System.EventHandler(this.expiryReportToolStripMenuItem_Click);
             // 
             // stockOnHandToolStripMenuItem
@@ -177,6 +172,7 @@
             this.consultationsToolStripMenuItem1,
             this.consultationsToolStripMenuItem,
             this.settingsToolStripMenuItem,
+            this.paymentsToolStripMenuItem,
             this.reportsToolStripMenuItem,
             this.closeButton,
             this.maximizeMaximizeButton,
@@ -189,6 +185,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(1458, 39);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // toolStripMenuItem1
             // 
@@ -196,6 +193,13 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(28, 29);
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // consultationsToolStripMenuItem1
+            // 
+            this.consultationsToolStripMenuItem1.Name = "consultationsToolStripMenuItem1";
+            this.consultationsToolStripMenuItem1.Size = new System.Drawing.Size(132, 29);
+            this.consultationsToolStripMenuItem1.Text = "Consultations";
+            this.consultationsToolStripMenuItem1.Click += new System.EventHandler(this.consultationsToolStripMenuItem1_Click);
             // 
             // closeButton
             // 
@@ -275,12 +279,19 @@
             this.MainPanel.Size = new System.Drawing.Size(1458, 892);
             this.MainPanel.TabIndex = 6;
             // 
-            // consultationsToolStripMenuItem1
+            // paymentsToolStripMenuItem
             // 
-            this.consultationsToolStripMenuItem1.Name = "consultationsToolStripMenuItem1";
-            this.consultationsToolStripMenuItem1.Size = new System.Drawing.Size(132, 29);
-            this.consultationsToolStripMenuItem1.Text = "Consultations";
-            this.consultationsToolStripMenuItem1.Click += new System.EventHandler(this.consultationsToolStripMenuItem1_Click);
+            this.paymentsToolStripMenuItem.Name = "paymentsToolStripMenuItem";
+            this.paymentsToolStripMenuItem.Size = new System.Drawing.Size(102, 29);
+            this.paymentsToolStripMenuItem.Text = "Payments";
+            this.paymentsToolStripMenuItem.Click += new System.EventHandler(this.paymentsToolStripMenuItem_Click);
+            // 
+            // writeToolStripMenuItem
+            // 
+            this.writeToolStripMenuItem.Name = "writeToolStripMenuItem";
+            this.writeToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.writeToolStripMenuItem.Text = "Write-Off";
+            this.writeToolStripMenuItem.Click += new System.EventHandler(this.writeToolStripMenuItem_Click);
             // 
             // MainFormDoctor
             // 
@@ -330,9 +341,10 @@
         private System.Windows.Forms.ToolStripMenuItem expiryReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dispensingReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem salesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stockOnHandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem consultationsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem paymentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem writeToolStripMenuItem;
     }
 }

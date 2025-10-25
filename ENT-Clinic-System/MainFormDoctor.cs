@@ -8,7 +8,9 @@ using ENT_Clinic_System.Reports;
 using ENT_Clinic_System.Reports.ParamsForm;
 using ENT_Clinic_System.UI;
 using ENT_Clinic_System.UserControls;
+using Mysqlx.Crud;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -248,19 +250,37 @@ namespace ENT_Clinic_System
 
         private void stocToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Create the report instance
-                var report = new Reports.LowStockReport();
+            // Columns to display
+            List<string> displayColumns = new List<string>
+    {
+        "Item_ID",
+        "Generic_Name",
+        "Brand_Name",
+        "Strength",
+        "Dosage",
+        "Category",
+        "Current_Stock",
+    };
 
-                // Show the print preview
-                report.ShowPreview();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to generate Low Stock Report: " + ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Columns to hide (internal IDs)
+            List<string> hiddenColumns = new List<string>
+    {
+        "Item_ID"
+    };
+
+            // Generate the report (no date filtering needed)
+            ReportHelper.GenerateReport(
+                tableName: "v_low_stock_report",
+                dateColumn: null,
+                dateFrom: null,
+                dateTo: null,
+                displayColumns: displayColumns,
+                hiddenColumns: hiddenColumns,
+                                 reportTitle: "LOW STOCK REORDER REPORT"
+            );
+
+            // Show print preview
+            ReportHelper.ShowPreview();
         }
 
 
@@ -277,23 +297,60 @@ namespace ENT_Clinic_System
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowSingleInstanceForm<PaymentsControl>();
-        }   
+        }
 
         private void billingToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            using (var paramForm = new Reports.ParamsForm.BillingParamsForm())
+            using (var dateForm = new DateRangeForm())
             {
-                if (paramForm.ShowDialog() == DialogResult.OK)
+                if (dateForm.ShowDialog() == DialogResult.OK)
                 {
-                    string patient = paramForm.SelectedPatient;
-                    DateTime fromDate = paramForm.FromDate;
-                    DateTime toDate = paramForm.ToDate;
+                    DateTime fromDate = dateForm.FromDate;
+                    DateTime toDate = dateForm.ToDate;
 
-                    var report = new Reports.BillingReport(patient, fromDate, toDate);
-                    report.ShowPreview();
+                    // Columns to display in the report
+                    List<string> displayColumns = new List<string>
+            {
+                "Billing_ID",
+                "Consultation_ID",
+                "Patient_ID",
+                "Patient_Name",
+                "Fee",
+                "Discount_Percent",
+                "Discount_Amount",
+                "Total_Amount",
+                "Amount_Paid",
+                "Balance",
+                "Payment_Status",
+                "Note",
+                "Date_Billed"
+            };
+
+                    // Columns to hide (internal IDs, if you want)
+                    List<string> hiddenColumns = new List<string>
+            {
+                "Billing_ID",
+                "Consultation_ID",
+                "Patient_ID"
+            };
+
+                    // Generate the report (dateColumn must match your view column)
+                    ReportHelper.GenerateReport(
+                        tableName: "v_billing_with_patient_report",
+                        dateColumn: "Date_Billed",
+                        dateFrom: fromDate,
+                        dateTo: toDate,
+                        displayColumns: displayColumns,
+                        hiddenColumns: hiddenColumns,
+                                         reportTitle: "BILLING REPORT"
+                    );
+
+                    // Show print preview
+                    ReportHelper.ShowPreview();
                 }
             }
         }
+
 
 
         private void revenueToolStripMenuItem_Click(object sender, EventArgs e)
@@ -302,24 +359,59 @@ namespace ENT_Clinic_System
         }
         private void dispensingReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Open the parameters form
-            using (var paramForm = new Reports.ParamsForm.DispenseParamsForm())
-            {
-                if (paramForm.ShowDialog() == DialogResult.OK)
-                {
-                    // Get all selected parameters
-                    string patient = paramForm.SelectedPatient;
-                    string category = paramForm.SelectedCategory;
-                    string itemName = paramForm.SelectedItemName;
-                    string description = paramForm.SelectedDescription;
-                    DateTime fromDate = paramForm.FromDate;
-                    DateTime toDate = paramForm.ToDate;
+            //var printer = new DispensingReportPrinter();
+            //printer.ShowPreview();
 
-                    // Pass all parameters to the report
-                    var report = new Reports.DispensingReport(patient, category, itemName, description, fromDate, toDate);
-                    report.ShowPreview();
+            using (var dateForm = new DateRangeForm())
+            {
+                if (dateForm.ShowDialog() == DialogResult.OK)
+                {
+                    DateTime fromDate = dateForm.FromDate;
+                    DateTime toDate = dateForm.ToDate;
+
+                    // Display headers must match the view aliases with underscores
+                    List<string> displayColumns = new List<string>
+        {
+            "Invoice_ID",
+            "Invoice_Date",
+            "Customer_Name",
+            "Prescription_ID",
+            "Item_ID",
+            "Generic_Name",
+            "Brand_Name",
+            "Strength",
+            "Dosage",
+            "Category",
+            "Quantity",
+            "Cost_Price",
+            "Unit_Price",
+            "Total"
+        };
+
+                    // Columns to hide (use the same underscore names)
+                    List<string> hiddenColumns = new List<string> { "Invoice_ID", "Prescription_ID", "Item_ID" };
+
+                    // Generate the report
+                    // dateColumn must match the real column name (with underscore)
+                    ReportHelper.GenerateReport(
+                        tableName: "v_detailed_dispensing_report",
+                        dateColumn: "Invoice_Date", // matches view alias
+                        dateFrom: fromDate,
+                        dateTo: toDate,
+                        displayColumns: displayColumns,
+                        hiddenColumns: hiddenColumns,
+                                         reportTitle: "DISPENSING REPORT"
+                    );
+
+                    // Show print preview
+                    ReportHelper.ShowPreview();
                 }
             }
+
+
+
+
+
         }
 
 
@@ -329,20 +421,45 @@ namespace ENT_Clinic_System
 
         private void expiryReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Create an instance of the report
-                var report = new Reports.ExpiryReport();
+            // Columns to display in the report
+            List<string> displayColumns = new List<string>
+    {
+        "Movement_ID",
+        "Item_ID",
+        "Generic_Name",
+        "Brand_Name",
+        "Strength",
+        "Dosage",
+        "Movement_Type",
+        "Quantity",
+        "Movement_Date",
+        "Expiration_Date",
+        "User_ID"
+    };
 
-                // Show print preview
-                report.ShowPreview();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error generating expiry report: " + ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Columns to hide in the printed report (internal IDs)
+            List<string> hiddenColumns = new List<string>
+    {
+        "Movement_ID",
+        "Item_ID",
+        "User_ID"
+    };
+
+            // Generate the report using the near-expiry view
+            ReportHelper.GenerateReport(
+                tableName: "v_stock_near_expiry_report",
+                dateColumn: null,   // view already filters by near expiry, no need for a date filter
+                dateFrom: null,
+                dateTo: null,
+                displayColumns: displayColumns,
+                hiddenColumns: hiddenColumns,
+                                 reportTitle: "NEAR EXPIRATION REPORT"
+            );
+
+            // Show print preview
+            ReportHelper.ShowPreview();
         }
+
 
         private void wastageDamagedItemsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -356,30 +473,38 @@ namespace ENT_Clinic_System
 
         private void stockOnHandToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // 1️⃣ Open the parameter form
-                using (var paramForm = new StockOnHandReportForm())
-                {
-                    if (paramForm.ShowDialog() == DialogResult.OK)
-                    {
-                        // 2️⃣ Get the selected parameters
-                        string category = paramForm.SelectedCategory;
-                        DateTime asOfDate = paramForm.AsOfDate;
+            // Columns to display in the report
+            List<string> displayColumns = new List<string>
+    {
+        "Item_ID",
+        "Generic_Name",
+        "Brand_Name",
+        "Strength",
+        "Dosage",
+        "Category",
+        "Current_Stock",
+        "Updated_At"
+    };
 
-                        // 3️⃣ Create the report
-                        StockOnHandReport report = new StockOnHandReport(category, asOfDate);
+            // Columns to hide in the printed report (internal IDs)
+            List<string> hiddenColumns = new List<string>
+    {
+        "Item_ID"
+    };
 
-                        // 4️⃣ Show the preview
-                        report.ShowPreview();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error opening Stock On Hand report: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Generate the report
+            ReportHelper.GenerateReport(
+                tableName: "v_stock_on_hand_report",
+                dateColumn: null,  // no date filtering needed
+                dateFrom: null,
+                dateTo: null,
+                displayColumns: displayColumns,
+                hiddenColumns: hiddenColumns,
+                 reportTitle: "STOCK ON HAND REPORT"
+            );
+
+            // Show print preview
+            ReportHelper.ShowPreview();
         }
 
         private void salesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -424,6 +549,60 @@ namespace ENT_Clinic_System
         {
             ConsultationListControl consultationList = new ConsultationListControl();
             LoadUserControl(consultationList);
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void paymentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowSingleInstanceForm<PaymentsControl>();
+        }
+
+        private void writeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Columns to display in the report
+            List<string> displayColumns = new List<string>
+    {
+        "Write_Off_ID",
+        "Item_ID",
+        "Generic_Name",
+        "Brand_Name",
+        "Strength",
+        "Dosage",
+        "Quantity",
+        "Reason",
+        "Expiration_Date",
+        "Created_At",
+    };
+
+            // Columns to hide in the printed report (internal IDs)
+            List<string> hiddenColumns = new List<string>
+    {
+        "Write_Off_ID",
+        "Item_ID"
+    };
+
+            // Generate the report (no date filtering needed)
+            ReportHelper.GenerateReport(
+                tableName: "v_write_off_report",
+                dateColumn: null,
+                dateFrom: null,
+                dateTo: null,
+                displayColumns: displayColumns,
+                hiddenColumns: hiddenColumns,
+                 reportTitle: "WRITE-OFF REPORT"
+            );
+
+            // Show print preview
+            ReportHelper.ShowPreview();
+        }
+
+        private void reportsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

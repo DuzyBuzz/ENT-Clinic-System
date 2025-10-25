@@ -268,10 +268,7 @@ namespace ENT_Clinic_System.UserControls
 
         private void patientsDataGridView_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.P)
-            {
-                ReportHelper.PrintDataGridView(patientsDataGridView, "Patient List");
-            }
+
         }
         private void consultationHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -462,5 +459,58 @@ namespace ENT_Clinic_System.UserControls
         {
 
         }
+
+        private void scannedHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (patientsDataGridView.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a patient record first.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Assume you only need to open one patient's history (not multiple)
+                DataGridViewRow row = patientsDataGridView.SelectedRows[0];
+
+                // Make sure the cell exists and has a value
+                if (row.Cells["patient_id"].Value == null)
+                {
+                    MessageBox.Show("Selected row does not contain a valid patient ID.",
+                        "Invalid Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Get the IDs safely
+                int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+
+                //// Optional: retrieve patient name for a friendlier window title
+                //string patientName = row.Cells.Contains("patient_name")
+                //    ? Convert.ToString(row.Cells["patient_name"].Value)
+                //    : string.Empty;
+
+                // Open the scanned history form for this patient
+                try
+                {
+                    var consultationHistory = new ScannedConsultationHistoryForm(patientId.ToString());
+                    //if (!string.IsNullOrEmpty(patientName))
+                    //    consultationHistory.Text = $"Scanned Documents - {patientName}";
+
+                    consultationHistory.ShowDialog(); // Use ShowDialog so it blocks until closed
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error opening consultation history: " + ex.Message,
+                        "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error handling selection: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

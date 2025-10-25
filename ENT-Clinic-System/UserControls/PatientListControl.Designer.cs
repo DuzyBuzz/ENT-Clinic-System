@@ -65,6 +65,7 @@
             this.showLaboratoryRequesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showPrescriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.scannedHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).BeginInit();
@@ -330,22 +331,23 @@
             // 
             this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewConsultationToolStripMenuItem,
-            this.consultationHistoryToolStripMenuItem});
+            this.consultationHistoryToolStripMenuItem,
+            this.scannedHistoryToolStripMenuItem});
             this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(184, 48);
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(232, 92);
             this.patientsContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.patientsContextMenuStrip_Opening);
             // 
             // viewConsultationToolStripMenuItem
             // 
             this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.viewConsultationToolStripMenuItem.Text = "New Consultation";
             this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
             // 
             // consultationHistoryToolStripMenuItem
             // 
             this.consultationHistoryToolStripMenuItem.Name = "consultationHistoryToolStripMenuItem";
-            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.consultationHistoryToolStripMenuItem.Text = "Consultation History";
             this.consultationHistoryToolStripMenuItem.Click += new System.EventHandler(this.consultationHistoryToolStripMenuItem_Click);
             this.consultationHistoryToolStripMenuItem.MouseEnter += new System.EventHandler(this.consultationHistoryToolStripMenuItem_MouseEnter);
@@ -409,6 +411,13 @@
             this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
             this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 114);
             // 
+            // scannedHistoryToolStripMenuItem
+            // 
+            this.scannedHistoryToolStripMenuItem.Name = "scannedHistoryToolStripMenuItem";
+            this.scannedHistoryToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.scannedHistoryToolStripMenuItem.Text = "Scanned Consultation History";
+            this.scannedHistoryToolStripMenuItem.Click += new System.EventHandler(this.scannedHistoryToolStripMenuItem_Click);
+            // 
             // PatientListControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
@@ -467,5 +476,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn referred_by;
         private System.Windows.Forms.DataGridViewTextBoxColumn createdat;
         private System.Windows.Forms.DataGridViewImageColumn photo;
+        private System.Windows.Forms.ToolStripMenuItem scannedHistoryToolStripMenuItem;
     }
 }
