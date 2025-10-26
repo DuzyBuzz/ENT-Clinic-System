@@ -15,12 +15,8 @@ namespace ENT_Clinic_System.UserControls
 {
     public partial class CameraConsultationForm : Form
     {
-        // -------------------------
-        // Helpers
-        // -------------------------
         private ImageFlowHelper imageHelper;
         private VideoFlowHelper videoHelper;
-
         private FireflyHelper fireflyHelper;
 
         private FilterInfoCollection videoDevices;
@@ -36,42 +32,48 @@ namespace ENT_Clinic_System.UserControls
         private Bitmap currentFrame;
         private readonly object frameLock = new object();
 
+        private PictureBox previewPictureBox;
+        private Panel flashOverlay;
+        private Timer watchdogTimer;
+        private DateTime lastFrameTime = DateTime.MinValue;
+
         public List<string> CapturedImages { get; private set; } = new List<string>();
         public List<string> CapturedVideos { get; private set; } = new List<string>();
 
-        private PictureBox previewPictureBox;
-        private Panel flashOverlay;
-
-        private Timer watchdogTimer;
-        private DateTime lastFrameTime = DateTime.MinValue;
+        private readonly string logFilePath;
+        private bool notifiedCameraLost = false; // prevent multiple messageboxes
 
         public CameraConsultationForm()
         {
             InitializeComponent();
 
-            imageHelper = new ImageFlowHelper(imageVideoFlowPanel);
-            videoHelper = new VideoFlowHelper(imageVideoFlowPanel);
-
-            previewPictureBox = new PictureBox
-            {
-                Dock = DockStyle.Fill,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Black
-            };
-
-            cameraPreviewPanel.Controls.Clear();
-            cameraPreviewPanel.Controls.Add(previewPictureBox);
-
-            SetupFlashOverlay();
+            logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CameraError.log");
 
             try
             {
+                imageHelper = new ImageFlowHelper(imageVideoFlowPanel);
+                videoHelper = new VideoFlowHelper(imageVideoFlowPanel);
+
+                previewPictureBox = new PictureBox
+                {
+                    Dock = DockStyle.Fill,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    BackColor = Color.Black
+                };
+
+                cameraPreviewPanel.Controls.Clear();
+                cameraPreviewPanel.Controls.Add(previewPictureBox);
+                SetupFlashOverlay();
+
                 fireflyHelper = new FireflyHelper();
-                fireflyHelper.FireflySingleClick += (s, ev) => { InvokeIfRequired(() => captureImageButton.PerformClick()); };
-                fireflyHelper.FireflyLongPress += (s, ev) => { InvokeIfRequired(() => captureVideoButton.PerformClick()); };
+                fireflyHelper.FireflySingleClick += (s, ev) => InvokeSafe(() => captureImageButton.PerformClick());
+                fireflyHelper.FireflyLongPress += (s, ev) => InvokeSafe(() => captureVideoButton.PerformClick());
             }
-            catch
+            catch (Exception ex)
             {
+                LogError("Hardware controller init failed: " + ex);
+                MessageBox.Show("Hardware controller initialization failed: " + ex.Message,
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 fireflyHelper = null;
             }
 
@@ -81,12 +83,18 @@ namespace ENT_Clinic_System.UserControls
             this.FormClosing += CameraConsultationForm_FormClosing;
         }
 
-        private void InvokeIfRequired(Action action)
+        // -------------------------------------------
+        // Safe helpers
+        // -------------------------------------------
+        private void InvokeSafe(Action action)
         {
-            if (this.IsHandleCreated && this.InvokeRequired)
-                this.BeginInvoke(action);
-            else
-                action();
+            try
+            {
+                if (!IsHandleCreated || IsDisposed) return;
+                if (InvokeRequired) BeginInvoke(action);
+                else action();
+            }
+            catch { }
         }
 
         private void SafeDispose(IDisposable obj)
@@ -94,6 +102,19 @@ namespace ENT_Clinic_System.UserControls
             try { obj?.Dispose(); } catch { }
         }
 
+        private void LogError(string text)
+        {
+            try
+            {
+                string line = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} - {text}{Environment.NewLine}";
+                lock (logFilePath) File.AppendAllText(logFilePath, line);
+            }
+            catch { }
+        }
+
+        // -------------------------------------------
+        // Flash overlay
+        // -------------------------------------------
         private void SetupFlashOverlay()
         {
             flashOverlay = new Panel
@@ -109,25 +130,24 @@ namespace ENT_Clinic_System.UserControls
 
         private void ShowFlash(int ms = 100)
         {
-            try
+            if (flashOverlay == null) return;
+            InvokeSafe(() =>
             {
-                if (flashOverlay == null) return;
-                InvokeIfRequired(() =>
+                flashOverlay.Visible = true;
+                var t = new Timer { Interval = ms };
+                t.Tick += (s, e) =>
                 {
-                    flashOverlay.Visible = true;
-                    var t = new Timer { Interval = ms };
-                    t.Tick += (s, e) =>
-                    {
-                        t.Stop();
-                        t.Dispose();
-                        flashOverlay.Visible = false;
-                    };
-                    t.Start();
-                });
-            }
-            catch { }
+                    t.Stop();
+                    t.Dispose();
+                    flashOverlay.Visible = false;
+                };
+                t.Start();
+            });
         }
 
+        // -------------------------------------------
+        // Camera handling
+        // -------------------------------------------
         private void SafeLoadAvailableCameras()
         {
             try
@@ -138,23 +158,26 @@ namespace ENT_Clinic_System.UserControls
                 foreach (FilterInfo dev in videoDevices)
                     cameraComboBox.Items.Add(dev.Name);
 
-                if (cameraComboBox.Items.Count > 0)
-                {
-                    cameraComboBox.SelectedIndex = 0;
-                    StartSelectedCamera();
-                }
-                else
+                if (videoDevices.Count == 0)
                 {
                     captureImageButton.Enabled = false;
                     captureVideoButton.Enabled = false;
-                    MessageBox.Show("No camera devices detected.", "Camera", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No camera devices detected.", "Camera",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Close();
+                    return;
                 }
+
+                cameraComboBox.SelectedIndex = 0;
+                StartSelectedCamera();
             }
             catch (Exception ex)
             {
+                LogError("Camera enumeration failed: " + ex);
                 captureImageButton.Enabled = false;
                 captureVideoButton.Enabled = false;
-                MessageBox.Show($"Error enumerating camera devices: {ex.Message}", "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error enumerating cameras: " + ex.Message,
+                    "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -168,17 +191,19 @@ namespace ENT_Clinic_System.UserControls
             try
             {
                 StopCameraInternal();
-                if (videoDevices == null || cameraComboBox.SelectedIndex < 0) return;
+
+                if (videoDevices == null || cameraComboBox.SelectedIndex < 0)
+                    return;
 
                 string moniker = videoDevices[cameraComboBox.SelectedIndex].MonikerString;
                 currentCamera = new VideoCaptureDevice(moniker);
 
                 if (currentCamera.VideoCapabilities.Length > 0)
                 {
-                    var bestResolution = currentCamera.VideoCapabilities
+                    var best = currentCamera.VideoCapabilities
                         .OrderByDescending(r => r.FrameSize.Width * r.FrameSize.Height)
                         .First();
-                    currentCamera.VideoResolution = bestResolution;
+                    currentCamera.VideoResolution = best;
                 }
 
                 currentCamera.NewFrame += CurrentCamera_NewFrame;
@@ -189,7 +214,9 @@ namespace ENT_Clinic_System.UserControls
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to start camera: {ex.Message}", "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogError("StartSelectedCamera: " + ex);
+                MessageBox.Show("Failed to start camera: " + ex.Message, "Camera Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -200,26 +227,43 @@ namespace ENT_Clinic_System.UserControls
                 if (currentCamera != null)
                 {
                     currentCamera.NewFrame -= CurrentCamera_NewFrame;
+
                     if (currentCamera.IsRunning)
                     {
-                        currentCamera.SignalToStop();
-                        DateTime waitUntil = DateTime.Now.AddSeconds(2);
-                        while (currentCamera.IsRunning && DateTime.Now < waitUntil)
+                        try
                         {
-                            Application.DoEvents();
-                            Thread.Sleep(10);
+                            currentCamera.SignalToStop();
+                            DateTime until = DateTime.Now.AddSeconds(3);
+                            while (currentCamera.IsRunning && DateTime.Now < until)
+                            {
+                                Application.DoEvents();
+                                Thread.Sleep(10);
+                            }
                         }
-                        if (currentCamera.IsRunning)
-                        {
-                            try { currentCamera.Stop(); } catch { }
-                        }
+                        catch (Exception ex) { LogError("StopCameraInternal: " + ex); }
+
+                        try { if (currentCamera.IsRunning) currentCamera.Stop(); } catch { }
                     }
+
+                    // 🔹 Do NOT call Dispose() — VideoCaptureDevice is not IDisposable
                     currentCamera = null;
                 }
+
+                lock (frameLock)
+                {
+                    SafeDispose(currentFrame);
+                    currentFrame = null;
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                LogError("StopCameraInternal outer: " + ex);
+            }
         }
 
+        // -------------------------------------------
+        // Watchdog for camera disconnection
+        // -------------------------------------------
         private void SetupWatchdog()
         {
             watchdogTimer = new Timer { Interval = 1500 };
@@ -230,19 +274,15 @@ namespace ENT_Clinic_System.UserControls
                     if (lastFrameTime == DateTime.MinValue) return;
                     if ((DateTime.Now - lastFrameTime).TotalSeconds > 3)
                     {
-                        InvokeIfRequired(() =>
+                        InvokeSafe(() =>
                         {
                             captureImageButton.Enabled = false;
                             captureVideoButton.Enabled = false;
                         });
                         SafeStopOnCameraLost();
-                        InvokeIfRequired(() =>
-                            MessageBox.Show("Camera feed lost. Please reconnect the camera.", "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                        );
-                        watchdogTimer.Stop();
                     }
                 }
-                catch { }
+                catch (Exception ex) { LogError("Watchdog error: " + ex); }
             };
             watchdogTimer.Start();
         }
@@ -251,99 +291,80 @@ namespace ENT_Clinic_System.UserControls
         {
             try
             {
-                lock (recordingLock)
-                {
-                    if (isRecording)
-                    {
-                        isRecording = false;
-                        try { videoWriter?.Close(); } catch { }
-                        try { videoWriter?.Dispose(); } catch { }
-                        videoWriter = null;
-                        try { if (!string.IsNullOrEmpty(currentVideoPath) && File.Exists(currentVideoPath)) File.Delete(currentVideoPath); } catch { }
-                        currentVideoPath = null;
-                    }
-                }
+                StopRecording();
+                StopCameraInternal();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                LogError("SafeStopOnCameraLost: " + ex);
+            }
+
+            if (notifiedCameraLost) return;
+            notifiedCameraLost = true;
+
+            InvokeSafe(() =>
+            {
+                try { watchdogTimer?.Stop(); } catch { }
+                MessageBox.Show(
+                    "Camera feed lost. This window will close. Please reconnect the camera and try again.",
+                    "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Close(); // ✅ Close only this form
+            });
         }
 
-        private void CurrentCamera_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        // -------------------------------------------
+        // Frame processing
+        // -------------------------------------------
+        private void CurrentCamera_NewFrame(object sender, NewFrameEventArgs e)
         {
+            if (currentCamera == null || !currentCamera.IsRunning) return;
+
             try
             {
                 lastFrameTime = DateTime.Now;
 
-                // Update currentFrame safely
                 lock (frameLock)
                 {
-                    try { currentFrame?.Dispose(); } catch { }
-                    currentFrame = (Bitmap)eventArgs.Frame.Clone();
+                    SafeDispose(currentFrame);
+                    currentFrame = (Bitmap)e.Frame.Clone();
                 }
 
-                // Update preview safely
-                if (previewPictureBox.InvokeRequired)
-                    previewPictureBox.BeginInvoke(new Action(UpdatePreviewFromBuffer));
-                else
-                    UpdatePreviewFromBuffer();
+                InvokeSafe(UpdatePreviewFromBuffer);
 
-                // Only write if recording is active
-                bool recordingNow;
-                lock (recordingLock) { recordingNow = isRecording && videoWriter != null; }
-                if (!recordingNow) return;
+                bool recordNow;
+                lock (recordingLock) { recordNow = isRecording && videoWriter != null; }
+                if (!recordNow) return;
 
                 Bitmap toWrite = null;
                 try
                 {
-                    // Clone current frame for writing
-                    lock (frameLock) { toWrite = (Bitmap)currentFrame.Clone(); }
+                    lock (frameLock) toWrite = (Bitmap)currentFrame.Clone();
 
-                    try
+                    if (toWrite.Width != recordingWidth || toWrite.Height != recordingHeight)
                     {
-                        // Resize if needed to match recording dimensions
-                        if (toWrite.Width != recordingWidth || toWrite.Height != recordingHeight)
-                        {
-                            using (var resized = new Bitmap(toWrite, new Size(recordingWidth, recordingHeight)))
-                            {
-                                try
-                                {
-                                    videoWriter.WriteVideoFrame(resized);
-                                }
-                                catch (AccessViolationException)
-                                {
-                                    SafeStopRecordingOnError("Recording failed due to memory access violation. File discarded.");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            try
-                            {
-                                videoWriter.WriteVideoFrame(toWrite);
-                            }
-                            catch (AccessViolationException)
-                            {
-                                SafeStopRecordingOnError("Recording failed due to memory access violation. File discarded.");
-                            }
-                        }
+                        using (var resized = new Bitmap(toWrite, new Size(recordingWidth, recordingHeight)))
+                            videoWriter.WriteVideoFrame(resized);
                     }
-                    finally
+                    else
                     {
-                        toWrite.Dispose();
+                        videoWriter.WriteVideoFrame(toWrite);
                     }
                 }
-                catch (Exception ex)
+                finally
                 {
-                    SafeStopRecordingOnError($"Unexpected error while writing video frame: {ex.Message}");
-                    toWrite?.Dispose();
+                    SafeDispose(toWrite);
                 }
             }
-            catch
+            catch (AccessViolationException ex)
             {
-                // Swallow any other exceptions to prevent crash
+                LogError("AccessViolationException: " + ex);
+                SafeStopRecordingOnError("Memory access violation while recording. Recording stopped.");
+            }
+            catch (Exception ex)
+            {
+                LogError("Frame error: " + ex);
             }
         }
-
-
 
         private void UpdatePreviewFromBuffer()
         {
@@ -358,14 +379,20 @@ namespace ENT_Clinic_System.UserControls
                         return;
                     }
 
-                    var bmp = (Bitmap)currentFrame.Clone();
+                    Bitmap bmp = (Bitmap)currentFrame.Clone();
                     SafeDispose(previewPictureBox.Image);
                     previewPictureBox.Image = bmp;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                LogError("UpdatePreviewFromBuffer: " + ex);
+            }
         }
 
+        // -------------------------------------------
+        // Image capture
+        // -------------------------------------------
         private void captureImageButton_Click(object sender, EventArgs e)
         {
             try
@@ -377,32 +404,28 @@ namespace ENT_Clinic_System.UserControls
                     frameCopy = (Bitmap)currentFrame.Clone();
                 }
 
-                // Get the folder where your .exe is running
-                string exeFolder = AppDomain.CurrentDomain.BaseDirectory;
+                string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image");
+                Directory.CreateDirectory(folder);
 
-                // Ensure the "Image" folder exists
-                string imageFolder = Path.Combine(exeFolder, "Image");
-                if (!Directory.Exists(imageFolder))
-                {
-                    Directory.CreateDirectory(imageFolder);
-                }
+                string path = Path.Combine(folder, $"image_{DateTime.Now:yyyyMMdd_HHmmss}.png");
+                frameCopy.Save(path);
+                frameCopy.Dispose();
 
-                // Build the full path for the image
-                string tempPath = Path.Combine(imageFolder, $"image_{DateTime.Now:yyyyMMdd_HHmmss}.png");
-
-                using (frameCopy) { frameCopy.Save(tempPath); }
-
-                CapturedImages.Add(tempPath);
-                try { imageHelper.AddImage(tempPath); } catch { }
-
+                CapturedImages.Add(path);
+                imageHelper?.AddImage(path);
                 ShowFlash(120);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Capture failed: {ex.Message}", "Capture Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogError("captureImageButton_Click: " + ex);
+                MessageBox.Show("Capture failed: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        // -------------------------------------------
+        // Video capture
+        // -------------------------------------------
         private void captureVideoButton_Click(object sender, EventArgs e)
         {
             captureVideoButton.Enabled = false;
@@ -424,30 +447,23 @@ namespace ENT_Clinic_System.UserControls
 
         private void StartRecordingSafe()
         {
-            lock (frameLock)
-            {
-                if (currentFrame == null)
-                {
-                    MessageBox.Show("Start the camera before recording.", "Recording", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
-
             try
             {
-                // Get the folder where your .exe is running
-                string exeFolder = AppDomain.CurrentDomain.BaseDirectory;
-
-                // Ensure the "Video" folder exists
-                string videoFolder = Path.Combine(exeFolder, "Video");
-                if (!Directory.Exists(videoFolder))
+                lock (frameLock)
                 {
-                    Directory.CreateDirectory(videoFolder);
+                    if (currentFrame == null)
+                    {
+                        MessageBox.Show("Start the camera before recording.", "Recording",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                 }
 
-                // Build the full path for the video
-                currentVideoPath = Path.Combine(videoFolder, $"video_{DateTime.Now:yyyyMMdd_HHmmss}.avi");
+                string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Video");
+                Directory.CreateDirectory(folder);
 
+                currentVideoPath = Path.Combine(folder, $"video_{DateTime.Now:yyyyMMdd_HHmmss}.avi");
+                SafeDispose(videoWriter);
                 videoWriter = new VideoFileWriter();
 
                 lock (frameLock)
@@ -468,16 +484,8 @@ namespace ENT_Clinic_System.UserControls
             }
             catch (Exception ex)
             {
-                try { videoWriter?.Close(); } catch { }
-                try { videoWriter?.Dispose(); } catch { }
-                videoWriter = null;
-                isRecording = false;
-
-                captureVideoButton.Text = "Start Recording";
-                captureVideoButton.BackColor = SystemColors.Control;
-                captureVideoButton.ForeColor = SystemColors.ControlText;
-
-                MessageBox.Show($"Failed to start recording: {ex.Message}", "Recording Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogError("StartRecordingSafe: " + ex);
+                SafeStopRecordingOnError("Failed to start recording: " + ex.Message);
             }
         }
 
@@ -485,70 +493,49 @@ namespace ENT_Clinic_System.UserControls
         {
             try
             {
-                if (videoWriter == null)
-                {
-                    isRecording = false;
-                    captureVideoButton.Text = "Start Recording";
-                    captureVideoButton.BackColor = SystemColors.Control;
-                    captureVideoButton.ForeColor = SystemColors.ControlText;
-                    return;
-                }
+                if (videoWriter == null) return;
 
                 isRecording = false;
-                try { videoWriter?.Close(); } catch { }
-                try { videoWriter?.Dispose(); } catch { }
+                videoWriter.Close();
+                videoWriter.Dispose();
                 videoWriter = null;
 
                 captureVideoButton.Text = "Start Recording";
                 captureVideoButton.BackColor = SystemColors.Control;
                 captureVideoButton.ForeColor = SystemColors.ControlText;
 
-                bool ok = false;
-                try
-                {
-                    if (!string.IsNullOrEmpty(currentVideoPath) && File.Exists(currentVideoPath))
-                        ok = new FileInfo(currentVideoPath).Length > 1000;
-                }
-                catch { }
+                bool ok = File.Exists(currentVideoPath) && new FileInfo(currentVideoPath).Length > 1000;
 
                 if (ok)
                 {
                     CapturedVideos.Add(currentVideoPath);
-                    try { videoHelper.AddVideo(currentVideoPath); } catch { }
+                    videoHelper?.AddVideo(currentVideoPath);
                 }
                 else
                 {
-                    try { if (File.Exists(currentVideoPath)) File.Delete(currentVideoPath); } catch { }
-                    MessageBox.Show("Recorded video was invalid and has been discarded.", "Recording", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (File.Exists(currentVideoPath)) File.Delete(currentVideoPath);
+                    MessageBox.Show("Recorded video was invalid and discarded.", "Recording",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error while stopping recording: {ex.Message}", "Recording Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogError("StopRecordingSafe: " + ex);
+                MessageBox.Show("Error while stopping recording: " + ex.Message,
+                    "Recording Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally { currentVideoPath = null; }
+            finally
+            {
+                currentVideoPath = null;
+            }
         }
 
         private void SafeStopRecordingOnError(string message)
         {
-            try
-            {
-                lock (recordingLock)
-                {
-                    if (isRecording)
-                    {
-                        isRecording = false;
-                        try { videoWriter?.Close(); } catch { }
-                        try { videoWriter?.Dispose(); } catch { }
-                        videoWriter = null;
-                        try { if (!string.IsNullOrEmpty(currentVideoPath) && File.Exists(currentVideoPath)) File.Delete(currentVideoPath); } catch { }
-                        currentVideoPath = null;
-                    }
-                }
-            }
+            try { StopRecordingSafe(); }
             finally
             {
-                InvokeIfRequired(() =>
+                InvokeSafe(() =>
                 {
                     captureVideoButton.Text = "Start Recording";
                     captureVideoButton.BackColor = SystemColors.Control;
@@ -567,28 +554,15 @@ namespace ENT_Clinic_System.UserControls
             }
         }
 
+        // -------------------------------------------
+        // Cleanup
+        // -------------------------------------------
         private void CameraConsultationForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
             {
-                try { watchdogTimer?.Stop(); } catch { }
-
-                lock (recordingLock)
-                {
-                    if (isRecording)
-                    {
-                        isRecording = false;
-                        try { videoWriter?.Close(); } catch { }
-                        try { videoWriter?.Dispose(); } catch { }
-                        videoWriter = null;
-                        if (!string.IsNullOrEmpty(currentVideoPath))
-                        {
-                            try { if (File.Exists(currentVideoPath)) File.Delete(currentVideoPath); } catch { }
-                            currentVideoPath = null;
-                        }
-                    }
-                }
-
+                watchdogTimer?.Stop();
+                StopRecording();
                 StopCameraInternal();
 
                 lock (frameLock)
@@ -598,10 +572,12 @@ namespace ENT_Clinic_System.UserControls
                 }
 
                 SafeDispose(fireflyHelper);
-
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                LogError("FormClosing: " + ex);
+            }
         }
     }
 }

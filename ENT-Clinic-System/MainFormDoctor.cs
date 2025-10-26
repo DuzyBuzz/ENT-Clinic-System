@@ -604,6 +604,11 @@ namespace ENT_Clinic_System
         {
 
         }
+
+        private void MainPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 
 }

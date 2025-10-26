@@ -26,7 +26,8 @@ namespace ENT_Clinic_System.PrintingForms
         private string earExam, noseExam, throatExam, neckExam, othersExam;
         private string diagnosis, recommendations, notes, followUpNotes;
         private DateTime? followUpDate;
-
+        private float currentY;          // Tracks vertical position across pages
+        private bool isFirstPage = true; // Used to reset margins per print job
         // Health record info
         private string pastMedicalHistory, familyHistory, personalSocialHistory, allergies;
         private string bp, temperature, pr, rr, ht, wt;
@@ -174,8 +175,8 @@ namespace ENT_Clinic_System.PrintingForms
             float y = topMargin;
 
             Font titleFont = new Font("Arial", 12, FontStyle.Bold);
-            Font sectionFont = new Font("Arial", 10, FontStyle.Bold);
-            Font bodyFont = new Font("Arial", 9, FontStyle.Regular);
+            Font sectionFont = new Font("Arial", 8, FontStyle.Bold);
+            Font bodyFont = new Font("Arial", 8, FontStyle.Regular);
             StringFormat wrapFormat = new StringFormat
             {
                 Alignment = StringAlignment.Near,
@@ -234,7 +235,7 @@ namespace ENT_Clinic_System.PrintingForms
 
             DrawPatientInfoRow("Address", patientAddress, null, null, "Contact Number", patientContact);
             if (!string.IsNullOrEmpty(emergencyName))
-                DrawPatientInfoRow("Contact in case of Emergency", $"{emergencyName} ({emergencyRelationship}) - {emergencyContact}");
+                DrawPatientInfoRow("Contact in case of Emergency", $"{emergencyName} {emergencyRelationship}  {emergencyContact}");
             else
                 DrawPatientInfoRow(null, null,null,null);
 
@@ -249,55 +250,120 @@ namespace ENT_Clinic_System.PrintingForms
                 g.DrawString(text, sectionFont, Brushes.Black, leftMargin + 5, y + 3);
                 y += 25;
             }
-
             void DrawTwoColumnSection(string leftHeader, string rightHeader, string leftText, string rightText)
             {
+                // Draw section header background
                 g.FillRectangle(Brushes.LightGray, leftMargin, y, contentWidth, 22);
                 g.DrawRectangle(Pens.Gray, leftMargin, y, contentWidth, 22);
                 g.DrawString(leftHeader, sectionFont, Brushes.Black, leftMargin + 5, y + 3);
                 g.DrawString(rightHeader, sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, y + 3);
                 y += 25;
 
-                var leftItems = string.IsNullOrWhiteSpace(leftText) ? new string[0] : leftText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
-                var rightItems = string.IsNullOrWhiteSpace(rightText) ? new string[0] : rightText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                // Split items
+                var leftItems = string.IsNullOrWhiteSpace(leftText)
+                    ? new string[0]
+                    : leftText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+
+                var rightItems = string.IsNullOrWhiteSpace(rightText)
+                    ? new string[0]
+                    : rightText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+
                 int maxLines = Math.Max(leftItems.Length, rightItems.Length);
+
+                // Column width (split the total width in half)
+                float columnWidth = contentWidth / 2 - 10; // padding between text and border
+
+                // Enable wrapping
+                StringFormat sf = new StringFormat
+                {
+                    Alignment = StringAlignment.Near,
+                    LineAlignment = StringAlignment.Near,
+                    FormatFlags = StringFormatFlags.LineLimit
+                };
 
                 for (int i = 0; i < maxLines; i++)
                 {
-                    string l = i < leftItems.Length ? "• " + leftItems[i] : "";
-                    string r = i < rightItems.Length ? "• " + rightItems[i] : "";
-                    g.DrawString(l, bodyFont, Brushes.Black, leftMargin, y);
-                    g.DrawString(r, bodyFont, Brushes.Black, leftMargin + contentWidth / 2, y);
-                    y += 18;
+                    string leftBullet = i < leftItems.Length ? "• " + leftItems[i] : "";
+                    string rightBullet = i < rightItems.Length ? "• " + rightItems[i] : "";
+
+                    // Measure both sides’ wrapped height
+                    SizeF leftSize = g.MeasureString(leftBullet, bodyFont, (int)columnWidth, sf);
+                    SizeF rightSize = g.MeasureString(rightBullet, bodyFont, (int)columnWidth, sf);
+                    float lineHeight = Math.Max(leftSize.Height, rightSize.Height);
+
+                    // Define drawing rectangles for wrapping
+                    RectangleF leftRect = new RectangleF(leftMargin + 5, y, columnWidth, lineHeight);
+                    RectangleF rightRect = new RectangleF(leftMargin + contentWidth / 2 + 5, y, columnWidth, lineHeight);
+
+                    // Draw wrapped text
+                    if (!string.IsNullOrEmpty(leftBullet))
+                        g.DrawString(leftBullet, bodyFont, Brushes.Black, leftRect, sf);
+
+                    if (!string.IsNullOrEmpty(rightBullet))
+                        g.DrawString(rightBullet, bodyFont, Brushes.Black, rightRect, sf);
+
+                    // Move down for next line
+                    y += lineHeight + 4;
                 }
-                y += 5;
+
+                y += 5; // spacing after section
             }
+
             void DrawTwoColumnSectionText(string leftHeader, string rightHeader, string leftText, string rightText)
             {
+                // Header background and borders
                 g.FillRectangle(Brushes.LightGray, leftMargin, y, contentWidth, 22);
                 g.DrawRectangle(Pens.Gray, leftMargin, y, contentWidth, 22);
                 g.DrawString(leftHeader, sectionFont, Brushes.Black, leftMargin + 5, y + 3);
                 g.DrawString(rightHeader, sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, y + 3);
                 y += 25;
 
-                var leftItems = string.IsNullOrWhiteSpace(leftText) ? new string[0] : leftText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
-                var rightItems = string.IsNullOrWhiteSpace(rightText) ? new string[0] : rightText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                // Split text items (comma separated)
+                var leftItems = string.IsNullOrWhiteSpace(leftText)
+                    ? new string[0]
+                    : leftText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                var rightItems = string.IsNullOrWhiteSpace(rightText)
+                    ? new string[0]
+                    : rightText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+
                 int maxLines = Math.Max(leftItems.Length, rightItems.Length);
+
+                // Define column widths
+                float columnWidth = contentWidth / 2 - 10; // padding
+                StringFormat sf = new StringFormat
+                {
+                    Alignment = StringAlignment.Near,
+                    LineAlignment = StringAlignment.Near,
+                    FormatFlags = StringFormatFlags.LineLimit
+                };
 
                 for (int i = 0; i < maxLines; i++)
                 {
-                    string l = i < leftItems.Length ? "" + leftItems[i] : "";
-                    string r = i < rightItems.Length ? "" + rightItems[i] : "";
-                    g.DrawString(l, bodyFont, Brushes.Black, leftMargin, y);
-                    g.DrawString(r, bodyFont, Brushes.Black, leftMargin + contentWidth / 2, y);
-                    y += 18;
+                    string l = i < leftItems.Length ? leftItems[i] : "";
+                    string r = i < rightItems.Length ? rightItems[i] : "";
+
+                    // Measure text height for wrapping
+                    SizeF leftSize = g.MeasureString(l, bodyFont, (int)columnWidth, sf);
+                    SizeF rightSize = g.MeasureString(r, bodyFont, (int)columnWidth, sf);
+                    float lineHeight = Math.Max(leftSize.Height, rightSize.Height);
+
+                    // Draw wrapped text
+                    RectangleF leftRect = new RectangleF(leftMargin, y, columnWidth, lineHeight);
+                    RectangleF rightRect = new RectangleF(leftMargin + contentWidth / 2, y, columnWidth, lineHeight);
+
+                    g.DrawString(l, bodyFont, Brushes.Black, leftRect, sf);
+                    g.DrawString(r, bodyFont, Brushes.Black, rightRect, sf);
+
+                    y += lineHeight + 5; // spacing between rows
                 }
-                y += 5;
+
+                y += 5; // extra bottom space
             }
+
             // --- Consultation Details ---
             DrawSectionHeader("Consultation Details");
             DrawPatientInfoRow("Doctor", doctorName, null, "Date", consultationDate.ToString("MMMM dd, yyyy"));
-            DrawTwoColumnSectionText("Chief Complaint", "Recent Illness", chiefComplaint, history);
+            DrawTwoColumnSectionText("Chief Complaint", "Recent Illness", chiefComplaint, history);// wrapped
 
             // --- Vital Signs ---
             DrawSectionHeader("Vital Signs");
@@ -337,22 +403,59 @@ namespace ENT_Clinic_System.PrintingForms
 
             // --- ENT Examination ---
             DrawSectionHeader("ENT Examination");
+            // ENT Exam Section - Vertical Layout with Wrapping
             string[] entLabels = { "Ear Exam", "Nose Exam", "Throat Exam", "Other Exam" };
             string[] entValues = { earExam, noseExam, throatExam, othersExam };
-            for (int i = 0; i < 4; i++)
+
+            // StringFormat to enable wrapping
+            StringFormat sfs = new StringFormat
             {
-                if (!string.IsNullOrWhiteSpace(entValues[i]))
+                Alignment = StringAlignment.Near,
+                LineAlignment = StringAlignment.Near,
+                FormatFlags = StringFormatFlags.LineLimit
+            };
+
+            // Define text area width (full printable width)
+            float textWidth = contentWidth - 10; // 5px padding on each side
+
+            for (int i = 0; i < entLabels.Length; i++)
+            {
+                // Skip if exam is empty
+                if (string.IsNullOrWhiteSpace(entValues[i]))
+                    continue;
+
+                // Draw section label
+                g.DrawString(entLabels[i] + ":", sectionFont, Brushes.Black, leftMargin, y);
+                y += 22; // space below label
+
+                // Split bullets (comma separated)
+                var bullets = entValues[i]
+                    .Split(',')
+                    .Select(s => s.Trim())
+                    .Where(s => !string.IsNullOrEmpty(s))
+                    .ToArray();
+
+                foreach (var b in bullets)
                 {
-                    g.DrawString(entLabels[i] + ":", sectionFont, Brushes.Black, leftMargin + i * colWidth4, y);
-                    var bullets = entValues[i].Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
-                    float lineOffset = 18;
-                    foreach (var b in bullets)
-                    {
-                        g.DrawString("• " + b, bodyFont, Brushes.Black, leftMargin + i * colWidth4 + 5, y + lineOffset);
-                        lineOffset += 16;
-                    }
+                    string bulletText = "• " + b;
+
+                    // Measure how tall the text will be when wrapped
+                    SizeF textSize = g.MeasureString(bulletText, bodyFont, (int)textWidth, sfs);
+
+                    // Define bounding box for wrapped text
+                    RectangleF textRect = new RectangleF(leftMargin + 10, y, textWidth, textSize.Height);
+
+                    // Draw text inside the box (auto-wrap)
+                    g.DrawString(bulletText, bodyFont, Brushes.Black, textRect, sfs);
+
+                    // Move Y down according to the wrapped height
+                    y += textSize.Height + 4; // spacing between bullets
                 }
+
+                // Extra space after each exam section
+                y += 10;
             }
+
             y += 40;
 
             DrawTwoColumnSection("Diagnosis", "Recommendations", diagnosis, recommendations);

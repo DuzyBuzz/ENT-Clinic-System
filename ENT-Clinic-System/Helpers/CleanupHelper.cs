@@ -10,7 +10,7 @@ namespace ENT_Clinic_System.Helpers
         {
             string exeFolder = AppDomain.CurrentDomain.BaseDirectory; // path of your .exe
 
-            string[] folders = { "Image", "Video" };
+            string[] folders = { "Image", "Video", "LabFiles"};
 
             foreach (var folderName in folders)
             {

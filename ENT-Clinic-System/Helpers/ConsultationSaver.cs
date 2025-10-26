@@ -36,7 +36,7 @@ namespace ENT_Clinic_System.Helpers
 
             // 2️⃣ Prepare base folder for attachments
             string dateFolder = DateTime.Now.ToString("yyyy-MM-dd");
-            string baseFolder = Path.Combine(@"D:\ENT_CLINIC_Attachments", patientId.ToString(), dateFolder);
+            string baseFolder = Path.Combine(SettingsHelper.GetSetting("base_path"), patientId.ToString(), dateFolder);
 
             // 3️⃣ Save Images
             foreach (var imageInfo in imageHelper.GetAllImages())

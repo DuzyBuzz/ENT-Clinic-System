@@ -34,6 +34,7 @@
             this.dispensingReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expiryReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stockOnHandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.writeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patientQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +46,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.paymentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.maximizeMaximizeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,8 +56,6 @@
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.paymentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.writeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,6 +100,13 @@
             this.stockOnHandToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
             this.stockOnHandToolStripMenuItem.Text = "Stock On Hand";
             this.stockOnHandToolStripMenuItem.Click += new System.EventHandler(this.stockOnHandToolStripMenuItem_Click);
+            // 
+            // writeToolStripMenuItem
+            // 
+            this.writeToolStripMenuItem.Name = "writeToolStripMenuItem";
+            this.writeToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.writeToolStripMenuItem.Text = "Write-Off";
+            this.writeToolStripMenuItem.Click += new System.EventHandler(this.writeToolStripMenuItem_Click);
             // 
             // stocToolStripMenuItem
             // 
@@ -201,6 +208,13 @@
             this.consultationsToolStripMenuItem1.Text = "Consultations";
             this.consultationsToolStripMenuItem1.Click += new System.EventHandler(this.consultationsToolStripMenuItem1_Click);
             // 
+            // paymentsToolStripMenuItem
+            // 
+            this.paymentsToolStripMenuItem.Name = "paymentsToolStripMenuItem";
+            this.paymentsToolStripMenuItem.Size = new System.Drawing.Size(102, 29);
+            this.paymentsToolStripMenuItem.Text = "Payments";
+            this.paymentsToolStripMenuItem.Click += new System.EventHandler(this.paymentsToolStripMenuItem_Click);
+            // 
             // closeButton
             // 
             this.closeButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -278,20 +292,7 @@
             this.MainPanel.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
             this.MainPanel.Size = new System.Drawing.Size(1458, 892);
             this.MainPanel.TabIndex = 6;
-            // 
-            // paymentsToolStripMenuItem
-            // 
-            this.paymentsToolStripMenuItem.Name = "paymentsToolStripMenuItem";
-            this.paymentsToolStripMenuItem.Size = new System.Drawing.Size(102, 29);
-            this.paymentsToolStripMenuItem.Text = "Payments";
-            this.paymentsToolStripMenuItem.Click += new System.EventHandler(this.paymentsToolStripMenuItem_Click);
-            // 
-            // writeToolStripMenuItem
-            // 
-            this.writeToolStripMenuItem.Name = "writeToolStripMenuItem";
-            this.writeToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.writeToolStripMenuItem.Text = "Write-Off";
-            this.writeToolStripMenuItem.Click += new System.EventHandler(this.writeToolStripMenuItem_Click);
+            this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
             // MainFormDoctor
             // 

@@ -22,8 +22,39 @@ namespace ENT_Clinic_System.Consultation
         private void ScannedConsultationHistoryForm_Load(object sender, EventArgs e)
         {
             LoadPatientScannedDocuments(_patientId);
+            LoadPatientName(_patientId);
         }
 
+        private void LoadPatientName(string patientId)
+        {
+            try
+            {
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT full_name FROM patients WHERE patient_id = @id LIMIT 1;";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", patientId);
+                        var result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            this.Text = $"Scanned Documents for {result.ToString()}";
+                        }
+                        else
+                        {
+                            this.Text = "Scanned Documents for Unknown Patient";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading patient name: " + ex.Message,
+                    "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
         /// <summary>
         /// Loads all scanned documents for the given patient and displays them.
         /// </summary>
@@ -107,7 +138,7 @@ namespace ENT_Clinic_System.Consultation
             {
                 PictureBox pb = new PictureBox
                 {
-                    Size = new Size(200, 150),
+                    Size = new Size(800, 1000),
                     SizeMode = PictureBoxSizeMode.Zoom,
                     BorderStyle = BorderStyle.FixedSingle,
                     Margin = new Padding(10),
@@ -248,6 +279,16 @@ namespace ENT_Clinic_System.Consultation
                 MessageBox.Show("Error deleting record: " + ex.Message,
                     "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void ScannedConsultationHistoryForm_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scannedDocumentsFlowLayoutPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

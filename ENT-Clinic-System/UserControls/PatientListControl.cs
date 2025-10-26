@@ -37,6 +37,7 @@ namespace ENT_Clinic_System.UserControls
             // Columns to allow editing
             List<string> columns = new List<string>
             {
+                "patient_id",
                 "full_name",
                 "address",
                 "birth_date",
@@ -75,14 +76,20 @@ namespace ENT_Clinic_System.UserControls
         {
             // Define which columns you want to show when searching
             string[] displayColumns = {
-        "patient_id",
-        "full_name",
-        "age",
-        "sex",
-        "address",
-        "civil_status",
-        "patient_contact_number",
-                    "referred_by"
+               "patient_id",
+                "full_name",
+                "address",
+                "birth_date",
+                "age",
+                "sex",
+                "civil_status",
+                "patient_contact_number",
+                "emergency_name",
+                "emergency_contact_number",
+                "emergency_relationship",
+                            "referred_by",
+                "created_at",
+                "photo"
     };
 
             // Perform search with limited columns
@@ -104,14 +111,20 @@ namespace ENT_Clinic_System.UserControls
         {
             // Define which columns you want to show when searching
             string[] displayColumns = {
-        "patient_id",
-        "full_name",
-        "age",
-        "sex",
-        "address",
-        "civil_status",
-        "patient_contact_number",
-                    "referred_by"
+               "patient_id",
+                "full_name",
+                "address",
+                "birth_date",
+                "age",
+                "sex",
+                "civil_status",
+                "patient_contact_number",
+                "emergency_name",
+                "emergency_contact_number",
+                "emergency_relationship",
+                            "referred_by",
+                "created_at",
+                "photo"
     };
 
             // Perform search with limited columns
@@ -135,14 +148,20 @@ namespace ENT_Clinic_System.UserControls
             searchPatientNameTextBox.Text = "";
             // Define which columns you want to show when searching
             string[] displayColumns = {
-        "patient_id",
-        "full_name",
-        "age",
-        "sex",
-        "address",
-        "civil_status",
-        "patient_contact_number",
-                    "referred_by"
+               "patient_id",
+                "full_name",
+                "address",
+                "birth_date",
+                "age",
+                "sex",
+                "civil_status",
+                "patient_contact_number",
+                "emergency_name",
+                "emergency_contact_number",
+                "emergency_relationship",
+                            "referred_by",
+                "created_at",
+                "photo"
     };
 
             // Perform search with limited columns
@@ -230,14 +249,20 @@ namespace ENT_Clinic_System.UserControls
                 e.SuppressKeyPress = true;
 
                 string[] displayColumns = {
-            "patient_id",
-            "full_name",
-            "age",
-            "sex",
-            "address",
-            "civil_status",
-            "patient_contact_number",
-            "referred_by"
+               "patient_id",
+                "full_name",
+                "address",
+                "birth_date",
+                "age",
+                "sex",
+                "civil_status",
+                "patient_contact_number",
+                "emergency_name",
+                "emergency_contact_number",
+                "emergency_relationship",
+                            "referred_by",
+                "created_at",
+                "photo"
         };
 
                 SearchHelper.Search(

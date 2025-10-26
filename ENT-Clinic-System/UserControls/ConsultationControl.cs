@@ -744,19 +744,85 @@ namespace ENT_Clinic_System.UserControls
         // Open Camera button
         private void openCameraButton_Click(object sender, EventArgs e)
         {
-            using (var cameraForm = new CameraConsultationForm())
+            // ✅ CAMERA CHECK BEFORE OPENING
+            if (!IsCameraAvailable())
             {
-                var result = cameraForm.ShowDialog();
+                MessageBox.Show("No camera detected on this system. Please connect a camera first.",
+                    "Camera Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                if (result == DialogResult.OK)
+            try
+            {
+                // Wrap inside try–catch to prevent parent form crash
+                using (var cameraForm = new CameraConsultationForm())
                 {
-                    // Transfer captured media into ConsultationControl
-                    foreach (var img in cameraForm.CapturedImages)
-                        imageHelper.AddImage(img);
+                    // ✅ Use ShowDialog in safe mode
+                    DialogResult result;
+                    try
+                    {
+                        result = cameraForm.ShowDialog();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Any internal exception from the camera form will be caught here
+                        LogCameraError("CameraConsultationForm crashed: " + ex);
+                        MessageBox.Show("Camera window encountered an error and had to close.\n\n" +
+                            ex.Message, "Camera Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return; // stop execution, but keep parent form open
+                    }
 
-                    foreach (var vid in cameraForm.CapturedVideos)
-                        videoHelper.AddVideo(vid);
+                    if (result == DialogResult.OK)
+                    {
+                        // ✅ Transfer captured media safely
+                        foreach (var img in cameraForm.CapturedImages)
+                        {
+                            try { imageHelper.AddImage(img); } catch { /* ignore per item errors */ }
+                        }
+
+                        foreach (var vid in cameraForm.CapturedVideos)
+                        {
+                            try { videoHelper.AddVideo(vid); } catch { }
+                        }
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                // ✅ Global fallback if cameraForm initialization fails
+                LogCameraError("openCameraButton_Click: " + ex);
+                MessageBox.Show("An unexpected error occurred while opening the camera.\n\n" +
+                    ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void LogCameraError(string text)
+        {
+            try
+            {
+                string logPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CameraError.log");
+                File.AppendAllText(logPath,
+                    $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} - {text}{Environment.NewLine}");
+            }
+            catch { /* never throw from logger */ }
+        }
+
+        /// <summary>
+        /// Checks if at least one video capture device (camera) is available.
+        /// Requires reference to AForge.Video.DirectShow NuGet package.
+        /// </summary>
+        /// <returns>True if a camera is available, otherwise false.</returns>
+        private bool IsCameraAvailable()
+        {
+            try
+            {
+                // You need: AForge.Video.DirectShow
+                var videoDevices = new AForge.Video.DirectShow.FilterInfoCollection(AForge.Video.DirectShow.FilterCategory.VideoInputDevice);
+                return videoDevices.Count > 0;
+            }
+            catch
+            {
+                // If any error occurs, treat as "no camera found"
+                return false;
             }
         }
 
