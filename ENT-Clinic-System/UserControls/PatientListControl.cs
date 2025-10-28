@@ -26,10 +26,16 @@ namespace ENT_Clinic_System.UserControls
 
         private void PatientListControl_Load(object sender, EventArgs e)
         {
+
+            LoadPatients();
+
+        }
+        private void LoadPatients()
+        {
             AutoCompleteHelper.SetupAutoComplete(
                 searchPatientNameTextBox,
                 "patients",
-                new List<string> { "full_name" } 
+                new List<string> { "full_name" }
             );
 
 
@@ -60,6 +66,14 @@ namespace ENT_Clinic_System.UserControls
 
                 patientCrud.SetPageInfoLabel(pageLabel);
                 patientCrud.LoadData();
+
+                // ✅ Sort by full_name ascending (if bound to DataTable)
+                if (patientsDataGridView.DataSource is DataTable dt)
+                {
+                    dt.DefaultView.Sort = "full_name ASC";
+                    patientsDataGridView.DataSource = dt;
+                }
+
                 UpdatePaginationButtons();
             }
             catch (Exception ex)
@@ -68,50 +82,18 @@ namespace ENT_Clinic_System.UserControls
             }
 
 
-
-
         }
 
         private void searchPatientNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            // Define which columns you want to show when searching
-            string[] displayColumns = {
-               "patient_id",
-                "full_name",
-                "address",
-                "birth_date",
-                "age",
-                "sex",
-                "civil_status",
-                "patient_contact_number",
-                "emergency_name",
-                "emergency_contact_number",
-                "emergency_relationship",
-                            "referred_by",
-                "created_at",
-                "photo"
-    };
 
-            // Perform search with limited columns
-            SearchHelper.Search(
-                dgv: patientsDataGridView,
-                tableName: "patients",
-                columnNames: new string[] { "full_name" },
-                filterControl: searchPatientNameTextBox,
-                columns: displayColumns
-            );
-
-            // Disable pagination when showing search results
-            prevButton.Enabled = false;
-            nextButton.Enabled = false;
-            pageLabel.Text = "Search results";
-
+            SearchPatients();
         }
-        private void searchPatientButton_Click(object sender, EventArgs e)
+        private void SearchPatients()
         {
             // Define which columns you want to show when searching
             string[] displayColumns = {
-               "patient_id",
+                "patient_id",
                 "full_name",
                 "address",
                 "birth_date",
@@ -140,43 +122,16 @@ namespace ENT_Clinic_System.UserControls
             prevButton.Enabled = false;
             nextButton.Enabled = false;
             pageLabel.Text = "Search results";
+        }
+        private void searchPatientButton_Click(object sender, EventArgs e)
+        {
+            SearchPatients();
         }
 
 
         private void refreshPatientsButton_Click(object sender, EventArgs e)
         {
-            searchPatientNameTextBox.Text = "";
-            // Define which columns you want to show when searching
-            string[] displayColumns = {
-               "patient_id",
-                "full_name",
-                "address",
-                "birth_date",
-                "age",
-                "sex",
-                "civil_status",
-                "patient_contact_number",
-                "emergency_name",
-                "emergency_contact_number",
-                "emergency_relationship",
-                            "referred_by",
-                "created_at",
-                "photo"
-    };
-
-            // Perform search with limited columns
-            SearchHelper.Search(
-                dgv: patientsDataGridView,
-                tableName: "patients",
-                columnNames: new string[] { "full_name" },
-                filterControl: searchPatientNameTextBox,
-                columns: displayColumns
-            );
-
-            // Disable pagination when showing search results
-            prevButton.Enabled = false;
-            nextButton.Enabled = false;
-            pageLabel.Text = "Search results";
+            LoadPatients();
         }
         private void UpdatePaginationButtons()
         {
@@ -244,39 +199,7 @@ namespace ENT_Clinic_System.UserControls
 
         private void searchPatientNameTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true;
-
-                string[] displayColumns = {
-               "patient_id",
-                "full_name",
-                "address",
-                "birth_date",
-                "age",
-                "sex",
-                "civil_status",
-                "patient_contact_number",
-                "emergency_name",
-                "emergency_contact_number",
-                "emergency_relationship",
-                            "referred_by",
-                "created_at",
-                "photo"
-        };
-
-                SearchHelper.Search(
-                    dgv: patientsDataGridView,
-                    tableName: "patients",
-                    columnNames: new string[] { "full_name" },
-                    filterControl: searchPatientNameTextBox,
-                    columns: displayColumns
-                );
-
-                prevButton.Enabled = false;
-                nextButton.Enabled = false;
-                pageLabel.Text = "Search results";
-            }
+            SearchPatients();
         }
 
 
@@ -470,10 +393,6 @@ namespace ENT_Clinic_System.UserControls
         }
 
 
-        private void PrescriptionForm_Load(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         private void showLaboratoryRequesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -522,7 +441,7 @@ namespace ENT_Clinic_System.UserControls
                     //if (!string.IsNullOrEmpty(patientName))
                     //    consultationHistory.Text = $"Scanned Documents - {patientName}";
 
-                    consultationHistory.ShowDialog(); // Use ShowDialog so it blocks until closed
+                    consultationHistory.Show(); // Use ShowDialog so it blocks until closed
                 }
                 catch (Exception ex)
                 {

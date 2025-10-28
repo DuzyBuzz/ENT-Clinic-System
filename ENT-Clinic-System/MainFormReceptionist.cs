@@ -699,6 +699,55 @@ namespace ENT_Clinic_System
             // Show print preview
             ReportHelper.ShowPreview();
         }
+
+        private void patientVisitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dateForm = new DateRangeForm())
+            {
+                if (dateForm.ShowDialog() == DialogResult.OK)
+                {
+                    DateTime fromDate = dateForm.FromDate;
+                    DateTime toDate = dateForm.ToDate;
+
+                    // Display headers must match the view aliases with underscores
+                    List<string> displayColumns = new List<string>
+        {
+             "Queue_Number",
+            "Patient_Name",
+            "Address",
+            "Age",
+            "Sex",
+            "Civil_Status",
+            "Patient_Contact_Number",
+            "Emergency_Contact_Number",
+            "Referred_By",
+            "Status",
+            "Queued_At",
+            "Finished_Time"
+        };
+
+                    // Columns to hide (use the same underscore names)
+                    List<string> hiddenColumns = new List<string> {
+                        "Queue_ID",
+                        "Patient_ID", };
+
+                    // Generate the report
+                    // dateColumn must match the real column name (with underscore)
+                    ReportHelper.GenerateReport(
+                        tableName: "view_queue_with_patients",
+                        dateColumn: "Queued_At", // matches view alias
+                        dateFrom: fromDate,
+                        dateTo: toDate,
+                        displayColumns: displayColumns,
+                        hiddenColumns: hiddenColumns,
+                                         reportTitle: "PATIENT VISIT REPORT"
+                    );
+
+                    // Show print preview
+                    ReportHelper.ShowPreview();
+                }
+            }
+        }
     }
 
 }

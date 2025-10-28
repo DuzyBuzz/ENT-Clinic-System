@@ -39,6 +39,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.paymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dispensingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nearExpirationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stockOnHandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.writeOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lowStockReorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.maximizeMaximizeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,13 +55,7 @@
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.billingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dispensingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nearExpirationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stockOnHandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.writeOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lowStockReorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.patientVisitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -149,6 +150,63 @@
             this.paymentToolStripMenuItem.Text = "Payment";
             this.paymentToolStripMenuItem.Click += new System.EventHandler(this.paymentToolStripMenuItem_Click);
             // 
+            // reportsToolStripMenuItem
+            // 
+            this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.billingToolStripMenuItem,
+            this.dispensingToolStripMenuItem,
+            this.nearExpirationToolStripMenuItem,
+            this.stockOnHandToolStripMenuItem,
+            this.writeOffToolStripMenuItem,
+            this.lowStockReorderToolStripMenuItem,
+            this.patientVisitToolStripMenuItem});
+            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
+            this.reportsToolStripMenuItem.Text = "Report";
+            this.reportsToolStripMenuItem.Click += new System.EventHandler(this.reportsToolStripMenuItem_Click);
+            // 
+            // billingToolStripMenuItem
+            // 
+            this.billingToolStripMenuItem.Name = "billingToolStripMenuItem";
+            this.billingToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.billingToolStripMenuItem.Text = "Billing";
+            this.billingToolStripMenuItem.Click += new System.EventHandler(this.billingToolStripMenuItem_Click_2);
+            // 
+            // dispensingToolStripMenuItem
+            // 
+            this.dispensingToolStripMenuItem.Name = "dispensingToolStripMenuItem";
+            this.dispensingToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.dispensingToolStripMenuItem.Text = "Dispensing";
+            this.dispensingToolStripMenuItem.Click += new System.EventHandler(this.dispensingToolStripMenuItem_Click);
+            // 
+            // nearExpirationToolStripMenuItem
+            // 
+            this.nearExpirationToolStripMenuItem.Name = "nearExpirationToolStripMenuItem";
+            this.nearExpirationToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.nearExpirationToolStripMenuItem.Text = "Near Expiration";
+            this.nearExpirationToolStripMenuItem.Click += new System.EventHandler(this.nearExpirationToolStripMenuItem_Click);
+            // 
+            // stockOnHandToolStripMenuItem
+            // 
+            this.stockOnHandToolStripMenuItem.Name = "stockOnHandToolStripMenuItem";
+            this.stockOnHandToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.stockOnHandToolStripMenuItem.Text = "Stock On Hand";
+            this.stockOnHandToolStripMenuItem.Click += new System.EventHandler(this.stockOnHandToolStripMenuItem_Click_1);
+            // 
+            // writeOffToolStripMenuItem
+            // 
+            this.writeOffToolStripMenuItem.Name = "writeOffToolStripMenuItem";
+            this.writeOffToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.writeOffToolStripMenuItem.Text = "Write-Off";
+            this.writeOffToolStripMenuItem.Click += new System.EventHandler(this.writeOffToolStripMenuItem_Click);
+            // 
+            // lowStockReorderToolStripMenuItem
+            // 
+            this.lowStockReorderToolStripMenuItem.Name = "lowStockReorderToolStripMenuItem";
+            this.lowStockReorderToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.lowStockReorderToolStripMenuItem.Text = "Low Stock / Reorder";
+            this.lowStockReorderToolStripMenuItem.Click += new System.EventHandler(this.lowStockReorderToolStripMenuItem_Click);
+            // 
             // closeButton
             // 
             this.closeButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -228,61 +286,12 @@
             this.MainPanel.TabIndex = 6;
             this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
-            // reportsToolStripMenuItem
+            // patientVisitToolStripMenuItem
             // 
-            this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.billingToolStripMenuItem,
-            this.dispensingToolStripMenuItem,
-            this.nearExpirationToolStripMenuItem,
-            this.stockOnHandToolStripMenuItem,
-            this.writeOffToolStripMenuItem,
-            this.lowStockReorderToolStripMenuItem});
-            this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
-            this.reportsToolStripMenuItem.Text = "Report";
-            this.reportsToolStripMenuItem.Click += new System.EventHandler(this.reportsToolStripMenuItem_Click);
-            // 
-            // billingToolStripMenuItem
-            // 
-            this.billingToolStripMenuItem.Name = "billingToolStripMenuItem";
-            this.billingToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.billingToolStripMenuItem.Text = "Billing";
-            this.billingToolStripMenuItem.Click += new System.EventHandler(this.billingToolStripMenuItem_Click_2);
-            // 
-            // dispensingToolStripMenuItem
-            // 
-            this.dispensingToolStripMenuItem.Name = "dispensingToolStripMenuItem";
-            this.dispensingToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.dispensingToolStripMenuItem.Text = "Dispensing";
-            this.dispensingToolStripMenuItem.Click += new System.EventHandler(this.dispensingToolStripMenuItem_Click);
-            // 
-            // nearExpirationToolStripMenuItem
-            // 
-            this.nearExpirationToolStripMenuItem.Name = "nearExpirationToolStripMenuItem";
-            this.nearExpirationToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.nearExpirationToolStripMenuItem.Text = "Near Expiration";
-            this.nearExpirationToolStripMenuItem.Click += new System.EventHandler(this.nearExpirationToolStripMenuItem_Click);
-            // 
-            // stockOnHandToolStripMenuItem
-            // 
-            this.stockOnHandToolStripMenuItem.Name = "stockOnHandToolStripMenuItem";
-            this.stockOnHandToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.stockOnHandToolStripMenuItem.Text = "Stock On Hand";
-            this.stockOnHandToolStripMenuItem.Click += new System.EventHandler(this.stockOnHandToolStripMenuItem_Click_1);
-            // 
-            // writeOffToolStripMenuItem
-            // 
-            this.writeOffToolStripMenuItem.Name = "writeOffToolStripMenuItem";
-            this.writeOffToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.writeOffToolStripMenuItem.Text = "Write-Off";
-            this.writeOffToolStripMenuItem.Click += new System.EventHandler(this.writeOffToolStripMenuItem_Click);
-            // 
-            // lowStockReorderToolStripMenuItem
-            // 
-            this.lowStockReorderToolStripMenuItem.Name = "lowStockReorderToolStripMenuItem";
-            this.lowStockReorderToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.lowStockReorderToolStripMenuItem.Text = "Low Stock / Reorder";
-            this.lowStockReorderToolStripMenuItem.Click += new System.EventHandler(this.lowStockReorderToolStripMenuItem_Click);
+            this.patientVisitToolStripMenuItem.Name = "patientVisitToolStripMenuItem";
+            this.patientVisitToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.patientVisitToolStripMenuItem.Text = "Patient Visit";
+            this.patientVisitToolStripMenuItem.Click += new System.EventHandler(this.patientVisitToolStripMenuItem_Click);
             // 
             // MainFormReceptionist
             // 
@@ -336,5 +345,6 @@
         private System.Windows.Forms.ToolStripMenuItem stockOnHandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem writeOffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lowStockReorderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem patientVisitToolStripMenuItem;
     }
 }

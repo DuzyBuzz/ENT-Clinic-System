@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WIA; // ✅ for scanner
 using CommonDialog = WIA.CommonDialog; // ✅ alias for scanner dialog
+
 namespace ENT_Clinic_System.PrintingForms
 {
     public partial class LabResultsForm : Form
@@ -21,6 +22,8 @@ namespace ENT_Clinic_System.PrintingForms
         private string attachedFilePath = "";
         private int selectedResultId = -1;
 
+        private readonly string basePath = SettingsHelper.GetSetting("base_path");
+
         public LabResultsForm(int consultationId, int patientId)
         {
             InitializeComponent();
@@ -29,15 +32,13 @@ namespace ENT_Clinic_System.PrintingForms
 
             LoadLabResults();
 
-            // Right-click delete
             dgvLabResults.ContextMenuStrip = cmsDelete;
             deleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             dgvLabResults.CellContentClick += dgvLabResults_CellContentClick;
-
-
+            dgvLabResults.CellClick += dgvLabResults_CellClick;
         }
 
-        // Load lab results from database
+        // Load lab results
         private void LoadLabResults()
         {
             try
@@ -55,8 +56,6 @@ namespace ENT_Clinic_System.PrintingForms
                             DataTable dt = new DataTable();
                             adapter.Fill(dt);
                             dgvLabResults.DataSource = dt;
-
-                
                         }
                     }
                 }
@@ -69,45 +68,51 @@ namespace ENT_Clinic_System.PrintingForms
             }
         }
 
-        // Refresh FlowLayoutPanel previews
+        // Refresh preview panel
         private void RefreshPreviewPanel()
         {
             flpPreview.Controls.Clear();
             foreach (DataGridViewRow row in dgvLabResults.Rows)
             {
-                string file = row.Cells["result_file"].Value != DBNull.Value
-                    ? row.Cells["result_file"].Value.ToString()
-                    : "";
-
-                if (!string.IsNullOrEmpty(file) && File.Exists(file))
+                string relativeFile = row.Cells["result_file"].Value?.ToString() ?? "";
+                if (!string.IsNullOrEmpty(relativeFile))
                 {
-                    PictureBox pb = new PictureBox();
-                    pb.Width = 150;
-                    pb.Height = 150;
-                    pb.SizeMode = PictureBoxSizeMode.Zoom;
-                    pb.Tag = file;
-                    pb.BorderStyle = BorderStyle.FixedSingle;
-
-                    string ext = Path.GetExtension(file).ToLower();
-                    if (ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".bmp" || ext == ".tif" || ext == ".tiff")
+                    string fullPath = Path.Combine(basePath, relativeFile);
+                    if (File.Exists(fullPath))
                     {
-                        pb.Image = System.Drawing.Image.FromFile(file);
-                    }
-                    else
-                    {
-                        // Use your PDF thumbnail from Assets
-                        string pdfThumb = Path.Combine(Application.StartupPath, "assets", "images", "pdf.png");
-                        if (File.Exists(pdfThumb))
-                            pb.Image = System.Drawing.Image.FromFile(pdfThumb);
-                    }
+                        PictureBox pb = new PictureBox
+                        {
+                            Width = 150,
+                            Height = 150,
+                            SizeMode = PictureBoxSizeMode.Zoom,
+                            Tag = fullPath,
+                            BorderStyle = BorderStyle.FixedSingle
+                        };
 
-                    pb.Click += PreviewFile_Click;
-                    flpPreview.Controls.Add(pb);
+                        // Load image into memory to avoid locking file
+                        string ext = Path.GetExtension(fullPath).ToLower();
+                        if (ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".bmp" || ext == ".tif" || ext == ".tiff")
+                        {
+                            using (var fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
+                            {
+                                Image img = Image.FromStream(fs);
+                                pb.Image = new Bitmap(img);
+                            }
+                        }
+                        else
+                        {
+                            string pdfThumb = Path.Combine(Application.StartupPath, "assets", "images", "pdf.png");
+                            if (File.Exists(pdfThumb))
+                                pb.Image = Image.FromFile(pdfThumb);
+                        }
+
+                        pb.Click += PreviewFile_Click;
+                        flpPreview.Controls.Add(pb);
+                    }
                 }
             }
         }
 
-        // Open file on click
         private void PreviewFile_Click(object sender, EventArgs e)
         {
             PictureBox pb = sender as PictureBox;
@@ -115,28 +120,32 @@ namespace ENT_Clinic_System.PrintingForms
             {
                 string file = pb.Tag.ToString();
                 if (File.Exists(file))
-                {
                     Process.Start(file);
-                }
             }
         }
 
-        // Attach file button click
         private void btnAttachFile_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Title = "Select Lab Result File";
-            dlg.Filter = "All Files|*.*|PDF|*.pdf|Images|*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff";
-            dlg.Multiselect = false;
+            OpenFileDialog dlg = new OpenFileDialog
+            {
+                Title = "Select Lab Result File",
+                Filter = "All Files|*.*|PDF|*.pdf|Images|*.jpg;*.jpeg;*.png;*.bmp;*.tif;*.tiff",
+                Multiselect = false
+            };
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                attachedFilePath = dlg.FileName;
+                string tempFolder = Path.Combine(basePath, "Temp");
+                Directory.CreateDirectory(tempFolder);
+
+                string tempFile = Path.Combine(tempFolder, Guid.NewGuid().ToString() + Path.GetExtension(dlg.FileName));
+                File.Copy(dlg.FileName, tempFile, true);
+
+                attachedFilePath = tempFile;
                 lblFileName.Text = Path.GetFileName(attachedFilePath);
             }
         }
 
-        // Add new lab result
         private async void btnAdd_Click(object sender, EventArgs e)
         {
             string testName = txtTestName.Text.Trim();
@@ -144,8 +153,7 @@ namespace ENT_Clinic_System.PrintingForms
 
             if (string.IsNullOrEmpty(testName))
             {
-                MessageBox.Show("Test name is required. Please enter the test name before adding.",
-                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Test name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTestName.Focus();
                 return;
             }
@@ -156,93 +164,69 @@ namespace ENT_Clinic_System.PrintingForms
                 lblStatus.Visible = true;
                 lblStatus.Text = "Uploading file...";
 
-                string savedFile = null;
+                string relativePath = null; // relative path to save in DB
 
                 if (!string.IsNullOrEmpty(attachedFilePath))
                 {
-                    string baseFolder = Path.Combine(@"D:\ENT_CLINIC_Attachments", patientId.ToString(), consultationId.ToString());
-                    if (!Directory.Exists(baseFolder))
-                        Directory.CreateDirectory(baseFolder);
+                    string finalFolder = Path.Combine(basePath, patientId.ToString(), consultationId.ToString(), "Lab Results");
+                    Directory.CreateDirectory(finalFolder);
 
                     string uniqueName = Guid.NewGuid().ToString() + Path.GetExtension(attachedFilePath);
-                    savedFile = Path.Combine(baseFolder, uniqueName);
+                    string finalFilePath = Path.Combine(finalFolder, uniqueName);
 
-                    await Task.Run(() =>
-                    {
-                        const int bufferSize = 1024 * 1024; // 1 MB
-                        byte[] buffer = new byte[bufferSize];
-                        using (FileStream source = new FileStream(attachedFilePath, FileMode.Open, FileAccess.Read))
-                        using (FileStream dest = new FileStream(savedFile, FileMode.Create, FileAccess.Write))
-                        {
-                            long totalBytes = source.Length;
-                            long bytesCopied = 0;
-                            int bytesRead;
-                            while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                dest.Write(buffer, 0, bytesRead);
-                                bytesCopied += bytesRead;
-                                int percent = (int)((bytesCopied * 100) / totalBytes);
-                                this.Invoke((Action)(() => progressBar.Value = percent));
-                            }
-                        }
-                    });
+                    File.Move(attachedFilePath, finalFilePath);
+
+                    relativePath = Path.Combine(patientId.ToString(), consultationId.ToString(), "Lab Results", uniqueName);
                 }
 
                 lblStatus.Text = "Saving to database...";
 
-                // Insert into DB
                 await Task.Run(() =>
                 {
                     using (MySqlConnection conn = DBConfig.GetConnection())
                     {
                         conn.Open();
                         string query = @"INSERT INTO lab_results 
-                                 (consultation_id, test_name, result_text, result_file) 
-                                 VALUES (@cid, @test, @text, @file)";
+                                         (consultation_id, test_name, result_text, result_file) 
+                                         VALUES (@cid, @test, @text, @file)";
                         using (MySqlCommand cmd = new MySqlCommand(query, conn))
                         {
                             cmd.Parameters.AddWithValue("@cid", consultationId);
                             cmd.Parameters.AddWithValue("@test", testName);
                             cmd.Parameters.AddWithValue("@text", resultText);
-                            cmd.Parameters.AddWithValue("@file", savedFile != null ? (object)savedFile : DBNull.Value);
+                            cmd.Parameters.AddWithValue("@file", relativePath != null ? (object)relativePath : DBNull.Value);
                             cmd.ExecuteNonQuery();
                         }
                     }
                 });
 
-                progressBar.Value = 0;
                 progressBar.Visible = false;
-                lblStatus.Text = "Laboratory result uploaded successfully!";
-                await Task.Delay(1500);
                 lblStatus.Visible = false;
-
                 ClearForm();
                 LoadLabResults();
+
+                MessageBox.Show("✅ Lab result added successfully!");
             }
             catch (Exception ex)
             {
                 progressBar.Visible = false;
                 lblStatus.Visible = false;
-                MessageBox.Show("Error adding Laboratory result: " + ex.Message,
-                                "Upload Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error adding Laboratory result: " + ex.Message, "Upload Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // Delete via right-click
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvLabResults.CurrentRow == null) return;
 
             int resultId = Convert.ToInt32(dgvLabResults.CurrentRow.Cells["result_id"].Value);
-            string filePath = dgvLabResults.CurrentRow.Cells["result_file"].Value != DBNull.Value
-                ? dgvLabResults.CurrentRow.Cells["result_file"].Value.ToString()
-                : "";
+            string relativeFile = dgvLabResults.CurrentRow.Cells["result_file"].Value?.ToString() ?? "";
+            string fullPath = Path.Combine(basePath, relativeFile);
 
             if (MessageBox.Show("Delete this lab result?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 try
                 {
-                    // Delete record from database
                     using (MySqlConnection conn = DBConfig.GetConnection())
                     {
                         conn.Open();
@@ -254,50 +238,41 @@ namespace ENT_Clinic_System.PrintingForms
                         }
                     }
 
-                    // Delete the attached file if it exists
-                    if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-                    {
-                        File.Delete(filePath);
-                    }
+                    if (!string.IsNullOrEmpty(fullPath) && File.Exists(fullPath))
+                        File.Delete(fullPath);
 
+                    LoadLabResults();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error deleting lab result: " + ex.Message);
                 }
-
-                LoadLabResults(); // Refresh the grid and preview
             }
         }
 
-        // Clear form inputs
         private void ClearForm()
         {
-            txtTestName.Text = string.Empty;
-            txtResultText.Text = string.Empty;
+            txtTestName.Text = "";
+            txtResultText.Text = "";
             lblFileName.Text = "";
             attachedFilePath = "";
             selectedResultId = -1;
         }
+
         private void dgvLabResults_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && dgvLabResults.Columns[e.ColumnIndex].Name == "result_file")
             {
-                string filePath = dgvLabResults.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString();
-                if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
-                {
-                    // Open File Explorer and select the file
-                    Process.Start("explorer.exe", $"/select,\"{filePath}\"");
-                }
+                string relativeFile = dgvLabResults.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString() ?? "";
+                string fullPath = Path.Combine(basePath, relativeFile);
+
+                if (!string.IsNullOrEmpty(fullPath) && File.Exists(fullPath))
+                    Process.Start("explorer.exe", $"/select,\"{fullPath}\"");
                 else
-                {
                     MessageBox.Show("File does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
             }
         }
 
-
-        // Select row for update
         private void dgvLabResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -309,7 +284,6 @@ namespace ENT_Clinic_System.PrintingForms
             }
         }
 
-        // Update existing lab result
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (selectedResultId == -1)
@@ -327,16 +301,19 @@ namespace ENT_Clinic_System.PrintingForms
                 return;
             }
 
-            string savedFile = null;
+            string relativePath = null;
+
             if (!string.IsNullOrEmpty(attachedFilePath))
             {
-                string baseFolder = Path.Combine(@"D:\ENT_CLINIC_Attachments", patientId.ToString(), consultationId.ToString(), "Lab Results");
-                if (!Directory.Exists(baseFolder))
-                    Directory.CreateDirectory(baseFolder);
+                string finalFolder = Path.Combine(basePath, patientId.ToString(), consultationId.ToString(), "Lab Results");
+                Directory.CreateDirectory(finalFolder);
 
                 string uniqueName = Guid.NewGuid().ToString() + Path.GetExtension(attachedFilePath);
-                savedFile = Path.Combine(baseFolder, uniqueName);
-                File.Copy(attachedFilePath, savedFile, true);
+                string finalFilePath = Path.Combine(finalFolder, uniqueName);
+
+                File.Move(attachedFilePath, finalFilePath);
+
+                relativePath = Path.Combine(patientId.ToString(), consultationId.ToString(), "Lab Results", uniqueName);
             }
 
             try
@@ -345,109 +322,73 @@ namespace ENT_Clinic_System.PrintingForms
                 {
                     conn.Open();
                     string query = @"UPDATE lab_results 
-                             SET test_name=@test, result_text=@text, result_file=@file, updated_at=NOW() 
-                             WHERE result_id=@id";
+                                     SET test_name=@test, result_text=@text, result_file=@file, updated_at=NOW() 
+                                     WHERE result_id=@id";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", selectedResultId);
                         cmd.Parameters.AddWithValue("@test", testName);
                         cmd.Parameters.AddWithValue("@text", resultText);
-                        cmd.Parameters.AddWithValue("@file", savedFile != null ? (object)savedFile : DBNull.Value);
-
+                        cmd.Parameters.AddWithValue("@file", relativePath != null ? (object)relativePath : DBNull.Value);
                         cmd.ExecuteNonQuery();
                     }
                 }
+
+                ClearForm();
+                LoadLabResults();
+                MessageBox.Show("Lab result updated successfully.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error updating lab result: " + ex.Message);
-                return;
             }
-
-            ClearForm();
-            LoadLabResults();
-            MessageBox.Show("Lab result updated successfully.");
         }
 
         private void LabResultsForm_Load(object sender, EventArgs e)
         {
-            ComboBoxCollectionHelper.PopulateComboBox(
-                txtTestName,
-                "lab_tests",
-                "test_name"
-            );
-            AutoCompleteHelper.SetupAutoComplete(
-                txtTestName,
-                "lab_tests",
-                new List<string> { "test_name" }
-            );
-            ComboBoxCollectionHelper.PopulateComboBox(
-                txtResultText,
-                "lab_results",
-                "result_text"
-            );
-            AutoCompleteHelper.SetupAutoComplete(
-                txtResultText,
-                "lab_results",
-                new List<string> { "result_text" }
-            );
+            ComboBoxCollectionHelper.PopulateComboBox(txtTestName, "lab_tests", "test_name");
+            AutoCompleteHelper.SetupAutoComplete(txtTestName, "lab_tests", new List<string> { "test_name" });
+            ComboBoxCollectionHelper.PopulateComboBox(txtResultText, "lab_results", "result_text");
+            AutoCompleteHelper.SetupAutoComplete(txtResultText, "lab_results", new List<string> { "result_text" });
         }
 
         private void ScanButton_Click(object sender, EventArgs e)
         {
             try
             {
-                // 🔒 Make sure patient & consultation are valid
                 if (patientId <= 0 || consultationId <= 0)
                 {
                     MessageBox.Show("⚠️ No patient or consultation selected.", "Scan Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // ✅ Initialize WIA Device Manager
                 var manager = new WIA.DeviceManager();
                 if (manager.DeviceInfos.Count == 0)
                 {
-                    MessageBox.Show("⚠️ No scanner detected. Please connect a scanner.", "Scanner Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("⚠️ No scanner detected.", "Scanner Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // ✅ Let user pick scanner and scan
                 WIA.CommonDialog dialog = new WIA.CommonDialog();
-                WIA.ImageFile image = null;
-
-                try
-                {
-                    image = dialog.ShowAcquireImage(
-                        WiaDeviceType.ScannerDeviceType,
-                        WiaImageIntent.UnspecifiedIntent,
-                        WiaImageBias.MaximizeQuality,
-                        WiaFormatIDs.PNG,// output as PNG
-                        true,  // show scanner UI
-                        true,  // allow preview
-                        false  // single page
-                    );
-                }
-                catch (System.Runtime.InteropServices.COMException comEx)
-                {
-                    MessageBox.Show($"Scanning failed: {comEx.Message}", "Scan Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                WIA.ImageFile image = dialog.ShowAcquireImage(
+                    WiaDeviceType.ScannerDeviceType,
+                    WiaImageIntent.UnspecifiedIntent,
+                    WiaImageBias.MaximizeQuality,
+                    WiaFormatIDs.PNG,
+                    true, true, false
+                );
 
                 if (image == null)
                 {
-                    MessageBox.Show("Scan cancelled.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Scan cancelled.");
                     return;
                 }
 
-                // ✅ Prepare save folder
-                string baseFolder = Path.Combine(@"D:\ENT_CLINIC_Attachments", patientId.ToString(), consultationId.ToString(), "Lab Results");
-                if (!Directory.Exists(baseFolder))
-                    Directory.CreateDirectory(baseFolder);
+                string tempFolder = Path.Combine(basePath, "Temp");
+                Directory.CreateDirectory(tempFolder);
 
-                // ✅ Save scanned image as PNG
                 string fileName = $"{Guid.NewGuid():N}.png";
-                string savedFilePath = Path.Combine(baseFolder, fileName);
+                string savedFilePath = Path.Combine(tempFolder, fileName);
 
                 using (var stream = new MemoryStream((byte[])image.FileData.get_BinaryData()))
                 using (Bitmap bmp = new Bitmap(stream))
@@ -455,37 +396,39 @@ namespace ENT_Clinic_System.PrintingForms
                     bmp.Save(savedFilePath, System.Drawing.Imaging.ImageFormat.Png);
                 }
 
-                // ✅ Show scanned image immediately in flpPreview
-                PictureBox pb = new PictureBox
+                attachedFilePath = savedFilePath;
+                lblFileName.Text = Path.GetFileName(savedFilePath);
+
+                // Load image into memory to avoid locking file
+                PictureBox pb;
+                using (var fs = new FileStream(savedFilePath, FileMode.Open, FileAccess.Read))
                 {
-                    Width = 150,
-                    Height = 150,
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Tag = savedFilePath,
-                    BorderStyle = BorderStyle.FixedSingle,
-                    Image = System.Drawing.Image.FromFile(savedFilePath)
-                };
-
-                pb.Click += PreviewFile_Click; // reuse your existing click handler
+                    Image img = Image.FromStream(fs);
+                    pb = new PictureBox
+                    {
+                        Width = 150,
+                        Height = 150,
+                        SizeMode = PictureBoxSizeMode.Zoom,
+                        Tag = savedFilePath,
+                        BorderStyle = BorderStyle.FixedSingle,
+                        Image = new Bitmap(img)
+                    };
+                }
+                pb.Click += PreviewFile_Click;
                 flpPreview.Controls.Add(pb);
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("❌ Scanning failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("❌ Scanning failed: " + ex.Message);
             }
         }
 
-        private void flpPreview_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void flpPreview_Paint(object sender, PaintEventArgs e) { }
     }
 }
+
 public static class WiaFormatIDs
 {
-
-
     public const string BMP = "{B96B3CAB-0728-11D3-9D7B-0000F81EF32E}";
     public const string PNG = "{B96B3CAF-0728-11D3-9D7B-0000F81EF32E}";
     public const string GIF = "{B96B3CB0-0728-11D3-9D7B-0000F81EF32E}";

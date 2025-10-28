@@ -56,6 +56,7 @@
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.patientVisitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +68,8 @@
             this.expiryReportToolStripMenuItem,
             this.stockOnHandToolStripMenuItem,
             this.writeToolStripMenuItem,
-            this.stocToolStripMenuItem});
+            this.stocToolStripMenuItem,
+            this.patientVisitToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             this.reportsToolStripMenuItem.Size = new System.Drawing.Size(77, 29);
             this.reportsToolStripMenuItem.Text = "Report";
@@ -294,6 +296,13 @@
             this.MainPanel.TabIndex = 6;
             this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
+            // patientVisitToolStripMenuItem
+            // 
+            this.patientVisitToolStripMenuItem.Name = "patientVisitToolStripMenuItem";
+            this.patientVisitToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.patientVisitToolStripMenuItem.Text = "Patient Visit";
+            this.patientVisitToolStripMenuItem.Click += new System.EventHandler(this.patientVisitToolStripMenuItem_Click);
+            // 
             // MainFormDoctor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -347,5 +356,6 @@
         private System.Windows.Forms.ToolStripMenuItem consultationsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem paymentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem writeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem patientVisitToolStripMenuItem;
     }
 }

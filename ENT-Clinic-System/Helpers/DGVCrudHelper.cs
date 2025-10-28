@@ -15,7 +15,7 @@ namespace ENT_Clinic_System.Helpers
         // use composite key "row:col" so multiple edited cells per row tracked correctly
         private Dictionary<string, object> oldCellValues = new Dictionary<string, object>();
 
-        private int pageSize = 100;
+        private int pageSize = 50;
         private int currentPage = 1;
         private int totalRecords = 0;
         private int totalPages = 0;
@@ -51,7 +51,7 @@ namespace ENT_Clinic_System.Helpers
         private void UpdatePageInfoLabel()
         {
             if (pageInfoLabel != null)
-                pageInfoLabel.Text = $"Page {currentPage} of {totalPages}";
+                pageInfoLabel.Text = $"Showing {pageSize} Patients\nPage {currentPage} of {totalPages}";
         }
 
         public void NextPage()

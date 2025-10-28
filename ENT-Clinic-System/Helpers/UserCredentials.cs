@@ -19,7 +19,7 @@ namespace ENT_Clinic_System.Helpers
         public static void SetConnectionString()
         {
             if (Role == "Receptionist")
-                ConnectionString = "server=localhost;user=lanuser;password=password;database=ent_clinic_db;";
+                ConnectionString = "server=localhost;user=root;password=password;database=ent_clinic_db;";
             else if (Role == "Doctor")
                 ConnectionString = "server=localhost;user=root;password=password;database=ent_clinic_db;";
             else if (Role == "Admin")

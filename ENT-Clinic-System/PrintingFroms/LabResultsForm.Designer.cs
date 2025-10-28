@@ -122,7 +122,7 @@ namespace ENT_Clinic_System.PrintingForms
             // 
             this.btnAttachFile.Location = new System.Drawing.Point(369, 235);
             this.btnAttachFile.Name = "btnAttachFile";
-            this.btnAttachFile.Size = new System.Drawing.Size(97, 30);
+            this.btnAttachFile.Size = new System.Drawing.Size(122, 30);
             this.btnAttachFile.TabIndex = 3;
             this.btnAttachFile.Text = "Browse File";
             this.btnAttachFile.UseVisualStyleBackColor = true;
@@ -131,7 +131,7 @@ namespace ENT_Clinic_System.PrintingForms
             // lblFileName
             // 
             this.lblFileName.AutoSize = true;
-            this.lblFileName.Location = new System.Drawing.Point(482, 247);
+            this.lblFileName.Location = new System.Drawing.Point(511, 248);
             this.lblFileName.Name = "lblFileName";
             this.lblFileName.Size = new System.Drawing.Size(63, 17);
             this.lblFileName.TabIndex = 4;
@@ -149,17 +149,17 @@ namespace ENT_Clinic_System.PrintingForms
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(369, 274);
+            this.btnAdd.Location = new System.Drawing.Point(615, 273);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(80, 30);
+            this.btnAdd.Size = new System.Drawing.Size(97, 30);
             this.btnAdd.TabIndex = 6;
-            this.btnAdd.Text = "Add";
+            this.btnAdd.Text = "Save All";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(465, 274);
+            this.btnUpdate.Location = new System.Drawing.Point(514, 274);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(80, 30);
             this.btnUpdate.TabIndex = 7;
@@ -239,9 +239,9 @@ namespace ENT_Clinic_System.PrintingForms
             // 
             // ScanButton
             // 
-            this.ScanButton.Location = new System.Drawing.Point(566, 274);
+            this.ScanButton.Location = new System.Drawing.Point(369, 274);
             this.ScanButton.Name = "ScanButton";
-            this.ScanButton.Size = new System.Drawing.Size(150, 30);
+            this.ScanButton.Size = new System.Drawing.Size(122, 30);
             this.ScanButton.TabIndex = 11;
             this.ScanButton.Text = "Scan Document";
             this.ScanButton.UseVisualStyleBackColor = true;
