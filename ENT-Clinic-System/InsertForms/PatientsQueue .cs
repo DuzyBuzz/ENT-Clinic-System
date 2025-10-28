@@ -15,7 +15,7 @@ namespace ENT_Clinic_System.InsertForms
         private DataTable patientsTable;
         private DataTable queueTable;
         private bool suppressEvents = false;
-
+        private object oldCellValue = null;
         // Realtime watcher
         private TableChangeWatcher queueWatcher;
 
@@ -155,11 +155,12 @@ namespace ENT_Clinic_System.InsertForms
                 if (dgvQueue.Columns.Contains("emergency_contact_number"))
                     dgvQueue.Columns["emergency_contact_number"].HeaderText = "Emergency Contact Number";
 
-                // Make only status editable
                 foreach (DataGridViewColumn col in dgvQueue.Columns)
                 {
-                    col.ReadOnly = col.Name != "status";
+                    // Allow editing for "status" and "queue_number" only
+                    col.ReadOnly = !(col.Name == "status" || col.Name == "queue_number");
                 }
+
             }
             finally
             {
@@ -205,41 +206,78 @@ namespace ENT_Clinic_System.InsertForms
         private void dgvQueue_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (suppressEvents || e.RowIndex < 0 || e.ColumnIndex < 0) return;
-            if (dgvQueue.Columns[e.ColumnIndex].Name != "status") return;
+
+            string columnName = dgvQueue.Columns[e.ColumnIndex].Name;
+            if (columnName != "status" && columnName != "queue_number") return;
+
+            var row = dgvQueue.Rows[e.RowIndex];
+            int queueId = Convert.ToInt32(row.Cells["queue_id"].Value);
 
             try
             {
-                var row = dgvQueue.Rows[e.RowIndex];
-                int queueId = Convert.ToInt32(row.Cells["queue_id"].Value);
-                string newStatus = row.Cells["status"].Value.ToString();
-
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string sql;
-                    if (newStatus == "examining")
-                        sql = "UPDATE queue SET status=@status, called_at=NOW() WHERE queue_id=@id";
-                    else if (newStatus == "done")
-                        sql = "UPDATE queue SET status=@status, finished_at=NOW() WHERE queue_id=@id";
-                    else
-                        sql = "UPDATE queue SET status=@status WHERE queue_id=@id";
 
-                    using (var cmd = new MySqlCommand(sql, conn))
+                    string sql = "";
+                    MySqlCommand cmd = null;
+
+                    // ✅ Handle Status column
+                    if (columnName == "status")
                     {
+                        string newStatus = row.Cells["status"].Value?.ToString() ?? "";
+
+                        if (newStatus.Equals("Examining", StringComparison.OrdinalIgnoreCase))
+                            sql = "UPDATE queue SET status=@status, called_at=NOW() WHERE queue_id=@id";
+                        else if (newStatus.Equals("Done", StringComparison.OrdinalIgnoreCase))
+                            sql = "UPDATE queue SET status=@status, finished_at=NOW() WHERE queue_id=@id";
+                        else
+                            sql = "UPDATE queue SET status=@status WHERE queue_id=@id";
+
+                        cmd = new MySqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@status", newStatus);
                         cmd.Parameters.AddWithValue("@id", queueId);
-                        cmd.ExecuteNonQuery();
                     }
+
+                    // ✅ Handle Queue Number column
+                    else if (columnName == "queue_number")
+                    {
+                        string value = row.Cells["queue_number"].Value?.ToString() ?? "";
+
+                        // Empty?
+                        if (string.IsNullOrWhiteSpace(value))
+                        {
+
+                        }
+
+                        // Not numeric?
+                        if (!int.TryParse(value, out int newNumber))
+                        {
+
+                        }
+
+                        // ✅ Update DB if valid
+                        sql = "UPDATE queue SET queue_number=@num WHERE queue_id=@id";
+                        cmd = new MySqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@num", newNumber);
+                        cmd.Parameters.AddWithValue("@id", queueId);
+                    }
+
+                    if (cmd != null)
+                        cmd.ExecuteNonQuery();
                 }
 
+                // ✅ Reload data to reflect update
                 LoadQueue();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to update status: " + ex.Message, "Error",
+                MessageBox.Show("Failed to update queue: " + ex.Message, "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
 
         private void dgvQueue_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
@@ -251,7 +289,7 @@ namespace ENT_Clinic_System.InsertForms
 
         private void btnSearchPatient_Click(object sender, EventArgs e)
         {
-            patientsTable.DefaultView.RowFilter = $"full_name LIKE '%{txtSearchPatient.Text}%'";
+            LoadPatients();
         }
 
         private void dgvPatients_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -471,5 +509,38 @@ namespace ENT_Clinic_System.InsertForms
         {
 
         }
+
+        private void dgvQueue_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (dgvQueue.Columns[e.ColumnIndex].Name == "queue_number")
+            {
+                // ✅ Store the current value before editing
+                oldCellValue = dgvQueue.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            }
+        }
+
+        private void dgvQueue_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (dgvQueue.CurrentCell.ColumnIndex == dgvQueue.Columns["queue_number"].Index)
+            {
+                TextBox tb = e.Control as TextBox;
+
+                if (tb != null)
+                {
+                    // Remove previous handlers to avoid duplicate events
+                    tb.KeyPress -= QueueNumber_KeyPress;
+                    tb.KeyPress += QueueNumber_KeyPress;
+                }
+            }
+        }
+        private void QueueNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // ✅ Allow only digits and control keys (Backspace, Delete)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Block non-numeric input
+            }
+        }
+
     }
 }

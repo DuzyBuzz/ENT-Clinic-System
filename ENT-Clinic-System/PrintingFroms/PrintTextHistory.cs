@@ -1,6 +1,7 @@
 ﻿using ENT_Clinic_System.Helpers;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
@@ -11,30 +12,53 @@ namespace ENT_Clinic_System.PrintingForms
 {
     internal class PrintTextHistory
     {
+        // --- Identifiers ---
         private int patientId;
         private int consultationId;
 
-        // Patient info
+        // --- Patient info ---
         private string patientName, patientAddress, patientSex, civilStatus, patientContact;
         private string emergencyName, emergencyContact, emergencyRelationship;
         private int patientAge;
         private DateTime birthDate;
 
-        // Consultation info
+        // --- Consultation info ---
         private DateTime consultationDate;
         private string doctorName, chiefComplaint, history;
         private string earExam, noseExam, throatExam, neckExam, othersExam;
         private string diagnosis, recommendations, notes, followUpNotes;
         private DateTime? followUpDate;
-        private float currentY;          // Tracks vertical position across pages
-        private bool isFirstPage = true; // Used to reset margins per print job
-        // Health record info
+
+        // --- Health record info ---
         private string pastMedicalHistory, familyHistory, personalSocialHistory, allergies;
         private string bp, temperature, pr, rr, ht, wt;
         private string generalAppearance, skin, headAndFace, eyes, neck, chestLungs, heart, abdomen, extremities, neurologic;
 
+        // --- Prescriptions (combined from prescription + prescription_other) ---
+        private readonly List<(string GenericName, string BrandName, string Strength, string Dosage, int Quantity, string Sig)> prescriptions
+            = new List<(string, string, string, string, int, string)>();
+
+        // --- Print and pagination state ---
         private PrintDocument printDocument;
         public PrintDocument Document => printDocument;
+
+        // Pagination state
+        // stage indicates which major block we are printing (so we can resume)
+        // stages:
+        // 0 = start/header/title, 1 = patient info rows, 2 = consultation details (doctor/date), 3 = chief/history,
+        // 4 = vitals, 5 = medical/family/social/allergy, 6 = physical exam block, 7 = ENT exam block,
+        // 8 = diagnosis/recommendations, 9 = prescriptions, 10 = footer/done
+        private int printStage = 0;
+
+        // Sub indices used to resume lists across pages
+        private int patientInfoRowIndex = 0;
+        private int physicalExamOuterIndex = 0; // for 5-per-row loop
+        private int physicalExamInnerMax = 0;
+        private int entExamIndex = 0;
+        private int entBulletIndex = 0;
+        private int prescriptionsIndex = 0;
+        private bool headerPrintedThisPage = false;
+        private float currentY = 0f;
 
         public PrintTextHistory(int patientId, int consultationId)
         {
@@ -48,6 +72,7 @@ namespace ENT_Clinic_System.PrintingForms
             printDocument.PrintPage += PrintDocument_PrintPage;
         }
 
+        #region Data Loading
         private void LoadData()
         {
             using (var conn = DBConfig.GetConnection())
@@ -153,333 +178,660 @@ namespace ENT_Clinic_System.PrintingForms
                         }
                     }
                 }
+
+                // --- PRESCRIPTIONS: combine prescription + prescription_other (same as your PrescriptionPrintHelper) ---
+                using (var cmd = new MySqlCommand(@"
+                    SELECT i.generic_name, i.brand_name, i.strength, i.dosage, p.quantity, p.sig
+                    FROM prescription p
+                    JOIN items i ON p.item_id = i.item_id
+                    WHERE p.consultation_id = @consultationId
+                    UNION ALL
+                    SELECT o.generic_name, o.brand_name, o.strength, o.dosage, po.quantity, po.sig
+                    FROM prescription_other po
+                    JOIN other_items o ON po.item_id = o.item_id
+                    WHERE po.consultation_id = @consultationId
+                    ORDER BY 1;", conn))
+                {
+                    cmd.Parameters.AddWithValue("@consultationId", consultationId);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            prescriptions.Add((
+                                ToTitleCase(reader["generic_name"]?.ToString()),
+                                ToTitleCase(reader["brand_name"]?.ToString()),
+                                reader["strength"]?.ToString(),
+                                reader["dosage"]?.ToString(),
+                                reader["quantity"] != DBNull.Value ? Convert.ToInt32(reader["quantity"]) : 0,
+                                reader["sig"]?.ToString()
+                            ));
+                        }
+                    }
+                }
             }
         }
 
-        // ✅ Helper: Convert to Title Case
         private static string ToTitleCase(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) return text;
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text.ToLower());
         }
+        #endregion
 
-        // --- Print Page ---
-        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        #region Print Helpers (space checks and small drawers)
+
+        /// <summary>
+        /// Checks if there is room for 'needed' vertical space. If not, set HasMorePages and save currentY.
+        /// Returns true if enough space, false if no space and HasMorePages set.
+        /// </summary>
+        private bool EnsureSpace(Graphics g, PrintPageEventArgs e, ref float y, float needed, float bottomLimit)
         {
-            Graphics g = e.Graphics;
-            float leftMargin = 40;
-            float rightMargin = 40;
-            float topMargin = 40;
-            float footerMargin = 100;
-            float contentWidth = e.PageBounds.Width - leftMargin - rightMargin;
-            float y = topMargin;
-
-            Font titleFont = new Font("Arial", 12, FontStyle.Bold);
-            Font sectionFont = new Font("Arial", 8, FontStyle.Bold);
-            Font bodyFont = new Font("Arial", 8, FontStyle.Regular);
-            StringFormat wrapFormat = new StringFormat
+            if (y + needed > bottomLimit)
             {
-                Alignment = StringAlignment.Near,
-                LineAlignment = StringAlignment.Near,
-                FormatFlags = StringFormatFlags.LineLimit,
-                Trimming = StringTrimming.Word
-            };
+                // Save the position and indicate another page is required
+                currentY = y;
+                e.HasMorePages = true;
+                return false;
+            }
+            return true;
+        }
 
-            // --- Header ---
-            y = WaterMarkHelper.PrintHeader(g, (int)leftMargin, (int)y, e.PageBounds.Width);
-
-            // --- Title ---
-            g.DrawString("CONSULTATION HISTORY", titleFont, Brushes.Black,
-                new RectangleF(leftMargin, y, contentWidth, 25),
-                new StringFormat { Alignment = StringAlignment.Center });
-            y += 35;
-
-            // --- Patient Info ---
-            float colWidth3 = contentWidth / 3;
-
-            void DrawPatientInfoRow(
-                string c1Label, string c1Val,
-                string c2Label = null, string c2Val = null,
-                string c3Label = null, string c3Val = null,
-                string c4Label = null, string c4Val = null)
+        /// <summary>
+        /// Simple wrapper to draw a labelled row with optional 4 columns like your original DrawPatientInfoRow.
+        /// This does not check all wrap situations — keep rows small.
+        /// </summary>
+        private void DrawPatientInfoRow(Graphics g, ref float y, float leftMargin, float contentWidth, PrintPageEventArgs e,
+            string c1Label, string c1Val,
+            string c2Label = null, string c2Val = null,
+            string c3Label = null, string c3Val = null,
+            string c4Label = null, string c4Val = null,
+            float bottomLimit = float.MaxValue)
+        {
+            using (Font bodyFont = new Font("Arial", 8, FontStyle.Regular))
             {
-                // Divide the available width into 4 equal parts
-                float colWidth4s = contentWidth / 4;
+                float colWidth4s = contentWidth / 4f;
 
-                // --- Column 1 ---
+                // Estimate height needed
+                float needed = 20f;
+                if (!EnsureSpace(g, e, ref y, needed, bottomLimit)) return;
+
                 if (!string.IsNullOrEmpty(c1Label))
                     g.DrawString($"{c1Label}: {c1Val}", bodyFont, Brushes.Black, leftMargin, y);
 
-                // --- Column 2 ---
                 if (!string.IsNullOrEmpty(c2Label))
                     g.DrawString($"{c2Label}: {c2Val}", bodyFont, Brushes.Black, leftMargin + colWidth4s, y);
 
-                // --- Column 3 ---
                 if (!string.IsNullOrEmpty(c3Label))
                     g.DrawString($"{c3Label}: {c3Val}", bodyFont, Brushes.Black, leftMargin + (colWidth4s * 2), y);
 
-                // --- Column 4 ---
                 if (!string.IsNullOrEmpty(c4Label))
                     g.DrawString($"{c4Label}: {c4Val}", bodyFont, Brushes.Black, leftMargin + (colWidth4s * 3), y);
 
-                // Move down for next line
                 y += 20;
-
-                // Optional line separator
-                g.DrawLine(Pens.LightGray, leftMargin, y, e.PageBounds.Width - rightMargin, y);
+                g.DrawLine(Pens.LightGray, leftMargin, y, leftMargin + contentWidth, y);
                 y += 5;
             }
-
-
-            DrawPatientInfoRow("Name", patientName, "Age", patientAge.ToString(), "Sex", patientSex, "Civil Status", civilStatus);
-
-            DrawPatientInfoRow("Address", patientAddress, null, null, "Contact Number", patientContact);
-            if (!string.IsNullOrEmpty(emergencyName))
-                DrawPatientInfoRow("Contact in case of Emergency", $"{emergencyName} {emergencyRelationship}  {emergencyContact}");
-            else
-                DrawPatientInfoRow(null, null,null,null);
-
-
-            y += 10;
-
-            // --- Section Headers and Body ---
-            void DrawSectionHeader(string text)
-            {
-                g.FillRectangle(Brushes.LightGray, leftMargin, y, contentWidth, 22);
-                g.DrawRectangle(Pens.Gray, leftMargin, y, contentWidth, 22);
-                g.DrawString(text, sectionFont, Brushes.Black, leftMargin + 5, y + 3);
-                y += 25;
-            }
-            void DrawTwoColumnSection(string leftHeader, string rightHeader, string leftText, string rightText)
-            {
-                // Draw section header background
-                g.FillRectangle(Brushes.LightGray, leftMargin, y, contentWidth, 22);
-                g.DrawRectangle(Pens.Gray, leftMargin, y, contentWidth, 22);
-                g.DrawString(leftHeader, sectionFont, Brushes.Black, leftMargin + 5, y + 3);
-                g.DrawString(rightHeader, sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, y + 3);
-                y += 25;
-
-                // Split items
-                var leftItems = string.IsNullOrWhiteSpace(leftText)
-                    ? new string[0]
-                    : leftText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
-
-                var rightItems = string.IsNullOrWhiteSpace(rightText)
-                    ? new string[0]
-                    : rightText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
-
-                int maxLines = Math.Max(leftItems.Length, rightItems.Length);
-
-                // Column width (split the total width in half)
-                float columnWidth = contentWidth / 2 - 10; // padding between text and border
-
-                // Enable wrapping
-                StringFormat sf = new StringFormat
-                {
-                    Alignment = StringAlignment.Near,
-                    LineAlignment = StringAlignment.Near,
-                    FormatFlags = StringFormatFlags.LineLimit
-                };
-
-                for (int i = 0; i < maxLines; i++)
-                {
-                    string leftBullet = i < leftItems.Length ? "• " + leftItems[i] : "";
-                    string rightBullet = i < rightItems.Length ? "• " + rightItems[i] : "";
-
-                    // Measure both sides’ wrapped height
-                    SizeF leftSize = g.MeasureString(leftBullet, bodyFont, (int)columnWidth, sf);
-                    SizeF rightSize = g.MeasureString(rightBullet, bodyFont, (int)columnWidth, sf);
-                    float lineHeight = Math.Max(leftSize.Height, rightSize.Height);
-
-                    // Define drawing rectangles for wrapping
-                    RectangleF leftRect = new RectangleF(leftMargin + 5, y, columnWidth, lineHeight);
-                    RectangleF rightRect = new RectangleF(leftMargin + contentWidth / 2 + 5, y, columnWidth, lineHeight);
-
-                    // Draw wrapped text
-                    if (!string.IsNullOrEmpty(leftBullet))
-                        g.DrawString(leftBullet, bodyFont, Brushes.Black, leftRect, sf);
-
-                    if (!string.IsNullOrEmpty(rightBullet))
-                        g.DrawString(rightBullet, bodyFont, Brushes.Black, rightRect, sf);
-
-                    // Move down for next line
-                    y += lineHeight + 4;
-                }
-
-                y += 5; // spacing after section
-            }
-
-            void DrawTwoColumnSectionText(string leftHeader, string rightHeader, string leftText, string rightText)
-            {
-                // Header background and borders
-                g.FillRectangle(Brushes.LightGray, leftMargin, y, contentWidth, 22);
-                g.DrawRectangle(Pens.Gray, leftMargin, y, contentWidth, 22);
-                g.DrawString(leftHeader, sectionFont, Brushes.Black, leftMargin + 5, y + 3);
-                g.DrawString(rightHeader, sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, y + 3);
-                y += 25;
-
-                // Split text items (comma separated)
-                var leftItems = string.IsNullOrWhiteSpace(leftText)
-                    ? new string[0]
-                    : leftText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
-                var rightItems = string.IsNullOrWhiteSpace(rightText)
-                    ? new string[0]
-                    : rightText.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
-
-                int maxLines = Math.Max(leftItems.Length, rightItems.Length);
-
-                // Define column widths
-                float columnWidth = contentWidth / 2 - 10; // padding
-                StringFormat sf = new StringFormat
-                {
-                    Alignment = StringAlignment.Near,
-                    LineAlignment = StringAlignment.Near,
-                    FormatFlags = StringFormatFlags.LineLimit
-                };
-
-                for (int i = 0; i < maxLines; i++)
-                {
-                    string l = i < leftItems.Length ? leftItems[i] : "";
-                    string r = i < rightItems.Length ? rightItems[i] : "";
-
-                    // Measure text height for wrapping
-                    SizeF leftSize = g.MeasureString(l, bodyFont, (int)columnWidth, sf);
-                    SizeF rightSize = g.MeasureString(r, bodyFont, (int)columnWidth, sf);
-                    float lineHeight = Math.Max(leftSize.Height, rightSize.Height);
-
-                    // Draw wrapped text
-                    RectangleF leftRect = new RectangleF(leftMargin, y, columnWidth, lineHeight);
-                    RectangleF rightRect = new RectangleF(leftMargin + contentWidth / 2, y, columnWidth, lineHeight);
-
-                    g.DrawString(l, bodyFont, Brushes.Black, leftRect, sf);
-                    g.DrawString(r, bodyFont, Brushes.Black, rightRect, sf);
-
-                    y += lineHeight + 5; // spacing between rows
-                }
-
-                y += 5; // extra bottom space
-            }
-
-            // --- Consultation Details ---
-            DrawSectionHeader("Consultation Details");
-            DrawPatientInfoRow("Doctor", doctorName, null, "Date", consultationDate.ToString("MMMM dd, yyyy"));
-            DrawTwoColumnSectionText("Chief Complaint", "Recent Illness", chiefComplaint, history);// wrapped
-
-            // --- Vital Signs ---
-            DrawSectionHeader("Vital Signs");
-            g.DrawString($" BP: {bp}                Temp: {temperature}                         PR: {pr}                    RR: {rr}                        Ht: {ht}                    Wt: {wt}", bodyFont, Brushes.Black, leftMargin, y);
-            y += 30;
-
-            DrawTwoColumnSection("Medical History", "Family History", pastMedicalHistory, familyHistory);
-            DrawTwoColumnSection("Social History", "Allergies", personalSocialHistory, allergies);
-
-            // --- Physical Exam ---
-            DrawSectionHeader("Physical Examination");
-            string[] examTitles = { "General Appearance", "Skin", "Head & Face", "Eyes", "Neck", "Chest & Lungs", "Heart", "Abdomen", "Extremities", "Neurologic" };
-            string[] examValues = { generalAppearance, skin, headAndFace, eyes, neck, chestLungs, heart, abdomen, extremities, neurologic };
-            float colWidth4 = contentWidth / 5;
-
-            for (int i = 0; i < examTitles.Length; i += 5)
-            {
-                float maxHeight = 0;
-                for (int c = 0; c < 5 && i + c < examTitles.Length; c++)
-                {
-                    var val = examValues[i + c];
-                    if (!string.IsNullOrWhiteSpace(val))
-                    {
-                        g.DrawString(examTitles[i + c] + "", sectionFont, Brushes.Black, leftMargin + c * colWidth4, y);
-                        var bullets = val.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
-                        float lineOffset = 18;
-                        foreach (var b in bullets)
-                        {
-                            g.DrawString("" + b, bodyFont, Brushes.Black, leftMargin + c * colWidth4 + 5, y + lineOffset);
-                            lineOffset += 16;
-                        }
-                        if (lineOffset > maxHeight) maxHeight = lineOffset;
-                    }
-                }
-                y += maxHeight + 10;
-            }
-
-            // --- ENT Examination ---
-            DrawSectionHeader("ENT Examination");
-            // ENT Exam Section - Vertical Layout with Wrapping
-            string[] entLabels = { "Ear Exam", "Nose Exam", "Throat Exam", "Other Exam" };
-            string[] entValues = { earExam, noseExam, throatExam, othersExam };
-
-            // StringFormat to enable wrapping
-            StringFormat sfs = new StringFormat
-            {
-                Alignment = StringAlignment.Near,
-                LineAlignment = StringAlignment.Near,
-                FormatFlags = StringFormatFlags.LineLimit
-            };
-
-            // Define text area width (full printable width)
-            float textWidth = contentWidth - 10; // 5px padding on each side
-
-            for (int i = 0; i < entLabels.Length; i++)
-            {
-                // Skip if exam is empty
-                if (string.IsNullOrWhiteSpace(entValues[i]))
-                    continue;
-
-                // Draw section label
-                g.DrawString(entLabels[i] + ":", sectionFont, Brushes.Black, leftMargin, y);
-                y += 22; // space below label
-
-                // Split bullets (comma separated)
-                var bullets = entValues[i]
-                    .Split(',')
-                    .Select(s => s.Trim())
-                    .Where(s => !string.IsNullOrEmpty(s))
-                    .ToArray();
-
-                foreach (var b in bullets)
-                {
-                    string bulletText = "• " + b;
-
-                    // Measure how tall the text will be when wrapped
-                    SizeF textSize = g.MeasureString(bulletText, bodyFont, (int)textWidth, sfs);
-
-                    // Define bounding box for wrapped text
-                    RectangleF textRect = new RectangleF(leftMargin + 10, y, textWidth, textSize.Height);
-
-                    // Draw text inside the box (auto-wrap)
-                    g.DrawString(bulletText, bodyFont, Brushes.Black, textRect, sfs);
-
-                    // Move Y down according to the wrapped height
-                    y += textSize.Height + 4; // spacing between bullets
-                }
-
-                // Extra space after each exam section
-                y += 10;
-            }
-
-            y += 40;
-
-            DrawTwoColumnSection("Diagnosis", "Recommendations", diagnosis, recommendations);
-
-            using (Font labelFont = new Font("Arial", 9, FontStyle.Bold))
-            {
-                string labelText = "Follow-up visit on:";
-                float footerY = e.PageBounds.Bottom - 70;
-                g.DrawString(labelText, labelFont, Brushes.Black, leftMargin + 30, footerY);
-
-                if (followUpDate.HasValue)
-                {
-                    using (Font dateFont = new Font("Arial", 9, FontStyle.Underline))
-                    {
-                        string dateText = followUpDate.Value.ToString("MMMM dd, yyyy");
-                        float dateY = footerY + 18;
-                        g.DrawString(dateText, dateFont, Brushes.Black, leftMargin + 30, dateY);
-                    }
-                }
-            }
-
-            WaterMarkHelper.PrintFooter(g, 0, (int)(e.PageBounds.Height - footerMargin), e.PageBounds.Width - 75);
         }
 
+        #endregion
+
+        #region Main Print Logic with Pagination State Machine
+
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            Graphics g = e.Graphics;
+
+            // Margins and layout
+            float leftMargin = 40f;
+            float rightMargin = 40f;
+            float topMargin = 40f;
+            float footerHeightReserve = 110f; // reserve area so footer can be placed cleanly on last page
+            float contentWidth = e.PageBounds.Width - leftMargin - rightMargin;
+            float pageTop = topMargin;
+            float pageBottom = e.MarginBounds.Bottom - 20f; // general bottom limit
+            float bottomForContent = pageBottom - footerHeightReserve; // avoid overwriting footer area
+
+            // Fonts
+            Font titleFont = new Font("Arial", 12, FontStyle.Bold);
+            Font sectionFont = new Font("Arial", 8, FontStyle.Bold);
+            Font bodyFont = new Font("Arial", 8, FontStyle.Regular);
+
+            // If this is the first time PrintPage is called for the job, reset state
+            if (printStage == 0 && currentY == 0f)
+            {
+                headerPrintedThisPage = false;
+                currentY = pageTop;
+            }
+            else if (!headerPrintedThisPage)
+            {
+                // if moving to a new page in middle of job, reset header flag
+                currentY = pageTop;
+            }
+
+            // Ensure header printed each page
+            if (!headerPrintedThisPage)
+            {
+                // Print header and title at top of each page
+                currentY = WaterMarkHelper.PrintHeader(g, (int)leftMargin, (int)currentY, e.PageBounds.Width);
+                g.DrawString("CONSULTATION HISTORY", titleFont, Brushes.Black,
+                    new RectangleF(leftMargin, currentY, contentWidth, 25),
+                    new StringFormat { Alignment = StringAlignment.Center });
+                currentY += 35;
+                headerPrintedThisPage = true;
+            }
+
+            // We'll repeatedly attempt to draw from the current printStage until we either
+            // finish all stages or we run out of vertical space and set e.HasMorePages = true.
+            bool pageFull = false;
+
+            // Helper lambda to stop printing on page and request another
+            Action stopPage = () =>
+            {
+                currentY = currentY; // preserved
+                e.HasMorePages = true;
+                pageFull = true;
+            };
+
+            // Stage-driven printing: do not reinitialize variables that track indices between pages.
+            while (!pageFull && printStage <= 10)
+            {
+                switch (printStage)
+                {
+                    case 0: // Patient Info block (rows)
+                        {
+                            // We'll print a few patient rows. We maintain patientInfoRowIndex to resume.
+                            List<Action> patientRows = new List<Action>
+                            {
+                                () => DrawPatientInfoRow(g, ref currentY, leftMargin, contentWidth, e,
+                                    "Name", patientName, "Age", patientAge.ToString(), "Sex", patientSex, "Civil Status", civilStatus, bottomLimit: bottomForContent),
+                                () => DrawPatientInfoRow(g, ref currentY, leftMargin, contentWidth, e,
+                                    "Address", patientAddress, null, null, "Contact Number", patientContact, null, null, bottomLimit: bottomForContent),
+                                () => {
+                                    if (!string.IsNullOrEmpty(emergencyName))
+                                        DrawPatientInfoRow(g, ref currentY, leftMargin, contentWidth, e,
+                                            "Contact in case of Emergency", $"{emergencyName} {emergencyRelationship} {emergencyContact}", null, null, null, null, null, null, bottomLimit: bottomForContent);
+                                    else
+                                        DrawPatientInfoRow(g, ref currentY, leftMargin, contentWidth, e, null, null, null, null, null, null, null, null, bottomLimit: bottomForContent);
+                                }
+                            };
+
+                            for (; patientInfoRowIndex < patientRows.Count; patientInfoRowIndex++)
+                            {
+                                // before invoking, check minimal space
+                                if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent))
+                                {
+                                    stopPage();
+                                    break;
+                                }
+
+                                patientRows[patientInfoRowIndex].Invoke();
+
+                                if (e.HasMorePages) { stopPage(); break; }
+                            }
+
+                            if (!pageFull && patientInfoRowIndex >= patientRows.Count)
+                            {
+                                // advance stage
+                                printStage = 1;
+                                patientInfoRowIndex = 0;
+                            }
+                        }
+                        break;
+
+                    case 1: // Consultation Details (Doctor, Date) & Chief Complaint / Recent Illness
+                        {
+                            // Doctor & Date row
+                            if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent))
+                            {
+                                stopPage(); break;
+                            }
+
+                            // Doctor and Date
+                            g.DrawString("Doctor: " + doctorName, bodyFont, Brushes.Black, leftMargin, currentY);
+                            g.DrawString("Date: " + consultationDate.ToString("MMMM dd, yyyy"), bodyFont, Brushes.Black, leftMargin + contentWidth / 2, currentY);
+                            currentY += 25;
+
+                            // Chief complaint (two column style previously used)
+                            // We'll draw headings then the wrapped text in two halves
+                            if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent))
+                            { stopPage(); break; }
+
+                            // Draw Section Header
+                            g.FillRectangle(Brushes.LightGray, leftMargin, currentY, contentWidth, 22);
+                            g.DrawRectangle(Pens.Gray, leftMargin, currentY, contentWidth, 22);
+                            g.DrawString("Chief Complaint", sectionFont, Brushes.Black, leftMargin + 5, currentY + 3);
+                            g.DrawString("Recent Illness", sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, currentY + 3);
+                            currentY += 25;
+
+                            // Draw chief complaint and history as comma split bullets in columns with wrapping
+                            var leftItems = string.IsNullOrWhiteSpace(chiefComplaint) ? new string[0] : chiefComplaint.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                            var rightItems = string.IsNullOrWhiteSpace(history) ? new string[0] : history.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                            int maxLines = Math.Max(leftItems.Length, rightItems.Length);
+                            float columnWidth = contentWidth / 2 - 10;
+                            StringFormat sf = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near, FormatFlags = StringFormatFlags.LineLimit };
+
+                            for (int i = 0; i < maxLines; i++)
+                            {
+                                string l = i < leftItems.Length ? "• " + leftItems[i] : "";
+                                string r = i < rightItems.Length ? "• " + rightItems[i] : "";
+
+                                SizeF leftSize = g.MeasureString(l, bodyFont, (int)columnWidth, sf);
+                                SizeF rightSize = g.MeasureString(r, bodyFont, (int)columnWidth, sf);
+                                float lineHeight = Math.Max(leftSize.Height, rightSize.Height);
+
+                                if (!EnsureSpace(g, e, ref currentY, lineHeight + 6f, bottomForContent))
+                                { stopPage(); break; }
+
+                                RectangleF leftRect = new RectangleF(leftMargin + 5, currentY, columnWidth, lineHeight);
+                                RectangleF rightRect = new RectangleF(leftMargin + contentWidth / 2 + 5, currentY, columnWidth, lineHeight);
+
+                                if (!string.IsNullOrEmpty(l)) g.DrawString(l, bodyFont, Brushes.Black, leftRect, sf);
+                                if (!string.IsNullOrEmpty(r)) g.DrawString(r, bodyFont, Brushes.Black, rightRect, sf);
+
+                                currentY += lineHeight + 4;
+                            }
+
+                            if (!pageFull)
+                            {
+                                printStage = 2;
+                            }
+                        }
+                        break;
+
+                    case 2: // Vital Signs
+                        {
+                            if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent))
+                            { stopPage(); break; }
+
+                            g.DrawString($" BP: {bp}                Temp: {temperature}                         PR: {pr}                    RR: {rr}                        Ht: {ht}                    Wt: {wt}", bodyFont, Brushes.Black, leftMargin, currentY);
+                            currentY += 30;
+                            printStage = 3;
+                        }
+                        break;
+
+                    case 3: // Medical / Family / Social / Allergies
+                        {
+                            // Medical & Family (two column list)
+                            if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent))
+                            { stopPage(); break; }
+
+                            // Medical / Family
+                            {
+                                // Draw header for the two-column section
+                                g.FillRectangle(Brushes.LightGray, leftMargin, currentY, contentWidth, 22);
+                                g.DrawRectangle(Pens.Gray, leftMargin, currentY, contentWidth, 22);
+                                g.DrawString("Medical History", sectionFont, Brushes.Black, leftMargin + 5, currentY + 3);
+                                g.DrawString("Family History", sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, currentY + 3);
+                                currentY += 25;
+
+                                var leftItems = string.IsNullOrWhiteSpace(pastMedicalHistory) ? new string[0] : pastMedicalHistory.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                                var rightItems = string.IsNullOrWhiteSpace(familyHistory) ? new string[0] : familyHistory.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                                int maxLines = Math.Max(leftItems.Length, rightItems.Length);
+                                float columnWidth = contentWidth / 2 - 10;
+                                StringFormat sf = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near, FormatFlags = StringFormatFlags.LineLimit };
+
+                                for (int i = 0; i < maxLines; i++)
+                                {
+                                    string l = i < leftItems.Length ? "• " + leftItems[i] : "";
+                                    string r = i < rightItems.Length ? "• " + rightItems[i] : "";
+
+                                    SizeF leftSize = g.MeasureString(l, bodyFont, (int)columnWidth, sf);
+                                    SizeF rightSize = g.MeasureString(r, bodyFont, (int)columnWidth, sf);
+                                    float lineHeight = Math.Max(leftSize.Height, rightSize.Height);
+
+                                    if (!EnsureSpace(g, e, ref currentY, lineHeight + 6f, bottomForContent))
+                                    { stopPage(); break; }
+
+                                    RectangleF leftRect = new RectangleF(leftMargin + 5, currentY, columnWidth, lineHeight);
+                                    RectangleF rightRect = new RectangleF(leftMargin + contentWidth / 2 + 5, currentY, columnWidth, lineHeight);
+
+                                    if (!string.IsNullOrEmpty(l)) g.DrawString(l, bodyFont, Brushes.Black, leftRect, sf);
+                                    if (!string.IsNullOrEmpty(r)) g.DrawString(r, bodyFont, Brushes.Black, rightRect, sf);
+
+                                    currentY += lineHeight + 4;
+                                }
+                            }
+
+                            if (e.HasMorePages) { stopPage(); break; }
+
+                            // Social History & Allergies (two column)
+                            if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent))
+                            { stopPage(); break; }
+
+                            g.FillRectangle(Brushes.LightGray, leftMargin, currentY, contentWidth, 22);
+                            g.DrawRectangle(Pens.Gray, leftMargin, currentY, contentWidth, 22);
+                            g.DrawString("Social History", sectionFont, Brushes.Black, leftMargin + 5, currentY + 3);
+                            g.DrawString("Allergies", sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, currentY + 3);
+                            currentY += 25;
+
+                            {
+                                var leftItems = string.IsNullOrWhiteSpace(personalSocialHistory) ? new string[0] : personalSocialHistory.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                                var rightItems = string.IsNullOrWhiteSpace(allergies) ? new string[0] : allergies.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                                int maxLines = Math.Max(leftItems.Length, rightItems.Length);
+                                float columnWidth = contentWidth / 2 - 10;
+                                StringFormat sf = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near, FormatFlags = StringFormatFlags.LineLimit };
+
+                                for (int i = 0; i < maxLines; i++)
+                                {
+                                    string l = i < leftItems.Length ? "• " + leftItems[i] : "";
+                                    string r = i < rightItems.Length ? "• " + rightItems[i] : "";
+
+                                    SizeF leftSize = g.MeasureString(l, bodyFont, (int)columnWidth, sf);
+                                    SizeF rightSize = g.MeasureString(r, bodyFont, (int)columnWidth, sf);
+                                    float lineHeight = Math.Max(leftSize.Height, rightSize.Height);
+
+                                    if (!EnsureSpace(g, e, ref currentY, lineHeight + 6f, bottomForContent))
+                                    { stopPage(); break; }
+
+                                    RectangleF leftRect = new RectangleF(leftMargin + 5, currentY, columnWidth, lineHeight);
+                                    RectangleF rightRect = new RectangleF(leftMargin + contentWidth / 2 + 5, currentY, columnWidth, lineHeight);
+
+                                    if (!string.IsNullOrEmpty(l)) g.DrawString(l, bodyFont, Brushes.Black, leftRect, sf);
+                                    if (!string.IsNullOrEmpty(r)) g.DrawString(r, bodyFont, Brushes.Black, rightRect, sf);
+
+                                    currentY += lineHeight + 4;
+                                }
+                            }
+
+                            if (!pageFull)
+                                printStage = 4;
+                        }
+                        break;
+
+                    case 4: // Physical Examination (multi-column in groups of 5 as in your original code)
+                        {
+                            string[] examTitles = { "General Appearance", "Skin", "Head & Face", "Eyes", "Neck", "Chest & Lungs", "Heart", "Abdomen", "Extremities", "Neurologic" };
+                            string[] examValues = { generalAppearance, skin, headAndFace, eyes, neck, chestLungs, heart, abdomen, extremities, neurologic };
+                            float colWidth4 = contentWidth / 5f;
+
+                            // We'll iterate in steps of 5 (like your original)
+                            for (; physicalExamOuterIndex < examTitles.Length; physicalExamOuterIndex += 5)
+                            {
+                                // Measure the needed height for this 5-column block conservatively
+                                float estimatedNeeded = 40f; // baseline
+                                if (!EnsureSpace(g, e, ref currentY, estimatedNeeded, bottomForContent))
+                                { stopPage(); break; }
+
+                                float maxHeight = 0;
+                                for (int c = 0; c < 5 && physicalExamOuterIndex + c < examTitles.Length; c++)
+                                {
+                                    var val = examValues[physicalExamOuterIndex + c];
+                                    if (!string.IsNullOrWhiteSpace(val))
+                                    {
+                                        g.DrawString(examTitles[physicalExamOuterIndex + c] + "", sectionFont, Brushes.Black, leftMargin + c * colWidth4, currentY);
+                                        var bullets = val.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                                        float lineOffset = 18f;
+                                        foreach (var b in bullets)
+                                        {
+                                            // For each bullet we check space and print
+                                            if (!EnsureSpace(g, e, ref currentY, 0f, bottomForContent)) { stopPage(); break; }
+                                            g.DrawString("" + b, bodyFont, Brushes.Black, leftMargin + c * colWidth4 + 5, currentY + lineOffset);
+                                            lineOffset += 16f;
+                                        }
+                                        if (lineOffset > maxHeight) maxHeight = lineOffset;
+                                    }
+                                }
+
+                                currentY += maxHeight + 10f;
+                                if (e.HasMorePages) { stopPage(); break; }
+                            }
+
+                            if (!pageFull)
+                                printStage = 5;
+                        }
+                        break;
+
+                    case 5: // ENT Examination (Ear, Nose, Throat, Other) — vertical layout with bullets & wrapping
+                        {
+                            string[] entLabels = { "Ear Exam", "Nose Exam", "Throat Exam", "Other Exam" };
+                            string[] entValues = { earExam, noseExam, throatExam, othersExam };
+                            StringFormat sfs = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near, FormatFlags = StringFormatFlags.LineLimit };
+
+                            for (; entExamIndex < entLabels.Length; entExamIndex++)
+                            {
+                                if (string.IsNullOrWhiteSpace(entValues[entExamIndex]))
+                                    continue;
+
+                                // section label
+                                if (!EnsureSpace(g, e, ref currentY, 26f, bottomForContent)) { stopPage(); break; }
+                                g.DrawString(entLabels[entExamIndex] + ":", sectionFont, Brushes.Black, leftMargin, currentY);
+                                currentY += 22f;
+
+                                // bullets
+                                var bullets = entValues[entExamIndex].Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                                for (int bi = 0; bi < bullets.Length; bi++)
+                                {
+                                    if (!EnsureSpace(g, e, ref currentY, 18f, bottomForContent)) { stopPage(); break; }
+
+                                    string bulletText = "• " + bullets[bi];
+                                    float textWidth = contentWidth - 10f;
+                                    SizeF textSize = g.MeasureString(bulletText, bodyFont, (int)textWidth, sfs);
+
+                                    RectangleF textRect = new RectangleF(leftMargin + 10, currentY, textWidth, textSize.Height);
+                                    g.DrawString(bulletText, bodyFont, Brushes.Black, textRect, sfs);
+
+                                    currentY += textSize.Height + 4f;
+                                }
+
+                                currentY += 10f;
+                                if (e.HasMorePages) { stopPage(); break; }
+                            }
+
+                            if (!pageFull)
+                                printStage = 6;
+                        }
+                        break;
+
+                    case 6: // Diagnosis & Recommendations (two column text blocks)
+                        {
+                            // Header
+                            if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent)) { stopPage(); break; }
+
+                            // Draw Section header style then fill left and right columns with wrapped text
+                            g.FillRectangle(Brushes.LightGray, leftMargin, currentY, contentWidth, 22);
+                            g.DrawRectangle(Pens.Gray, leftMargin, currentY, contentWidth, 22);
+                            g.DrawString("Diagnosis", sectionFont, Brushes.Black, leftMargin + 5, currentY + 3);
+                            g.DrawString("Recommendations", sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, currentY + 3);
+                            currentY += 25;
+
+                            var leftItems = string.IsNullOrWhiteSpace(diagnosis) ? new string[0] : diagnosis.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                            var rightItems = string.IsNullOrWhiteSpace(recommendations) ? new string[0] : recommendations.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
+                            int maxLines = Math.Max(leftItems.Length, rightItems.Length);
+                            float columnWidth = contentWidth / 2 - 10;
+                            StringFormat sf = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near, FormatFlags = StringFormatFlags.LineLimit };
+
+                            for (int i = 0; i < maxLines; i++)
+                            {
+                                string l = i < leftItems.Length ? leftItems[i] : "";
+                                string r = i < rightItems.Length ? rightItems[i] : "";
+
+                                SizeF leftSize = g.MeasureString(l, bodyFont, (int)columnWidth, sf);
+                                SizeF rightSize = g.MeasureString(r, bodyFont, (int)columnWidth, sf);
+                                float lineHeight = Math.Max(leftSize.Height, rightSize.Height);
+
+                                if (!EnsureSpace(g, e, ref currentY, lineHeight + 6f, bottomForContent))
+                                { stopPage(); break; }
+
+                                RectangleF leftRect = new RectangleF(leftMargin, currentY, columnWidth, lineHeight);
+                                RectangleF rightRect = new RectangleF(leftMargin + contentWidth / 2, currentY, columnWidth, lineHeight);
+
+                                g.DrawString(l, bodyFont, Brushes.Black, leftRect, sf);
+                                g.DrawString(r, bodyFont, Brushes.Black, rightRect, sf);
+
+                                currentY += lineHeight + 5f;
+                            }
+
+                            if (!pageFull)
+                                printStage = 7;
+                        }
+                        break;
+
+                    case 7: // Prescriptions (the new block inserted after Recommendations)
+                        {
+                            if (prescriptions.Count > 0)
+                            {
+                                // Section header
+                                if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent)) { stopPage(); break; }
+                                g.FillRectangle(Brushes.LightGray, leftMargin, currentY, contentWidth, 22);
+                                g.DrawRectangle(Pens.Gray, leftMargin, currentY, contentWidth, 22);
+                                g.DrawString("Prescriptions", sectionFont, Brushes.Black, leftMargin + 5, currentY + 3);
+                                currentY += 30;
+
+                                using (Font itemFont = new Font("Arial", 8))
+                                using (Font sigFont = new Font("Arial", 8, FontStyle.Italic))
+                                {
+                                    for (; prescriptionsIndex < prescriptions.Count; prescriptionsIndex++)
+                                    {
+                                        var item = prescriptions[prescriptionsIndex];
+
+                                        // Before printing each prescription entry, ensure enough minimal space
+                                        if (!EnsureSpace(g, e, ref currentY, 40f, bottomForContent))
+                                        {
+                                            stopPage(); break;
+                                        }
+
+                                        // Generic (Brand)
+                                        g.DrawString($"{item.GenericName} ({item.BrandName})", itemFont, Brushes.Black, leftMargin, currentY);
+                                        currentY += 15f;
+
+                                        // Strength - Dosage  and Qty
+                                        g.DrawString($"{item.Strength} - {item.Dosage}     Qty: {item.Quantity}", itemFont, Brushes.Black, leftMargin + 10f, currentY);
+                                        currentY += 15f;
+
+                                        // Sig (with wrapping)
+                                        if (!string.IsNullOrEmpty(item.Sig))
+                                        {
+                                            float sigX = leftMargin + 20f;
+                                            float sigWidth = contentWidth - 40f;
+                                            RectangleF sigRect = new RectangleF(sigX, currentY, sigWidth, 200f);
+                                            StringFormat sigFmt = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near, Trimming = StringTrimming.Word, FormatFlags = StringFormatFlags.LineLimit };
+
+                                            SizeF sigSize = g.MeasureString("Sig: " + item.Sig, sigFont, (int)sigWidth, sigFmt);
+
+                                            if (!EnsureSpace(g, e, ref currentY, sigSize.Height + 8f, bottomForContent))
+                                            {
+                                                stopPage(); break;
+                                            }
+
+                                            g.DrawString("Sig: " + item.Sig, sigFont, Brushes.Black, sigRect, sigFmt);
+                                            currentY += sigSize.Height + 5f;
+                                        }
+
+                                        // Separator line after each item
+                                        g.DrawLine(Pens.LightGray, leftMargin, currentY, leftMargin + contentWidth, currentY);
+                                        currentY += 10f;
+                                    }
+                                }
+                            }
+                            // done with prescriptions block (empty or fully printed)
+                            if (!pageFull)
+                                printStage = 8;
+                        }
+                        break;
+
+                    case 8: // Notes / Follow-up notes (if you want to print them before footer)
+                        {
+                            // Optional notes block printing (if notes exist)
+                            if (!string.IsNullOrWhiteSpace(notes))
+                            {
+                                if (!EnsureSpace(g, e, ref currentY, 30f, bottomForContent))
+                                { stopPage(); break; }
+
+                                g.FillRectangle(Brushes.LightGray, leftMargin, currentY, contentWidth, 22);
+                                g.DrawRectangle(Pens.Gray, leftMargin, currentY, contentWidth, 22);
+                                g.DrawString("Notes", sectionFont, Brushes.Black, leftMargin + 5, currentY + 3);
+                                currentY += 25;
+
+                                // draw notes in wrapped rectangle
+                                StringFormat nf = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near, Trimming = StringTrimming.Word, FormatFlags = StringFormatFlags.LineLimit };
+                                RectangleF notesRect = new RectangleF(leftMargin, currentY, contentWidth, 300f);
+                                SizeF notesSize = g.MeasureString(notes, bodyFont, (int)contentWidth, nf);
+                                if (!EnsureSpace(g, e, ref currentY, notesSize.Height + 6f, bottomForContent))
+                                { stopPage(); break; }
+
+                                g.DrawString(notes, bodyFont, Brushes.Black, notesRect, nf);
+                                currentY += notesSize.Height + 5f;
+                            }
+
+                            // Follow-up notes area (if any)
+                            if (!pageFull)
+                                printStage = 9;
+                        }
+                        break;
+
+                    case 9: // Footer / Follow-up label - BUT only print on last page; if it doesn't fit, request a new page so footer will sit on last page
+                        {
+                            // To ensure footer prints at bottom of last page, first check if there is room for footer area.
+                            // If not, advance to a new blank page so footer sits at fixed bottom.
+                            float footerNeeded = 80f; // space for "Follow-up visit on" and watermark footer
+                            if (currentY + footerNeeded > pageBottom)
+                            {
+                                // Force another page so footer will be printed on the very last page
+                                stopPage();
+                                break;
+                            }
+
+                            // Draw follow-up label and value at fixed bottom
+                            float footerY = e.PageBounds.Bottom - 70f;
+                            using (Font labelFont = new Font("Arial", 9, FontStyle.Bold))
+                            {
+                                g.DrawString("Follow-up visit on:", labelFont, Brushes.Black, leftMargin + 30f, footerY);
+
+                                if (followUpDate.HasValue)
+                                {
+                                    using (Font dateFont = new Font("Arial", 9, FontStyle.Underline))
+                                    {
+                                        string dateText = followUpDate.Value.ToString("MMMM dd, yyyy");
+                                        float dateY = footerY + 18f;
+                                        g.DrawString(dateText, dateFont, Brushes.Black, leftMargin + 30f, dateY);
+                                    }
+                                }
+                            }
+
+                            // Print watermark footer using your helper at bottom
+                            WaterMarkHelper.PrintFooter(g, 0, (int)(e.PageBounds.Height - 100), e.PageBounds.Width - 75);
+
+                            // Mark complete
+                            printStage = 10;
+                            pageFull = true;
+                            e.HasMorePages = false;
+                            break;
+                        }
+
+                    case 10: // Done printing everything.
+                        e.HasMorePages = false;
+                        pageFull = true;
+                        break;
+
+                    default:
+                        e.HasMorePages = false;
+                        pageFull = true;
+                        break;
+                } // switch
+            } // while
+
+            // If we set HasMorePages to true, prepare flags so next PrintPage call continues
+            if (e.HasMorePages)
+            {
+                // For the next page, ensure header prints again and keep currentY preserved
+                headerPrintedThisPage = false;
+            }
+            else
+            {
+                // Reset state at the end of the print job so the object can be reused for another preview/print
+                headerPrintedThisPage = false;
+                currentY = 0f;
+                printStage = 0;
+                patientInfoRowIndex = 0;
+                physicalExamOuterIndex = 0;
+                entExamIndex = 0;
+                prescriptionsIndex = 0;
+            }
+        }
+
+        #endregion
+
+        #region Preview Helper
         public void ShowPreview()
         {
             PrintPreviewDialog preview = new PrintPreviewDialog
@@ -515,5 +867,6 @@ namespace ENT_Clinic_System.PrintingForms
 
             preview.ShowDialog();
         }
+        #endregion
     }
 }

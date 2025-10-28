@@ -46,7 +46,7 @@ namespace ENT_Clinic_System.UserControls
         public CameraConsultationForm()
         {
             InitializeComponent();
-
+            OpenOnSecondMonitor();
             logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CameraError.log");
 
             try
@@ -82,7 +82,18 @@ namespace ENT_Clinic_System.UserControls
 
             this.FormClosing += CameraConsultationForm_FormClosing;
         }
+        private void OpenOnSecondMonitor()
+        {
+            // ✅ Move to 2nd monitor if available
+            Screen[] screens = Screen.AllScreens;
+            Screen targetScreen = screens.Length > 2 ? screens[2] : screens[0];
 
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = targetScreen.WorkingArea.Location;
+            this.WindowState = FormWindowState.Maximized;
+            this.TopMost = true;
+
+        }
         // -------------------------------------------
         // Safe helpers
         // -------------------------------------------
@@ -570,7 +581,7 @@ namespace ENT_Clinic_System.UserControls
                     SafeDispose(currentFrame);
                     currentFrame = null;
                 }
-
+                StopRecordingSafe();
                 SafeDispose(fireflyHelper);
                 DialogResult = DialogResult.OK;
             }

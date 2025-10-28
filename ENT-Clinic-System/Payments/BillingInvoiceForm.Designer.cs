@@ -745,6 +745,7 @@ namespace ENT_Clinic_System.Payments
             this.amountRecievedNumericUpDown.Name = "amountRecievedNumericUpDown";
             this.amountRecievedNumericUpDown.Size = new System.Drawing.Size(239, 23);
             this.amountRecievedNumericUpDown.TabIndex = 29;
+            this.amountRecievedNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.amountRecievedNumericUpDown_KeyDown);
             // 
             // label7
             // 

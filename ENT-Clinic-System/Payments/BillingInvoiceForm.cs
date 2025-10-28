@@ -21,7 +21,8 @@ namespace ENT_Clinic_System.Payments
         public BillingInvoiceForm()
         {
             InitializeComponent();
-
+            // ✅ This makes the Enter key trigger saveButton automatically
+            this.AcceptButton = saveButton;
             // Hook events
             billingDataGridView.CellClick += BillingDataGridView_CellClick;
             amountRecievedNumericUpDown.ValueChanged += AmountRecievedNumericUpDown_ValueChanged;
@@ -264,6 +265,7 @@ namespace ENT_Clinic_System.Payments
         {
             decimal received = amountRecievedNumericUpDown.Value;
 
+            // ✅ 1. Validate the input
             if (received <= 0)
             {
                 MessageBox.Show("Enter a valid amount received.", "Warning",
@@ -272,20 +274,21 @@ namespace ENT_Clinic_System.Payments
                 return;
             }
 
-            // 1. Confirm save
+            // ✅ 2. Confirm save
             var confirm = MessageBox.Show("Do you want to save this payment?",
                 "Confirm Payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirm != DialogResult.Yes)
                 return;
 
-            // 2. Prompt for note
+            // ✅ 3. Ask for payment note
             string note = PromptNote("Payment Note", "Enter a note for this payment:");
             if (note == null) // user pressed Cancel
                 return;
 
             try
             {
+                // ✅ 4. Save payment into database
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
@@ -298,11 +301,19 @@ namespace ENT_Clinic_System.Payments
                     }
                 }
 
-                MessageBox.Show("Payment recorded successfully.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                var printer = new BillingPrinter(billingId);
-                printer.PrintReceipt();
+
+                // ✅ 6. Ask if user wants to print the receipt
+                var printConfirm = MessageBox.Show("Do you want to print the receipt now?",
+                    "Print Receipt", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (printConfirm == DialogResult.Yes)
+                {
+                    var printer = new BillingPrinter(billingId);
+                    printer.PrintReceipt();
+                }
+
+                // ✅ 7. Refresh billing data after transaction
                 RefreshBilling();
             }
             catch (Exception ex)
@@ -311,6 +322,7 @@ namespace ENT_Clinic_System.Payments
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         /// <summary>
         /// Prompt user for a note before saving.
@@ -490,6 +502,15 @@ namespace ENT_Clinic_System.Payments
         private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
         {
 
+        }
+
+        private void amountRecievedNumericUpDown_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // ✅ Prevents "ding" sound or moving to next control
+                saveButton.PerformClick(); // ✅ Triggers the button click event
+            }
         }
     }
 }

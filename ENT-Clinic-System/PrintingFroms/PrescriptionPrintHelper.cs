@@ -48,47 +48,83 @@ namespace ENT_Clinic_System.PrintingForms
                 {
                     conn.Open();
 
-                    // 🔹 Load medicines
+                    // ---------------------------------------------
+                    // 1️⃣ Get patient_id and created_at from consultation
+                    // ---------------------------------------------
+                    int patientId = 0;
+                    string queryConsultation = @"
+                SELECT patient_id, consultation_date, follow_up_date
+                FROM consultation
+                WHERE consultation_id = @consultationId
+                LIMIT 1";
+
+                    using (var cmd = new MySqlCommand(queryConsultation, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@consultationId", _consultationId);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                patientId = SafeInt(reader["patient_id"]);
+                                DateTime.TryParse(SafeString(reader["consultation_date"]), out _prescriptionDate);
+
+                                // 🔹 Optional follow-up date
+                                if (reader["follow_up_date"] != DBNull.Value)
+                                    _followUpDate = Convert.ToDateTime(reader["follow_up_date"]);
+                            }
+                        }
+                    }
+
+                    if (patientId == 0)
+                        throw new Exception("No patient linked to this consultation.");
+
+                    // ---------------------------------------------
+                    // 2️⃣ Load patient info using patient_id
+                    // ---------------------------------------------
+                    string queryPatient = @"
+                SELECT full_name, address, sex, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age
+                FROM patients
+                WHERE patient_id = @patientId
+                LIMIT 1";
+
+                    using (var cmd = new MySqlCommand(queryPatient, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@patientId", patientId);
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                _patientName = SafeString(reader["full_name"]);
+                                _patientAddress = SafeString(reader["address"]);
+                                _patientGender = SafeString(reader["sex"]);
+                                _patientAge = SafeString(reader["age"]);
+                            }
+                        }
+                    }
+
+                    // ---------------------------------------------
+                    // 3️⃣ Load medicines from `prescription`
+                    // ---------------------------------------------
                     string queryMedicines = @"
-                      SELECT 
-                        p.full_name,
-                        p.address,
-                        c.age,
-                        p.sex,
-                        pr.created_at,
-                        i.generic_name,
-                        i.brand_name,
-                        i.strength,
-                        i.dosage,
-                        pr.quantity,
-                        pr.sig
-                    FROM prescription pr
-                    JOIN patients p ON pr.patient_id = p.patient_id
-                    JOIN consultation c ON pr.consultation_id = c.consultation_id
-                    JOIN items i ON pr.item_id = i.item_id
-                    WHERE pr.consultation_id = @consultationId
-                    ORDER BY i.generic_name;
-                    ";
+                SELECT 
+                    i.generic_name,
+                    i.brand_name,
+                    i.strength,
+                    i.dosage,
+                    pr.quantity,
+                    pr.sig
+                FROM prescription pr
+                JOIN items i ON pr.item_id = i.item_id
+                WHERE pr.consultation_id = @consultationId
+                ORDER BY i.generic_name;";
 
                     using (var cmd = new MySqlCommand(queryMedicines, conn))
                     {
                         cmd.Parameters.AddWithValue("@consultationId", _consultationId);
                         using (var reader = cmd.ExecuteReader())
                         {
-                            bool firstRow = true;
-
                             while (reader.Read())
                             {
-                                if (firstRow)
-                                {
-                                    _patientName = SafeString(reader["full_name"]);
-                                    _patientAddress = SafeString(reader["address"]);
-                                    _patientAge = SafeString(reader["age"]);
-                                    _patientGender = SafeString(reader["sex"]);
-                                    DateTime.TryParse(SafeString(reader["created_at"]), out _prescriptionDate);
-                                    firstRow = false;
-                                }
-
                                 _items.Add((
                                     SafeString(reader["generic_name"]),
                                     SafeString(reader["brand_name"]),
@@ -101,51 +137,44 @@ namespace ENT_Clinic_System.PrintingForms
                         }
                     }
 
-                    // 🔹 Load other items (from prescription_other)
+                    // ---------------------------------------------
+                    // 4️⃣ Load other medicines from `prescription_other`
+                    // ---------------------------------------------
                     string queryOthers = @"
-                        SELECT o.generic_name, o.brand_name, o.strength, o.dosage,
-                               po.quantity, po.sig
-                        FROM prescription_other po
-                        JOIN other_items o ON po.item_id = o.item_id
-                        WHERE po.consultation_id = @consultationId
-                        ORDER BY o.generic_name";
+                SELECT 
+                    o.generic_name,
+                    o.brand_name,
+                    o.strength,
+                    o.dosage,
+                    po.quantity,
+                    po.sig
+                FROM prescription_other po
+                JOIN other_items o ON po.item_id = o.item_id
+                WHERE po.consultation_id = @consultationId
+                ORDER BY o.generic_name;";
 
-                    using (var cmdOther = new MySqlCommand(queryOthers, conn))
+                    using (var cmd = new MySqlCommand(queryOthers, conn))
                     {
-                        cmdOther.Parameters.AddWithValue("@consultationId", _consultationId);
-                        using (var reader2 = cmdOther.ExecuteReader())
+                        cmd.Parameters.AddWithValue("@consultationId", _consultationId);
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            while (reader2.Read())
+                            while (reader.Read())
                             {
                                 _items.Add((
-                                    SafeString(reader2["generic_name"]),
-                                    SafeString(reader2["brand_name"]),
-                                    SafeString(reader2["strength"]),
-                                    SafeString(reader2["dosage"]),
-                                    SafeInt(reader2["quantity"]),
-                                    SafeString(reader2["sig"])
+                                    SafeString(reader["generic_name"]),
+                                    SafeString(reader["brand_name"]),
+                                    SafeString(reader["strength"]),
+                                    SafeString(reader["dosage"]),
+                                    SafeInt(reader["quantity"]),
+                                    SafeString(reader["sig"])
                                 ));
                             }
                         }
                     }
 
-                    // 🔹 Load follow-up date from consultation
-                    string queryFollowUp = @"
-                        SELECT follow_up_date 
-                        FROM consultation
-                        WHERE consultation_id = @consultationId
-                        LIMIT 1";
-
-                    using (var cmdFollow = new MySqlCommand(queryFollowUp, conn))
-                    {
-                        cmdFollow.Parameters.AddWithValue("@consultationId", _consultationId);
-                        object result = cmdFollow.ExecuteScalar();
-                        if (result != null && result != DBNull.Value)
-                        {
-                            _followUpDate = Convert.ToDateTime(result);
-                        }
-                    }
-
+                    // ---------------------------------------------
+                    // 5️⃣ Check if there are any prescription items
+                    // ---------------------------------------------
                     if (_items.Count == 0)
                         throw new Exception("No prescription items found for this consultation.");
                 }
@@ -156,6 +185,7 @@ namespace ENT_Clinic_System.PrintingForms
                     "Prescription Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // ✅ Safe conversion helpers
         private string SafeString(object value)

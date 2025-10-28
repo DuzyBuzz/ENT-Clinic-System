@@ -762,6 +762,7 @@ namespace ENT_Clinic_System.UserControls
                     try
                     {
                         result = cameraForm.ShowDialog();
+
                     }
                     catch (Exception ex)
                     {

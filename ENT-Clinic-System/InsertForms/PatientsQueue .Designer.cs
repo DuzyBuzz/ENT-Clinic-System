@@ -6,7 +6,7 @@
         private System.Windows.Forms.DataGridView dgvPatients;
         private System.Windows.Forms.DataGridView dgvQueue;
         private System.Windows.Forms.TextBox txtSearchPatient;
-        private System.Windows.Forms.Button btnSearchPatient;
+        private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnAddToQueue;
         private System.Windows.Forms.Button btnRemoveFromQueue;
 
@@ -24,7 +24,7 @@
             this.dgvPatients = new System.Windows.Forms.DataGridView();
             this.dgvQueue = new System.Windows.Forms.DataGridView();
             this.txtSearchPatient = new System.Windows.Forms.TextBox();
-            this.btnSearchPatient = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.btnAddToQueue = new System.Windows.Forms.Button();
             this.btnRemoveFromQueue = new System.Windows.Forms.Button();
             this.refreshButton = new System.Windows.Forms.Button();
@@ -77,10 +77,12 @@
             this.dgvQueue.Name = "dgvQueue";
             this.dgvQueue.Size = new System.Drawing.Size(895, 732);
             this.dgvQueue.TabIndex = 1;
+            this.dgvQueue.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvQueue_CellBeginEdit);
             this.dgvQueue.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvQueue_CellContentClick);
             this.dgvQueue.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvQueue_CellFormatting);
             this.dgvQueue.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvQueue_CellValueChanged_1);
             this.dgvQueue.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvQueue_CurrentCellDirtyStateChanged_1);
+            this.dgvQueue.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvQueue_EditingControlShowing);
             this.dgvQueue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvQueue_MouseDown);
             // 
             // txtSearchPatient
@@ -92,16 +94,16 @@
             this.txtSearchPatient.TabIndex = 2;
             this.txtSearchPatient.TextChanged += new System.EventHandler(this.txtSearchPatient_TextChanged);
             // 
-            // btnSearchPatient
+            // btnRefresh
             // 
-            this.btnSearchPatient.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSearchPatient.Location = new System.Drawing.Point(331, 3);
-            this.btnSearchPatient.Name = "btnSearchPatient";
-            this.btnSearchPatient.Size = new System.Drawing.Size(148, 28);
-            this.btnSearchPatient.TabIndex = 3;
-            this.btnSearchPatient.Text = "Search";
-            this.btnSearchPatient.UseVisualStyleBackColor = true;
-            this.btnSearchPatient.Click += new System.EventHandler(this.btnSearchPatient_Click);
+            this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRefresh.Location = new System.Drawing.Point(331, 3);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(148, 28);
+            this.btnRefresh.TabIndex = 3;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnSearchPatient_Click);
             // 
             // btnAddToQueue
             // 
@@ -200,7 +202,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.805654F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.08126F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.90732F));
-            this.tableLayoutPanel3.Controls.Add(this.btnSearchPatient, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnRefresh, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnAddToQueue, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.txtSearchPatient, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.btnRemoveFromQueue, 3, 0);

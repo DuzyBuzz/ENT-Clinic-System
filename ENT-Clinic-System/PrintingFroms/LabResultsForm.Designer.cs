@@ -45,6 +45,7 @@ namespace ENT_Clinic_System.PrintingForms
             this.label1 = new System.Windows.Forms.Label();
             this.txtResultText = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.ScanButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabResults)).BeginInit();
             this.cmsDelete.SuspendLayout();
             this.SuspendLayout();
@@ -144,6 +145,7 @@ namespace ENT_Clinic_System.PrintingForms
             this.flpPreview.Name = "flpPreview";
             this.flpPreview.Size = new System.Drawing.Size(1100, 329);
             this.flpPreview.TabIndex = 5;
+            this.flpPreview.Paint += new System.Windows.Forms.PaintEventHandler(this.flpPreview_Paint);
             // 
             // btnAdd
             // 
@@ -235,11 +237,22 @@ namespace ENT_Clinic_System.PrintingForms
             this.label2.TabIndex = 10;
             this.label2.Text = "Test Name:";
             // 
+            // ScanButton
+            // 
+            this.ScanButton.Location = new System.Drawing.Point(566, 274);
+            this.ScanButton.Name = "ScanButton";
+            this.ScanButton.Size = new System.Drawing.Size(150, 30);
+            this.ScanButton.TabIndex = 11;
+            this.ScanButton.Text = "Scan Document";
+            this.ScanButton.UseVisualStyleBackColor = true;
+            this.ScanButton.Click += new System.EventHandler(this.ScanButton_Click);
+            // 
             // LabResultsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1132, 678);
+            this.Controls.Add(this.ScanButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtResultText);
             this.Controls.Add(this.label1);
@@ -278,5 +291,6 @@ namespace ENT_Clinic_System.PrintingForms
         private DataGridViewTextBoxColumn result_text;
         private DataGridViewLinkColumn result_file;
         private DataGridViewTextBoxColumn created_at;
+        private Button ScanButton;
     }
 }

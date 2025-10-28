@@ -28,8 +28,12 @@ namespace ENT_Clinic_System.Payments
         public InvoiceForm()
         {
             InitializeComponent();
+            // ✅ This makes the Enter key trigger saveButton automatically
+            this.AcceptButton = saveButton;
+
             helper = new InventoryHelper();
 
+            // ✅ This makes the Enter key trigger saveButton automatically
             // =============================
             // Setup DataTable for selected items
             // =============================
@@ -642,6 +646,20 @@ namespace ENT_Clinic_System.Payments
             {
                 e.Handled = true; // ignore input
                 System.Media.SystemSounds.Beep.Play(); // optional feedback
+            }
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void itemsAmountRecievedNumericUpDown_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // ✅ Prevents "ding" sound or moving to next control
+                saveButton.PerformClick(); // ✅ Triggers the button click event
             }
         }
     }

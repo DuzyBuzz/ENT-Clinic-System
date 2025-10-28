@@ -118,27 +118,10 @@ namespace ENT_Clinic_System.Consultation
                     dgvAvailableItems.Columns["category"].HeaderText = "Category";
                 if (dgvAvailableItems.Columns.Contains("description"))
                     dgvAvailableItems.Columns["description"].Visible = false;
-                dgvAvailableItems.Columns["description"].HeaderText = "Description";
-                if (dgvAvailableItems.Columns.Contains("created_at"))
-                    dgvAvailableItems.Columns["created_at"].Visible = false;
-                if (dgvAvailableItems.Columns.Contains("updated_at"))
-                    dgvAvailableItems.Columns["updated_at"].Visible = false;
-                // Format quantity column if present
                 if (dgvAvailableItems.Columns.Contains("quantity"))
                 {
-                    dgvAvailableItems.Columns["quantity"].Visible = true;
                     dgvAvailableItems.Columns["quantity"].HeaderText = "Available Qty";
                     dgvAvailableItems.Columns["quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    dgvAvailableItems.Columns["quantity"].ReadOnly = true;
-                }
-
-                // Adjust column order to match selected DGV
-                string[] displayOrder = { "generic_name", "brand_name", "strength", "dosage", "category", "description", "quantity" };
-                int order = 0;
-                foreach (string col in displayOrder)
-                {
-                    if (dgvAvailableItems.Columns.Contains(col))
-                        dgvAvailableItems.Columns[col].DisplayIndex = order++;
                 }
 
                 // General UI settings
@@ -148,12 +131,31 @@ namespace ENT_Clinic_System.Consultation
                 dgvAvailableItems.MultiSelect = false;
                 dgvAvailableItems.RowHeadersVisible = false;
                 dgvAvailableItems.AllowUserToAddRows = false;
+
+                // ⚡ Fix column order after data binding completes
+                dgvAvailableItems.DataBindingComplete -= DgvAvailableItems_DataBindingComplete;
+                dgvAvailableItems.DataBindingComplete += DgvAvailableItems_DataBindingComplete;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading medicines: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void DgvAvailableItems_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            var dgv = (DataGridView)sender;
+
+            // ✅ Set desired display order
+            string[] displayOrder = { "generic_name", "brand_name", "strength", "dosage", "category", "quantity" };
+            int order = 0;
+            foreach (string col in displayOrder)
+            {
+                if (dgv.Columns.Contains(col))
+                    dgv.Columns[col].DisplayIndex = order++;
+            }
+        }
+
 
         /// <summary>
         /// Load other_items directly into the grid and show the real columns (no display-name column).
@@ -346,7 +348,6 @@ namespace ENT_Clinic_System.Consultation
             ToolStripMenuItem remove = new ToolStripMenuItem("Remove This Item") { ForeColor = Color.Red };
             remove.Click += (s, ev) =>
             {
-                if (MessageBox.Show("Remove this item?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     dgvSelectedItems.Rows.RemoveAt(hit.RowIndex);
             };
             menu.Items.Add(remove);
@@ -366,7 +367,6 @@ namespace ENT_Clinic_System.Consultation
             ToolStripMenuItem remove = new ToolStripMenuItem("Remove This Item") { ForeColor = Color.Red };
             remove.Click += (s, ev) =>
             {
-                if (MessageBox.Show("Remove this item?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     selectedOtherDGV.Rows.RemoveAt(hit.RowIndex);
             };
             menu.Items.Add(remove);
@@ -685,8 +685,8 @@ namespace ENT_Clinic_System.Consultation
             AutoCompleteHelper.SetupAutoComplete(descriptionComboBox, "other_items", new List<string> { "description" });
             DGVColumnHeaderFilterHelper.Attach(dgvAvailableItems);
             DGVColumnHeaderFilterHelper.Attach(dgvOtherItems);
-        }
 
+        }
         private void refreshPatientsButton_Click(object sender, EventArgs e)
         {
             DGVColumnHeaderFilterHelper.ResetFilters(dgvAvailableItems);
@@ -712,6 +712,59 @@ filterControl: searchItemsTextBox
         private void btnSubmit_Click_2(object sender, EventArgs e)
         {
 
+        }
+
+        private void descriptionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dgvOtherItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button3.Visible = false;
+
+            try
+            {
+                // ✅ Make sure the table has at least 2 rows
+                if (otherItemsTableLayoutPanel.RowCount > 1)
+                {
+                    // Access the 2nd row (index 1)
+                    var rowStyle = otherItemsTableLayoutPanel.RowStyles[1];
+
+                    // Set to 165px absolute
+                    rowStyle.SizeType = SizeType.Absolute;
+                    rowStyle.Height = 165;
+                    otherItemsTableLayoutPanel.RowStyles[1] = rowStyle;
+
+                    // Force layout refresh
+                    otherItemsTableLayoutPanel.PerformLayout();
+                }
+                else
+                {
+                    //MessageBox.Show("TableLayoutPanel does not have a 2nd row.",
+                    //    "Resize Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Error resizing TableLayoutPanel row:\n" + ex.Message,
+                //    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

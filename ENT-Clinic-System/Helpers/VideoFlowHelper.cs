@@ -23,7 +23,7 @@ public class VideoFlowHelper
     public Panel AddVideo(string videoPath, string initialNote = "", string initialCategory = "")
     {
         if (!File.Exists(videoPath)) return null;
-        if (string.IsNullOrEmpty(initialCategory)) initialCategory = "(no category)";
+        if (string.IsNullOrEmpty(initialCategory)) initialCategory = "";
 
         Panel container = new Panel
         {

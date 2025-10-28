@@ -10,7 +10,8 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using WIA; // ✅ for scanner
+using CommonDialog = WIA.CommonDialog; // ✅ alias for scanner dialog
 namespace ENT_Clinic_System.PrintingForms
 {
     public partial class LabResultsForm : Form
@@ -391,5 +392,103 @@ namespace ENT_Clinic_System.PrintingForms
                 new List<string> { "result_text" }
             );
         }
+
+        private void ScanButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 🔒 Make sure patient & consultation are valid
+                if (patientId <= 0 || consultationId <= 0)
+                {
+                    MessageBox.Show("⚠️ No patient or consultation selected.", "Scan Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // ✅ Initialize WIA Device Manager
+                var manager = new WIA.DeviceManager();
+                if (manager.DeviceInfos.Count == 0)
+                {
+                    MessageBox.Show("⚠️ No scanner detected. Please connect a scanner.", "Scanner Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // ✅ Let user pick scanner and scan
+                WIA.CommonDialog dialog = new WIA.CommonDialog();
+                WIA.ImageFile image = null;
+
+                try
+                {
+                    image = dialog.ShowAcquireImage(
+                        WiaDeviceType.ScannerDeviceType,
+                        WiaImageIntent.UnspecifiedIntent,
+                        WiaImageBias.MaximizeQuality,
+                        WiaFormatIDs.PNG,// output as PNG
+                        true,  // show scanner UI
+                        true,  // allow preview
+                        false  // single page
+                    );
+                }
+                catch (System.Runtime.InteropServices.COMException comEx)
+                {
+                    MessageBox.Show($"Scanning failed: {comEx.Message}", "Scan Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (image == null)
+                {
+                    MessageBox.Show("Scan cancelled.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // ✅ Prepare save folder
+                string baseFolder = Path.Combine(@"D:\ENT_CLINIC_Attachments", patientId.ToString(), consultationId.ToString(), "Lab Results");
+                if (!Directory.Exists(baseFolder))
+                    Directory.CreateDirectory(baseFolder);
+
+                // ✅ Save scanned image as PNG
+                string fileName = $"{Guid.NewGuid():N}.png";
+                string savedFilePath = Path.Combine(baseFolder, fileName);
+
+                using (var stream = new MemoryStream((byte[])image.FileData.get_BinaryData()))
+                using (Bitmap bmp = new Bitmap(stream))
+                {
+                    bmp.Save(savedFilePath, System.Drawing.Imaging.ImageFormat.Png);
+                }
+
+                // ✅ Show scanned image immediately in flpPreview
+                PictureBox pb = new PictureBox
+                {
+                    Width = 150,
+                    Height = 150,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Tag = savedFilePath,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    Image = System.Drawing.Image.FromFile(savedFilePath)
+                };
+
+                pb.Click += PreviewFile_Click; // reuse your existing click handler
+                flpPreview.Controls.Add(pb);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("❌ Scanning failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void flpPreview_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
+}
+public static class WiaFormatIDs
+{
+
+
+    public const string BMP = "{B96B3CAB-0728-11D3-9D7B-0000F81EF32E}";
+    public const string PNG = "{B96B3CAF-0728-11D3-9D7B-0000F81EF32E}";
+    public const string GIF = "{B96B3CB0-0728-11D3-9D7B-0000F81EF32E}";
+    public const string JPEG = "{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}";
+    public const string TIFF = "{B96B3CB1-0728-11D3-9D7B-0000F81EF32E}";
 }

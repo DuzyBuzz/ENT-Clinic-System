@@ -166,6 +166,7 @@
             this.saveButton.TabIndex = 13;
             this.saveButton.Text = "Submit Payment";
             this.saveButton.UseVisualStyleBackColor = false;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // noteComboBox
             // 
@@ -198,6 +199,7 @@
             this.itemsAmountRecievedNumericUpDown.Name = "itemsAmountRecievedNumericUpDown";
             this.itemsAmountRecievedNumericUpDown.Size = new System.Drawing.Size(125, 23);
             this.itemsAmountRecievedNumericUpDown.TabIndex = 19;
+            this.itemsAmountRecievedNumericUpDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.itemsAmountRecievedNumericUpDown_KeyDown);
             // 
             // lblSubtotal
             // 
@@ -530,7 +532,7 @@
             this.categoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.categoryCombobox.FormattingEnabled = true;
-            this.categoryCombobox.Location = new System.Drawing.Point(1025, 11);
+            this.categoryCombobox.Location = new System.Drawing.Point(1025, 13);
             this.categoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.categoryCombobox.Name = "categoryCombobox";
             this.categoryCombobox.Size = new System.Drawing.Size(312, 23);
