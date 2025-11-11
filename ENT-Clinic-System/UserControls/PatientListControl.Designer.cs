@@ -57,6 +57,8 @@
             this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scannedHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.admitingOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
             this.printAttachmentButton = new System.Windows.Forms.ToolStripMenuItem();
             this.printMedicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +67,6 @@
             this.showLaboratoryRequesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showPrescriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.scannedHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.patientsDataGridView)).BeginInit();
@@ -332,9 +333,10 @@
             this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewConsultationToolStripMenuItem,
             this.consultationHistoryToolStripMenuItem,
-            this.scannedHistoryToolStripMenuItem});
+            this.scannedHistoryToolStripMenuItem,
+            this.admitingOrdersToolStripMenuItem});
             this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(232, 92);
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(232, 114);
             this.patientsContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.patientsContextMenuStrip_Opening);
             // 
             // viewConsultationToolStripMenuItem
@@ -351,6 +353,20 @@
             this.consultationHistoryToolStripMenuItem.Text = "Consultation History";
             this.consultationHistoryToolStripMenuItem.Click += new System.EventHandler(this.consultationHistoryToolStripMenuItem_Click);
             this.consultationHistoryToolStripMenuItem.MouseEnter += new System.EventHandler(this.consultationHistoryToolStripMenuItem_MouseEnter);
+            // 
+            // scannedHistoryToolStripMenuItem
+            // 
+            this.scannedHistoryToolStripMenuItem.Name = "scannedHistoryToolStripMenuItem";
+            this.scannedHistoryToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.scannedHistoryToolStripMenuItem.Text = "Scanned Consultation History";
+            this.scannedHistoryToolStripMenuItem.Click += new System.EventHandler(this.scannedHistoryToolStripMenuItem_Click);
+            // 
+            // admitingOrdersToolStripMenuItem
+            // 
+            this.admitingOrdersToolStripMenuItem.Name = "admitingOrdersToolStripMenuItem";
+            this.admitingOrdersToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.admitingOrdersToolStripMenuItem.Text = "Admiting Orders";
+            this.admitingOrdersToolStripMenuItem.Click += new System.EventHandler(this.admitingOrdersToolStripMenuItem_Click);
             // 
             // printConsultationHistoryButton
             // 
@@ -411,13 +427,6 @@
             this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
             this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(216, 114);
             // 
-            // scannedHistoryToolStripMenuItem
-            // 
-            this.scannedHistoryToolStripMenuItem.Name = "scannedHistoryToolStripMenuItem";
-            this.scannedHistoryToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.scannedHistoryToolStripMenuItem.Text = "Scanned Consultation History";
-            this.scannedHistoryToolStripMenuItem.Click += new System.EventHandler(this.scannedHistoryToolStripMenuItem_Click);
-            // 
             // PatientListControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
@@ -477,5 +486,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn createdat;
         private System.Windows.Forms.DataGridViewImageColumn photo;
         private System.Windows.Forms.ToolStripMenuItem scannedHistoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem admitingOrdersToolStripMenuItem;
     }
 }

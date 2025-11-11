@@ -250,5 +250,27 @@ namespace ENT_Clinic_System.Helpers
                 }
             }
         }
+        public static string GetPatientName(int patientId)
+        {
+            try
+            {
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+                    string query = "SELECT full_name FROM patients WHERE patient_id=@patientId LIMIT 1";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@patientId", patientId);
+                        var val = cmd.ExecuteScalar();
+                        return val != null ? val.ToString() : string.Empty;
+                    }
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
     }
 }

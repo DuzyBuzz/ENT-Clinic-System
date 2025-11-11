@@ -22,21 +22,10 @@ namespace ENT_Clinic_System
         public MainFormReceptionist()
         {
             InitializeComponent();
-            // Form settings
-            this.FormBorderStyle = FormBorderStyle.None; // Remove default border
-            this.MaximizeBox = true;                     // Allow maximize
-            this.MinimizeBox = true;                     // Allow minimize
-            this.ShowInTaskbar = true;                   // Show in taskbar
-            this.StartPosition = FormStartPosition.CenterScreen; // Optional
-            this.Resize += MainForm_Resize;
-            this.FormClosing -= MainForm_FormClosing; // remove any previous subscription
-            this.FormClosing += MainForm_FormClosing; // attach once
+
 
         }
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            UpdateMaximizeButtonIcon();
-        }
+
 
         private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -47,27 +36,6 @@ namespace ENT_Clinic_System
         {
 
         }
-        private void LoadFormIntoPanel(Form form, Panel targetPanel)
-        {
-            if (form == null || targetPanel == null)
-                return;
-
-            // Clear previous content to prevent overlap
-            targetPanel.Controls.Clear();
-
-            // Setup form for embedding
-            form.TopLevel = false;
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.Dock = DockStyle.Fill;  // fills the entire panel
-            form.AutoScroll = true;
-
-            // Add to panel and show
-            targetPanel.Controls.Add(form);
-            form.Show();
-        }
-        /// <summary>
-        /// Opens a single-instance form. If already open, brings it to front.
-        /// </summary>
         private void ShowSingleInstanceForm<T>() where T : Form, new()
         {
             foreach (Form form in Application.OpenForms)
@@ -158,17 +126,9 @@ namespace ENT_Clinic_System
 
         private void minimizeButton_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
         }
 
-        private void UpdateMaximizeButtonIcon()
-        {
-            if (this.Bounds.Width == Screen.FromControl(this).WorkingArea.Width &&
-                this.Bounds.Height == Screen.FromControl(this).WorkingArea.Height)
-                maximizeMaximizeButton.Text = "❐"; // restore icon
-            else
-                maximizeMaximizeButton.Text = "🗖"; // maximize icon
-        }
+   
 
         protected override void WndProc(ref Message m)
         {

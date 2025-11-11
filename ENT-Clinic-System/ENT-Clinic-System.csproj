@@ -173,6 +173,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdmitingOrders\SetAdmitTemplateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdmitingOrders\SetAdmitTemplateForm.Designer.cs">
+      <DependentUpon>SetAdmitTemplateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Consultation\BillingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,7 @@
       <DependentUpon>PurposeInputForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ReportHelper.cs" />
+    <Compile Include="Helpers\RichTextBoxFormatterHelper.cs" />
     <Compile Include="Helpers\SelectPhotoOptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -327,6 +334,13 @@
     <Compile Include="Payments\PaymentsControl.Designer.cs">
       <DependentUpon>PaymentsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdmitingOrders\AdmitingOrdersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdmitingOrders\AdmitingOrdersForm.Designer.cs">
+      <DependentUpon>AdmitingOrdersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintingFroms\AdmitingOrdersPrintHelper.cs" />
     <Compile Include="PrintingFroms\BillingPrinter.cs" />
     <Compile Include="PrintingFroms\LabRequestPrintHelper.cs" />
     <Compile Include="PrintingFroms\LabResultsForm.cs">
@@ -501,6 +515,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AdmitingOrders\SetAdmitTemplateForm.resx">
+      <DependentUpon>SetAdmitTemplateForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Consultation\BillingForm.resx">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -565,6 +582,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Payments\PaymentsControl.resx">
       <DependentUpon>PaymentsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdmitingOrders\AdmitingOrdersForm.resx">
+      <DependentUpon>AdmitingOrdersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrintingFroms\LabResultsForm.resx">
       <DependentUpon>LabResultsForm.cs</DependentUpon>

@@ -1499,5 +1499,17 @@ namespace ENT_Clinic_System.UserControls
             });
         }
 
+        private void scannedConsultationHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int patientIdInt = _patientId; // original integer
+            string patientIdStr = patientIdInt.ToString(); // convert to string
+
+
+            var consultationHistory = new ScannedConsultationHistoryForm(patientIdStr);
+            //if (!string.IsNullOrEmpty(patientName))
+            //    consultationHistory.Text = $"Scanned Documents - {patientName}";
+
+            consultationHistory.Show(); // Use ShowDialog so it blocks until closed
+        }
     }
 }

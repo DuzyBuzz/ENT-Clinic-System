@@ -1,4 +1,5 @@
-﻿using ENT_Clinic_System.Consultation;
+﻿using ENT_Clinic_System.AdmitingOrders;
+using ENT_Clinic_System.Consultation;
 using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.InsertForms;
 using ENT_Clinic_System.Inventory;
@@ -24,22 +25,10 @@ namespace ENT_Clinic_System
         public MainFormDoctor()
         {
             InitializeComponent();
-            // Form settings
-            this.FormBorderStyle = FormBorderStyle.None; // Remove default border
-            this.MaximizeBox = true;                     // Allow maximize
-            this.MinimizeBox = true;                     // Allow minimize
-            this.ShowInTaskbar = true;                   // Show in taskbar
-            this.StartPosition = FormStartPosition.CenterScreen; // Optional
-            this.Resize += MainForm_Resize;
-            this.FormClosing -= MainForm_FormClosing; // remove any previous subscription
-            this.FormClosing += MainForm_FormClosing; // attach once
+
 
         }
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            UpdateMaximizeButtonIcon();
-        }
-
+  
         private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowSingleInstanceForm<PatientInfoForm>();
@@ -140,54 +129,9 @@ namespace ENT_Clinic_System
         }
 
 
-        private void minimizeButton_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
 
-        private void UpdateMaximizeButtonIcon()
-        {
-            if (this.Bounds.Width == Screen.FromControl(this).WorkingArea.Width &&
-                this.Bounds.Height == Screen.FromControl(this).WorkingArea.Height)
-                maximizeMaximizeButton.Text = "❐"; // restore icon
-            else
-                maximizeMaximizeButton.Text = "🗖"; // maximize icon
-        }
 
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_NCHITTEST = 0x84;
-            const int HTCLIENT = 1;
-            const int HTCAPTION = 2;
-            const int HTLEFT = 10;
-            const int HTRIGHT = 11;
-            const int HTTOP = 12;
-            const int HTTOPLEFT = 13;
-            const int HTTOPRIGHT = 14;
-            const int HTBOTTOM = 15;
-            const int HTBOTTOMLEFT = 16;
-            const int HTBOTTOMRIGHT = 17;
 
-            const int RESIZE_BORDER = 6; 
-
-            if (m.Msg == WM_NCHITTEST)
-            {
-                base.WndProc(ref m);
-                var pos = this.PointToClient(new Point(m.LParam.ToInt32()));
-                if (pos.X < RESIZE_BORDER && pos.Y < RESIZE_BORDER) m.Result = (IntPtr)HTTOPLEFT;
-                else if (pos.X > this.ClientSize.Width - RESIZE_BORDER && pos.Y < RESIZE_BORDER) m.Result = (IntPtr)HTTOPRIGHT;
-                else if (pos.X < RESIZE_BORDER && pos.Y > this.ClientSize.Height - RESIZE_BORDER) m.Result = (IntPtr)HTBOTTOMLEFT;
-                else if (pos.X > this.ClientSize.Width - RESIZE_BORDER && pos.Y > this.ClientSize.Height - RESIZE_BORDER) m.Result = (IntPtr)HTBOTTOMRIGHT;
-                else if (pos.X < RESIZE_BORDER) m.Result = (IntPtr)HTLEFT;
-                else if (pos.X > this.ClientSize.Width - RESIZE_BORDER) m.Result = (IntPtr)HTRIGHT;
-                else if (pos.Y < RESIZE_BORDER) m.Result = (IntPtr)HTTOP;
-                else if (pos.Y > this.ClientSize.Height - RESIZE_BORDER) m.Result = (IntPtr)HTBOTTOM;
-                else m.Result = (IntPtr)HTCAPTION; 
-                return;
-            }
-
-            base.WndProc(ref m);
-        }
 
         private void stockInButton_Click(object sender, EventArgs e)
         {
@@ -659,6 +603,11 @@ namespace ENT_Clinic_System
             }
         }
 
+        private void admitOrderTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetAdmitTemplateForm setAdmitTemplateForm = new SetAdmitTemplateForm();
+            setAdmitTemplateForm.ShowDialog();
+        }
     }
 
 }

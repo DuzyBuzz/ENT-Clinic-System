@@ -10,7 +10,7 @@ namespace ENT_Clinic_System.UI
         private Timer animationTimer;
         private int animationStep = 0;
         private const int totalSteps = 30; // total animation frames
-        private const int displayDuration = 1500; // 1.5 seconds display
+        private const int displayDuration = 50; // 1.5 seconds display
 
         public WelcomeForm(string role, string fullName)
         {
@@ -54,7 +54,7 @@ namespace ENT_Clinic_System.UI
         private void StartAnimation()
         {
             animationTimer = new Timer();
-            animationTimer.Interval = 15; // ~15ms per step (~0.45s fade-in)
+            animationTimer.Interval = 1; // ~15ms per step (~0.45s fade-in)
             animationTimer.Tick += AnimationTimer_Tick;
             animationTimer.Start();
         }

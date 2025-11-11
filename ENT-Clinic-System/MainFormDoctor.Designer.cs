@@ -36,6 +36,7 @@
             this.stockOnHandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.writeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.patientVisitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.patientQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,16 +48,12 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.paymentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.maximizeMaximizeButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.minimizeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.patientVisitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.admitOrderTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,6 +113,13 @@
             this.stocToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
             this.stocToolStripMenuItem.Text = "Low Stock / Reorder";
             this.stocToolStripMenuItem.Click += new System.EventHandler(this.stocToolStripMenuItem_Click);
+            // 
+            // patientVisitToolStripMenuItem
+            // 
+            this.patientVisitToolStripMenuItem.Name = "patientVisitToolStripMenuItem";
+            this.patientVisitToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
+            this.patientVisitToolStripMenuItem.Text = "Patient Visit";
+            this.patientVisitToolStripMenuItem.Click += new System.EventHandler(this.patientVisitToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -183,11 +187,7 @@
             this.settingsToolStripMenuItem,
             this.paymentsToolStripMenuItem,
             this.reportsToolStripMenuItem,
-            this.closeButton,
-            this.maximizeMaximizeButton,
-            this.minimizeButton,
-            this.accountToolStripMenuItem,
-            this.toolStripMenuItem2});
+            this.accountToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(13, 15);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 5, 0, 5);
@@ -217,73 +217,42 @@
             this.paymentsToolStripMenuItem.Text = "Payments";
             this.paymentsToolStripMenuItem.Click += new System.EventHandler(this.paymentsToolStripMenuItem_Click);
             // 
-            // closeButton
-            // 
-            this.closeButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.closeButton.ForeColor = System.Drawing.Color.Red;
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(46, 29);
-            this.closeButton.Text = "✖";
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
-            // maximizeMaximizeButton
-            // 
-            this.maximizeMaximizeButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.maximizeMaximizeButton.Name = "maximizeMaximizeButton";
-            this.maximizeMaximizeButton.Size = new System.Drawing.Size(41, 29);
-            this.maximizeMaximizeButton.Text = "🗖";
-            this.maximizeMaximizeButton.Click += new System.EventHandler(this.maximizeMaximizeButton_Click);
-            // 
-            // minimizeButton
-            // 
-            this.minimizeButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.minimizeButton.Name = "minimizeButton";
-            this.minimizeButton.Size = new System.Drawing.Size(33, 29);
-            this.minimizeButton.Text = "━";
-            this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
-            // 
             // accountToolStripMenuItem
             // 
-            this.accountToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.accountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.admitOrderTemplateToolStripMenuItem,
             this.updateToolStripMenuItem,
             this.profileToolStripMenuItem,
             this.logoutToolStripMenuItem});
             this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
-            this.accountToolStripMenuItem.Size = new System.Drawing.Size(46, 29);
-            this.accountToolStripMenuItem.Text = "⚙️";
+            this.accountToolStripMenuItem.Size = new System.Drawing.Size(88, 29);
+            this.accountToolStripMenuItem.Text = "Settings";
             this.accountToolStripMenuItem.Click += new System.EventHandler(this.accountToolStripMenuItem_Click);
             // 
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.updateToolStripMenuItem.Text = "Auto Complete";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // profileToolStripMenuItem
             // 
             this.profileToolStripMenuItem.Name = "profileToolStripMenuItem";
-            this.profileToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
+            this.profileToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.profileToolStripMenuItem.Text = "Profile";
             this.profileToolStripMenuItem.Click += new System.EventHandler(this.profileToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(39, 29);
-            this.toolStripMenuItem2.Text = "❓";
-            // 
             // MainPanel
             // 
+            this.MainPanel.BackColor = System.Drawing.Color.White;
             this.MainPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MainPanel.BackgroundImage")));
             this.MainPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.MainPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -296,12 +265,12 @@
             this.MainPanel.TabIndex = 6;
             this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
-            // patientVisitToolStripMenuItem
+            // admitOrderTemplateToolStripMenuItem
             // 
-            this.patientVisitToolStripMenuItem.Name = "patientVisitToolStripMenuItem";
-            this.patientVisitToolStripMenuItem.Size = new System.Drawing.Size(245, 30);
-            this.patientVisitToolStripMenuItem.Text = "Patient Visit";
-            this.patientVisitToolStripMenuItem.Click += new System.EventHandler(this.patientVisitToolStripMenuItem_Click);
+            this.admitOrderTemplateToolStripMenuItem.Name = "admitOrderTemplateToolStripMenuItem";
+            this.admitOrderTemplateToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.admitOrderTemplateToolStripMenuItem.Text = "Admit Order Template";
+            this.admitOrderTemplateToolStripMenuItem.Click += new System.EventHandler(this.admitOrderTemplateToolStripMenuItem_Click);
             // 
             // MainFormDoctor
             // 
@@ -313,12 +282,11 @@
             this.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "MainFormDoctor";
             this.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ENT Clinic System";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormReceptionist_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -340,22 +308,19 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem closeButton;
-        private System.Windows.Forms.ToolStripMenuItem maximizeMaximizeButton;
-        private System.Windows.Forms.ToolStripMenuItem minimizeButton;
-        private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stocToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expiryReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dispensingReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stockOnHandToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem consultationsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem paymentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem writeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem patientVisitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem admitOrderTemplateToolStripMenuItem;
     }
 }
