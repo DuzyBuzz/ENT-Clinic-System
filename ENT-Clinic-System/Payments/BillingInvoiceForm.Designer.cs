@@ -150,11 +150,11 @@ namespace ENT_Clinic_System.Payments
             this.updated_at,
             this.consultation_id});
             this.billingDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.billingDataGridView.Location = new System.Drawing.Point(3, 78);
+            this.billingDataGridView.Location = new System.Drawing.Point(3, 72);
             this.billingDataGridView.MultiSelect = false;
             this.billingDataGridView.Name = "billingDataGridView";
             this.billingDataGridView.ReadOnly = true;
-            this.billingDataGridView.Size = new System.Drawing.Size(1397, 529);
+            this.billingDataGridView.Size = new System.Drawing.Size(1397, 535);
             this.billingDataGridView.TabIndex = 7;
             this.billingDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.billingDataGridView_CellContentClick);
             // 
@@ -259,7 +259,7 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1397, 59);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1397, 53);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // tableLayoutPanel3
@@ -284,7 +284,7 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(510, 43);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(510, 37);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // label11
@@ -296,7 +296,7 @@ namespace ENT_Clinic_System.Payments
             this.label11.Location = new System.Drawing.Point(278, 0);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(72, 43);
+            this.label11.Size = new System.Drawing.Size(72, 37);
             this.label11.TabIndex = 14;
             this.label11.Text = "Date To:";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -310,7 +310,7 @@ namespace ENT_Clinic_System.Payments
             this.label2.Location = new System.Drawing.Point(4, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(107, 43);
+            this.label2.Size = new System.Drawing.Size(107, 37);
             this.label2.TabIndex = 13;
             this.label2.Text = "Date From:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -356,7 +356,7 @@ namespace ENT_Clinic_System.Payments
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(863, 43);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(863, 37);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // searchItemtButton
@@ -369,7 +369,7 @@ namespace ENT_Clinic_System.Payments
             this.searchItemtButton.Location = new System.Drawing.Point(646, 5);
             this.searchItemtButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchItemtButton.Name = "searchItemtButton";
-            this.searchItemtButton.Size = new System.Drawing.Size(93, 33);
+            this.searchItemtButton.Size = new System.Drawing.Size(93, 27);
             this.searchItemtButton.TabIndex = 4;
             this.searchItemtButton.Text = "Search";
             this.searchItemtButton.UseVisualStyleBackColor = false;
@@ -385,7 +385,7 @@ namespace ENT_Clinic_System.Payments
             this.refreshPatientsButton.Location = new System.Drawing.Point(747, 5);
             this.refreshPatientsButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.refreshPatientsButton.Name = "refreshPatientsButton";
-            this.refreshPatientsButton.Size = new System.Drawing.Size(112, 33);
+            this.refreshPatientsButton.Size = new System.Drawing.Size(112, 27);
             this.refreshPatientsButton.TabIndex = 3;
             this.refreshPatientsButton.Text = "Refresh";
             this.refreshPatientsButton.UseVisualStyleBackColor = false;
@@ -396,7 +396,7 @@ namespace ENT_Clinic_System.Payments
             this.searchPatientTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchPatientTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchPatientTextBox.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.searchPatientTextBox.Location = new System.Drawing.Point(136, 12);
+            this.searchPatientTextBox.Location = new System.Drawing.Point(136, 6);
             this.searchPatientTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.searchPatientTextBox.Name = "searchPatientTextBox";
             this.searchPatientTextBox.Size = new System.Drawing.Size(502, 26);
@@ -412,7 +412,7 @@ namespace ENT_Clinic_System.Payments
             this.label8.Location = new System.Drawing.Point(4, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(124, 43);
+            this.label8.Size = new System.Drawing.Size(124, 37);
             this.label8.TabIndex = 2;
             this.label8.Text = "Search Patient:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

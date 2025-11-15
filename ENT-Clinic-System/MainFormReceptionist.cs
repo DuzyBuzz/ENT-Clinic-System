@@ -253,8 +253,10 @@ namespace ENT_Clinic_System
 
         private void paymentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowSingleInstanceForm<PaymentsControl>();
-        }   
+            PaymentsControl paymentsControl = new PaymentsControl();
+            LoadUserControl(paymentsControl);
+
+        }
 
         private void billingToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
@@ -373,7 +375,8 @@ namespace ENT_Clinic_System
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowSingleInstanceForm<InventoryForm>();
+            InventoryForm inventoryForm = new InventoryForm();
+            LoadUserControl(inventoryForm);
         }
 
         private void accountToolStripMenuItem_Click(object sender, EventArgs e)

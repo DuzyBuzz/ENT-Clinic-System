@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Payments
 {
-    public partial class PaymentsControl : Form
+    public partial class PaymentsControl : UserControl
     {
         public PaymentsControl()
         {

@@ -17,7 +17,7 @@ namespace ENT_Clinic_System.UserControls
 {
     public partial class PatientListControl : UserControl
     {
-        private DGVCrudHelper patientCrud;
+        private DGVViewCrudHelper patientCrud;
         private int currentRow = 0;
         public PatientListControl()
         {
@@ -40,48 +40,43 @@ namespace ENT_Clinic_System.UserControls
             );
 
 
-
-            // Columns to allow editing
-            List<string> columns = new List<string>
-            {
-                "patient_id",
-                "full_name",
-                "address",
-                "birth_date",
-                "age",
-                "sex",
-                "civil_status",
-                "patient_contact_number",
-                "emergency_name",
-                "emergency_contact_number",
-                "emergency_relationship",
-                            "referred_by",
-                "created_at",
-                "photo"
-            };
-
             try
             {
-                if (patientCrud == null)
-                    patientCrud = new DGVCrudHelper(patientsDataGridView, "patients", columns, "patient_id");
+                // Define searchable columns
+                string[] searchableCols = { "full_name"};
+                patientCrud = new DGVViewCrudHelper(
+                    patientsDataGridView,
+                    "patients",       // View or table name (used for SELECT)
+                    "patient_id",    // Primary key column
+                    "patients"        // Base table name for UPDATE/DELETE
+                );
 
+
+                patientCrud.PageSize = 2000;
                 patientCrud.SetPageInfoLabel(pageLabel);
+                patientCrud.AttachSearchControls(searchPatientNameTextBox, searchPatientButton, refreshPatientsButton, searchableCols);
+
+                // Initial data load
                 patientCrud.LoadData();
 
-                // ✅ Sort by full_name ascending (if bound to DataTable)
+                // Sort by concessionaire_code ASC
                 if (patientsDataGridView.DataSource is DataTable dt)
                 {
-                    dt.DefaultView.Sort = "full_name ASC";
+                    dt.DefaultView.Sort = "created_at DESC";
                     patientsDataGridView.DataSource = dt;
                 }
 
                 UpdatePaginationButtons();
+
+                // Exclude these columns from right-click filter menu
+                string[] columnsToIgnore = { "full_name", "birth_date", "age", "patient_contact_number" ,"emergency_name"
+                ,"emergency_contact_number"};
+                DGVColumnHeaderFilterHelper.Attach(patientsDataGridView, columnsToIgnore);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to load patient list: " + ex.Message);
+                MessageBox.Show("Failed to load concessionaire list:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
 
         }
 
@@ -508,6 +503,11 @@ namespace ENT_Clinic_System.UserControls
                 MessageBox.Show("Error handling selection: " + ex.Message,
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
 
         }
     }

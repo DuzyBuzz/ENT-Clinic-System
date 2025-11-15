@@ -68,6 +68,21 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.5.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
+    <Reference Include="ClosedXML, Version=0.105.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.105.0\lib\netstandard2.0\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML.Parser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d5f7376574c51ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.Parser.2.0.0\lib\netstandard2.0\ClosedXML.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.3.1.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.1.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Protobuf, Version=3.30.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.30.0\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
@@ -83,6 +98,9 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.9, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.9\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.Sqlite, Version=9.0.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Sqlite.Core.9.0.10\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
@@ -94,6 +112,12 @@
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.3\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="RBush, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c77e27b81f4d0187, processorArchitecture=MSIL">
+      <HintPath>..\packages\RBush.Signed.4.0.0\lib\net47\RBush.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
     <Reference Include="SQLitePCLRaw.core, Version=2.1.10.2445, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.core.2.1.10\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
     </Reference>
@@ -185,10 +209,49 @@
     <Compile Include="Consultation\BillingForm.Designer.cs">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Consultation\ConsultationListControl.cs">
+    <Compile Include="reporthelpers\DashboardHelper.cs" />
+    <Compile Include="reporthelpers\ReportHelper.cs" />
+    <Compile Include="reporthelpers\ReportHelper_v2.cs" />
+    <Compile Include="reporthelpers\ReportParamForms\DailySelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\DailySelectionForm.Designer.cs">
+      <DependentUpon>DailySelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\DateRangeSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\DateRangeSelectionForm.Designer.cs">
+      <DependentUpon>DateRangeSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\DaySelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\DaySelectionForm.Designer.cs">
+      <DependentUpon>DaySelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\LedgerFilterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\LedgerFilterForm.Designer.cs">
+      <DependentUpon>LedgerFilterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\MonthYearSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\MonthYearSelectionForm.Designer.cs">
+      <DependentUpon>MonthYearSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\ZoneSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reporthelpers\ReportParamForms\ZoneSelectionForm.Designer.cs">
+      <DependentUpon>ZoneSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ConsultationListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Consultation\ConsultationListControl.Designer.cs">
+    <Compile Include="UserControls\ConsultationListControl.Designer.cs">
       <DependentUpon>ConsultationListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Consultation\ScannedConsultationHistoryForm.cs">
@@ -329,7 +392,7 @@
       <DependentUpon>BillingInvoiceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Payments\PaymentsControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Payments\PaymentsControl.Designer.cs">
       <DependentUpon>PaymentsControl.cs</DependentUpon>
@@ -371,7 +434,7 @@
       <DependentUpon>PatientInfoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Inventory\InventoryForm.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Inventory\InventoryForm.Designer.cs">
       <DependentUpon>InventoryForm.cs</DependentUpon>
@@ -483,10 +546,10 @@
     <Compile Include="UserControls\AppointmentsUserControl.Designer.cs">
       <DependentUpon>AppointmentsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ConsultationControl.cs">
+    <Compile Include="Consultation\ConsultationControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserControls\ConsultationControl.Designer.cs">
+    <Compile Include="Consultation\ConsultationControl.Designer.cs">
       <DependentUpon>ConsultationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainFormReceptionist.cs">
@@ -495,11 +558,11 @@
     <Compile Include="MainFormReceptionist.Designer.cs">
       <DependentUpon>MainFormReceptionist.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DashboardUserControl.cs">
+    <Compile Include="UserControls\Dashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\DashboardUserControl.Designer.cs">
-      <DependentUpon>DashboardUserControl.cs</DependentUpon>
+    <Compile Include="UserControls\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\DefaultControl.cs">
       <SubType>UserControl</SubType>
@@ -520,9 +583,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Consultation\BillingForm.resx">
       <DependentUpon>BillingForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Consultation\ConsultationListControl.resx">
-      <DependentUpon>ConsultationListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Consultation\PrescriptionNoteForm .resx">
       <DependentUpon>PrescriptionNoteForm .cs</DependentUpon>
@@ -598,6 +658,12 @@
     <EmbeddedResource Include="Consultation\LabRequestForm.resx">
       <DependentUpon>LabRequestForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="reporthelpers\ReportParamForms\LedgerFilterForm.resx">
+      <DependentUpon>LedgerFilterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reporthelpers\ReportParamForms\ZoneSelectionForm.resx">
+      <DependentUpon>ZoneSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\ParamsForm\DispenseParamsForm.resx">
       <DependentUpon>DispenseParamsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -625,14 +691,17 @@
     <EmbeddedResource Include="UserControls\AppointmentsUserControl.resx">
       <DependentUpon>AppointmentsUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\ConsultationControl.resx">
+    <EmbeddedResource Include="Consultation\ConsultationControl.resx">
       <DependentUpon>ConsultationControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainFormReceptionist.resx">
       <DependentUpon>MainFormReceptionist.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DashboardUserControl.resx">
-      <DependentUpon>DashboardUserControl.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\ConsultationListControl.resx">
+      <DependentUpon>ConsultationListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DefaultControl.resx">
       <DependentUpon>DefaultControl.cs</DependentUpon>
@@ -648,6 +717,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -678,6 +748,18 @@
     <Content Include="Database\ent_clinic_db.sql" />
     <Content Include="Database\lanuser.txt" />
     <Content Include="ENT LOGO.ico" />
+    <Content Include="Resources\excel.ico" />
+    <Content Include="Resources\excel_image.png" />
+    <Content Include="Resources\IGW_Logo.ico" />
+    <Content Include="Resources\IGW_Logo_image.png" />
+    <Content Include="Resources\pdf.ico" />
+    <Content Include="Resources\pdf_image.png" />
+    <Content Include="Resources\ph-logo.png" />
+    <Content Include="Resources\print.ico" />
+    <Content Include="Resources\print_image.png" />
+    <Content Include="Resources\republika_ng_pilipinas.jpg" />
+    <Content Include="Resources\settingscog_87317.ico" />
+    <Content Include="Resources\system_settings_icon.ico" />
     <Content Include="setups\structure only.sql" />
     <Content Include="SnapDll.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

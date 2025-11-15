@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ENT_Clinic_System.UserControls
+namespace ENT_Clinic_System.Helpers.ReportHelpers
 {
-    public partial class DashboardUserControl : UserControl
+    public partial class DailySelectionForm : Form
     {
-        public DashboardUserControl()
+        public DailySelectionForm()
         {
             InitializeComponent();
         }

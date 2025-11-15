@@ -49,11 +49,11 @@
             this.consultationsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.paymentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.admitOrderTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.admitOrderTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -219,15 +219,23 @@
             // 
             // accountToolStripMenuItem
             // 
+            this.accountToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.accountToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.admitOrderTemplateToolStripMenuItem,
             this.updateToolStripMenuItem,
             this.profileToolStripMenuItem,
             this.logoutToolStripMenuItem});
+            this.accountToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("accountToolStripMenuItem.Image")));
             this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
-            this.accountToolStripMenuItem.Size = new System.Drawing.Size(88, 29);
-            this.accountToolStripMenuItem.Text = "Settings";
+            this.accountToolStripMenuItem.Size = new System.Drawing.Size(28, 29);
             this.accountToolStripMenuItem.Click += new System.EventHandler(this.accountToolStripMenuItem_Click);
+            // 
+            // admitOrderTemplateToolStripMenuItem
+            // 
+            this.admitOrderTemplateToolStripMenuItem.Name = "admitOrderTemplateToolStripMenuItem";
+            this.admitOrderTemplateToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
+            this.admitOrderTemplateToolStripMenuItem.Text = "Admit Order Template";
+            this.admitOrderTemplateToolStripMenuItem.Click += new System.EventHandler(this.admitOrderTemplateToolStripMenuItem_Click);
             // 
             // updateToolStripMenuItem
             // 
@@ -264,13 +272,6 @@
             this.MainPanel.Size = new System.Drawing.Size(1458, 892);
             this.MainPanel.TabIndex = 6;
             this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
-            // 
-            // admitOrderTemplateToolStripMenuItem
-            // 
-            this.admitOrderTemplateToolStripMenuItem.Name = "admitOrderTemplateToolStripMenuItem";
-            this.admitOrderTemplateToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
-            this.admitOrderTemplateToolStripMenuItem.Text = "Admit Order Template";
-            this.admitOrderTemplateToolStripMenuItem.Click += new System.EventHandler(this.admitOrderTemplateToolStripMenuItem_Click);
             // 
             // MainFormDoctor
             // 

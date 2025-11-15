@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pageLabel = new System.Windows.Forms.Label();
@@ -77,7 +77,7 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.patientsDataGridView, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -85,22 +85,23 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.742574F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.25742F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1904, 1010);
             this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 8;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.866948F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.49525F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.652587F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.761352F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.2661F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.969705F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.939409F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.969705F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel2.Controls.Add(this.pageLabel, 6, 0);
             this.tableLayoutPanel2.Controls.Add(this.nextButton, 7, 0);
             this.tableLayoutPanel2.Controls.Add(this.prevButton, 5, 0);
@@ -114,7 +115,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1894, 48);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1894, 40);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // pageLabel
@@ -122,9 +123,9 @@
             this.pageLabel.AutoSize = true;
             this.pageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pageLabel.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pageLabel.Location = new System.Drawing.Point(1613, 0);
+            this.pageLabel.Location = new System.Drawing.Point(1597, 0);
             this.pageLabel.Name = "pageLabel";
-            this.pageLabel.Size = new System.Drawing.Size(182, 48);
+            this.pageLabel.Size = new System.Drawing.Size(144, 40);
             this.pageLabel.TabIndex = 9;
             this.pageLabel.Text = "Page";
             this.pageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -133,9 +134,9 @@
             // 
             this.nextButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nextButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nextButton.Location = new System.Drawing.Point(1801, 3);
+            this.nextButton.Location = new System.Drawing.Point(1747, 3);
             this.nextButton.Name = "nextButton";
-            this.nextButton.Size = new System.Drawing.Size(90, 42);
+            this.nextButton.Size = new System.Drawing.Size(144, 34);
             this.nextButton.TabIndex = 7;
             this.nextButton.Text = ">>";
             this.nextButton.UseVisualStyleBackColor = true;
@@ -145,9 +146,9 @@
             // 
             this.prevButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.prevButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prevButton.Location = new System.Drawing.Point(1519, 3);
+            this.prevButton.Location = new System.Drawing.Point(1447, 3);
             this.prevButton.Name = "prevButton";
-            this.prevButton.Size = new System.Drawing.Size(88, 42);
+            this.prevButton.Size = new System.Drawing.Size(144, 34);
             this.prevButton.TabIndex = 5;
             this.prevButton.Text = "<<";
             this.prevButton.UseVisualStyleBackColor = true;
@@ -157,9 +158,9 @@
             // 
             this.refreshPatientsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.refreshPatientsButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.refreshPatientsButton.Location = new System.Drawing.Point(723, 3);
+            this.refreshPatientsButton.Location = new System.Drawing.Point(603, 3);
             this.refreshPatientsButton.Name = "refreshPatientsButton";
-            this.refreshPatientsButton.Size = new System.Drawing.Size(141, 42);
+            this.refreshPatientsButton.Size = new System.Drawing.Size(144, 34);
             this.refreshPatientsButton.TabIndex = 3;
             this.refreshPatientsButton.Text = "Refresh";
             this.refreshPatientsButton.UseVisualStyleBackColor = true;
@@ -169,9 +170,9 @@
             // 
             this.searchPatientButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchPatientButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchPatientButton.Location = new System.Drawing.Point(597, 3);
+            this.searchPatientButton.Location = new System.Drawing.Point(453, 3);
             this.searchPatientButton.Name = "searchPatientButton";
-            this.searchPatientButton.Size = new System.Drawing.Size(120, 42);
+            this.searchPatientButton.Size = new System.Drawing.Size(144, 34);
             this.searchPatientButton.TabIndex = 0;
             this.searchPatientButton.Text = "Search";
             this.searchPatientButton.UseVisualStyleBackColor = true;
@@ -181,9 +182,9 @@
             // 
             this.searchPatientNameTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchPatientNameTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchPatientNameTextBox.Location = new System.Drawing.Point(152, 19);
+            this.searchPatientNameTextBox.Location = new System.Drawing.Point(153, 11);
             this.searchPatientNameTextBox.Name = "searchPatientNameTextBox";
-            this.searchPatientNameTextBox.Size = new System.Drawing.Size(439, 26);
+            this.searchPatientNameTextBox.Size = new System.Drawing.Size(294, 26);
             this.searchPatientNameTextBox.TabIndex = 1;
             this.searchPatientNameTextBox.TextChanged += new System.EventHandler(this.searchPatientNameTextBox_TextChanged);
             this.searchPatientNameTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchPatientNameTextBox_KeyDown);
@@ -193,9 +194,9 @@
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 28);
+            this.label1.Location = new System.Drawing.Point(3, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 20);
+            this.label1.Size = new System.Drawing.Size(144, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Search Patient:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -204,8 +205,8 @@
             // patientsDataGridView
             // 
             this.patientsDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.patientsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.patientsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.patientsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.patientsDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.patientsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -228,9 +229,9 @@
             this.patientsDataGridView.ContextMenuStrip = this.patientsContextMenuStrip;
             this.patientsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.patientsDataGridView.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.patientsDataGridView.Location = new System.Drawing.Point(3, 61);
+            this.patientsDataGridView.Location = new System.Drawing.Point(3, 53);
             this.patientsDataGridView.Name = "patientsDataGridView";
-            this.patientsDataGridView.Size = new System.Drawing.Size(1898, 946);
+            this.patientsDataGridView.Size = new System.Drawing.Size(1898, 954);
             this.patientsDataGridView.TabIndex = 1;
             this.patientsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.patientsDataGridView_CellContentClick);
             this.patientsDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.patientsDataGridView_KeyDown);
@@ -336,7 +337,7 @@
             this.scannedHistoryToolStripMenuItem,
             this.admitingOrdersToolStripMenuItem});
             this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(232, 114);
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(232, 92);
             this.patientsContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.patientsContextMenuStrip_Opening);
             // 
             // viewConsultationToolStripMenuItem

@@ -15,7 +15,10 @@ namespace ENT_Clinic_System.Helpers
         private static readonly Dictionary<DataGridView, Dictionary<string, string>> originalHeaders
             = new Dictionary<DataGridView, Dictionary<string, string>>();
 
-        public static void Attach(DataGridView dgv)
+        // 🟩 NEW: store ignored columns per DataGridView
+        private static readonly Dictionary<DataGridView, HashSet<string>> ignoredColumns
+            = new Dictionary<DataGridView, HashSet<string>>();
+        public static void Attach(DataGridView dgv, IEnumerable<string> columnsToIgnore = null)
         {
             if (dgv == null) throw new ArgumentNullException(nameof(dgv));
             if (dgvFilters.ContainsKey(dgv)) return;
@@ -23,7 +26,12 @@ namespace ENT_Clinic_System.Helpers
             dgvFilters[dgv] = new Dictionary<string, string>();
             originalHeaders[dgv] = new Dictionary<string, string>();
 
-            // Store original headers
+            // store ignored columns (if any)
+            ignoredColumns[dgv] = columnsToIgnore != null
+                ? new HashSet<string>(columnsToIgnore, StringComparer.OrdinalIgnoreCase)
+                : new HashSet<string>();
+
+            // save original headers
             foreach (DataGridViewColumn col in dgv.Columns)
             {
                 originalHeaders[dgv][col.Name] = col.HeaderText;
@@ -39,6 +47,11 @@ namespace ENT_Clinic_System.Helpers
 
             string columnName = dgv.Columns[e.ColumnIndex].Name;
             if (string.IsNullOrEmpty(columnName)) return;
+
+            // 🛑 Skip ignored columns
+            if (ignoredColumns.ContainsKey(dgv) && ignoredColumns[dgv].Contains(columnName))
+                return;
+
             if (!(dgv.DataSource is DataTable dt)) return;
 
             try

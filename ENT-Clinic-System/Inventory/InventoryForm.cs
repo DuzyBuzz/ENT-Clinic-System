@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Inventory
 {
-    public partial class InventoryForm : Form
+    public partial class InventoryForm : UserControl
     {
         private readonly InventoryHelper _inventoryHelper;
         private bool _isProcessingStockIn = false; // Prevent double stock in

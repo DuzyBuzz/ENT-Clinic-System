@@ -187,7 +187,7 @@
             this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.sortCategoryCombobox.FormattingEnabled = true;
-            this.sortCategoryCombobox.Location = new System.Drawing.Point(604, 13);
+            this.sortCategoryCombobox.Location = new System.Drawing.Point(604, 6);
             this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.sortCategoryCombobox.Name = "sortCategoryCombobox";
             this.sortCategoryCombobox.Size = new System.Drawing.Size(179, 28);
@@ -915,12 +915,9 @@
             this.ClientSize = new System.Drawing.Size(1586, 933);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "InventoryForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inventory Management";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.InventoryForm_Load);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
