@@ -245,6 +245,19 @@ namespace ENT_Clinic_System.UserControls
 
         }
 
+
+
+
+
+        private void showLaboratoryRequesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
         private void consultationHistoryToolStripMenuItem_MouseEnter(object sender, EventArgs e)
         {
             int patientId = GetSelectedPatientId();
@@ -387,19 +400,6 @@ namespace ENT_Clinic_System.UserControls
                 subMenuActions: actions // now accepts both Action<int> and Func<int, ToolStripMenuItem>
             );
         }
-
-
-
-        private void showLaboratoryRequesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void scannedHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try

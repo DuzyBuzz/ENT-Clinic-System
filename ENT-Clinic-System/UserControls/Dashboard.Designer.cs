@@ -18,6 +18,8 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabMonthly;
         private System.Windows.Forms.TabPage tabDaily;
+        private System.Windows.Forms.TabPage tabQueueDaily;
+        private System.Windows.Forms.TabPage tabQueueMonthly;
         private System.Windows.Forms.TabPage tabPatientStats;
 
         // Monthly controls
@@ -30,10 +32,54 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chartDaily;
         private System.Windows.Forms.DataGridView dgvDaily;
 
-        // Patient Stats controls (now vertical split: left grid, right chart)
+        // Queue Daily controls
+        private System.Windows.Forms.SplitContainer splitQueueDaily;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartQueueDaily;
+        private System.Windows.Forms.DataGridView dgvQueueDaily;
+
+        // Queue Monthly controls
+        private System.Windows.Forms.SplitContainer splitQueueMonthly;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartQueueMonthly;
+        private System.Windows.Forms.DataGridView dgvQueueMonthly;
+
+        // Patient Stats controls
         private System.Windows.Forms.SplitContainer splitPatientStats;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartPatientStats;
         private System.Windows.Forms.DataGridView dgvPatientStats;
+
+        // Columns declarations (DataGridView columns)
+        private System.Windows.Forms.DataGridViewTextBoxColumn MonthNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MonthName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EarCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NoseCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ThroatCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OthersCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalConsults;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn DayDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DayLabel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EarCounts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NoseCounts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ThroatCounts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OthersCounts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalConsultss;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn QDayDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QDayLabel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QTotalQueued;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QCalledCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QFinishedCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QPendingCount;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn QMonthNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QMonthName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QTotalQueuedM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QCalledCountM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QFinishedCountM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn QPendingCountM;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn AgeGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CountPatients;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -58,21 +104,6 @@
             this.splitMonthly = new System.Windows.Forms.SplitContainer();
             this.chartEnt = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dgvEnt = new System.Windows.Forms.DataGridView();
-            this.tabDaily = new System.Windows.Forms.TabPage();
-            this.splitDaily = new System.Windows.Forms.SplitContainer();
-            this.chartDaily = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.dgvDaily = new System.Windows.Forms.DataGridView();
-            this.tabPatientStats = new System.Windows.Forms.TabPage();
-            this.splitPatientStats = new System.Windows.Forms.SplitContainer();
-            this.dgvPatientStats = new System.Windows.Forms.DataGridView();
-            this.chartPatientStats = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.DayDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DayLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EarCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NoseCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ThroatCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OthersCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TotalConsultss = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MonthNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MonthName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EarCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -80,8 +111,43 @@
             this.ThroatCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OthersCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalConsults = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabDaily = new System.Windows.Forms.TabPage();
+            this.splitDaily = new System.Windows.Forms.SplitContainer();
+            this.chartDaily = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.dgvDaily = new System.Windows.Forms.DataGridView();
+            this.DayDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DayLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EarCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NoseCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ThroatCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OthersCounts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TotalConsultss = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabQueueDaily = new System.Windows.Forms.TabPage();
+            this.splitQueueDaily = new System.Windows.Forms.SplitContainer();
+            this.chartQueueDaily = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.dgvQueueDaily = new System.Windows.Forms.DataGridView();
+            this.QDayDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QDayLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QTotalQueued = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QCalledCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QFinishedCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QPendingCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabQueueMonthly = new System.Windows.Forms.TabPage();
+            this.splitQueueMonthly = new System.Windows.Forms.SplitContainer();
+            this.chartQueueMonthly = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.dgvQueueMonthly = new System.Windows.Forms.DataGridView();
+            this.QMonthNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QMonthName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QTotalQueuedM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QCalledCountM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QFinishedCountM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.QPendingCountM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPatientStats = new System.Windows.Forms.TabPage();
+            this.splitPatientStats = new System.Windows.Forms.SplitContainer();
+            this.dgvPatientStats = new System.Windows.Forms.DataGridView();
             this.AgeGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CountPatients = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chartPatientStats = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pnlTop.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabMonthly.SuspendLayout();
@@ -98,6 +164,20 @@
             this.splitDaily.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDaily)).BeginInit();
+            this.tabQueueDaily.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitQueueDaily)).BeginInit();
+            this.splitQueueDaily.Panel1.SuspendLayout();
+            this.splitQueueDaily.Panel2.SuspendLayout();
+            this.splitQueueDaily.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartQueueDaily)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvQueueDaily)).BeginInit();
+            this.tabQueueMonthly.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitQueueMonthly)).BeginInit();
+            this.splitQueueMonthly.Panel1.SuspendLayout();
+            this.splitQueueMonthly.Panel2.SuspendLayout();
+            this.splitQueueMonthly.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartQueueMonthly)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvQueueMonthly)).BeginInit();
             this.tabPatientStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitPatientStats)).BeginInit();
             this.splitPatientStats.Panel1.SuspendLayout();
@@ -119,13 +199,14 @@
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Padding = new System.Windows.Forms.Padding(8);
             this.pnlTop.Size = new System.Drawing.Size(980, 10);
-            this.pnlTop.TabIndex = 1;
+            this.pnlTop.TabIndex = 0;
             this.pnlTop.Visible = false;
             // 
             // cboZoneFilter
             // 
             this.cboZoneFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboZoneFilter.Location = new System.Drawing.Point(8, 12);
+            this.cboZoneFilter.FormattingEnabled = true;
+            this.cboZoneFilter.Location = new System.Drawing.Point(8, 8);
             this.cboZoneFilter.Name = "cboZoneFilter";
             this.cboZoneFilter.Size = new System.Drawing.Size(160, 21);
             this.cboZoneFilter.TabIndex = 0;
@@ -133,40 +214,45 @@
             // cboServiceFilter
             // 
             this.cboServiceFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboServiceFilter.Location = new System.Drawing.Point(176, 12);
+            this.cboServiceFilter.FormattingEnabled = true;
+            this.cboServiceFilter.Location = new System.Drawing.Point(176, 8);
             this.cboServiceFilter.Name = "cboServiceFilter";
             this.cboServiceFilter.Size = new System.Drawing.Size(160, 21);
             this.cboServiceFilter.TabIndex = 1;
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(344, 10);
+            this.btnRefresh.Location = new System.Drawing.Point(344, 8);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(88, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(88, 26);
             this.btnRefresh.TabIndex = 2;
             this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
             // 
             // btnExportCsv
             // 
-            this.btnExportCsv.Location = new System.Drawing.Point(438, 10);
+            this.btnExportCsv.Location = new System.Drawing.Point(438, 8);
             this.btnExportCsv.Name = "btnExportCsv";
-            this.btnExportCsv.Size = new System.Drawing.Size(100, 23);
+            this.btnExportCsv.Size = new System.Drawing.Size(100, 26);
             this.btnExportCsv.TabIndex = 3;
             this.btnExportCsv.Text = "Export CSV";
+            this.btnExportCsv.UseVisualStyleBackColor = true;
             this.btnExportCsv.Click += new System.EventHandler(this.BtnExportCsv_Click);
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabMonthly);
             this.tabControl.Controls.Add(this.tabDaily);
+            this.tabControl.Controls.Add(this.tabQueueDaily);
+            this.tabControl.Controls.Add(this.tabQueueMonthly);
             this.tabControl.Controls.Add(this.tabPatientStats);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 10);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(980, 670);
-            this.tabControl.TabIndex = 0;
+            this.tabControl.TabIndex = 1;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.TabControl_SelectedIndexChanged);
             // 
             // tabMonthly
@@ -175,9 +261,10 @@
             this.tabMonthly.Location = new System.Drawing.Point(4, 22);
             this.tabMonthly.Name = "tabMonthly";
             this.tabMonthly.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMonthly.Size = new System.Drawing.Size(972, 644);
+            this.tabMonthly.Size = new System.Drawing.Size(972, 612);
             this.tabMonthly.TabIndex = 0;
             this.tabMonthly.Text = "Monthly Summary";
+            this.tabMonthly.UseVisualStyleBackColor = true;
             // 
             // splitMonthly
             // 
@@ -193,8 +280,8 @@
             // splitMonthly.Panel2
             // 
             this.splitMonthly.Panel2.Controls.Add(this.dgvEnt);
-            this.splitMonthly.Size = new System.Drawing.Size(966, 638);
-            this.splitMonthly.SplitterDistance = 429;
+            this.splitMonthly.Size = new System.Drawing.Size(966, 606);
+            this.splitMonthly.SplitterDistance = 381;
             this.splitMonthly.TabIndex = 0;
             // 
             // chartEnt
@@ -202,7 +289,7 @@
             this.chartEnt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartEnt.Location = new System.Drawing.Point(0, 0);
             this.chartEnt.Name = "chartEnt";
-            this.chartEnt.Size = new System.Drawing.Size(966, 429);
+            this.chartEnt.Size = new System.Drawing.Size(966, 381);
             this.chartEnt.TabIndex = 0;
             this.chartEnt.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChartEnt_MouseClick);
             // 
@@ -225,166 +312,13 @@
             this.dgvEnt.Location = new System.Drawing.Point(0, 0);
             this.dgvEnt.Name = "dgvEnt";
             this.dgvEnt.ReadOnly = true;
-            this.dgvEnt.Size = new System.Drawing.Size(966, 205);
+            this.dgvEnt.Size = new System.Drawing.Size(966, 221);
             this.dgvEnt.TabIndex = 0;
-            // 
-            // tabDaily
-            // 
-            this.tabDaily.Controls.Add(this.splitDaily);
-            this.tabDaily.Location = new System.Drawing.Point(4, 22);
-            this.tabDaily.Name = "tabDaily";
-            this.tabDaily.Size = new System.Drawing.Size(972, 644);
-            this.tabDaily.TabIndex = 1;
-            this.tabDaily.Text = "Daily Summary";
-            // 
-            // splitDaily
-            // 
-            this.splitDaily.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitDaily.Location = new System.Drawing.Point(0, 0);
-            this.splitDaily.Name = "splitDaily";
-            this.splitDaily.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitDaily.Panel1
-            // 
-            this.splitDaily.Panel1.Controls.Add(this.chartDaily);
-            // 
-            // splitDaily.Panel2
-            // 
-            this.splitDaily.Panel2.Controls.Add(this.dgvDaily);
-            this.splitDaily.Size = new System.Drawing.Size(972, 644);
-            this.splitDaily.SplitterDistance = 456;
-            this.splitDaily.TabIndex = 0;
-            // 
-            // chartDaily
-            // 
-            this.chartDaily.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartDaily.Location = new System.Drawing.Point(0, 0);
-            this.chartDaily.Name = "chartDaily";
-            this.chartDaily.Size = new System.Drawing.Size(972, 456);
-            this.chartDaily.TabIndex = 0;
-            this.chartDaily.Text = "30";
-            // 
-            // dgvDaily
-            // 
-            this.dgvDaily.AllowUserToAddRows = false;
-            this.dgvDaily.AllowUserToDeleteRows = false;
-            this.dgvDaily.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvDaily.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvDaily.ColumnHeadersHeight = 30;
-            this.dgvDaily.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DayDate,
-            this.DayLabel,
-            this.EarCounts,
-            this.NoseCounts,
-            this.ThroatCounts,
-            this.OthersCounts,
-            this.TotalConsultss});
-            this.dgvDaily.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvDaily.Location = new System.Drawing.Point(0, 0);
-            this.dgvDaily.Name = "dgvDaily";
-            this.dgvDaily.ReadOnly = true;
-            this.dgvDaily.Size = new System.Drawing.Size(972, 184);
-            this.dgvDaily.TabIndex = 0;
-            // 
-            // tabPatientStats
-            // 
-            this.tabPatientStats.Controls.Add(this.splitPatientStats);
-            this.tabPatientStats.Location = new System.Drawing.Point(4, 22);
-            this.tabPatientStats.Name = "tabPatientStats";
-            this.tabPatientStats.Size = new System.Drawing.Size(972, 644);
-            this.tabPatientStats.TabIndex = 3;
-            this.tabPatientStats.Text = "Age Group";
-            // 
-            // splitPatientStats
-            // 
-            this.splitPatientStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitPatientStats.Location = new System.Drawing.Point(0, 0);
-            this.splitPatientStats.Name = "splitPatientStats";
-            // 
-            // splitPatientStats.Panel1
-            // 
-            this.splitPatientStats.Panel1.Controls.Add(this.dgvPatientStats);
-            this.splitPatientStats.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitPatientStats_Panel1_Paint);
-            // 
-            // splitPatientStats.Panel2
-            // 
-            this.splitPatientStats.Panel2.Controls.Add(this.chartPatientStats);
-            this.splitPatientStats.Size = new System.Drawing.Size(972, 644);
-            this.splitPatientStats.SplitterDistance = 124;
-            this.splitPatientStats.TabIndex = 0;
-            // 
-            // dgvPatientStats
-            // 
-            this.dgvPatientStats.AllowUserToAddRows = false;
-            this.dgvPatientStats.AllowUserToDeleteRows = false;
-            this.dgvPatientStats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvPatientStats.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvPatientStats.ColumnHeadersHeight = 30;
-            this.dgvPatientStats.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.AgeGroup,
-            this.CountPatients});
-            this.dgvPatientStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvPatientStats.Location = new System.Drawing.Point(0, 0);
-            this.dgvPatientStats.Name = "dgvPatientStats";
-            this.dgvPatientStats.ReadOnly = true;
-            this.dgvPatientStats.Size = new System.Drawing.Size(124, 644);
-            this.dgvPatientStats.TabIndex = 0;
-            // 
-            // chartPatientStats
-            // 
-            this.chartPatientStats.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartPatientStats.Location = new System.Drawing.Point(0, 0);
-            this.chartPatientStats.Name = "chartPatientStats";
-            this.chartPatientStats.Size = new System.Drawing.Size(844, 644);
-            this.chartPatientStats.TabIndex = 0;
-            // 
-            // DayDate
-            // 
-            this.DayDate.DataPropertyName = "DayDate";
-            this.DayDate.HeaderText = "Column1";
-            this.DayDate.Name = "DayDate";
-            this.DayDate.Visible = false;
-            // 
-            // DayLabel
-            // 
-            this.DayLabel.DataPropertyName = "DayLabel";
-            this.DayLabel.HeaderText = "Date";
-            this.DayLabel.Name = "DayLabel";
-            // 
-            // EarCounts
-            // 
-            this.EarCounts.DataPropertyName = "EarCount";
-            this.EarCounts.HeaderText = "Ears";
-            this.EarCounts.Name = "EarCounts";
-            // 
-            // NoseCounts
-            // 
-            this.NoseCounts.DataPropertyName = "NoseCount";
-            this.NoseCounts.HeaderText = "Nose";
-            this.NoseCounts.Name = "NoseCounts";
-            // 
-            // ThroatCounts
-            // 
-            this.ThroatCounts.DataPropertyName = "ThroatCount";
-            this.ThroatCounts.HeaderText = "Throat";
-            this.ThroatCounts.Name = "ThroatCounts";
-            // 
-            // OthersCounts
-            // 
-            this.OthersCounts.DataPropertyName = "OthersCount";
-            this.OthersCounts.HeaderText = "Others";
-            this.OthersCounts.Name = "OthersCounts";
-            // 
-            // TotalConsultss
-            // 
-            this.TotalConsultss.DataPropertyName = "TotalConsults";
-            this.TotalConsultss.HeaderText = "Number of Consultations";
-            this.TotalConsultss.Name = "TotalConsultss";
             // 
             // MonthNumber
             // 
             this.MonthNumber.DataPropertyName = "MonthNumber";
-            this.MonthNumber.HeaderText = "Column1";
+            this.MonthNumber.HeaderText = "MonthNumber";
             this.MonthNumber.Name = "MonthNumber";
             this.MonthNumber.ReadOnly = true;
             this.MonthNumber.Visible = false;
@@ -431,10 +365,362 @@
             this.TotalConsults.Name = "TotalConsults";
             this.TotalConsults.ReadOnly = true;
             // 
+            // tabDaily
+            // 
+            this.tabDaily.Controls.Add(this.splitDaily);
+            this.tabDaily.Location = new System.Drawing.Point(4, 22);
+            this.tabDaily.Name = "tabDaily";
+            this.tabDaily.Size = new System.Drawing.Size(972, 612);
+            this.tabDaily.TabIndex = 1;
+            this.tabDaily.Text = "Daily Summary";
+            this.tabDaily.UseVisualStyleBackColor = true;
+            // 
+            // splitDaily
+            // 
+            this.splitDaily.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitDaily.Location = new System.Drawing.Point(0, 0);
+            this.splitDaily.Name = "splitDaily";
+            this.splitDaily.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitDaily.Panel1
+            // 
+            this.splitDaily.Panel1.Controls.Add(this.chartDaily);
+            // 
+            // splitDaily.Panel2
+            // 
+            this.splitDaily.Panel2.Controls.Add(this.dgvDaily);
+            this.splitDaily.Size = new System.Drawing.Size(972, 612);
+            this.splitDaily.SplitterDistance = 381;
+            this.splitDaily.TabIndex = 0;
+            // 
+            // chartDaily
+            // 
+            this.chartDaily.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartDaily.Location = new System.Drawing.Point(0, 0);
+            this.chartDaily.Name = "chartDaily";
+            this.chartDaily.Size = new System.Drawing.Size(972, 381);
+            this.chartDaily.TabIndex = 0;
+            // 
+            // dgvDaily
+            // 
+            this.dgvDaily.AllowUserToAddRows = false;
+            this.dgvDaily.AllowUserToDeleteRows = false;
+            this.dgvDaily.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvDaily.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvDaily.ColumnHeadersHeight = 30;
+            this.dgvDaily.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DayDate,
+            this.DayLabel,
+            this.EarCounts,
+            this.NoseCounts,
+            this.ThroatCounts,
+            this.OthersCounts,
+            this.TotalConsultss});
+            this.dgvDaily.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvDaily.Location = new System.Drawing.Point(0, 0);
+            this.dgvDaily.Name = "dgvDaily";
+            this.dgvDaily.ReadOnly = true;
+            this.dgvDaily.Size = new System.Drawing.Size(972, 227);
+            this.dgvDaily.TabIndex = 0;
+            // 
+            // DayDate
+            // 
+            this.DayDate.DataPropertyName = "DayDate";
+            this.DayDate.HeaderText = "DayDate";
+            this.DayDate.Name = "DayDate";
+            this.DayDate.ReadOnly = true;
+            this.DayDate.Visible = false;
+            // 
+            // DayLabel
+            // 
+            this.DayLabel.DataPropertyName = "DayLabel";
+            this.DayLabel.HeaderText = "Date";
+            this.DayLabel.Name = "DayLabel";
+            this.DayLabel.ReadOnly = true;
+            // 
+            // EarCounts
+            // 
+            this.EarCounts.DataPropertyName = "EarCount";
+            this.EarCounts.HeaderText = "Ears";
+            this.EarCounts.Name = "EarCounts";
+            this.EarCounts.ReadOnly = true;
+            // 
+            // NoseCounts
+            // 
+            this.NoseCounts.DataPropertyName = "NoseCount";
+            this.NoseCounts.HeaderText = "Nose";
+            this.NoseCounts.Name = "NoseCounts";
+            this.NoseCounts.ReadOnly = true;
+            // 
+            // ThroatCounts
+            // 
+            this.ThroatCounts.DataPropertyName = "ThroatCount";
+            this.ThroatCounts.HeaderText = "Throat";
+            this.ThroatCounts.Name = "ThroatCounts";
+            this.ThroatCounts.ReadOnly = true;
+            // 
+            // OthersCounts
+            // 
+            this.OthersCounts.DataPropertyName = "OthersCount";
+            this.OthersCounts.HeaderText = "Others";
+            this.OthersCounts.Name = "OthersCounts";
+            this.OthersCounts.ReadOnly = true;
+            // 
+            // TotalConsultss
+            // 
+            this.TotalConsultss.DataPropertyName = "TotalConsults";
+            this.TotalConsultss.HeaderText = "Number of Consultations";
+            this.TotalConsultss.Name = "TotalConsultss";
+            this.TotalConsultss.ReadOnly = true;
+            // 
+            // tabQueueDaily
+            // 
+            this.tabQueueDaily.Controls.Add(this.splitQueueDaily);
+            this.tabQueueDaily.Location = new System.Drawing.Point(4, 22);
+            this.tabQueueDaily.Name = "tabQueueDaily";
+            this.tabQueueDaily.Size = new System.Drawing.Size(972, 612);
+            this.tabQueueDaily.TabIndex = 2;
+            this.tabQueueDaily.Text = "Queue - Daily";
+            this.tabQueueDaily.UseVisualStyleBackColor = true;
+            // 
+            // splitQueueDaily
+            // 
+            this.splitQueueDaily.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitQueueDaily.Location = new System.Drawing.Point(0, 0);
+            this.splitQueueDaily.Name = "splitQueueDaily";
+            this.splitQueueDaily.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitQueueDaily.Panel1
+            // 
+            this.splitQueueDaily.Panel1.Controls.Add(this.chartQueueDaily);
+            // 
+            // splitQueueDaily.Panel2
+            // 
+            this.splitQueueDaily.Panel2.Controls.Add(this.dgvQueueDaily);
+            this.splitQueueDaily.Size = new System.Drawing.Size(972, 612);
+            this.splitQueueDaily.SplitterDistance = 381;
+            this.splitQueueDaily.TabIndex = 0;
+            // 
+            // chartQueueDaily
+            // 
+            this.chartQueueDaily.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartQueueDaily.Location = new System.Drawing.Point(0, 0);
+            this.chartQueueDaily.Name = "chartQueueDaily";
+            this.chartQueueDaily.Size = new System.Drawing.Size(972, 381);
+            this.chartQueueDaily.TabIndex = 0;
+            // 
+            // dgvQueueDaily
+            // 
+            this.dgvQueueDaily.AllowUserToAddRows = false;
+            this.dgvQueueDaily.AllowUserToDeleteRows = false;
+            this.dgvQueueDaily.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvQueueDaily.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvQueueDaily.ColumnHeadersHeight = 30;
+            this.dgvQueueDaily.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.QDayDate,
+            this.QDayLabel,
+            this.QTotalQueued,
+            this.QCalledCount,
+            this.QFinishedCount,
+            this.QPendingCount});
+            this.dgvQueueDaily.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvQueueDaily.Location = new System.Drawing.Point(0, 0);
+            this.dgvQueueDaily.Name = "dgvQueueDaily";
+            this.dgvQueueDaily.ReadOnly = true;
+            this.dgvQueueDaily.Size = new System.Drawing.Size(972, 227);
+            this.dgvQueueDaily.TabIndex = 0;
+            // 
+            // QDayDate
+            // 
+            this.QDayDate.DataPropertyName = "DayDate";
+            this.QDayDate.HeaderText = "DayDate";
+            this.QDayDate.Name = "QDayDate";
+            this.QDayDate.ReadOnly = true;
+            this.QDayDate.Visible = false;
+            // 
+            // QDayLabel
+            // 
+            this.QDayLabel.DataPropertyName = "DayLabel";
+            this.QDayLabel.HeaderText = "Date";
+            this.QDayLabel.Name = "QDayLabel";
+            this.QDayLabel.ReadOnly = true;
+            // 
+            // QTotalQueued
+            // 
+            this.QTotalQueued.DataPropertyName = "TotalQueued";
+            this.QTotalQueued.HeaderText = "Total Queued";
+            this.QTotalQueued.Name = "QTotalQueued";
+            this.QTotalQueued.ReadOnly = true;
+            // 
+            // QCalledCount
+            // 
+            this.QCalledCount.DataPropertyName = "CalledCount";
+            this.QCalledCount.HeaderText = "Called";
+            this.QCalledCount.Name = "QCalledCount";
+            this.QCalledCount.ReadOnly = true;
+            // 
+            // QFinishedCount
+            // 
+            this.QFinishedCount.DataPropertyName = "FinishedCount";
+            this.QFinishedCount.HeaderText = "Finished";
+            this.QFinishedCount.Name = "QFinishedCount";
+            this.QFinishedCount.ReadOnly = true;
+            // 
+            // QPendingCount
+            // 
+            this.QPendingCount.DataPropertyName = "PendingCount";
+            this.QPendingCount.HeaderText = "Pending";
+            this.QPendingCount.Name = "QPendingCount";
+            this.QPendingCount.ReadOnly = true;
+            // 
+            // tabQueueMonthly
+            // 
+            this.tabQueueMonthly.Controls.Add(this.splitQueueMonthly);
+            this.tabQueueMonthly.Location = new System.Drawing.Point(4, 22);
+            this.tabQueueMonthly.Name = "tabQueueMonthly";
+            this.tabQueueMonthly.Size = new System.Drawing.Size(972, 612);
+            this.tabQueueMonthly.TabIndex = 3;
+            this.tabQueueMonthly.Text = "Queue - Monthly";
+            this.tabQueueMonthly.UseVisualStyleBackColor = true;
+            // 
+            // splitQueueMonthly
+            // 
+            this.splitQueueMonthly.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitQueueMonthly.Location = new System.Drawing.Point(0, 0);
+            this.splitQueueMonthly.Name = "splitQueueMonthly";
+            this.splitQueueMonthly.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitQueueMonthly.Panel1
+            // 
+            this.splitQueueMonthly.Panel1.Controls.Add(this.chartQueueMonthly);
+            // 
+            // splitQueueMonthly.Panel2
+            // 
+            this.splitQueueMonthly.Panel2.Controls.Add(this.dgvQueueMonthly);
+            this.splitQueueMonthly.Size = new System.Drawing.Size(972, 612);
+            this.splitQueueMonthly.SplitterDistance = 381;
+            this.splitQueueMonthly.TabIndex = 0;
+            // 
+            // chartQueueMonthly
+            // 
+            this.chartQueueMonthly.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartQueueMonthly.Location = new System.Drawing.Point(0, 0);
+            this.chartQueueMonthly.Name = "chartQueueMonthly";
+            this.chartQueueMonthly.Size = new System.Drawing.Size(972, 381);
+            this.chartQueueMonthly.TabIndex = 0;
+            // 
+            // dgvQueueMonthly
+            // 
+            this.dgvQueueMonthly.AllowUserToAddRows = false;
+            this.dgvQueueMonthly.AllowUserToDeleteRows = false;
+            this.dgvQueueMonthly.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvQueueMonthly.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvQueueMonthly.ColumnHeadersHeight = 30;
+            this.dgvQueueMonthly.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.QMonthNumber,
+            this.QMonthName,
+            this.QTotalQueuedM,
+            this.QCalledCountM,
+            this.QFinishedCountM,
+            this.QPendingCountM});
+            this.dgvQueueMonthly.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvQueueMonthly.Location = new System.Drawing.Point(0, 0);
+            this.dgvQueueMonthly.Name = "dgvQueueMonthly";
+            this.dgvQueueMonthly.ReadOnly = true;
+            this.dgvQueueMonthly.Size = new System.Drawing.Size(972, 227);
+            this.dgvQueueMonthly.TabIndex = 0;
+            // 
+            // QMonthNumber
+            // 
+            this.QMonthNumber.DataPropertyName = "MonthNumber";
+            this.QMonthNumber.HeaderText = "MonthNumber";
+            this.QMonthNumber.Name = "QMonthNumber";
+            this.QMonthNumber.ReadOnly = true;
+            this.QMonthNumber.Visible = false;
+            // 
+            // QMonthName
+            // 
+            this.QMonthName.DataPropertyName = "MonthName";
+            this.QMonthName.HeaderText = "Month";
+            this.QMonthName.Name = "QMonthName";
+            this.QMonthName.ReadOnly = true;
+            // 
+            // QTotalQueuedM
+            // 
+            this.QTotalQueuedM.DataPropertyName = "TotalQueued";
+            this.QTotalQueuedM.HeaderText = "Total Queued";
+            this.QTotalQueuedM.Name = "QTotalQueuedM";
+            this.QTotalQueuedM.ReadOnly = true;
+            // 
+            // QCalledCountM
+            // 
+            this.QCalledCountM.DataPropertyName = "CalledCount";
+            this.QCalledCountM.HeaderText = "Called";
+            this.QCalledCountM.Name = "QCalledCountM";
+            this.QCalledCountM.ReadOnly = true;
+            // 
+            // QFinishedCountM
+            // 
+            this.QFinishedCountM.DataPropertyName = "FinishedCount";
+            this.QFinishedCountM.HeaderText = "Finished";
+            this.QFinishedCountM.Name = "QFinishedCountM";
+            this.QFinishedCountM.ReadOnly = true;
+            // 
+            // QPendingCountM
+            // 
+            this.QPendingCountM.DataPropertyName = "PendingCount";
+            this.QPendingCountM.HeaderText = "Pending";
+            this.QPendingCountM.Name = "QPendingCountM";
+            this.QPendingCountM.ReadOnly = true;
+            // 
+            // tabPatientStats
+            // 
+            this.tabPatientStats.Controls.Add(this.splitPatientStats);
+            this.tabPatientStats.Location = new System.Drawing.Point(4, 22);
+            this.tabPatientStats.Name = "tabPatientStats";
+            this.tabPatientStats.Size = new System.Drawing.Size(972, 644);
+            this.tabPatientStats.TabIndex = 4;
+            this.tabPatientStats.Text = "Age Group";
+            this.tabPatientStats.UseVisualStyleBackColor = true;
+            // 
+            // splitPatientStats
+            // 
+            this.splitPatientStats.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitPatientStats.Location = new System.Drawing.Point(0, 0);
+            this.splitPatientStats.Name = "splitPatientStats";
+            // 
+            // splitPatientStats.Panel1
+            // 
+            this.splitPatientStats.Panel1.Controls.Add(this.dgvPatientStats);
+            this.splitPatientStats.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitPatientStats_Panel1_Paint);
+            // 
+            // splitPatientStats.Panel2
+            // 
+            this.splitPatientStats.Panel2.Controls.Add(this.chartPatientStats);
+            this.splitPatientStats.Size = new System.Drawing.Size(972, 644);
+            this.splitPatientStats.SplitterDistance = 220;
+            this.splitPatientStats.TabIndex = 0;
+            // 
+            // dgvPatientStats
+            // 
+            this.dgvPatientStats.AllowUserToAddRows = false;
+            this.dgvPatientStats.AllowUserToDeleteRows = false;
+            this.dgvPatientStats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPatientStats.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPatientStats.ColumnHeadersHeight = 30;
+            this.dgvPatientStats.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.AgeGroup,
+            this.CountPatients});
+            this.dgvPatientStats.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPatientStats.Location = new System.Drawing.Point(0, 0);
+            this.dgvPatientStats.Name = "dgvPatientStats";
+            this.dgvPatientStats.ReadOnly = true;
+            this.dgvPatientStats.Size = new System.Drawing.Size(220, 644);
+            this.dgvPatientStats.TabIndex = 0;
+            // 
             // AgeGroup
             // 
             this.AgeGroup.DataPropertyName = "AgeGroup";
-            this.AgeGroup.FillWeight = 149.2386F;
             this.AgeGroup.HeaderText = "Age";
             this.AgeGroup.Name = "AgeGroup";
             this.AgeGroup.ReadOnly = true;
@@ -442,10 +728,17 @@
             // CountPatients
             // 
             this.CountPatients.DataPropertyName = "CountPatients";
-            this.CountPatients.FillWeight = 50.76142F;
             this.CountPatients.HeaderText = "#";
             this.CountPatients.Name = "CountPatients";
             this.CountPatients.ReadOnly = true;
+            // 
+            // chartPatientStats
+            // 
+            this.chartPatientStats.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartPatientStats.Location = new System.Drawing.Point(0, 0);
+            this.chartPatientStats.Name = "chartPatientStats";
+            this.chartPatientStats.Size = new System.Drawing.Size(748, 644);
+            this.chartPatientStats.TabIndex = 0;
             // 
             // Dashboard
             // 
@@ -469,6 +762,20 @@
             this.splitDaily.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartDaily)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDaily)).EndInit();
+            this.tabQueueDaily.ResumeLayout(false);
+            this.splitQueueDaily.Panel1.ResumeLayout(false);
+            this.splitQueueDaily.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitQueueDaily)).EndInit();
+            this.splitQueueDaily.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartQueueDaily)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvQueueDaily)).EndInit();
+            this.tabQueueMonthly.ResumeLayout(false);
+            this.splitQueueMonthly.Panel1.ResumeLayout(false);
+            this.splitQueueMonthly.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitQueueMonthly)).EndInit();
+            this.splitQueueMonthly.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartQueueMonthly)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvQueueMonthly)).EndInit();
             this.tabPatientStats.ResumeLayout(false);
             this.splitPatientStats.Panel1.ResumeLayout(false);
             this.splitPatientStats.Panel2.ResumeLayout(false);
@@ -481,22 +788,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn MonthNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MonthName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EarCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NoseCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ThroatCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OthersCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TotalConsults;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DayDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DayLabel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EarCounts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NoseCounts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ThroatCounts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OthersCounts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TotalConsultss;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AgeGroup;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CountPatients;
     }
 }

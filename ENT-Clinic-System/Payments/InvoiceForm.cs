@@ -542,7 +542,7 @@ namespace ENT_Clinic_System.Payments
             SetHeader("dosage", "Dosage");
             SetHeader("category", "Category");
             SetHeader("selling_price", "Unit Price");
-            SetHeader("stock_qty", "Stock Qty");
+            SetHeader("quantity", "Stock Qty");
 
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv.ColumnHeadersDefaultCellStyle.Font = _boldHeaderFont;
