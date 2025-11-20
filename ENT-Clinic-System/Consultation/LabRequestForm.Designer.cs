@@ -158,7 +158,7 @@
             // selectAllButton
             // 
             this.selectAllButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.selectAllButton.Location = new System.Drawing.Point(321, 3);
+            this.selectAllButton.Location = new System.Drawing.Point(320, 3);
             this.selectAllButton.Name = "selectAllButton";
             this.selectAllButton.Size = new System.Drawing.Size(120, 31);
             this.selectAllButton.TabIndex = 9;
@@ -168,7 +168,7 @@
             // deselectAllButton
             // 
             this.deselectAllButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.deselectAllButton.Location = new System.Drawing.Point(577, 3);
+            this.deselectAllButton.Location = new System.Drawing.Point(576, 3);
             this.deselectAllButton.Name = "deselectAllButton";
             this.deselectAllButton.Size = new System.Drawing.Size(105, 31);
             this.deselectAllButton.TabIndex = 10;
@@ -177,7 +177,7 @@
             // refreshButton
             // 
             this.refreshButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.refreshButton.Location = new System.Drawing.Point(451, 3);
+            this.refreshButton.Location = new System.Drawing.Point(450, 3);
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Size = new System.Drawing.Size(120, 31);
             this.refreshButton.TabIndex = 11;
@@ -369,7 +369,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.30376F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.69625F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 191F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
             this.tableLayoutPanel1.Controls.Add(this.refreshButton, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.deselectAllButton, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.saveRequestButton, 3, 0);

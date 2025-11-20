@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ENT_Clinic_System.Helpers
 {
     /// <summary>
-    /// RichTextBox formatter helper compatible with .NET Framework 4.8.
+    /// RichTextBox formatter helper compatible with .NET Framework4.8.
     /// Usage:
-    ///     RichTextBoxFormatterHelper.Attach(myRichTextBox, this);
+    /// RichTextBoxFormatterHelper.Attach(myRichTextBox, this); // full toolbar
+    /// RichTextBoxFormatterHelper.Attach(myRichTextBox, this, compact: true); // compact toolbar
     ///
-    /// Adds a ToolStrip with common formatting tools and a ContextMenuStrip.
-    /// Designed to avoid APIs that are unavailable on .NET Framework 4.8.
+    /// Adds a ToolStrip with Font and Paragraph features similar to Word's Font/Paragraph groups
+    /// using only WinForms / RichTextBox APIs. Some Word features (true justify, exact line spacing
+    /// using RTF paragraph flags) are not fully available via the managed RichTextBox without
+    /// P/Invoke; this helper implements close approximations using safe managed APIs.
     /// </summary>
     public static class RichTextBoxFormatterHelper
     {
-        public static void Attach(RichTextBox rtb, Form owner = null)
+        public static void Attach(RichTextBox rtb, Form owner = null, bool compact = false)
         {
-            if (rtb == null) throw new ArgumentNullException("rtb");
+            if (rtb == null) throw new ArgumentNullException(nameof(rtb));
 
             // Prevent attaching twice
             if (rtb.Tag is string s && s == "RTB_FORMATTER_ATTACHED") return;
@@ -26,158 +31,233 @@ namespace ENT_Clinic_System.Helpers
             var fontDialog = new FontDialog();
             var colorDialog = new ColorDialog();
 
-            var toolStrip = new ToolStrip();
-            toolStrip.GripStyle = ToolStripGripStyle.Hidden;
-            toolStrip.RenderMode = ToolStripRenderMode.System;
-            toolStrip.Stretch = true;
+            var toolStrip = new ToolStrip
+            {
+                GripStyle = ToolStripGripStyle.Hidden,
+                RenderMode = ToolStripRenderMode.System,
+                Stretch = true
+            };
 
-            var btnBold = new ToolStripButton("B") { CheckOnClick = true };
-            btnBold.ToolTipText = "Bold";
-            btnBold.Click += (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Bold, btnBold.Checked);
-
-            var btnItalic = new ToolStripButton("I") { CheckOnClick = true };
-            btnItalic.ToolTipText = "Italic";
-            btnItalic.Click += (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Italic, btnItalic.Checked);
-
-            var btnUnderline = new ToolStripButton("U") { CheckOnClick = true };
-            btnUnderline.ToolTipText = "Underline";
-            btnUnderline.Click += (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Underline, btnUnderline.Checked);
-
-            var fontFamilyBox = new ToolStripComboBox();
-            fontFamilyBox.Width = 160;
-            fontFamilyBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            // --- Font group ---
+            var fontFamilyBox = new ToolStripComboBox { Width =160, DropDownStyle = ComboBoxStyle.DropDownList };
             try
             {
-                var families = System.Drawing.FontFamily.Families;
-                foreach (var ff in families)
-                {
+                foreach (var ff in FontFamily.Families)
                     fontFamilyBox.Items.Add(ff.Name);
-                }
             }
             catch { }
 
-            fontFamilyBox.SelectedIndexChanged += (sender, e) =>
+            fontFamilyBox.SelectedIndexChanged += (s1, e1) =>
             {
                 if (fontFamilyBox.SelectedItem != null)
-                {
                     ApplyFontFamily(rtb, fontFamilyBox.SelectedItem.ToString());
-                }
             };
 
-            var fontSizeBox = new ToolStripComboBox();
-            fontSizeBox.Width = 70;
-            fontSizeBox.DropDownStyle = ComboBoxStyle.DropDown;
+            var fontSizeBox = new ToolStripComboBox { Width =70, DropDownStyle = ComboBoxStyle.DropDown };
             fontSizeBox.Items.AddRange(new object[] { "8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72" });
-            fontSizeBox.Leave += (s1, e1) => { float size; if (float.TryParse(fontSizeBox.Text, out size)) ApplyFontSize(rtb, size); };
-            fontSizeBox.KeyDown += (s1, e1) => { if (e1.KeyCode == Keys.Enter) { float size; if (float.TryParse(fontSizeBox.Text, out size)) ApplyFontSize(rtb, size); } };
+            fontSizeBox.Leave += (s1, e1) => { if (float.TryParse(fontSizeBox.Text, out float size)) ApplyFontSize(rtb, size); };
+            fontSizeBox.KeyDown += (s1, e1) => { if (e1.KeyCode == Keys.Enter && float.TryParse(fontSizeBox.Text, out float size)) ApplyFontSize(rtb, size); };
 
-            var btnColor = new ToolStripButton("A");
-            btnColor.ToolTipText = "Color";
-            btnColor.Click += (s1, e1) => { if (owner != null) colorDialog.ShowDialog(owner); else colorDialog.ShowDialog(); ApplyColor(rtb, colorDialog.Color); };
+            var btnBold = new ToolStripButton("B") { CheckOnClick = true, ToolTipText = "Bold (Ctrl+B)" };
+            btnBold.Click += (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Bold, btnBold.Checked);
 
-            var btnAlignLeft = new ToolStripButton("L"); btnAlignLeft.ToolTipText = "Align Left"; btnAlignLeft.Click += (s1, e1) => rtb.SelectionAlignment = HorizontalAlignment.Left;
-            var btnAlignCenter = new ToolStripButton("C"); btnAlignCenter.ToolTipText = "Center"; btnAlignCenter.Click += (s1, e1) => rtb.SelectionAlignment = HorizontalAlignment.Center;
-            var btnAlignRight = new ToolStripButton("R"); btnAlignRight.ToolTipText = "Align Right"; btnAlignRight.Click += (s1, e1) => rtb.SelectionAlignment = HorizontalAlignment.Right;
+            var btnItalic = new ToolStripButton("I") { CheckOnClick = true, ToolTipText = "Italic (Ctrl+I)" };
+            btnItalic.Click += (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Italic, btnItalic.Checked);
 
-            var btnBullets = new ToolStripButton("•") { CheckOnClick = true }; btnBullets.ToolTipText = "Toggle Bullets"; btnBullets.Click += (s1, e1) => rtb.SelectionBullet = btnBullets.Checked;
+            var btnUnderline = new ToolStripButton("U") { CheckOnClick = true, ToolTipText = "Underline (Ctrl+U)" };
+            btnUnderline.Click += (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Underline, btnUnderline.Checked);
 
-            var btnIndent = new ToolStripButton("→"); btnIndent.ToolTipText = "Increase Indent"; btnIndent.Click += (s1, e1) => rtb.SelectionIndent += 20;
-            var btnOutdent = new ToolStripButton("←"); btnOutdent.ToolTipText = "Decrease Indent"; btnOutdent.Click += (s1, e1) => rtb.SelectionIndent = Math.Max(0, rtb.SelectionIndent - 20);
+            var btnStrike = new ToolStripButton("abc") { CheckOnClick = true, ToolTipText = "Strikethrough" };
+            btnStrike.Click += (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Strikeout, btnStrike.Checked);
 
-            var btnWordWrap = new ToolStripButton("Wrap") { CheckOnClick = true }; btnWordWrap.ToolTipText = "Toggle Word Wrap";
-            btnWordWrap.Checked = rtb.WordWrap;
-            btnWordWrap.Click += (s1, e1) => { rtb.WordWrap = btnWordWrap.Checked; rtb.ScrollBars = rtb.WordWrap ? RichTextBoxScrollBars.Vertical : RichTextBoxScrollBars.Both; };
+            var btnSup = new ToolStripButton("xⁿ") { CheckOnClick = true, ToolTipText = "Superscript" };
+            var btnSub = new ToolStripButton("xₙ") { CheckOnClick = true, ToolTipText = "Subscript" };
 
-            var btnInsertDate = new ToolStripButton("Date"); btnInsertDate.ToolTipText = "Insert Date/Time"; btnInsertDate.Click += (s1, e1) => rtb.SelectedText = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-            var btnClear = new ToolStripButton("Clear"); btnClear.ToolTipText = "Clear Formatting (keep text)"; btnClear.Click += (s1, e1) => ClearFormatting(rtb);
-
-            var btnSave = new ToolStripButton("Save"); btnSave.ToolTipText = "Save to RTF"; btnSave.Click += (s1, e1) =>
+            btnSup.Click += (s1, e1) =>
             {
-                using (var sfd = new SaveFileDialog())
+                if (btnSup.Checked)
                 {
-                    sfd.Filter = "Rich Text Format (*.rtf)|*.rtf|Text File (*.txt)|*.txt";
-                    if (sfd.ShowDialog(owner ?? rtb.FindForm()) == DialogResult.OK)
-                    {
-                        if (sfd.FileName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
-                            System.IO.File.WriteAllText(sfd.FileName, rtb.Text);
-                        else
-                            rtb.SaveFile(sfd.FileName, RichTextBoxStreamType.RichText);
-                    }
+                    btnSub.Checked = false;
+                    ApplySuperScript(rtb, true);
                 }
+                else ApplySuperScript(rtb, false);
             };
 
-            var btnLoad = new ToolStripButton("Open"); btnLoad.ToolTipText = "Load RTF / Text"; btnLoad.Click += (s1, e1) =>
+            btnSub.Click += (s1, e1) =>
             {
-                using (var ofd = new OpenFileDialog())
+                if (btnSub.Checked)
                 {
-                    ofd.Filter = "Rich Text Format (*.rtf)|*.rtf|Text File (*.txt)|*.txt";
-                    if (ofd.ShowDialog(owner ?? rtb.FindForm()) == DialogResult.OK)
-                    {
-                        if (ofd.FileName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
-                            rtb.Text = System.IO.File.ReadAllText(ofd.FileName);
-                        else
-                            rtb.LoadFile(ofd.FileName, RichTextBoxStreamType.RichText);
-                    }
+                    btnSup.Checked = false;
+                    ApplySubScript(rtb, true);
                 }
+                else ApplySubScript(rtb, false);
             };
 
-            var btnUndo = new ToolStripButton("↶"); btnUndo.ToolTipText = "Undo"; btnUndo.Click += (s1, e1) => { if (rtb.CanUndo) rtb.Undo(); };
-            var btnRedo = new ToolStripButton("↷"); btnRedo.ToolTipText = "Redo"; btnRedo.Click += (s1, e1) => { try { rtb.Redo(); } catch { } };
-
-            var btnFind = new ToolStripButton("Find"); btnFind.ToolTipText = "Find Text"; btnFind.Click += (s1, e1) => SimpleFind(rtb, owner);
-            var btnReplace = new ToolStripButton("Replace"); btnReplace.ToolTipText = "Find and Replace"; btnReplace.Click += (s1, e1) => SimpleReplace(rtb, owner);
-
-            var btnColumns = new ToolStripButton("Columns"); btnColumns.ToolTipText = "Insert columns using tabs"; btnColumns.Click += (s1, e1) => InsertColumnsDialog(rtb, owner);
-
-            toolStrip.Items.AddRange(new ToolStripItem[]
+            var btnFontColor = new ToolStripButton("A") { ToolTipText = "Font Color" };
+            btnFontColor.Click += (s1, e1) =>
             {
-                btnBold, btnItalic, btnUnderline,
-                new ToolStripSeparator(),
-                fontFamilyBox, fontSizeBox,
-                new ToolStripSeparator(),
-                btnColor,
-                new ToolStripSeparator(),
-                btnAlignLeft, btnAlignCenter, btnAlignRight,
-                new ToolStripSeparator(),
-                btnBullets, btnIndent, btnOutdent,
-                new ToolStripSeparator(),
-                btnWordWrap, btnInsertDate, btnColumns,
-                new ToolStripSeparator(),
-                btnFind, btnReplace,
-                new ToolStripSeparator(),
-                btnUndo, btnRedo, btnClear,
-                new ToolStripSeparator(),
-                btnSave, btnLoad
-            });
+                if (owner != null) colorDialog.ShowDialog(owner); else colorDialog.ShowDialog();
+                ApplyColor(rtb, colorDialog.Color);
+            };
 
+            var btnHighlight = new ToolStripButton("▣") { ToolTipText = "Highlight" };
+            btnHighlight.Click += (s1, e1) =>
+            {
+                if (owner != null) colorDialog.ShowDialog(owner); else colorDialog.ShowDialog();
+                ApplyHighlight(rtb, colorDialog.Color);
+            };
+
+            var caseDrop = new ToolStripDropDownButton("Aa") { ToolTipText = "Change Case" };
+            caseDrop.DropDownItems.Add("UPPERCASE", null, (s1, e1) => ChangeCase(rtb, CaseTransform.Upper));
+            caseDrop.DropDownItems.Add("lowercase", null, (s1, e1) => ChangeCase(rtb, CaseTransform.Lower));
+            caseDrop.DropDownItems.Add("Sentence case", null, (s1, e1) => ChangeCase(rtb, CaseTransform.Sentence));
+            caseDrop.DropDownItems.Add("Title Case", null, (s1, e1) => ChangeCase(rtb, CaseTransform.Title));
+            caseDrop.DropDownItems.Add("tOGGLE cASE", null, (s1, e1) => ChangeCase(rtb, CaseTransform.Toggle));
+
+            var btnClear = new ToolStripButton("Clear") { ToolTipText = "Clear Formatting" };
+            btnClear.Click += (s1, e1) => ClearFormatting(rtb);
+
+            // --- Paragraph group ---
+            var btnBullets = new ToolStripButton("•") { CheckOnClick = true, ToolTipText = "Bullets" };
+            btnBullets.Click += (s1, e1) => rtb.SelectionBullet = btnBullets.Checked;
+
+            var btnNumbering = new ToolStripButton("1.") { ToolTipText = "Numbering (simple)" };
+            btnNumbering.Click += (s1, e1) => ToggleNumbering(rtb);
+
+            var btnIndent = new ToolStripButton("→") { ToolTipText = "Increase Indent" };
+            btnIndent.Click += (s1, e1) => rtb.SelectionIndent +=20;
+
+            var btnOutdent = new ToolStripButton("←") { ToolTipText = "Decrease Indent" };
+            btnOutdent.Click += (s1, e1) => rtb.SelectionIndent = Math.Max(0, rtb.SelectionIndent -20);
+
+            var btnAlignLeft = new ToolStripButton("L") { ToolTipText = "Align Left" };
+            btnAlignLeft.Click += (s1, e1) => rtb.SelectionAlignment = HorizontalAlignment.Left;
+
+            var btnAlignCenter = new ToolStripButton("C") { ToolTipText = "Center" };
+            btnAlignCenter.Click += (s1, e1) => rtb.SelectionAlignment = HorizontalAlignment.Center;
+
+            var btnAlignRight = new ToolStripButton("R") { ToolTipText = "Align Right" };
+            btnAlignRight.Click += (s1, e1) => rtb.SelectionAlignment = HorizontalAlignment.Right;
+
+            var spacingBox = new ToolStripComboBox { Width =90, DropDownStyle = ComboBoxStyle.DropDownList };
+            spacingBox.Items.AddRange(new object[] { "Single", "1.5", "Double" });
+            spacingBox.SelectedIndexChanged += (s1, e1) =>
+            {
+                var sel = spacingBox.SelectedItem?.ToString();
+                if (sel == "Single") AdjustLineSpacingApprox(rtb, LineSpacing.Single);
+                else if (sel == "1.5") AdjustLineSpacingApprox(rtb, LineSpacing.OnePointFive);
+                else if (sel == "Double") AdjustLineSpacingApprox(rtb, LineSpacing.Double);
+            };
+            spacingBox.Text = "Single";
+
+            // Build toolbar layout
+            if (compact)
+            {
+                toolStrip.Items.AddRange(new ToolStripItem[]
+                {
+                    fontSizeBox,
+                    new ToolStripSeparator(),
+                    btnBold, btnItalic, btnUnderline,
+                    new ToolStripSeparator(),
+                    btnBullets, btnNumbering,
+                    new ToolStripSeparator(),
+                    btnAlignLeft, btnAlignCenter, btnAlignRight,
+                    new ToolStripSeparator(),
+                    btnSaveLoadPlaceholder()
+                });
+            }
+            else
+            {
+                toolStrip.Items.AddRange(new ToolStripItem[]
+                {
+                    fontFamilyBox, fontSizeBox,
+                    new ToolStripSeparator(),
+                    btnBold, btnItalic, btnUnderline, btnStrike,
+                    new ToolStripSeparator(),
+                    btnSup, btnSub, caseDrop,
+                    new ToolStripSeparator(),
+                    btnFontColor, btnHighlight,
+                    new ToolStripSeparator(),
+                    btnClear,
+                    new ToolStripSeparator(),
+                    btnBullets, btnNumbering, btnIndent, btnOutdent,
+                    new ToolStripSeparator(),
+                    btnAlignLeft, btnAlignCenter, btnAlignRight,
+                    new ToolStripSeparator(),
+                    spacingBox,
+                    new ToolStripSeparator(),
+                    btnSaveLoadPlaceholder()
+                });
+            }
+
+            // Attach toolstrip above RichTextBox
             var parent = rtb.Parent;
             if (parent != null)
             {
                 toolStrip.Dock = DockStyle.Top;
+                // Create wrapper panel that will host the ToolStrip (top) and the RichTextBox (fill)
+                var wrapper = new Panel();
+                wrapper.SuspendLayout();
 
-                // If RTB is docked Fill, wrap it so the toolstrip can be placed above without changing layout
                 if (rtb.Dock == DockStyle.Fill)
+                // Preserve some layout properties from the RTB
+                wrapper.Anchor = rtb.Anchor;
+                wrapper.Location = rtb.Location;
+                wrapper.Size = rtb.Size;
+                wrapper.Margin = rtb.Margin;
+
+                // Prepare toolStrip inside the wrapper
+                toolStrip.Dock = DockStyle.Bottom;
+
+                // Special-case TableLayoutPanel to keep RTB in the same cell
+                var tlp = parent as TableLayoutPanel;
+                if (tlp != null)
                 {
-                    var wrapper = new Panel();
-                    wrapper.Dock = DockStyle.Fill;
+                    var wrapper2 = new Panel { Dock = DockStyle.Fill };
                     parent.Controls.Remove(rtb);
-                    wrapper.Controls.Add(rtb);
+                    var pos = tlp.GetPositionFromControl(rtb);
+                    int colSpan = tlp.GetColumnSpan(rtb);
+                    int rowSpan = tlp.GetRowSpan(rtb);
+
+                    tlp.SuspendLayout();
+                    tlp.Controls.Remove(rtb);
+
+                    // Make wrapper fill the table cell
+                    wrapper2.Dock = DockStyle.Fill;
+                    tlp.Controls.Add(wrapper2, pos.Column, pos.Row);
+                    try { tlp.SetColumnSpan(wrapper2, colSpan); tlp.SetRowSpan(wrapper2, rowSpan); } catch { }
+
+                    wrapper2.Controls.Add(toolStrip);
+                    wrapper2.Controls.Add(rtb);
                     rtb.Dock = DockStyle.Fill;
-                    parent.Controls.Add(wrapper);
+                    parent.Controls.Add(wrapper2);
                     parent.Controls.Add(toolStrip);
-                    parent.Controls.SetChildIndex(toolStrip, 0);
-                    parent.Controls.SetChildIndex(wrapper, 1);
+                    parent.Controls.SetChildIndex(toolStrip,0);
+                    parent.Controls.SetChildIndex(wrapper2,1);
+
+                    tlp.ResumeLayout();
                 }
                 else
                 {
                     parent.Controls.Add(toolStrip);
                     toolStrip.BringToFront();
-                    // move RTB down if needed
                     rtb.Top += toolStrip.Height;
+                    // General parent: replace RTB with wrapper at the same z-order index
+                    int originalIndex = parent.Controls.GetChildIndex(rtb);
+                    parent.Controls.Remove(rtb);
+
+                    parent.Controls.Add(wrapper);
+                    try { parent.Controls.SetChildIndex(wrapper, originalIndex); } catch { }
+
+                    wrapper.Controls.Add(toolStrip);
+                    wrapper.Controls.Add(rtb);
+                    rtb.Dock = DockStyle.Fill;
                 }
+
+                wrapper.ResumeLayout();
             }
 
+            // Context menu
             var ctx = new ContextMenuStrip();
             ctx.Items.Add("Cut", null, (s1, e1) => rtb.Cut());
             ctx.Items.Add("Copy", null, (s1, e1) => rtb.Copy());
@@ -186,12 +266,14 @@ namespace ENT_Clinic_System.Helpers
             ctx.Items.Add("Bold", null, (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Bold, true));
             ctx.Items.Add("Italic", null, (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Italic, true));
             ctx.Items.Add("Underline", null, (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Underline, true));
-            ctx.Items.Add("Color...", null, (s1, e1) => { if (owner != null) colorDialog.ShowDialog(owner); else colorDialog.ShowDialog(); ApplyColor(rtb, colorDialog.Color); });
-            ctx.Items.Add("Select All", null, (s1, e1) => rtb.SelectAll());
+            ctx.Items.Add("Strikethrough", null, (s1, e1) => ToggleSelectionFontStyle(rtb, FontStyle.Strikeout, true));
+            ctx.Items.Add("Font Color...", null, (s1, e1) => { if (owner != null) colorDialog.ShowDialog(owner); else colorDialog.ShowDialog(); ApplyColor(rtb, colorDialog.Color); });
+            ctx.Items.Add("Highlight...", null, (s1, e1) => { if (owner != null) colorDialog.ShowDialog(owner); else colorDialog.ShowDialog(); ApplyHighlight(rtb, colorDialog.Color); });
+            ctx.Items.Add(new ToolStripSeparator());
             ctx.Items.Add("Clear Formatting", null, (s1, e1) => ClearFormatting(rtb));
             rtb.ContextMenuStrip = ctx;
 
-            rtb.Disposed += (s1, e1) => { toolStrip.Dispose(); ctx.Dispose(); };
+            rtb.Disposed += (s1, e1) => { try { toolStrip.Dispose(); ctx.Dispose(); } catch { } };
 
             rtb.SelectionChanged += (s1, e1) =>
             {
@@ -199,19 +281,128 @@ namespace ENT_Clinic_System.Helpers
                 btnBold.Checked = (f.Style & FontStyle.Bold) == FontStyle.Bold;
                 btnItalic.Checked = (f.Style & FontStyle.Italic) == FontStyle.Italic;
                 btnUnderline.Checked = (f.Style & FontStyle.Underline) == FontStyle.Underline;
+                btnStrike.Checked = (f.Style & FontStyle.Strikeout) == FontStyle.Strikeout;
 
                 try { fontFamilyBox.SelectedItem = f.FontFamily.Name; } catch { }
                 fontSizeBox.Text = f.Size.ToString("0.##");
 
                 btnBullets.Checked = rtb.SelectionBullet;
-                btnWordWrap.Checked = rtb.WordWrap;
+                btnSup.Checked = rtb.SelectionCharOffset >0;
+                btnSub.Checked = rtb.SelectionCharOffset <0;
             };
+
+            ToolStripItem btnSaveLoadPlaceholder()
+            {
+                var save = new ToolStripButton("Save") { ToolTipText = "Save to RTF" };
+                save.Click += (s1, e1) =>
+                {
+                    using (var sfd = new SaveFileDialog { Filter = "Rich Text Format (*.rtf)|*.rtf|Text File (*.txt)|*.txt" })
+                    {
+                        if (sfd.ShowDialog(owner ?? rtb.FindForm()) == DialogResult.OK)
+                        {
+                            if (sfd.FileName.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+                                System.IO.File.WriteAllText(sfd.FileName, rtb.Text);
+                            else
+                                rtb.SaveFile(sfd.FileName, RichTextBoxStreamType.RichText);
+                        }
+                    }
+                };
+                var open = new ToolStripButton("Open") { ToolTipText = "Load RTF / Text / Word" };
+                open.Click += (s1, e1) =>
+                {
+                    using (var ofd = new OpenFileDialog
+                    {
+                        Filter =
+                            "Word Document (*.docx;*.doc)|*.docx;*.doc|" +
+                            "Text File (*.txt)|*.txt|" +
+                            "Rich Text Format (*.rtf)|*.rtf|" +
+                            "All Files (*.*)|*.*"
+                    })
+                    {
+                        if (ofd.ShowDialog(owner ?? rtb.FindForm()) == DialogResult.OK)
+                        {
+                            var file = ofd.FileName;
+                            try
+                            {
+                                if (file.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    rtb.Text = System.IO.File.ReadAllText(file);
+                                }
+                                else if (file.EndsWith(".rtf", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    rtb.LoadFile(file, RichTextBoxStreamType.RichText);
+                                }
+                                else if (file.EndsWith(".docx", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    // Try Word COM automation to convert to RTF and load
+                                    if (!TryLoadWordViaCom(rtb, file))
+                                    {
+                                        // Fallback to plain text if Word isn't available
+                                        rtb.Text = System.IO.File.ReadAllText(file);
+                                    }
+                                }
+                                else if (file.EndsWith(".doc", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    // Try Word COM automation to convert to RTF and load
+                                    if (!TryLoadWordViaCom(rtb, file))
+                                    {
+                                        MessageBox.Show(owner ?? rtb.FindForm(), "Opening .doc files requires Microsoft Word to be installed.", "Unsupported format", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    }
+                                }
+                                else
+                                {
+                                    // Unknown - attempt to load as text
+                                    rtb.Text = System.IO.File.ReadAllText(file);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(owner ?? rtb.FindForm(), "Failed to open file: " + ex.Message, "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                };
+
+                var container = new ToolStripDropDownButton("File");
+                container.DropDownItems.Add(new ToolStripMenuItem("Save", null, (s2, e2) => save.PerformClick()));
+                container.DropDownItems.Add(new ToolStripMenuItem("Open", null, (s2, e2) => open.PerformClick()));
+                return container;
+
+                // Local helpers
+                bool TryLoadWordViaCom(RichTextBox rtbTarget, string path)
+                {
+                    try
+                    {
+                        var prog = Type.GetTypeFromProgID("Word.Application");
+                        if (prog == null) return false;
+                        dynamic word = Activator.CreateInstance(prog);
+                        word.Visible = false;
+                        dynamic doc = word.Documents.Open(path, ReadOnly: true);
+                        var tmp = System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString() + ".rtf");
+                        //6 = wdFormatRTF
+                        doc.SaveAs(tmp,6);
+                        doc.Close(false);
+                        word.Quit(false);
+                        rtbTarget.LoadFile(tmp, RichTextBoxStreamType.RichText);
+                        try { System.IO.File.Delete(tmp); } catch { }
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
         }
 
-        #region Helpers
+        #region Helpers & Implementations
+
+        private enum CaseTransform { Upper, Lower, Sentence, Title, Toggle }
+        private enum LineSpacing { Single, OnePointFive, Double }
+
         private static void ToggleSelectionFontStyle(RichTextBox rtb, FontStyle style, bool enable)
         {
-            if (rtb.SelectionLength == 0)
+            if (rtb.SelectionLength ==0)
             {
                 var cur = rtb.SelectionFont ?? rtb.Font;
                 var newStyle = enable ? (cur.Style | style) : (cur.Style & ~style);
@@ -221,9 +412,9 @@ namespace ENT_Clinic_System.Helpers
             {
                 int selStart = rtb.SelectionStart;
                 int selLen = rtb.SelectionLength;
-                for (int i = 0; i < selLen; i++)
+                for (int i =0; i < selLen; i++)
                 {
-                    rtb.Select(selStart + i, 1);
+                    rtb.Select(selStart + i,1);
                     var cur = rtb.SelectionFont ?? rtb.Font;
                     var newStyle = enable ? (cur.Style | style) : (cur.Style & ~style);
                     rtb.SelectionFont = new Font(cur.FontFamily, cur.Size, newStyle);
@@ -243,7 +434,7 @@ namespace ENT_Clinic_System.Helpers
 
         private static void ApplyFontSize(RichTextBox rtb, float size)
         {
-            if (size <= 0) return;
+            if (size <=0) return;
             var cur = rtb.SelectionFont ?? rtb.Font;
             try { rtb.SelectionFont = new Font(cur.FontFamily, size, cur.Style); } catch { }
             rtb.Focus();
@@ -255,6 +446,12 @@ namespace ENT_Clinic_System.Helpers
             rtb.Focus();
         }
 
+        private static void ApplyHighlight(RichTextBox rtb, Color c)
+        {
+            try { rtb.SelectionBackColor = c; } catch { }
+            rtb.Focus();
+        }
+
         private static void ClearFormatting(RichTextBox rtb)
         {
             var text = rtb.Text;
@@ -262,103 +459,191 @@ namespace ENT_Clinic_System.Helpers
             rtb.SelectAll();
             rtb.SelectionFont = rtb.Font;
             rtb.SelectionColor = rtb.ForeColor;
+            try { rtb.SelectionBackColor = rtb.BackColor; } catch { }
             rtb.SelectionBullet = false;
             rtb.SelectionAlignment = HorizontalAlignment.Left;
-            rtb.SelectionIndent = 0;
+            rtb.SelectionIndent =0;
             rtb.DeselectAll();
             rtb.Text = text;
             if (selStart <= rtb.Text.Length) rtb.SelectionStart = selStart;
             rtb.Focus();
         }
 
-        private static void SimpleFind(RichTextBox rtb, Form owner)
+        private static void ApplySuperScript(RichTextBox rtb, bool enable)
         {
-            using (var dlg = new Form())
+            if (rtb.SelectionLength ==0)
             {
-                dlg.Width = 360; dlg.Height = 120; dlg.FormBorderStyle = FormBorderStyle.FixedDialog; dlg.StartPosition = FormStartPosition.CenterParent;
-                var tb = new TextBox { Left = 10, Top = 10, Width = 320 };
-                var btn = new Button { Text = "Find Next", Left = 10, Top = 40, Width = 100 };
-                btn.Click += (s, e) =>
+                var cur = rtb.SelectionFont ?? rtb.Font;
+                if (enable)
                 {
-                    var search = tb.Text;
-                    if (string.IsNullOrEmpty(search)) return;
-                    var idx = rtb.Find(search, rtb.SelectionStart + rtb.SelectionLength, RichTextBoxFinds.None);
-                    if (idx >= 0) rtb.Select(idx, search.Length);
-                    else MessageBox.Show(dlg, "Text not found.");
-                };
-                dlg.Controls.Add(tb); dlg.Controls.Add(btn);
-                dlg.Text = "Find"; dlg.ShowDialog(owner ?? rtb.FindForm());
+                    rtb.SelectionFont = new Font(cur.FontFamily, Math.Max(6f, cur.Size *0.75f), cur.Style);
+                    rtb.SelectionCharOffset = Math.Max(1, (int)(cur.Size /2));
+                }
+                else
+                {
+                    rtb.SelectionFont = new Font(cur.FontFamily, cur.Size /0.75f, cur.Style);
+                    rtb.SelectionCharOffset =0;
+                }
             }
-        }
-
-        private static void SimpleReplace(RichTextBox rtb, Form owner)
-        {
-            using (var dlg = new Form())
+            else
             {
-                dlg.Width = 420; dlg.Height = 160; dlg.FormBorderStyle = FormBorderStyle.FixedDialog; dlg.StartPosition = FormStartPosition.CenterParent;
-                var lbl1 = new Label { Text = "Find:", Left = 10, Top = 10 };
-                var tbFind = new TextBox { Left = 70, Top = 8, Width = 330 };
-                var lbl2 = new Label { Text = "Replace:", Left = 10, Top = 40 };
-                var tbReplace = new TextBox { Left = 70, Top = 38, Width = 330 };
-                var btnFindNext = new Button { Text = "Find Next", Left = 70, Top = 70, Width = 100 };
-                var btnReplace = new Button { Text = "Replace", Left = 180, Top = 70, Width = 100 };
-                btnFindNext.Click += (s, e) =>
+                int start = rtb.SelectionStart;
+                int len = rtb.SelectionLength;
+                for (int i =0; i < len; i++)
                 {
-                    var search = tbFind.Text;
-                    if (string.IsNullOrEmpty(search)) return;
-                    var idx = rtb.Find(search, rtb.SelectionStart + rtb.SelectionLength, RichTextBoxFinds.None);
-                    if (idx >= 0) rtb.Select(idx, search.Length);
-                    else MessageBox.Show(dlg, "Text not found.");
-                };
-                btnReplace.Click += (s, e) =>
-                {
-                    if (rtb.SelectionLength > 0 && rtb.SelectedText == tbFind.Text)
+                    rtb.Select(start + i,1);
+                    var f = rtb.SelectionFont ?? rtb.Font;
+                    if (enable)
                     {
-                        rtb.SelectedText = tbReplace.Text;
+                        rtb.SelectionFont = new Font(f.FontFamily, Math.Max(6f, f.Size *0.75f), f.Style);
+                        rtb.SelectionCharOffset = Math.Max(1, (int)(f.Size /2));
                     }
-                };
-                dlg.Controls.AddRange(new Control[] { lbl1, tbFind, lbl2, tbReplace, btnFindNext, btnReplace });
-                dlg.Text = "Find and Replace"; dlg.ShowDialog(owner ?? rtb.FindForm());
-            }
-        }
-
-        private static void InsertColumnsDialog(RichTextBox rtb, Form owner)
-        {
-            using (var dlg = new Form())
-            {
-                dlg.Width = 360; dlg.Height = 180; dlg.FormBorderStyle = FormBorderStyle.FixedDialog; dlg.StartPosition = FormStartPosition.CenterParent; dlg.Text = "Insert Columns";
-                var lblCols = new Label { Text = "Columns (comma separated):", Left = 10, Top = 10, Width = 320 };
-                var tbCols = new TextBox { Left = 10, Top = 30, Width = 320, Text = "Column1,Column2,Column3" };
-                var lblWidths = new Label { Text = "Widths (px) optional (comma):", Left = 10, Top = 60, Width = 320 };
-                var tbWidths = new TextBox { Left = 10, Top = 80, Width = 320, Text = "150,150,150" };
-                var btn = new Button { Text = "Insert", Left = 10, Top = 110, Width = 80 };
-                btn.Click += (s, e) =>
-                {
-                    var cols = tbCols.Text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToArray();
-                    if (cols.Length == 0) return;
-                    int[] widths = null;
-                    try { widths = tbWidths.Text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(t => int.Parse(t.Trim())).ToArray(); } catch { widths = null; }
-                    int[] tabs = null;
-                    if (widths != null && widths.Length >= cols.Length)
+                    else
                     {
-                        tabs = new int[cols.Length];
-                        int acc = 0;
-                        for (int i = 0; i < cols.Length; i++) { acc += widths[i]; tabs[i] = acc; }
+                        rtb.SelectionFont = new Font(f.FontFamily, Math.Min(72f, f.Size /0.75f), f.Style);
+                        rtb.SelectionCharOffset =0;
                     }
-                    InsertColumns(rtb, cols, tabs);
-                    dlg.Close();
-                };
-                dlg.Controls.AddRange(new Control[] { lblCols, tbCols, lblWidths, tbWidths, btn });
-                dlg.ShowDialog(owner ?? rtb.FindForm());
+                }
+                rtb.Select(start, len);
             }
+            rtb.Focus();
         }
 
-        private static void InsertColumns(RichTextBox rtb, string[] cols, int[] tabStopsPx)
+        private static void ApplySubScript(RichTextBox rtb, bool enable)
         {
-            if (cols == null || cols.Length == 0) return;
-            try { if (tabStopsPx != null && tabStopsPx.Length >= cols.Length) rtb.SelectionTabs = tabStopsPx; } catch { }
-            var line = string.Join("\t", cols) + "\n";
-            rtb.SelectedText = line;
+            if (rtb.SelectionLength ==0)
+            {
+                var cur = rtb.SelectionFont ?? rtb.Font;
+                if (enable)
+                {
+                    rtb.SelectionFont = new Font(cur.FontFamily, Math.Max(6f, cur.Size *0.75f), cur.Style);
+                    rtb.SelectionCharOffset = -Math.Max(1, (int)(cur.Size /3));
+                }
+                else
+                {
+                    rtb.SelectionFont = new Font(cur.FontFamily, cur.Size /0.75f, cur.Style);
+                    rtb.SelectionCharOffset =0;
+                }
+            }
+            else
+            {
+                int start = rtb.SelectionStart;
+                int len = rtb.SelectionLength;
+                for (int i =0; i < len; i++)
+                {
+                    rtb.Select(start + i,1);
+                    var f = rtb.SelectionFont ?? rtb.Font;
+                    if (enable)
+                    {
+                        rtb.SelectionFont = new Font(f.FontFamily, Math.Max(6f, f.Size *0.75f), f.Style);
+                        rtb.SelectionCharOffset = -Math.Max(1, (int)(f.Size /3));
+                    }
+                    else
+                    {
+                        rtb.SelectionFont = new Font(f.FontFamily, Math.Min(72f, f.Size /0.75f), f.Style);
+                        rtb.SelectionCharOffset =0;
+                    }
+                }
+                rtb.Select(start, len);
+            }
+            rtb.Focus();
+        }
+
+        private static void ToggleNumbering(RichTextBox rtb)
+        {
+            if (rtb.SelectionLength ==0)
+            {
+                int lineIndex = rtb.GetLineFromCharIndex(rtb.SelectionStart);
+                int lineStart = rtb.GetFirstCharIndexFromLine(lineIndex);
+                rtb.Select(lineStart,0);
+                rtb.SelectedText = "1. ";
+                rtb.SelectionStart = lineStart +3;
+            }
+            else
+            {
+                var selText = rtb.SelectedText.Replace("\r\n", "\n");
+                var lines = selText.Split(new[] { '\n' }, StringSplitOptions.None);
+                bool alreadyNumbered = lines.All(l => l.TrimStart().Length ==0 || System.Text.RegularExpressions.Regex.IsMatch(l.TrimStart(), "^\\d+\\.\\s+"));
+                if (alreadyNumbered)
+                {
+                    for (int i =0; i < lines.Length; i++)
+                        lines[i] = System.Text.RegularExpressions.Regex.Replace(lines[i], @"^\s*\d+\.\s+", string.Empty);
+                }
+                else
+                {
+                    for (int i =0; i < lines.Length; i++)
+                    {
+                        if (string.IsNullOrWhiteSpace(lines[i])) continue;
+                        lines[i] = (i +1).ToString() + ". " + lines[i];
+                    }
+                }
+                rtb.SelectedText = string.Join("\r\n", lines);
+            }
+            rtb.Focus();
+        }
+
+        private static void ChangeCase(RichTextBox rtb, CaseTransform transform)
+        {
+            if (rtb.SelectionLength ==0) return;
+            string text = rtb.SelectedText;
+            string changed = text;
+            switch (transform)
+            {
+                case CaseTransform.Upper: changed = text.ToUpperInvariant(); break;
+                case CaseTransform.Lower: changed = text.ToLowerInvariant(); break;
+                case CaseTransform.Title: changed = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text.ToLowerInvariant()); break;
+                case CaseTransform.Sentence:
+                {
+                    var sentences = System.Text.RegularExpressions.Regex.Split(text, @"(?<=[\.\!\?])\s+");
+                    for (int i =0; i < sentences.Length; i++)
+                    {
+                        var s = sentences[i].Trim();
+                        if (s.Length >0)
+                            sentences[i] = char.ToUpperInvariant(s[0]) + (s.Length >1 ? s.Substring(1).ToLowerInvariant() : "");
+                    }
+                    changed = string.Join(" ", sentences);
+                    break;
+                }
+                case CaseTransform.Toggle:
+                    changed = string.Concat(text.Select(c => char.IsUpper(c) ? char.ToLowerInvariant(c) : char.ToUpperInvariant(c)));
+                    break;
+            }
+            int selStart = rtb.SelectionStart;
+            rtb.SelectedText = changed;
+            rtb.Select(selStart, changed.Length);
+            rtb.Focus();
+        }
+
+        // Approximate line spacing by ensuring blank lines between paragraphs.
+        private static void AdjustLineSpacingApprox(RichTextBox rtb, LineSpacing spacing)
+        {
+            int selStart = rtb.SelectionStart;
+            int selLen = rtb.SelectionLength;
+            string text = rtb.SelectedText;
+            if (string.IsNullOrEmpty(text))
+            {
+                text = rtb.Text;
+                selStart =0;
+                selLen = text.Length;
+            }
+
+            var paragraphs = text.Replace("\r\n", "\n").Split(new[] { '\n' }, StringSplitOptions.None);
+            for (int i =0; i < paragraphs.Length; i++) paragraphs[i] = paragraphs[i].TrimEnd('\r', '\n');
+
+            string separator = "\r\n";
+            if (spacing == LineSpacing.OnePointFive) separator = "\r\n\r\n";
+            else if (spacing == LineSpacing.Double) separator = "\r\n\r\n";
+            string newText = string.Join(separator, paragraphs);
+
+            if (rtb.SelectionLength ==0)
+            {
+                rtb.Text = newText;
+            }
+            else
+            {
+                rtb.SelectedText = newText;
+                rtb.Select(selStart, newText.Length);
+            }
             rtb.Focus();
         }
 

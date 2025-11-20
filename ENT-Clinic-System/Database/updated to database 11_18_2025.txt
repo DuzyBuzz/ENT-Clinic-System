@@ -1,0 +1,391 @@
+added in the billing discount_name,
+added in the consultation procedure,
+added in the consultation a trigger auto complete
+
+drop event ev_cancel_pending_queue;
+CREATE EVENT ev_cancel_pending_queue
+ON SCHEDULE EVERY 1 DAY
+STARTS '2025-11-18 10:00:00'
+DO
+    UPDATE queue
+    SET status = 'Cancelled'
+    WHERE status = 'Waiting';
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `tr_consultation_set_done` AFTER INSERT ON `consultation` FOR EACH ROW BEGIN
+    UPDATE queue
+    SET 
+        status = 'Done',
+        finished_at = NOW()
+    WHERE patient_id = NEW.patient_id
+      AND status = 'Examining';   -- only change if currently examining
+END
+
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `trg_update_autocomplete`
+AFTER INSERT ON `ent_clinic_db`.`consultation`
+FOR EACH ROW
+BEGIN
+    -- ===== Variable and cursor declarations (must be before handlers) =====
+    DECLARE col_value TEXT;
+    DECLARE token TEXT;
+    DECLARE obs TEXT;
+    DECLARE pending_obs TEXT;
+    DECLARE pos INT;
+    DECLARE next_pos INT;
+    DECLARE tmp TEXT;
+    DECLARE done INT DEFAULT 0;
+    DECLARE col_name VARCHAR(100);
+
+    DECLARE columns_cursor CURSOR FOR
+        SELECT 'chief_complaint'
+        UNION ALL SELECT 'history'
+        UNION ALL SELECT 'ear_exam'
+        UNION ALL SELECT 'nose_exam'
+        UNION ALL SELECT 'throat_exam'
+        UNION ALL SELECT 'neck_exam'
+        UNION ALL SELECT 'others_exam'
+        UNION ALL SELECT 'diagnosis'
+        UNION ALL SELECT 'recommendations'
+        UNION ALL SELECT 'procedure';
+
+    -- ===== Handlers =====
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- swallow errors so consultation insert isn't blocked
+    END;
+
+    OPEN columns_cursor;
+
+    read_loop: LOOP
+        FETCH columns_cursor INTO col_name;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- fetch the NEW value for this column
+        SET col_value = NULL;
+        IF col_name = 'chief_complaint' THEN SET col_value = NEW.chief_complaint; END IF;
+        IF col_name = 'history'         THEN SET col_value = NEW.history;         END IF;
+        IF col_name = 'ear_exam'        THEN SET col_value = NEW.ear_exam;        END IF;
+        IF col_name = 'nose_exam'       THEN SET col_value = NEW.nose_exam;       END IF;
+        IF col_name = 'throat_exam'     THEN SET col_value = NEW.throat_exam;     END IF;
+        IF col_name = 'neck_exam'       THEN SET col_value = NEW.neck_exam;       END IF;
+        IF col_name = 'others_exam'     THEN SET col_value = NEW.others_exam;     END IF;
+        IF col_name = 'diagnosis'       THEN SET col_value = NEW.diagnosis;       END IF;
+        IF col_name = 'recommendations' THEN SET col_value = NEW.recommendations; END IF;
+        IF col_name = 'procedure'       THEN SET col_value = NEW.procedure;       END IF;
+
+        IF col_value IS NULL OR TRIM(col_value) = '' THEN
+            ITERATE read_loop;
+        END IF;
+
+        -- normalize line breaks to spaces so comma-splitting spans lines
+        SET col_value = REPLACE(col_value, CHAR(13), ' ');
+        SET col_value = REPLACE(col_value, CHAR(10), ' ');
+
+        -- iterate tokens separated by comma
+        SET pos = 1;
+        SET next_pos = LOCATE(',', col_value, pos);
+        SET pending_obs = NULL;
+
+        token_loop: WHILE pos <= CHAR_LENGTH(col_value) DO
+            IF next_pos = 0 THEN
+                SET token = SUBSTRING(col_value, pos);
+                SET pos = CHAR_LENGTH(col_value) + 1;
+            ELSE
+                SET token = SUBSTRING(col_value, pos, next_pos - pos);
+                SET pos = next_pos + 1;
+                SET next_pos = LOCATE(',', col_value, pos);
+            END IF;
+
+            SET token = TRIM(token);
+            IF token = '' THEN ITERATE token_loop; END IF;
+
+            -- if token is exactly a laterality (AS/AD/AU), attach to pending_obs if present
+            IF UPPER(token) IN ('AS','AD','AU') THEN
+                IF pending_obs IS NOT NULL THEN
+                    -- combine with previous observation, keep exact formatting of previous (trimmed) and append ", " + token
+                    SET obs = CONCAT(TRIM(pending_obs), ', ', token);
+                    SET pending_obs = NULL;
+
+                    INSERT INTO ent_clinic_db.autocomplete_entries (column_name, value, `count`)
+                    VALUES (col_name, obs, 1)
+                    ON DUPLICATE KEY UPDATE `count` = `count` + 1;
+                ELSE
+                    -- no prior observation: insert the abbreviation itself as a value
+                    INSERT INTO ent_clinic_db.autocomplete_entries (column_name, value, `count`)
+                    VALUES (col_name, token, 1)
+                    ON DUPLICATE KEY UPDATE `count` = `count` + 1;
+                END IF;
+
+                ITERATE token_loop;
+            END IF;
+
+            -- If there was a pending_obs (previous token) that didn't get a following abbreviation,
+            -- flush it now as its own value.
+            IF pending_obs IS NOT NULL THEN
+                SET obs = TRIM(pending_obs);
+                SET pending_obs = NULL;
+                IF obs <> '' THEN
+                    INSERT INTO ent_clinic_db.autocomplete_entries (column_name, value, `count`)
+                    VALUES (col_name, obs, 1)
+                    ON DUPLICATE KEY UPDATE `count` = `count` + 1;
+                END IF;
+            END IF;
+
+            -- Current token: since it's not a standalone abbreviation we treat it as pending,
+            -- because the next token may be a following abbreviation
+            SET pending_obs = token;
+
+        END WHILE token_loop;
+
+        -- After tokens for this column: if an observation is still pending with no following abbreviation,
+        -- insert it alone.
+        IF pending_obs IS NOT NULL THEN
+            SET obs = TRIM(pending_obs);
+            IF obs <> '' THEN
+                INSERT INTO ent_clinic_db.autocomplete_entries (column_name, value, `count`)
+                VALUES (col_name, obs, 1)
+                ON DUPLICATE KEY UPDATE `count` = `count` + 1;
+            END IF;
+            SET pending_obs = NULL;
+        END IF;
+
+    END LOOP read_loop;
+
+    CLOSE columns_cursor;
+END$$
+
+DELIMITER ;
+
+
+
+-- Clear table first (BE CAREFUL: this removes existing autocomplete entries)
+TRUNCATE TABLE ent_clinic_db.autocomplete_entries;
+
+DELIMITER $$
+
+CREATE PROCEDURE ent_clinic_db.rebuild_autocomplete_entries_once()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE col_value TEXT;
+    DECLARE token TEXT;
+    DECLARE obs TEXT;
+    DECLARE pending_obs TEXT;
+    DECLARE pos INT;
+    DECLARE next_pos INT;
+    DECLARE tmp TEXT;
+    DECLARE col_name VARCHAR(100);
+
+    DECLARE v_chief_complaint TEXT;
+    DECLARE v_history TEXT;
+    DECLARE v_ear_exam TEXT;
+    DECLARE v_nose_exam TEXT;
+    DECLARE v_throat_exam TEXT;
+    DECLARE v_neck_exam TEXT;
+    DECLARE v_others_exam TEXT;
+    DECLARE v_diagnosis TEXT;
+    DECLARE v_recommendations TEXT;
+
+    DECLARE consult_cursor CURSOR FOR
+        SELECT chief_complaint, history, ear_exam, nose_exam, throat_exam,
+               neck_exam, others_exam, diagnosis, recommendations
+        FROM ent_clinic_db.consultation;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    OPEN consult_cursor;
+
+    read_loop: LOOP
+        FETCH consult_cursor INTO
+            v_chief_complaint, v_history, v_ear_exam, v_nose_exam, v_throat_exam,
+            v_neck_exam, v_others_exam, v_diagnosis, v_recommendations;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        SET @i = 1;
+
+        column_loop: WHILE @i <= 9 DO
+            CASE @i
+                WHEN 1 THEN SET col_name = 'chief_complaint'; SET col_value = v_chief_complaint;
+                WHEN 2 THEN SET col_name = 'history';         SET col_value = v_history;
+                WHEN 3 THEN SET col_name = 'ear_exam';        SET col_value = v_ear_exam;
+                WHEN 4 THEN SET col_name = 'nose_exam';       SET col_value = v_nose_exam;
+                WHEN 5 THEN SET col_name = 'throat_exam';     SET col_value = v_throat_exam;
+                WHEN 6 THEN SET col_name = 'neck_exam';       SET col_value = v_neck_exam;
+                WHEN 7 THEN SET col_name = 'others_exam';     SET col_value = v_others_exam;
+                WHEN 8 THEN SET col_name = 'diagnosis';       SET col_value = v_diagnosis;
+                WHEN 9 THEN SET col_name = 'recommendations'; SET col_value = v_recommendations;
+            END CASE;
+
+            IF col_value IS NOT NULL AND TRIM(col_value) <> '' THEN
+                -- normalize newline to space
+                SET col_value = REPLACE(col_value, CHAR(13), ' ');
+                SET col_value = REPLACE(col_value, CHAR(10), ' ');
+                SET pos = 1;
+                SET next_pos = LOCATE(',', col_value, pos);
+                SET pending_obs = NULL;
+
+                token_loop: WHILE pos <= CHAR_LENGTH(col_value) DO
+                    IF next_pos = 0 THEN
+                        SET token = SUBSTRING(col_value, pos);
+                        SET pos = CHAR_LENGTH(col_value) + 1;
+                    ELSE
+                        SET token = SUBSTRING(col_value, pos, next_pos - pos);
+                        SET pos = next_pos + 1;
+                        SET next_pos = LOCATE(',', col_value, pos);
+                    END IF;
+
+                    SET token = TRIM(token);
+                    IF token = '' THEN ITERATE token_loop; END IF;
+
+                    -- token is a standalone laterality abbreviation?
+                    IF UPPER(token) IN ('AS','AD','AU') THEN
+                        IF pending_obs IS NOT NULL THEN
+                            SET obs = CONCAT(TRIM(pending_obs), ', ', token);
+                            SET pending_obs = NULL;
+                            INSERT INTO ent_clinic_db.autocomplete_entries (column_name, value, `count`)
+                            VALUES (col_name, obs, 1)
+                            ON DUPLICATE KEY UPDATE `count` = `count` + 1;
+                        ELSE
+                            -- no prior observation, insert the abbreviation alone
+                            INSERT INTO ent_clinic_db.autocomplete_entries (column_name, value, `count`)
+                            VALUES (col_name, token, 1)
+                            ON DUPLICATE KEY UPDATE `count` = `count` + 1;
+                        END IF;
+                        ITERATE token_loop;
+                    END IF;
+
+                    -- flush pending observation if present (no abbreviation followed it)
+                    IF pending_obs IS NOT NULL THEN
+                        SET obs = TRIM(pending_obs);
+                        SET pending_obs = NULL;
+                        IF obs <> '' THEN
+                            INSERT INTO ent_clinic_db.autocomplete_entries (column_name, value, `count`)
+                            VALUES (col_name, obs, 1)
+                            ON DUPLICATE KEY UPDATE `count` = `count` + 1;
+                        END IF;
+                    END IF;
+
+                    -- current token becomes pending (may be followed by abbreviation)
+                    SET pending_obs = token;
+
+                END WHILE token_loop;
+
+                -- after tokens, flush any remaining pending_obs
+                IF pending_obs IS NOT NULL THEN
+                    SET obs = TRIM(pending_obs);
+                    SET pending_obs = NULL;
+                    IF obs <> '' THEN
+                        INSERT INTO ent_clinic_db.autocomplete_entries (column_name, value, `count`)
+                        VALUES (col_name, obs, 1)
+                        ON DUPLICATE KEY UPDATE `count` = `count` + 1;
+                    END IF;
+                END IF;
+            END IF;
+
+            SET @i = @i + 1;
+        END WHILE column_loop;
+
+    END LOOP read_loop;
+
+    CLOSE consult_cursor;
+
+END$$
+
+DELIMITER ;
+
+-- Execute & drop the one-time procedure
+CALL ent_clinic_db.rebuild_autocomplete_entries_once();
+DROP PROCEDURE ent_clinic_db.rebuild_autocomplete_entries_once;
+
+
+
+
+
+UPDATE billing
+SET balance = CASE
+    WHEN payment_status = 'unpaid' THEN total_amount - amount_paid
+    ELSE 0
+END;
+
+
+DELIMITER $$
+
+CREATE TRIGGER trg_update_balance_before_insert
+BEFORE INSERT ON billing
+FOR EACH ROW
+BEGIN
+    -- If payment_status is 'unpaid', calculate the balance
+    IF NEW.payment_status = 'unpaid' THEN
+        SET NEW.balance = NEW.total_amount - NEW.amount_paid;
+    ELSE
+        SET NEW.balance = 0;
+    END IF;
+END$$
+CREATE TRIGGER trg_update_balance_before_update
+BEFORE UPDATE ON billing
+FOR EACH ROW
+BEGIN
+    -- If payment_status is 'unpaid', recalculate balance
+    IF NEW.payment_status = 'unpaid' THEN
+        SET NEW.balance = NEW.total_amount - NEW.amount_paid;
+    ELSE
+        SET NEW.balance = 0;
+    END IF;
+END$$
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DELIMITER $$
+
+CREATE TRIGGER trg_billing_payment_delete
+AFTER DELETE ON billing_payments
+FOR EACH ROW
+BEGIN
+    -- subtract deleted payment amount from billing.amount_paid
+    UPDATE billing
+    SET 
+        amount_paid = amount_paid - OLD.amount,
+        balance = total_amount - (amount_paid - OLD.amount)
+    WHERE billing_id = OLD.billing_id;
+
+    -- update payment status after recalculation
+    UPDATE billing
+    SET 
+        payment_status = 
+            CASE
+                WHEN amount_paid <= 0 THEN 'UNPAID'
+                WHEN balance = 0 THEN 'FULLY PAID'
+                ELSE 'PARTIALLY PAID'
+            END
+    WHERE billing_id = OLD.billing_id;
+END$$
+
+DELIMITER ;

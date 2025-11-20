@@ -1,6 +1,7 @@
 ﻿using ENT_Clinic_System.Helpers;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Consultation
@@ -99,7 +100,11 @@ namespace ENT_Clinic_System.Consultation
 
                 decimal discountAmount = (fee * discountPercent) / 100;
                 decimal finalAmount = Math.Max(fee - discountAmount, 0);
-                string note = noteComboBox.Text.Trim();
+
+                // Prepare uppercase values for DB
+                string note = string.IsNullOrWhiteSpace(noteComboBox.Text) ? "" : noteComboBox.Text.Trim().ToUpper();
+                string discountName = string.IsNullOrWhiteSpace(discountNameComboBox.Text) ? "" : discountNameComboBox.Text.Trim().ToUpper();
+                string procedures = string.IsNullOrWhiteSpace(procedureComboBox.Text) ? "" : procedureComboBox.Text.Trim().ToUpper();
 
                 // Save billing record
                 using (MySqlConnection conn = DBConfig.GetConnection())
@@ -107,10 +112,10 @@ namespace ENT_Clinic_System.Consultation
                     conn.Open();
 
                     string sql = @"
-                INSERT INTO billing 
-                    (consultation_id, patient_id, fee, discount_percent, discount_amount, total_amount, note, created_at) 
-                VALUES 
-                    (@consultation_id, @patient_id, @fee, @discount_percent, @discount_amount, @total_amount, @note, NOW())";
+            INSERT INTO billing 
+                (consultation_id, patient_id, fee, discount_percent, discount_amount, total_amount, note, discount_name, procedures, created_at) 
+            VALUES 
+                (@consultation_id, @patient_id, @fee, @discount_percent, @discount_amount, @total_amount, @note, @discount_name, @procedures, NOW())";
 
                     using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                     {
@@ -120,15 +125,38 @@ namespace ENT_Clinic_System.Consultation
                         cmd.Parameters.AddWithValue("@discount_percent", discountPercent);
                         cmd.Parameters.AddWithValue("@discount_amount", discountAmount);
                         cmd.Parameters.AddWithValue("@total_amount", finalAmount);
-                        cmd.Parameters.AddWithValue("@note", string.IsNullOrWhiteSpace(note) ? "" : note);
+                        cmd.Parameters.AddWithValue("@note", note);
+                        cmd.Parameters.AddWithValue("@discount_name", discountName);
+                        cmd.Parameters.AddWithValue("@procedures", procedures);
 
                         cmd.ExecuteNonQuery();
                     }
                 }
 
+                int latestConsultationId = LatestIdHelper.GetLatestId("consultation", "consultation_id");
+
+                using (MySqlConnection conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    string sql = @"
+            UPDATE consultation
+            SET procedures = @procedures
+            WHERE consultation_id = @consultation_id;";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@procedures", procedures);
+                        cmd.Parameters.AddWithValue("@consultation_id", latestConsultationId);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // User-friendly messages remain natural
                 MessageBox.Show("Billing record saved successfully!", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // --- ASK USER IF THERE IS A LAB REQUEST ---
+                // Ask user if there is a lab request
                 DialogResult result = MessageBox.Show(
                     "Do you want to create a laboratory request for this patient?",
                     "Lab Request",
@@ -153,6 +181,8 @@ namespace ENT_Clinic_System.Consultation
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
 
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -193,6 +223,15 @@ namespace ENT_Clinic_System.Consultation
             ComboBoxCollectionHelper.PopulateComboBox(feeComboBox, "billing", "fee");
             ComboBoxCollectionHelper.PopulateComboBox(discountComboBox, "billing", "discount_percent");
             ComboBoxCollectionHelper.PopulateComboBox(noteComboBox, "billing", "note");
+            ComboBoxCollectionHelper.PopulateComboBox(discountNameComboBox, "billing", "discount_name");
+            ComboBoxCollectionHelper.PopulateComboBox(procedureComboBox, "consultation", "procedure");
+
+            AutoCompleteHelper.SetupAutoComplete(noteComboBox, "billing", new List<string> { "note" });
+            AutoCompleteHelper.SetupAutoComplete(discountNameComboBox, "billing", new List<string> { "discount_name" });
+            AutoCompleteHelper.SetupAutoComplete(procedureComboBox, "consultation", new List<string> { "procedures" });
+
+
+
         }
     }
 }

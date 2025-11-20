@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using ENT_Clinic_System.Helpers;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -44,8 +45,48 @@ namespace ENT_Clinic_System.Helpers
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to populate ComboBox: " + ex.Message,
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+        public static void PopulateComboBox(object comboControl, string tableName, string columnName, bool append = false)
+        {
+            try
+            {
+                List<object> items = new List<object>();
+                string sql = $"SELECT DISTINCT {columnName} FROM {tableName} WHERE {columnName} IS NOT NULL ORDER BY {columnName}";
+
+                using (var conn = DBConfig.GetConnection())
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(0))
+                                items.Add(reader.GetValue(0));
+                        }
+                    }
+                }
+
+                if (comboControl is ComboBox cb)
+                {
+                    if (!append) cb.Items.Clear();
+                    cb.Items.AddRange(items.ToArray());
+                }
+                else if (comboControl is DataGridViewComboBoxColumn dgvCb)
+                {
+                    if (!append) dgvCb.Items.Clear();
+                    dgvCb.Items.AddRange(items.ToArray());
+                }
+                else
+                {
+                    throw new ArgumentException("comboControl must be ComboBox or DataGridViewComboBoxColumn");
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

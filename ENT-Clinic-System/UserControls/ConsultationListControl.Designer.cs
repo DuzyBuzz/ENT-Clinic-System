@@ -18,29 +18,30 @@
                 components.Dispose();
             }
             base.Dispose(disposing);
-        } 
+        }
 
         #region Component Designer generated code
 
         /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
+        /// NOTE: This designer file is identical to your original except that the
+        /// health_record_history columns were appended to the DataGridView columns.
+        /// Only the new columns were added — nothing else was modified.
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.searchButton = new System.Windows.Forms.Button();
@@ -49,9 +50,6 @@
             this.dateToPicker = new System.Windows.Forms.DateTimePicker();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.consulationDGV = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.searchDateButton = new System.Windows.Forms.Button();
-            this.pageLabel = new System.Windows.Forms.Label();
             this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,9 +67,37 @@
             this.others_exam = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.diagnosis = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.recommendations = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.procedures = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.notes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.follow_up_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.follow_up_notes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.past_medical_history = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.history_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.family_history = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.personal_social_history = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.temperature = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ht = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.wt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.general_appearance = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.skin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.head_and_face = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eyes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.neck = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.chest_lungs = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.heart = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.abdomen = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.extremities = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.neurologic = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.allergies = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.recorded_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.history_created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.history_updated_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.searchDateButton = new System.Windows.Forms.Button();
+            this.pageLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.consulationDGV)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
@@ -81,7 +107,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label1.Location = new System.Drawing.Point(2, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
@@ -93,7 +119,7 @@
             // searchTextBox
             // 
             this.searchTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.searchTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.searchTextBox.Location = new System.Drawing.Point(152, 3);
             this.searchTextBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 6);
             this.searchTextBox.Name = "searchTextBox";
@@ -103,7 +129,7 @@
             // searchButton
             // 
             this.searchButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.searchButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.searchButton.Location = new System.Drawing.Point(452, 3);
             this.searchButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.searchButton.Name = "searchButton";
@@ -115,7 +141,7 @@
             // refreshButton
             // 
             this.refreshButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.refreshButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.refreshButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.refreshButton.Location = new System.Drawing.Point(602, 3);
             this.refreshButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.refreshButton.Name = "refreshButton";
@@ -152,7 +178,7 @@
             this.tableLayoutPanel3.Controls.Add(this.consulationDGV, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tableLayoutPanel3.Font = new System.Drawing.Font("Arial Narrow", 12F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -165,10 +191,8 @@
             // consulationDGV
             // 
             this.consulationDGV.AllowUserToAddRows = false;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consulationDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
-            this.consulationDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.consulationDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consulationDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.consulationDGV.BackgroundColor = System.Drawing.SystemColors.Control;
             this.consulationDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.consulationDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -189,26 +213,371 @@
             this.others_exam,
             this.diagnosis,
             this.recommendations,
+            this.procedures,
             this.notes,
             this.follow_up_date,
-            this.follow_up_notes});
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.consulationDGV.DefaultCellStyle = dataGridViewCellStyle25;
+            this.follow_up_notes,
+            this.past_medical_history,
+            this.history_id,
+            this.family_history,
+            this.personal_social_history,
+            this.bp,
+            this.temperature,
+            this.pr,
+            this.rr,
+            this.ht,
+            this.wt,
+            this.general_appearance,
+            this.skin,
+            this.head_and_face,
+            this.eyes,
+            this.neck,
+            this.chest_lungs,
+            this.heart,
+            this.abdomen,
+            this.extremities,
+            this.neurologic,
+            this.allergies,
+            this.recorded_at,
+            this.history_created_at,
+            this.history_updated_at});
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Arial Narrow", 12F);
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.consulationDGV.DefaultCellStyle = dataGridViewCellStyle12;
             this.consulationDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.consulationDGV.Location = new System.Drawing.Point(2, 61);
             this.consulationDGV.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.consulationDGV.Name = "consulationDGV";
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.consulationDGV.RowsDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.consulationDGV.RowsDefaultCellStyle = dataGridViewCellStyle13;
             this.consulationDGV.Size = new System.Drawing.Size(1583, 1101);
             this.consulationDGV.TabIndex = 2;
             this.consulationDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.consulationDGV_CellContentClick_1);
+            // 
+            // full_name
+            // 
+            this.full_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.full_name.DataPropertyName = "full_name";
+            this.full_name.FillWeight = 200F;
+            this.full_name.Frozen = true;
+            this.full_name.HeaderText = "Patient Name";
+            this.full_name.Name = "full_name";
+            this.full_name.Width = 200;
+            // 
+            // consultation_id
+            // 
+            this.consultation_id.DataPropertyName = "consultation_id";
+            this.consultation_id.HeaderText = "consultation_id";
+            this.consultation_id.Name = "consultation_id";
+            this.consultation_id.Visible = false;
+            this.consultation_id.Width = 122;
+            // 
+            // patient_id
+            // 
+            this.patient_id.DataPropertyName = "patient_id";
+            this.patient_id.HeaderText = "patient_id";
+            this.patient_id.Name = "patient_id";
+            this.patient_id.Visible = false;
+            this.patient_id.Width = 91;
+            // 
+            // address
+            // 
+            this.address.DataPropertyName = "address";
+            this.address.HeaderText = "Address";
+            this.address.Name = "address";
+            this.address.Width = 200;
+            // 
+            // age
+            // 
+            this.age.DataPropertyName = "age";
+            this.age.HeaderText = "Age";
+            this.age.Name = "age";
+            this.age.Width = 50;
+            // 
+            // sex
+            // 
+            this.sex.DataPropertyName = "sex";
+            this.sex.HeaderText = "Sex";
+            this.sex.Name = "sex";
+            this.sex.Width = 50;
+            // 
+            // civil_status
+            // 
+            this.civil_status.DataPropertyName = "civil_status";
+            this.civil_status.HeaderText = "civil_status";
+            this.civil_status.Name = "civil_status";
+            this.civil_status.Visible = false;
+            this.civil_status.Width = 98;
+            // 
+            // referred_by
+            // 
+            this.referred_by.DataPropertyName = "referred_by";
+            this.referred_by.HeaderText = "Referred By";
+            this.referred_by.Name = "referred_by";
+            // 
+            // consultation_date
+            // 
+            this.consultation_date.DataPropertyName = "consultation_date";
+            this.consultation_date.HeaderText = "Date";
+            this.consultation_date.Name = "consultation_date";
+            this.consultation_date.Width = 50;
+            // 
+            // chief_complaint
+            // 
+            this.chief_complaint.DataPropertyName = "chief_complaint";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.chief_complaint.DefaultCellStyle = dataGridViewCellStyle2;
+            this.chief_complaint.HeaderText = "Chief Complaints";
+            this.chief_complaint.Name = "chief_complaint";
+            this.chief_complaint.Width = 200;
+            // 
+            // history
+            // 
+            this.history.DataPropertyName = "history";
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.history.DefaultCellStyle = dataGridViewCellStyle3;
+            this.history.HeaderText = "History";
+            this.history.Name = "history";
+            this.history.Width = 200;
+            // 
+            // ear_exam
+            // 
+            this.ear_exam.DataPropertyName = "ear_exam";
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ear_exam.DefaultCellStyle = dataGridViewCellStyle4;
+            this.ear_exam.HeaderText = "Ear Exam";
+            this.ear_exam.Name = "ear_exam";
+            this.ear_exam.Width = 200;
+            // 
+            // nose_exam
+            // 
+            this.nose_exam.DataPropertyName = "nose_exam";
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.nose_exam.DefaultCellStyle = dataGridViewCellStyle5;
+            this.nose_exam.HeaderText = "Nose Exam";
+            this.nose_exam.Name = "nose_exam";
+            this.nose_exam.Width = 200;
+            // 
+            // throat_exam
+            // 
+            this.throat_exam.DataPropertyName = "throat_exam";
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.throat_exam.DefaultCellStyle = dataGridViewCellStyle6;
+            this.throat_exam.HeaderText = "Throat Exam";
+            this.throat_exam.Name = "throat_exam";
+            this.throat_exam.Width = 200;
+            // 
+            // others_exam
+            // 
+            this.others_exam.DataPropertyName = "others_exam";
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.others_exam.DefaultCellStyle = dataGridViewCellStyle7;
+            this.others_exam.HeaderText = "Others Exam";
+            this.others_exam.Name = "others_exam";
+            this.others_exam.Width = 200;
+            // 
+            // diagnosis
+            // 
+            this.diagnosis.DataPropertyName = "diagnosis";
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle8;
+            this.diagnosis.HeaderText = "Diagnosis";
+            this.diagnosis.Name = "diagnosis";
+            // 
+            // recommendations
+            // 
+            this.recommendations.DataPropertyName = "recommendations";
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.recommendations.DefaultCellStyle = dataGridViewCellStyle9;
+            this.recommendations.HeaderText = "Recommendations";
+            this.recommendations.Name = "recommendations";
+            this.recommendations.Width = 200;
+            // 
+            // procedures
+            // 
+            this.procedures.DataPropertyName = "procedures";
+            this.procedures.HeaderText = "Procedure";
+            this.procedures.Name = "procedures";
+            // 
+            // notes
+            // 
+            this.notes.DataPropertyName = "notes";
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.notes.DefaultCellStyle = dataGridViewCellStyle10;
+            this.notes.HeaderText = "Notes";
+            this.notes.Name = "notes";
+            // 
+            // follow_up_date
+            // 
+            this.follow_up_date.DataPropertyName = "follow_up_date";
+            this.follow_up_date.HeaderText = "Follow Up Date";
+            this.follow_up_date.Name = "follow_up_date";
+            // 
+            // follow_up_notes
+            // 
+            this.follow_up_notes.DataPropertyName = "follow_up_notes";
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.follow_up_notes.DefaultCellStyle = dataGridViewCellStyle11;
+            this.follow_up_notes.HeaderText = "Follow Up Notes";
+            this.follow_up_notes.Name = "follow_up_notes";
+            // 
+            // past_medical_history
+            // 
+            this.past_medical_history.DataPropertyName = "past_medical_history";
+            this.past_medical_history.HeaderText = "Past Medical History";
+            this.past_medical_history.Name = "past_medical_history";
+            // 
+            // history_id
+            // 
+            this.history_id.DataPropertyName = "history_id";
+            this.history_id.HeaderText = "History ID";
+            this.history_id.Name = "history_id";
+            this.history_id.Visible = false;
+            this.history_id.Width = 84;
+            // 
+            // family_history
+            // 
+            this.family_history.DataPropertyName = "family_history";
+            this.family_history.HeaderText = "Family History";
+            this.family_history.Name = "family_history";
+            // 
+            // personal_social_history
+            // 
+            this.personal_social_history.DataPropertyName = "personal_social_history";
+            this.personal_social_history.HeaderText = "Personal & Social History";
+            this.personal_social_history.Name = "personal_social_history";
+            // 
+            // bp
+            // 
+            this.bp.DataPropertyName = "bp";
+            this.bp.HeaderText = "BP";
+            this.bp.Name = "bp";
+            // 
+            // temperature
+            // 
+            this.temperature.DataPropertyName = "temperature";
+            this.temperature.HeaderText = "Temperature";
+            this.temperature.Name = "temperature";
+            // 
+            // pr
+            // 
+            this.pr.DataPropertyName = "pr";
+            this.pr.HeaderText = "PR";
+            this.pr.Name = "pr";
+            // 
+            // rr
+            // 
+            this.rr.DataPropertyName = "rr";
+            this.rr.HeaderText = "RR";
+            this.rr.Name = "rr";
+            // 
+            // ht
+            // 
+            this.ht.DataPropertyName = "ht";
+            this.ht.HeaderText = "Height";
+            this.ht.Name = "ht";
+            // 
+            // wt
+            // 
+            this.wt.DataPropertyName = "wt";
+            this.wt.HeaderText = "Weight";
+            this.wt.Name = "wt";
+            // 
+            // general_appearance
+            // 
+            this.general_appearance.DataPropertyName = "general_appearance";
+            this.general_appearance.HeaderText = "General Appearance";
+            this.general_appearance.Name = "general_appearance";
+            // 
+            // skin
+            // 
+            this.skin.DataPropertyName = "skin";
+            this.skin.HeaderText = "Skin";
+            this.skin.Name = "skin";
+            // 
+            // head_and_face
+            // 
+            this.head_and_face.DataPropertyName = "head_and_face";
+            this.head_and_face.HeaderText = "Head & Face";
+            this.head_and_face.Name = "head_and_face";
+            // 
+            // eyes
+            // 
+            this.eyes.DataPropertyName = "eyes";
+            this.eyes.HeaderText = "Eyes";
+            this.eyes.Name = "eyes";
+            // 
+            // neck
+            // 
+            this.neck.DataPropertyName = "neck";
+            this.neck.HeaderText = "Neck";
+            this.neck.Name = "neck";
+            // 
+            // chest_lungs
+            // 
+            this.chest_lungs.DataPropertyName = "chest_lungs";
+            this.chest_lungs.HeaderText = "Chest / Lungs";
+            this.chest_lungs.Name = "chest_lungs";
+            // 
+            // heart
+            // 
+            this.heart.DataPropertyName = "heart";
+            this.heart.HeaderText = "Heart";
+            this.heart.Name = "heart";
+            // 
+            // abdomen
+            // 
+            this.abdomen.DataPropertyName = "abdomen";
+            this.abdomen.HeaderText = "Abdomen";
+            this.abdomen.Name = "abdomen";
+            // 
+            // extremities
+            // 
+            this.extremities.DataPropertyName = "extremities";
+            this.extremities.HeaderText = "Extremities";
+            this.extremities.Name = "extremities";
+            // 
+            // neurologic
+            // 
+            this.neurologic.DataPropertyName = "neurologic";
+            this.neurologic.HeaderText = "Neurologic";
+            this.neurologic.Name = "neurologic";
+            // 
+            // allergies
+            // 
+            this.allergies.DataPropertyName = "allergies";
+            this.allergies.HeaderText = "Allergies";
+            this.allergies.Name = "allergies";
+            // 
+            // recorded_at
+            // 
+            this.recorded_at.DataPropertyName = "recorded_at";
+            this.recorded_at.HeaderText = "Recorded At";
+            this.recorded_at.Name = "recorded_at";
+            this.recorded_at.Visible = false;
+            this.recorded_at.Width = 34;
+            // 
+            // history_created_at
+            // 
+            this.history_created_at.DataPropertyName = "history_created_at";
+            this.history_created_at.HeaderText = "Created At";
+            this.history_created_at.Name = "history_created_at";
+            this.history_created_at.Visible = false;
+            this.history_created_at.Width = 35;
+            // 
+            // history_updated_at
+            // 
+            this.history_updated_at.DataPropertyName = "history_updated_at";
+            this.history_updated_at.HeaderText = "Updated At";
+            this.history_updated_at.Name = "history_updated_at";
+            this.history_updated_at.Visible = false;
+            this.history_updated_at.Width = 34;
             // 
             // tableLayoutPanel4
             // 
@@ -242,7 +611,7 @@
             // searchDateButton
             // 
             this.searchDateButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchDateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.searchDateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.searchDateButton.Location = new System.Drawing.Point(1431, 3);
             this.searchDateButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.searchDateButton.Name = "searchDateButton";
@@ -256,7 +625,7 @@
             // 
             this.pageLabel.AutoSize = true;
             this.pageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pageLabel.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pageLabel.Font = new System.Drawing.Font("Arial Narrow", 11.25F);
             this.pageLabel.Location = new System.Drawing.Point(1069, 0);
             this.pageLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.pageLabel.Name = "pageLabel";
@@ -265,160 +634,12 @@
             this.pageLabel.Text = "Page";
             this.pageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // full_name
-            // 
-            this.full_name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.full_name.DataPropertyName = "full_name";
-            this.full_name.FillWeight = 200F;
-            this.full_name.Frozen = true;
-            this.full_name.HeaderText = "Patient Name";
-            this.full_name.Name = "full_name";
-            this.full_name.Width = 200;
-            // 
-            // consultation_id
-            // 
-            this.consultation_id.DataPropertyName = "consultation_id";
-            this.consultation_id.HeaderText = "consultation_id";
-            this.consultation_id.Name = "consultation_id";
-            this.consultation_id.Visible = false;
-            // 
-            // patient_id
-            // 
-            this.patient_id.DataPropertyName = "patient_id";
-            this.patient_id.HeaderText = "patient_id";
-            this.patient_id.Name = "patient_id";
-            this.patient_id.Visible = false;
-            // 
-            // address
-            // 
-            this.address.DataPropertyName = "address";
-            this.address.HeaderText = "Address";
-            this.address.Name = "address";
-            // 
-            // age
-            // 
-            this.age.DataPropertyName = "age";
-            this.age.HeaderText = "Age";
-            this.age.Name = "age";
-            // 
-            // sex
-            // 
-            this.sex.DataPropertyName = "sex";
-            this.sex.HeaderText = "Sex";
-            this.sex.Name = "sex";
-            // 
-            // civil_status
-            // 
-            this.civil_status.DataPropertyName = "civil_status";
-            this.civil_status.HeaderText = "civil_status";
-            this.civil_status.Name = "civil_status";
-            this.civil_status.Visible = false;
-            // 
-            // referred_by
-            // 
-            this.referred_by.DataPropertyName = "referred_by";
-            this.referred_by.HeaderText = "Referred By";
-            this.referred_by.Name = "referred_by";
-            // 
-            // consultation_date
-            // 
-            this.consultation_date.DataPropertyName = "consultation_date";
-            this.consultation_date.HeaderText = "Date";
-            this.consultation_date.Name = "consultation_date";
-            // 
-            // chief_complaint
-            // 
-            this.chief_complaint.DataPropertyName = "chief_complaint";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.chief_complaint.DefaultCellStyle = dataGridViewCellStyle15;
-            this.chief_complaint.HeaderText = "Chief Complaints";
-            this.chief_complaint.Name = "chief_complaint";
-            // 
-            // history
-            // 
-            this.history.DataPropertyName = "history";
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.history.DefaultCellStyle = dataGridViewCellStyle16;
-            this.history.HeaderText = "History";
-            this.history.Name = "history";
-            // 
-            // ear_exam
-            // 
-            this.ear_exam.DataPropertyName = "ear_exam";
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ear_exam.DefaultCellStyle = dataGridViewCellStyle17;
-            this.ear_exam.HeaderText = "Ear Exam";
-            this.ear_exam.Name = "ear_exam";
-            // 
-            // nose_exam
-            // 
-            this.nose_exam.DataPropertyName = "nose_exam";
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.nose_exam.DefaultCellStyle = dataGridViewCellStyle18;
-            this.nose_exam.HeaderText = "Nose Exam";
-            this.nose_exam.Name = "nose_exam";
-            // 
-            // throat_exam
-            // 
-            this.throat_exam.DataPropertyName = "throat_exam";
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.throat_exam.DefaultCellStyle = dataGridViewCellStyle19;
-            this.throat_exam.HeaderText = "Throat Exam";
-            this.throat_exam.Name = "throat_exam";
-            // 
-            // others_exam
-            // 
-            this.others_exam.DataPropertyName = "others_exam";
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.others_exam.DefaultCellStyle = dataGridViewCellStyle20;
-            this.others_exam.HeaderText = "Others Exam";
-            this.others_exam.Name = "others_exam";
-            // 
-            // diagnosis
-            // 
-            this.diagnosis.DataPropertyName = "diagnosis";
-            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle21;
-            this.diagnosis.HeaderText = "Diagnosis";
-            this.diagnosis.Name = "diagnosis";
-            // 
-            // recommendations
-            // 
-            this.recommendations.DataPropertyName = "recommendations";
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.recommendations.DefaultCellStyle = dataGridViewCellStyle22;
-            this.recommendations.HeaderText = "Recommendations";
-            this.recommendations.Name = "recommendations";
-            // 
-            // notes
-            // 
-            this.notes.DataPropertyName = "notes";
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.notes.DefaultCellStyle = dataGridViewCellStyle23;
-            this.notes.HeaderText = "Notes";
-            this.notes.Name = "notes";
-            // 
-            // follow_up_date
-            // 
-            this.follow_up_date.DataPropertyName = "follow_up_date";
-            this.follow_up_date.HeaderText = "Follow Up Date";
-            this.follow_up_date.Name = "follow_up_date";
-            // 
-            // follow_up_notes
-            // 
-            this.follow_up_notes.DataPropertyName = "follow_up_notes";
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.follow_up_notes.DefaultCellStyle = dataGridViewCellStyle24;
-            this.follow_up_notes.HeaderText = "Follow Up Notes";
-            this.follow_up_notes.Name = "follow_up_notes";
-            // 
             // ConsultationListControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel3);
-            this.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Arial Narrow", 8.25F);
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "ConsultationListControl";
             this.Size = new System.Drawing.Size(1587, 1165);
@@ -431,6 +652,7 @@
         }
 
         #endregion
+
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button searchButton;
@@ -459,8 +681,33 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn others_exam;
         private System.Windows.Forms.DataGridViewTextBoxColumn diagnosis;
         private System.Windows.Forms.DataGridViewTextBoxColumn recommendations;
+        private System.Windows.Forms.DataGridViewTextBoxColumn procedures;
         private System.Windows.Forms.DataGridViewTextBoxColumn notes;
         private System.Windows.Forms.DataGridViewTextBoxColumn follow_up_date;
         private System.Windows.Forms.DataGridViewTextBoxColumn follow_up_notes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn past_medical_history;
+        private System.Windows.Forms.DataGridViewTextBoxColumn history_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn family_history;
+        private System.Windows.Forms.DataGridViewTextBoxColumn personal_social_history;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn temperature;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ht;
+        private System.Windows.Forms.DataGridViewTextBoxColumn wt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn general_appearance;
+        private System.Windows.Forms.DataGridViewTextBoxColumn skin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn head_and_face;
+        private System.Windows.Forms.DataGridViewTextBoxColumn eyes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn neck;
+        private System.Windows.Forms.DataGridViewTextBoxColumn chest_lungs;
+        private System.Windows.Forms.DataGridViewTextBoxColumn heart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn abdomen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn extremities;
+        private System.Windows.Forms.DataGridViewTextBoxColumn neurologic;
+        private System.Windows.Forms.DataGridViewTextBoxColumn allergies;
+        private System.Windows.Forms.DataGridViewTextBoxColumn recorded_at;
+        private System.Windows.Forms.DataGridViewTextBoxColumn history_created_at;
+        private System.Windows.Forms.DataGridViewTextBoxColumn history_updated_at;
     }
 }

@@ -1,26 +1,63 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
+using System.Configuration;
+using MySql.Data.MySqlClient;
 
 namespace ENT_Clinic_System.Helpers
 {
     internal static class DBConfig
     {
         /// <summary>
-        /// Returns a new MySQL connection using the current UserCredentials.ConnectionString.
+        /// Holds the active connection string used throughout the system.
         /// </summary>
-        public static MySqlConnection GetConnection()
+        public static string ConnectionString { get; private set; }
+
+        /// <summary>
+        /// Assigns the connection string based on the user role.
+        /// Uses names from App.config.
+        /// </summary>
+        public static void SetConnectionString(string role)
         {
-            // Safety check: must select role first
-            if (string.IsNullOrWhiteSpace(UserCredentials.ConnectionString))
+            string keyName;
+
+            switch (role)
             {
-                throw new InvalidOperationException("❌ Connection string is not set. Please select a role (Doctor or Receptionist) first.");
+                case "Receptionist":
+                    keyName = "ReceptionistConnection";
+                    break;
+
+                case "Doctor":
+                    keyName = "DoctorConnection";
+                    break;
+
+                case "Admin":
+                    keyName = "AdminConnection";
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid role specified.");
             }
 
-            return new MySqlConnection(UserCredentials.ConnectionString);
+            var configValue = ConfigurationManager.ConnectionStrings[keyName];
+
+            if (configValue == null)
+                throw new Exception($"Connection string '{keyName}' not found in App.config.");
+
+            ConnectionString = configValue.ConnectionString;
         }
 
         /// <summary>
-        /// Tests the database connection. Returns true if connection succeeds, false otherwise.
+        /// Creates a new MySQL connection using the active connection string.
+        /// </summary>
+        public static MySqlConnection GetConnection()
+        {
+            if (string.IsNullOrEmpty(ConnectionString))
+                throw new InvalidOperationException("Connection string not set. Call SetConnectionString() first.");
+
+            return new MySqlConnection(ConnectionString);
+        }
+
+        /// <summary>
+        /// Tests if the connection can be opened.
         /// </summary>
         public static bool TestConnection(out string message)
         {
@@ -28,14 +65,14 @@ namespace ENT_Clinic_System.Helpers
             {
                 using (var conn = GetConnection())
                 {
-                    conn.Open(); // test the connection
-                    message = $"✅ Connection successful as {UserCredentials.Role}!";
+                    conn.Open();
+                    message = "Connection successful.";
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                message = "❌ Connection failed: " + ex.Message;
+                message = "Connection failed: " + ex.Message;
                 return false;
             }
         }

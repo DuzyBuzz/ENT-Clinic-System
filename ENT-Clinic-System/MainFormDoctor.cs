@@ -1,5 +1,5 @@
 ﻿using Accord;
-using ENT_Clinic_System.AdmitingOrders;
+using ENT_Clinic_System.Admission;
 using ENT_Clinic_System.Consultation;
 using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.Helpers;
@@ -306,8 +306,7 @@ namespace ENT_Clinic_System
 
         private void admitOrderTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetAdmitTemplateForm setAdmitTemplateForm = new SetAdmitTemplateForm();
-            setAdmitTemplateForm.ShowDialog();
+
         }
         // ===================== PATIENT VISIT REPORT =====================
         private void patientVisitToolStripMenuItem_Click(object sender, EventArgs e)

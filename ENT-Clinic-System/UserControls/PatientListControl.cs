@@ -1,7 +1,8 @@
-﻿using ENT_Clinic_System.Consultation;
+﻿using ENT_Clinic_System.Admission;
+using ENT_Clinic_System.Consultation;
 using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.PrintingForms;
-using ENT_Clinic_System.AdmitingOrders;
+using ENT_Clinic_System.Referral;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -245,19 +246,6 @@ namespace ENT_Clinic_System.UserControls
 
         }
 
-
-
-
-
-        private void showLaboratoryRequesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
         private void consultationHistoryToolStripMenuItem_MouseEnter(object sender, EventArgs e)
         {
             int patientId = GetSelectedPatientId();
@@ -400,6 +388,19 @@ namespace ENT_Clinic_System.UserControls
                 subMenuActions: actions // now accepts both Action<int> and Func<int, ToolStripMenuItem>
             );
         }
+
+
+
+        private void showLaboratoryRequesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void scannedHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -486,7 +487,7 @@ namespace ENT_Clinic_System.UserControls
                 // Open the scanned history form for this patient
                 try
                 {
-                    var consultationHistory = new AdmitingOrdersForm(patientId);
+                    AdmittingOrderForm consultationHistory = new AdmittingOrderForm(patientId);
                     //if (!string.IsNullOrEmpty(patientName))
                     //    consultationHistory.Text = $"Scanned Documents - {patientName}";
 
@@ -509,6 +510,59 @@ namespace ENT_Clinic_System.UserControls
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void referralToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                if (patientsDataGridView.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a patient record first.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Assume you only need to open one patient's history (not multiple)
+                DataGridViewRow row = patientsDataGridView.SelectedRows[0];
+
+                // Make sure the cell exists and has a value
+                if (row.Cells["patient_id"].Value == null)
+                {
+                    MessageBox.Show("Selected row does not contain a valid patient ID.",
+                        "Invalid Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Get the IDs safely
+                int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+
+                //// Optional: retrieve patient name for a friendlier window title
+                //string patientName = row.Cells.Contains("patient_name")
+                //    ? Convert.ToString(row.Cells["patient_name"].Value)
+                //    : string.Empty;
+
+                // Open the scanned history form for this patient
+                try
+                {
+                    ReferralForm consultationHistory = new ReferralForm(patientId);
+                    //if (!string.IsNullOrEmpty(patientName))
+                    //    consultationHistory.Text = $"Scanned Documents - {patientName}";
+
+                    consultationHistory.Show(); // Use ShowDialog so it blocks until closed
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error opening consultation history: " + ex.Message,
+                        "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error handling selection: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-using ENT_Clinic_System.Helpers;
+﻿using ENT_Clinic_System.Helpers;
 using MySql.Data.MySqlClient;
 using System;
 using System.Drawing;
@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace ENT_Clinic_System.PrintingForms
 {
-    public class AdmitOrdersPrintHelper
+    public class ReferralPrintHelper
     {
-        private readonly int _admitOrderId;
+        private readonly int _referralId;
         private readonly PrintDocument _printDocument;
 
         // Patient info
@@ -18,24 +18,18 @@ namespace ENT_Clinic_System.PrintingForms
         private string _patientAddress = "";
         private string _patientAge = "";
         private string _patientGender = "";
-        private DateTime _admitDate = DateTime.Now;
+        private DateTime _referralDate = DateTime.Now;
 
-        // Admitting order fields
-        private string _diagnosis = "";
-        private string _chief_complaints = "";
-        private string _vitalSigns = "";
-        private string _diet = "";
-        private string _activity = "";
-        private string _medications = "";
-        private string _ivFluids = "";
-        private string _laboratory = "";
-        private string _imaging = "";
-        private string _nursingInstructions = "";
-        private string _specialInstructions = "";
+        // Referral fields
+        private string _referringDoctor = "";
+        private string _referralType = "";
+        private string _workingImpression = "";
+        private string _plan = "";
+        private string _additionalInfo = "";
 
-        public AdmitOrdersPrintHelper(int admitOrderId)
+        public ReferralPrintHelper(int referralId)
         {
-            _admitOrderId = admitOrderId;
+            _referralId = referralId;
             LoadData();
             _printDocument = new PrintDocument();
             var a5 = new PaperSize("A5", 583, 827);
@@ -51,20 +45,16 @@ namespace ENT_Clinic_System.PrintingForms
             {
                 using (var conn = DBConfig.GetConnection())
                 using (var cmd = new MySqlCommand(@"
-         SELECT
-               ao.admitting_order_id, ao.patient_id, ao.diagnosis,
-      ao.`chief_complaints`, ao.vital_signs, ao.diet, ao.activity,
-  ao.medications, ao.iv_fluids, ao.laboratory,
-      ao.imaging, ao.nursing_instructions, ao.special_instructions,
-                ao.created_at, ao.updated_at,
- p.full_name, p.address, p.sex, p.birth_date
-       FROM `admitting_orders` ao
-                 LEFT JOIN `patients` p ON ao.patient_id = p.patient_id
-       WHERE ao.admitting_order_id = @id
-          LIMIT 1
-       ", conn))
+                    SELECT r.referral_id, r.patient_id, r.referring_doctor, r.referral_type, 
+                           r.present_working_impression, r.plan, r.additional_info, r.created_at,
+                           p.full_name, p.address, p.sex, p.birth_date
+                    FROM referrals r
+                    LEFT JOIN patients p ON r.patient_id = p.patient_id
+                    WHERE r.referral_id = @id
+                    LIMIT 1
+                ", conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", _admitOrderId);
+                    cmd.Parameters.AddWithValue("@id", _referralId);
                     conn.Open();
                     using (var dr = cmd.ExecuteReader())
                     {
@@ -82,28 +72,23 @@ namespace ENT_Clinic_System.PrintingForms
                                 }
                                 catch { _patientAge = ""; }
                             }
-                            if (dr["created_at"] != DBNull.Value)
-                                _admitDate = Convert.ToDateTime(dr["created_at"]);
 
-                            _diagnosis = SafeString(dr["diagnosis"]);
-                            _chief_complaints = SafeString(dr["chief_complaints"]);
-                            _vitalSigns = SafeString(dr["vital_signs"]);
-                            _diet = SafeString(dr["diet"]);
-                            _activity = SafeString(dr["activity"]);
-                            _medications = SafeString(dr["medications"]);
-                            _ivFluids = SafeString(dr["iv_fluids"]);
-                            _laboratory = SafeString(dr["laboratory"]);
-                            _imaging = SafeString(dr["imaging"]);
-                            _nursingInstructions = SafeString(dr["nursing_instructions"]);
-                            _specialInstructions = SafeString(dr["special_instructions"]);
+                            if (dr["created_at"] != DBNull.Value)
+                                _referralDate = Convert.ToDateTime(dr["created_at"]);
+
+                            _referringDoctor = SafeString(dr["referring_doctor"]);
+                            _referralType = SafeString(dr["referral_type"]);
+                            _workingImpression = SafeString(dr["present_working_impression"]);
+                            _plan = SafeString(dr["plan"]);
+                            _additionalInfo = SafeString(dr["additional_info"]);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading admit order data:\n" + ex.Message,
-                 "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error loading referral data:\n" + ex.Message,
+                    "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -132,22 +117,21 @@ namespace ENT_Clinic_System.PrintingForms
             }
             catch { }
 
-            y += 6; // spacing after header
+            y += 6;
 
             using (Font titleFont = new Font("Segoe UI", 14F, FontStyle.Bold))
-            using (Font sectionTitleFont = new Font("Arial", 9F, FontStyle.Bold))
-            using (Font labelFont = new Font("Arial", 8F, FontStyle.Bold))
-            using (Font valueFont = new Font("Arial", 8F, FontStyle.Underline))
+            using (Font labelFont = new Font("Arial", 9F, FontStyle.Bold))
+            using (Font valueFont = new Font("Arial", 9F, FontStyle.Underline))
             using (Font bodyFont = new Font("Arial", 8F, FontStyle.Regular))
+            using (Font checkboxFont = new Font("Arial", 8F, FontStyle.Regular))
             {
                 float contentLeft = left;
                 float contentWidth = margins.Width;
 
                 // ===== TITLE =====
-                g.DrawString("ADMITTING ORDERS", titleFont, Brushes.Black, contentLeft, y);
-                y += titleFont.Height + 10;
 
-                // ===== PATIENT INFO SECTION =====
+
+                // ===== PATIENT INFO SECTION (with underlined values) =====
                 g.DrawString("Name:", labelFont, Brushes.Black, contentLeft, y);
                 g.DrawString(_patientName, valueFont, Brushes.Black, contentLeft + 100, y);
                 g.DrawString("Age:", labelFont, Brushes.Black, contentLeft + 400, y);
@@ -159,37 +143,100 @@ namespace ENT_Clinic_System.PrintingForms
                 g.DrawString("Address:", labelFont, Brushes.Black, contentLeft, y);
                 g.DrawString(_patientAddress, valueFont, Brushes.Black, contentLeft + 100, y);
                 g.DrawString("Date:", labelFont, Brushes.Black, contentLeft + 400, y);
-                g.DrawString(_admitDate.ToString("MM/dd/yyyy"), valueFont, Brushes.Black, contentLeft + 440, y);
+                g.DrawString(DateTime.Now.ToString("MM/dd/yyyy"), valueFont, Brushes.Black, contentLeft + 440, y);
+
                 y += 20;
-
+                g.DrawString("Referral Form", titleFont, Brushes.Black, contentLeft, y);
+                y += titleFont.Height + 4;
                 g.DrawLine(Pens.Black, left, y, left + contentWidth, y);
-                y += 10;
+                y += 8;
 
-                // ===== ADMITTING ORDERS SECTIONS (full-width, wrapped text) =====
-                void DrawSection(string title, string content)
+                // ===== TO: DOCTOR =====
+                g.DrawString("To: " + _referringDoctor, labelFont, Brushes.Black, contentLeft, y);
+                y += bodyFont.Height +15;
+
+                // ===== INTRO =====
+                g.DrawString("Referring the above named patient to you for:", bodyFont, Brushes.Gray, contentLeft, y);
+                y += bodyFont.Height + 15;
+
+                // ===== REFERRAL TYPE CHECKBOXES (2 columns, multiple rows) =====
+                if (!string.IsNullOrWhiteSpace(_referralType))
                 {
-                    if (string.IsNullOrWhiteSpace(content)) return;
+                    string[] allOptions = { "Evaluation & Management", "Pre-Op Risk Assessment", "Co-Management", "Emergency" };
+                    string[] selectedItems = _referralType.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                                          .Select(i => i.Trim())
+                                                          .ToArray();
 
-                    g.DrawString(title + ":", sectionTitleFont, Brushes.Black, contentLeft, y);
-                    y += sectionTitleFont.Height + 2;
+                    int colCount = 2;
+                    float colWidth = (contentWidth - 10) / colCount;
+                    float startX = contentLeft;
+                    float startY = y;
+                    float checkboxSize = 10;
 
-                    RectangleF drawRect = new RectangleF(contentLeft, y, contentWidth, 1000); // large height to allow wrapping
-                    DrawWrappedString(g, content, bodyFont, drawRect);
+                    for (int i = 0; i < allOptions.Length; i++)
+                    {
+                        float x = startX + (i % colCount) * colWidth;
 
-                    y += g.MeasureString(content, bodyFont, (int)contentWidth).Height + 8; // add spacing after section
+                        // Draw square box
+                        g.DrawRectangle(Pens.Black, x, startY, checkboxSize, checkboxSize);
+
+                        // Check the box if it's in selectedItems
+                        if (selectedItems.Contains(allOptions[i]))
+                        {
+                            float padding = 2; // padding inside the box
+                            g.FillRectangle(Brushes.Black, x + padding, startY + padding, checkboxSize - 2 * padding, checkboxSize - 2 * padding);
+                        }
+
+                        // Draw text next to box
+                        g.DrawString(allOptions[i], checkboxFont, Brushes.Black, x + checkboxSize + 4, startY - 1);
+
+                        // Move to next row if end of column
+                        if ((i + 1) % colCount == 0) startY += checkboxFont.Height + 4;
+                    }
+
+                    y = startY + (allOptions.Length % colCount != 0 ? checkboxFont.Height + 4 : 0);
                 }
 
-                DrawSection("Chief Complaints", _chief_complaints);
-                DrawSection("Diagnosis", _diagnosis);
-                DrawSection("Diet", _diet);
-                DrawSection("Activity", _activity);
-                DrawSection("Vital Signs", _vitalSigns);
-                DrawSection("IV Fluids", _ivFluids);
-                DrawSection("Medications", _medications);
-                DrawSection("Laboratory", _laboratory);
-                DrawSection("Imaging", _imaging);
-                DrawSection("Nursing Instructions", _nursingInstructions);
-                DrawSection("Special Orders", _specialInstructions);
+                y += +15;
+
+
+                // ===== PRESENT WORKING IMPRESSION =====
+                if (!string.IsNullOrWhiteSpace(_workingImpression))
+                {
+                    g.DrawString("Present working impression is:", labelFont, Brushes.Black, contentLeft, y);
+                    y += labelFont.Height + 2;
+
+                    var sf = new StringFormat { FormatFlags = StringFormatFlags.LineLimit };
+                    var measured = g.MeasureString(_workingImpression, bodyFont, (int)contentWidth - 5, sf);
+                    g.DrawString(_workingImpression, bodyFont, Brushes.Black, new RectangleF(contentLeft, y, contentWidth, measured.Height), sf);
+                    y += measured.Height+15;
+
+                }
+
+                // ===== PLAN (plain wrapped text) =====
+                if (!string.IsNullOrWhiteSpace(_plan))
+                {
+                    g.DrawString("Plan:", labelFont, Brushes.Black, contentLeft, y);
+                    y += labelFont.Height + 2;
+
+                    var sf = new StringFormat { FormatFlags = StringFormatFlags.LineLimit };
+                    var measured = g.MeasureString(_plan, bodyFont, (int)contentWidth - 5, sf);
+                    g.DrawString(_plan, bodyFont, Brushes.Black, new RectangleF(contentLeft, y, contentWidth, measured.Height), sf);
+                    y += measured.Height + +15;
+
+                }
+
+                // ===== ADDITIONAL INFORMATION =====
+                if (!string.IsNullOrWhiteSpace(_additionalInfo))
+                {
+                    g.DrawString("Additional Information:", labelFont, Brushes.Black, contentLeft, y);
+                    y += labelFont.Height + 2;
+
+                    var sf = new StringFormat { FormatFlags = StringFormatFlags.LineLimit };
+                    var measured = g.MeasureString(_additionalInfo, bodyFont, (int)contentWidth - 5, sf);
+                    g.DrawString(_additionalInfo, bodyFont, Brushes.Black, new RectangleF(contentLeft, y, contentWidth, measured.Height), sf);
+                    y += measured.Height + 6;
+                }
 
                 // ===== FOOTER =====
                 float footerY = e.MarginBounds.Bottom - 25;
@@ -203,21 +250,21 @@ namespace ENT_Clinic_System.PrintingForms
             e.HasMorePages = false;
         }
 
+
+
         #endregion
 
         #region Drawing Helpers
         private void DrawWrappedString(Graphics g, string text, Font font, RectangleF rect)
         {
             if (string.IsNullOrEmpty(text)) return;
-
-            StringFormat sf = new StringFormat
+            var sf = new StringFormat
             {
                 Alignment = StringAlignment.Near,
                 LineAlignment = StringAlignment.Near,
-                Trimming = StringTrimming.Word,
-                FormatFlags = StringFormatFlags.LineLimit
+                FormatFlags = 0,
+                Trimming = StringTrimming.Word
             };
-
             g.DrawString(text, font, Brushes.Black, rect, sf);
         }
         #endregion
@@ -267,9 +314,7 @@ namespace ENT_Clinic_System.PrintingForms
                 {
                     dlg.Document = _printDocument;
                     if (dlg.ShowDialog() == DialogResult.OK)
-                    {
                         _printDocument.Print();
-                    }
                 }
             }
             catch (Exception ex)

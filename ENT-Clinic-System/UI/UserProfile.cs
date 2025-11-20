@@ -14,47 +14,70 @@ namespace ENT_Clinic_System.UI
 
         private void UserProfile_Load(object sender, EventArgs e)
         {
-            // Load current logged-in user details into form
+            // Fill textboxes with logged-in user info
             txtUserId.Text = UserCredentials.UserId.ToString();
             txtUsername.Text = UserCredentials.Username;
             txtFullName.Text = UserCredentials.Fullname;
-            txtRole.Text = UserCredentials.Role; // Role displayed as read-only
+            txtRole.Text = UserCredentials.Role;  // read-only (role cannot be changed)
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (txtPassword.Text != txtConfirmPassword.Text)
+            // Password validation
+            if (!string.IsNullOrWhiteSpace(txtPassword.Text) || !string.IsNullOrWhiteSpace(txtConfirmPassword.Text))
             {
-                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                if (txtPassword.Text != txtConfirmPassword.Text)
+                {
+                    MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             try
             {
-                using (var conn = new MySqlConnection(UserCredentials.ConnectionString))
+                // Load correct connection string based on ROLE
+                DBConfig.SetConnectionString(UserCredentials.Role);
+
+                using (var conn = new MySqlConnection(DBConfig.ConnectionString))
                 {
                     conn.Open();
-                    string sql = @"UPDATE user 
-                                   SET username=@username, 
-                                       password=@password, 
-                                       full_name=@fullname
-                                   WHERE user_id=@userId";
+
+                    string sql;
+
+                    // Only update password if the user entered one
+                    if (string.IsNullOrWhiteSpace(txtPassword.Text))
+                    {
+                        sql = @"UPDATE user 
+                               SET username=@username, 
+                                   full_name=@fullname
+                               WHERE user_id=@userId";
+                    }
+                    else
+                    {
+                        sql = @"UPDATE user 
+                               SET username=@username, 
+                                   password=@password, 
+                                   full_name=@fullname
+                               WHERE user_id=@userId";
+                    }
 
                     using (var cmd = new MySqlCommand(sql, conn))
                     {
-                        cmd.Parameters.AddWithValue("@username", txtUsername.Text);
-                        cmd.Parameters.AddWithValue("@password", txtPassword.Text);
-                        cmd.Parameters.AddWithValue("@fullname", txtFullName.Text);
+                        cmd.Parameters.AddWithValue("@username", txtUsername.Text.Trim());
+                        cmd.Parameters.AddWithValue("@fullname", txtFullName.Text.Trim());
                         cmd.Parameters.AddWithValue("@userId", int.Parse(txtUserId.Text));
+
+                        if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                            cmd.Parameters.AddWithValue("@password", txtPassword.Text.Trim());
 
                         cmd.ExecuteNonQuery();
                     }
                 }
 
-                // Update session values
-                UserCredentials.Username = txtUsername.Text;
-                UserCredentials.Fullname = txtFullName.Text;
-                // Role is unchanged since it's read-only
+                // Update in-memory session values
+                UserCredentials.Username = txtUsername.Text.Trim();
+                UserCredentials.Fullname = txtFullName.Text.Trim();
+                // Role stays the same
 
                 MessageBox.Show(
                     "Profile updated successfully!\n\nThe system will now restart to apply changes.",
@@ -65,11 +88,13 @@ namespace ENT_Clinic_System.UI
 
                 this.Close();
                 Application.Restart();
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error updating profile: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error updating profile:\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 

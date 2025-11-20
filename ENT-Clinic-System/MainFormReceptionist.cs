@@ -84,7 +84,10 @@ namespace ENT_Clinic_System
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            MainPanel.Controls.Clear();
+
+
+            Dashboard dashboard = new Dashboard();
+            LoadUserControl(dashboard);
         }
 
         private void closeButton_Click(object sender, EventArgs e)

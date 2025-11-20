@@ -41,6 +41,7 @@ namespace ENT_Clinic_System.Consultation
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.otherItemsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.otherItemsGroupBox = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.descriptionComboBox = new System.Windows.Forms.ComboBox();
@@ -64,7 +65,6 @@ namespace ENT_Clinic_System.Consultation
             this.searchItemtButton = new System.Windows.Forms.Button();
             this.searchItemsTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableItems)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSelectedItems)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -121,7 +121,7 @@ namespace ENT_Clinic_System.Consultation
             // btnSubmit
             // 
             this.btnSubmit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSubmit.Location = new System.Drawing.Point(535, 3);
+            this.btnSubmit.Location = new System.Drawing.Point(534, 3);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(101, 32);
             this.btnSubmit.TabIndex = 2;
@@ -222,7 +222,7 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.18123F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.81878F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 127F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 128F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.clearButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnSubmit, 1, 0);
@@ -247,7 +247,7 @@ namespace ENT_Clinic_System.Consultation
             // clearButton
             // 
             this.clearButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.clearButton.Location = new System.Drawing.Point(409, 3);
+            this.clearButton.Location = new System.Drawing.Point(408, 3);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(120, 32);
             this.clearButton.TabIndex = 3;
@@ -323,6 +323,16 @@ namespace ENT_Clinic_System.Consultation
             this.otherItemsGroupBox.TabIndex = 28;
             this.otherItemsGroupBox.TabStop = false;
             this.otherItemsGroupBox.Text = "(Others) Item Management";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(-2, 0);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(178, 23);
+            this.button3.TabIndex = 1;
+            this.button3.Text = "Add Other Items";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // tableLayoutPanel8
             // 
@@ -655,16 +665,6 @@ namespace ENT_Clinic_System.Consultation
             this.label8.TabIndex = 2;
             this.label8.Text = "Search Item:";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(-2, 0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(178, 23);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Add Other Items";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // PrescriptionForm
             // 

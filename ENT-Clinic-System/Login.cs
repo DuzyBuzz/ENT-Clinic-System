@@ -59,63 +59,59 @@ namespace ENT_Clinic_System
 
         private void doctorButton_Click(object sender, EventArgs e)
         {
-            UserCredentials.Role = "Doctor"; // set role
+            UserCredentials.Role = "Doctor";
+            DBConfig.SetConnectionString("Doctor");
 
             using (var loginForm = new UserLoginForm("Doctor"))
             {
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
-                    string msg;
-                    if (UserCredentials.ValidateLogin(loginForm.EnteredUsername, loginForm.EnteredPassword, out msg))
-                    {
-                        // Show welcome animation
-                        using (var welcomeForm = new WelcomeForm(UserCredentials.Fullname, UserCredentials.Role))
-                        {
-                            welcomeForm.ShowDialog();
-                        }
+                    string message;
 
-                        // Open main doctor form
-                        MainFormDoctor mainFormDoctor = new MainFormDoctor();
-                        mainFormDoctor.Show();
+                    if (UserCredentials.ValidateLogin(loginForm.EnteredUsername, loginForm.EnteredPassword, out message))
+                    {
+                        using (var welcome = new WelcomeForm(UserCredentials.Fullname, UserCredentials.Role))
+                            welcome.ShowDialog();
+
+                        new MainFormDoctor().Show();
                         this.Hide();
                     }
                     else
                     {
-                        MessageBox.Show(msg, "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(message, "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
 
+
         private void receptionistButton_Click(object sender, EventArgs e)
         {
-            UserCredentials.Role = "Receptionist"; // set role
+            UserCredentials.Role = "Receptionist";
+            DBConfig.SetConnectionString("Receptionist");
 
             using (var loginForm = new UserLoginForm("Receptionist"))
             {
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
-                    string msg;
-                    if (UserCredentials.ValidateLogin(loginForm.EnteredUsername, loginForm.EnteredPassword, out msg))
-                    {
-                        // Show welcome animation
-                        using (var welcomeForm = new WelcomeForm(UserCredentials.Fullname, UserCredentials.Role))
-                        {
-                            welcomeForm.ShowDialog();
-                        }
+                    string message;
 
-                        // Open main receptionist form
-                        MainFormReceptionist mainFormReceptionist = new MainFormReceptionist();
-                        mainFormReceptionist.Show();
+                    if (UserCredentials.ValidateLogin(loginForm.EnteredUsername, loginForm.EnteredPassword, out message))
+                    {
+                        using (var welcome = new WelcomeForm(UserCredentials.Fullname, UserCredentials.Role))
+                            welcome.ShowDialog();
+
+                        new MainFormReceptionist().Show();
                         this.Hide();
                     }
                     else
                     {
-                        MessageBox.Show(msg, "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(message, "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
+
 
         private void Login_KeyDown(object sender, KeyEventArgs e)
         {
@@ -124,25 +120,28 @@ namespace ENT_Clinic_System
 
         private void OpenAdminLogin()
         {
-            UserCredentials.Role = "Admin"; // set role to admin
+            UserCredentials.Role = "Admin";
+            DBConfig.SetConnectionString("Admin");
 
             using (var adminLoginForm = new UserLoginForm("Admin"))
             {
                 if (adminLoginForm.ShowDialog() == DialogResult.OK)
                 {
-                    if (UserCredentials.ValidateLogin(adminLoginForm.EnteredUsername, adminLoginForm.EnteredPassword, out string msg))
+                    string message;
+
+                    if (UserCredentials.ValidateLogin(adminLoginForm.EnteredUsername, adminLoginForm.EnteredPassword, out message))
                     {
-                        // Open the System Admin Form
-                        SystemAdminForm adminForm = new SystemAdminForm();
-                        adminForm.Show();
+                        new SystemAdminForm().Show();
+                        this.Hide();
                     }
                     else
                     {
-                        MessageBox.Show(msg, "Admin Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(message, "Admin Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
+
 
 
     }

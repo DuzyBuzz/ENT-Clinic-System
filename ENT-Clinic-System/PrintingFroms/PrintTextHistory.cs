@@ -504,6 +504,7 @@ namespace ENT_Clinic_System.PrintingForms
                             g.DrawString("Allergies", sectionFont, Brushes.Black, leftMargin + contentWidth / 2 + 5, currentY + 3);
                             currentY += 25;
 
+
                             {
                                 var leftItems = string.IsNullOrWhiteSpace(personalSocialHistory) ? new string[0] : personalSocialHistory.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
                                 var rightItems = string.IsNullOrWhiteSpace(allergies) ? new string[0] : allergies.Split(',').Select(s => s.Trim()).Where(s => s != "").ToArray();
@@ -540,6 +541,7 @@ namespace ENT_Clinic_System.PrintingForms
 
                     case 4: // Physical Examination (multi-column in groups of 5 as in your original code)
                         {
+
                             string[] examTitles = { "General Appearance", "Skin", "Head & Face", "Eyes", "Neck", "Chest & Lungs", "Heart", "Abdomen", "Extremities", "Neurologic" };
                             string[] examValues = { generalAppearance, skin, headAndFace, eyes, neck, chestLungs, heart, abdomen, extremities, neurologic };
                             float colWidth4 = contentWidth / 5f;
@@ -583,6 +585,8 @@ namespace ENT_Clinic_System.PrintingForms
 
                     case 5: // ENT Examination (Ear, Nose, Throat, Other) — vertical layout with bullets & wrapping
                         {
+                            g.FillRectangle(Brushes.LightGray, leftMargin, currentY, contentWidth, 22);
+                            g.DrawRectangle(Pens.Gray, leftMargin, currentY, contentWidth, 22);
                             string[] entLabels = { "Ear Exam", "Nose Exam", "Throat Exam", "Other Exam" };
                             string[] entValues = { earExam, noseExam, throatExam, othersExam };
                             StringFormat sfs = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near, FormatFlags = StringFormatFlags.LineLimit };

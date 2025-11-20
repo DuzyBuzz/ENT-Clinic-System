@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using ENT_Clinic_System.Helpers;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using ENT_Clinic_System.Helpers;
 //using PdfSharp.Pdf;
 //using PdfSharp.Drawing;
 //using ClosedXML.Excel;
@@ -230,6 +232,8 @@ namespace ENT_Clinic_System.Helpers
             _isMeasuring = false;
 
             _printDocument = new PrintDocument();
+            // Force long bond paper
+            SetLongBondPaper(_printDocument);
             CalculateTotalPages(_printDocument);
             _printDocument.DefaultPageSettings.Landscape = landscape;
 
@@ -425,7 +429,7 @@ namespace ENT_Clinic_System.Helpers
 
 
                     // Position footer near the bottom of page, but within margin bounds
-                    float footerY = e.MarginBounds.Bottom - footerHeight + 10f; // 10px padding from bottom
+                    float footerY = e.MarginBounds.Bottom - footerHeight + 28f; // 10px padding from bottom
 
                     RectangleF footerRect = new RectangleF(
                         e.MarginBounds.Left,
@@ -832,6 +836,22 @@ namespace ENT_Clinic_System.Helpers
             _currentPage = 1;
         }
 
+        public static void SetLongBondPaper(PrintDocument doc)
+        {
+            if (doc == null) return;
+
+            // Long bond paper (typical 8.5" x 13") in hundredths of an inch
+            int widthHundredths = (int)(8.5 * 100);   // 8.5 inches
+            int heightHundredths = (int)(13 * 100);   // 13 inches
+
+            PaperSize longBond = new PaperSize("Long Bond", widthHundredths, heightHundredths);
+
+            // Assign custom paper size
+            doc.DefaultPageSettings.PaperSize = longBond;
+
+            // Optional: set landscape
+            doc.DefaultPageSettings.Landscape = false; // portrait
+        }
 
 
         /// <summary>

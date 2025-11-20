@@ -27,8 +27,6 @@ namespace ENT_Clinic_System.InsertForms
 
             // ✅ Add Context Menu for right click
             var contextMenu = new ContextMenuStrip();
-            var viewConsultationItem = new ToolStripMenuItem("View Consultation");
-            contextMenu.Items.Add(viewConsultationItem);
             dgvQueue.ContextMenuStrip = contextMenu;
 
             // Subscribe events
