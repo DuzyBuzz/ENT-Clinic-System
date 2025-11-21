@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
@@ -8,8 +9,10 @@ namespace ENT_Clinic_System.Helpers
 {
     public static class AutoCompleteDgvHelper
     {
+        private static readonly TextInfo TextInfo = CultureInfo.CurrentCulture.TextInfo;
+
         /// <summary>
-        /// Enables uppercase autocomplete Suggest+Append for a DataGridViewTextBoxColumn.
+        /// Enables title case autocomplete Suggest+Append for a DataGridViewTextBoxColumn.
         /// Loads suggestions from the 'autocomplete_entries' table.
         /// </summary>
         public static void InitializeAutocompleteColumn(DataGridView dgv, string dgvColumnName, string entryColumnName)
@@ -19,20 +22,23 @@ namespace ENT_Clinic_System.Helpers
 
             try
             {
-                // ✅ Load autocomplete values and convert to uppercase
+                // ✅ Load autocomplete values and convert to Title Case
                 var autocompleteValues = LoadExistingAutocompleteValues(entryColumnName)
-                    .Select(v => v.ToUpperInvariant())
+                    .Select(v => ToTitleCase(v))
                     .Distinct()
                     .ToList();
 
-                // ✅ Attach events once
+                // Attach events once
                 dgv.EditingControlShowing -= OnEditingControlShowing;
                 dgv.EditingControlShowing += OnEditingControlShowing;
 
                 void OnEditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
                 {
-                    if (dgv.CurrentCell == null) return;
-                    if (dgv.CurrentCell.OwningColumn.Name != dgvColumnName) return;
+                    if (dgv.CurrentCell == null || dgv.CurrentCell.OwningColumn == null)
+                        return;
+
+                    if (dgv.CurrentCell.OwningColumn.Name != dgvColumnName)
+                        return;
 
                     if (e.Control is TextBox tb)
                     {
@@ -41,13 +47,14 @@ namespace ENT_Clinic_System.Helpers
                         tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
                         AutoCompleteStringCollection autoSource = new AutoCompleteStringCollection();
-                        autoSource.AddRange(autocompleteValues.ToArray());
+                        autoSource.AddRange(autocompleteValues?.ToArray() ?? Array.Empty<string>());
                         tb.AutoCompleteCustomSource = autoSource;
 
-                        // ✅ Force uppercase input while typing
-                        tb.CharacterCasing = CharacterCasing.Upper;
+                        // Allow normal typing
+                        tb.CharacterCasing = CharacterCasing.Normal;
                     }
                 }
+
             }
             catch (Exception ex)
             {
@@ -57,7 +64,7 @@ namespace ENT_Clinic_System.Helpers
         }
 
         /// <summary>
-        /// Saves unique non-empty uppercase user entries from a DataGridViewTextBoxColumn
+        /// Saves unique non-empty title case user entries from a DataGridViewTextBoxColumn
         /// into the autocomplete_entries table (if not already present).
         /// </summary>
         public static void SaveAllAutocompleteEntries(DataGridView dgv, string dgvColumnName, string entryColumnName)
@@ -75,11 +82,10 @@ namespace ENT_Clinic_System.Helpers
 
                     var cellValue = row.Cells[dgvColumnName].Value?.ToString()?.Trim();
                     if (!string.IsNullOrEmpty(cellValue))
-                        uniqueValues.Add(cellValue.ToUpperInvariant()); // ✅ store uppercase
+                        uniqueValues.Add(ToTitleCase(cellValue));
                 }
 
-                if (uniqueValues.Count == 0)
-                    return;
+                if (uniqueValues.Count == 0) return;
 
                 using (var conn = DBConfig.GetConnection())
                 {
@@ -87,7 +93,7 @@ namespace ENT_Clinic_System.Helpers
 
                     foreach (var value in uniqueValues)
                     {
-                        string checkQuery = "SELECT COUNT(*) FROM v_autocomplete_entries WHERE column_name=@col AND UPPER(value)=@val";
+                        string checkQuery = "SELECT COUNT(*) FROM v_autocomplete_entries WHERE column_name=@col AND value=@val";
                         using (var checkCmd = new MySqlCommand(checkQuery, conn))
                         {
                             checkCmd.Parameters.AddWithValue("@col", entryColumnName);
@@ -108,9 +114,9 @@ namespace ENT_Clinic_System.Helpers
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-
+                // Ignore errors silently
             }
         }
 
@@ -126,7 +132,7 @@ namespace ENT_Clinic_System.Helpers
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT DISTINCT UPPER(value) AS value FROM v_autocomplete_entries WHERE column_name=@col ORDER BY value ASC";
+                    string query = "SELECT DISTINCT value FROM v_autocomplete_entries WHERE column_name=@col ORDER BY value ASC";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
@@ -145,10 +151,18 @@ namespace ENT_Clinic_System.Helpers
             }
             catch
             {
-                // Ignore errors silently (do not block UI)
+                // Ignore errors silently
             }
 
             return values;
+        }
+
+        /// <summary>
+        /// Converts a string to Title Case.
+        /// </summary>
+        private static string ToTitleCase(string input)
+        {
+            return string.IsNullOrEmpty(input) ? input : TextInfo.ToTitleCase(input.ToLower());
         }
     }
 }

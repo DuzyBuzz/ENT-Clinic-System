@@ -208,7 +208,7 @@
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.patientsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.patientsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.patientsDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.patientsDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.patientsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.patientsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.patientsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {

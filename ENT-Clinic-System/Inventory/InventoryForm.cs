@@ -33,8 +33,9 @@ namespace ENT_Clinic_System.Inventory
             try
             {
                 // Populate combo boxes from database
-                ComboBoxCollectionHelper.PopulateComboBox(brandNameComboBox, "items", "brand_name");
                 ComboBoxCollectionHelper.PopulateComboBox(genericNameComboBox, "items", "generic_name");
+                ComboBoxCollectionHelper.PopulateComboBox(brandNameComboBox, "items", "brand_name");
+
                 ComboBoxCollectionHelper.PopulateComboBox(stregnthComboBox, "items", "strength");
                 ComboBoxCollectionHelper.PopulateComboBox(dosageComboBox, "items", "dosage");
                 ComboBoxCollectionHelper.PopulateComboBox(categoryComboBox, "items", "category");
@@ -50,8 +51,9 @@ namespace ENT_Clinic_System.Inventory
                 if (dgvItems.Columns.Contains("updated_at")) dgvItems.Columns["updated_at"].Visible = false;
 
                 // Professional column headers
-                if (dgvItems.Columns.Contains("brand_name")) dgvItems.Columns["brand_name"].HeaderText = "Brand Name";
                 if (dgvItems.Columns.Contains("generic_name")) dgvItems.Columns["generic_name"].HeaderText = "Generic Name";
+
+                if (dgvItems.Columns.Contains("brand_name")) dgvItems.Columns["brand_name"].HeaderText = "Brand Name";
                 if (dgvItems.Columns.Contains("strength")) dgvItems.Columns["strength"].HeaderText = "Strength";
                 if (dgvItems.Columns.Contains("dosage")) dgvItems.Columns["dosage"].HeaderText = "Dosage";
                 if (dgvItems.Columns.Contains("category")) dgvItems.Columns["category"].HeaderText = "Category";
@@ -439,7 +441,7 @@ namespace ENT_Clinic_System.Inventory
             SearchHelper.Search(
                 dgv: dgvItems,
                 tableName: "items",
-                columnNames: new string[] { "brand_name", "generic_name", "strength", "dosage", "category"},
+                columnNames: new string[] { "generic_name", "brand_name",  "strength", "dosage", "category"},
                 filterControl: searchItemsTextBox
             );
         }

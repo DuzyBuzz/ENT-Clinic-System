@@ -188,10 +188,10 @@
             this.paymentsToolStripMenuItem,
             this.reportsToolStripMenuItem,
             this.accountToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(13, 15);
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 5, 0, 5);
-            this.menuStrip1.Size = new System.Drawing.Size(1458, 39);
+            this.menuStrip1.Size = new System.Drawing.Size(1484, 39);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -265,11 +265,11 @@
             this.MainPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.MainPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(13, 54);
+            this.MainPanel.Location = new System.Drawing.Point(0, 39);
             this.MainPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
-            this.MainPanel.Size = new System.Drawing.Size(1458, 892);
+            this.MainPanel.Size = new System.Drawing.Size(1484, 922);
             this.MainPanel.TabIndex = 6;
             this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
@@ -284,7 +284,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainFormDoctor";
-            this.Padding = new System.Windows.Forms.Padding(13, 15, 13, 15);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ENT Clinic System";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

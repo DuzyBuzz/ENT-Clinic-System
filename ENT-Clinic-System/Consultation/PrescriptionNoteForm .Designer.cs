@@ -25,7 +25,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(343, 433);
+            this.ClientSize = new System.Drawing.Size(787, 577);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PrescriptionNoteForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

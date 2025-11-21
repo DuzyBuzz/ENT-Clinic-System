@@ -685,7 +685,7 @@ ORDER BY column_name, `count` DESC;
 SELECT 
     value AS Value,
     `count` AS EntryCount
-FROM autocomplete_entries
+FROM v_autocomplete_entries
 WHERE column_name = @col
 ORDER BY EntryCount DESC;
 ";

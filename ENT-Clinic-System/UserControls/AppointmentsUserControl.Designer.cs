@@ -189,6 +189,7 @@
             // 
             // AppointmentsUserControl
             // 
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.apointmentDateLabel);
             this.Controls.Add(this.todayButton);
             this.Controls.Add(this.label1);

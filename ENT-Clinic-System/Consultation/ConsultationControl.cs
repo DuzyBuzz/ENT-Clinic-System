@@ -58,23 +58,23 @@ namespace ENT_Clinic_System.UserControls
                 pastMedicalHistoryDGV,
                 allergiesDGV,
                 familyHistoryDGV,
-                personalSocialHistoryDGV,
-                bpTextBox,
-                temperatureTextBox,
-                prTextBox,
-                rrTextBox,
-                htTextBox,
-                wtTextBox,
-                generalApperanceComboBox,
-                skinComboBox,
-                headAndFaceComboBox,
-                eyesComboBox,
-                neckComboBox,
-                chestLungsComboBox,
-                heartComboBox,
-                abdomenComboBox,
-                extremetiesComboBox,
-                neurologicComboBox
+                personalSocialHistoryDGV
+                //bpTextBox,
+                //temperatureTextBox,
+                //prTextBox,
+                //rrTextBox,
+                //htTextBox,
+                //wtTextBox,
+                //generalApperanceComboBox,
+                //skinComboBox,
+                //headAndFaceComboBox,
+                //eyesComboBox,
+                //neckComboBox,
+                //chestLungsComboBox,
+                //heartComboBox,
+                //abdomenComboBox,
+                //extremetiesComboBox,
+                //neurologicComboBox
             );
 
         }
@@ -203,6 +203,8 @@ namespace ENT_Clinic_System.UserControls
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(earsDGV, "ears", "ear_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(noseDGV, "nose", "nose_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(throatDGV, "throat", "throat_exam");
+            AutoCompleteDgvHelper.InitializeAutocompleteColumn(maxillofacialDGV, "maxillofacial", "maxillofacial_exam");
+            AutoCompleteDgvHelper.InitializeAutocompleteColumn(headNeckDGV, "headneck", "headneck_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(othersDGV, "others", "others_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(diagnosisDGV, "diagnosis", "diagnosis");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(recommendationsDGV, "recommendations", "recommendations");

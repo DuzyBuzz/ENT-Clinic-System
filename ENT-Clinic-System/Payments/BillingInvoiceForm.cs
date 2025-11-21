@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
@@ -26,7 +27,93 @@ namespace ENT_Clinic_System.Payments
             // Hook events
             billingDataGridView.CellClick += BillingDataGridView_CellClick;
             amountRecievedNumericUpDown.ValueChanged += AmountRecievedNumericUpDown_ValueChanged;
+            SetupPaymentHistoryContextMenu();
         }
+        /// <summary>
+        /// Create right-click delete menu for Payment History grid.
+        /// </summary>
+        private void SetupPaymentHistoryContextMenu()
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Delete This Payment History");
+            deleteItem.ForeColor = Color.Red;
+                deleteItem.Click += DeletePayment_Click;
+
+            menu.Items.Add(deleteItem);
+
+            paymentHistoryDataGridView.ContextMenuStrip = menu;
+            paymentHistoryDataGridView.MouseDown += PaymentHistoryDataGridView_MouseDown;
+        }
+        private void PaymentHistoryDataGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var hit = paymentHistoryDataGridView.HitTest(e.X, e.Y);
+                if (hit.RowIndex >= 0)
+                {
+                    paymentHistoryDataGridView.ClearSelection();
+                    paymentHistoryDataGridView.Rows[hit.RowIndex].Selected = true;
+                    paymentHistoryDataGridView.CurrentCell =
+                        paymentHistoryDataGridView.Rows[hit.RowIndex].Cells[0];
+                }
+            }
+        }
+        /// <summary>
+        /// Handles the delete command from the right-click menu.
+        /// </summary>
+        private void DeletePayment_Click(object sender, EventArgs e)
+        {
+            if (paymentHistoryDataGridView.SelectedRows.Count == 0)
+                return;
+
+            DataGridViewRow row = paymentHistoryDataGridView.SelectedRows[0];
+
+            // Extract payment_id
+            if (!int.TryParse(row.Cells["payment_id"].Value.ToString(), out int paymentId))
+            {
+                MessageBox.Show("Unable to determine payment ID.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Confirm delete
+            DialogResult confirm = MessageBox.Show(
+                "Are you sure you want to delete this payment?",
+                "Delete Payment",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (confirm != DialogResult.Yes)
+                return;
+
+            try
+            {
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    using (var cmd = new MySqlCommand("DELETE FROM billing_payments WHERE payment_id = @id", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", paymentId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Payment deleted successfully.", "Deleted",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Refresh both: payment history + main billing list
+                LoadPaymentHistory(billingId);
+                RefreshBilling();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to delete payment: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void BillingInvoiceForm_Load(object sender, EventArgs e)
         {
@@ -167,14 +254,16 @@ namespace ENT_Clinic_System.Payments
             try
             {
                 string sql = @"SELECT 
-                            payment_date AS 'Date',
-                            amount AS 'Amount Paid',
-                            balance AS 'Balance',
-                            change_due AS 'Change',
-                            note AS 'Note'
-                       FROM billing_payments
-                       WHERE billing_id = @billingId
-                       ORDER BY payment_date ASC";
+                payment_id,
+                payment_date AS 'Date',
+                amount AS 'Amount Paid',
+                balance AS 'Balance',
+                change_due AS 'Change',
+                note AS 'Note'
+            FROM billing_payments
+            WHERE billing_id = @billingId
+            ORDER BY payment_date DESC";
+
 
                 using (var conn = DBConfig.GetConnection())
                 using (var cmd = new MySqlCommand(sql, conn))
@@ -186,6 +275,11 @@ namespace ENT_Clinic_System.Payments
 
                     paymentHistoryDataGridView.AutoGenerateColumns = true;
                     paymentHistoryDataGridView.DataSource = dt;
+                    // 🔹 Hide payment_id column if it exists
+                    if (paymentHistoryDataGridView.Columns.Contains("payment_id"))
+                    {
+                        paymentHistoryDataGridView.Columns["payment_id"].Visible = false;
+                    }
 
                     // Optional: make it clean
                     paymentHistoryDataGridView.ReadOnly = true;

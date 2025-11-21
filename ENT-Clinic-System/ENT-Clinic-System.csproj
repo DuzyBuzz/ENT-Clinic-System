@@ -363,7 +363,7 @@
       <DependentUpon>PatientHealthRecordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="InsertForms\DoctorPatientQueu.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="InsertForms\DoctorPatientQueu.Designer.cs">
       <DependentUpon>DoctorPatientQueu.cs</DependentUpon>

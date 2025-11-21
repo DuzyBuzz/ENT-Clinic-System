@@ -21,6 +21,7 @@ namespace ENT_Clinic_System.Helpers
         private readonly string viewName;             // used for SELECT / COUNT / SEARCH
         private readonly string baseTableName;        // used for UPDATE / DELETE
         private readonly string primaryKeyColumn;
+        private ContextMenuStrip dgvContextMenu;
 
         // paging state
         public int PageSize { get; set; } = 1500;
@@ -136,6 +137,8 @@ namespace ENT_Clinic_System.Helpers
 
             dgv.CellClick -= Dgv_CellClick;
             dgv.CellClick += Dgv_CellClick;
+            InitContextMenu();
+
         }
         #endregion
 
@@ -822,6 +825,66 @@ namespace ENT_Clinic_System.Helpers
                     "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void InitContextMenu()
+        {
+            dgvContextMenu = new ContextMenuStrip();
+            var deleteItem = new ToolStripMenuItem("Delete Row");
+            deleteItem.ForeColor = Color.Red;
+            deleteItem.Click += DgvContextMenu_DeleteClick;
+            dgvContextMenu.Items.Add(deleteItem);
+
+            dgv.CellMouseDown -= Dgv_CellMouseDown;
+            dgv.CellMouseDown += Dgv_CellMouseDown;
+        }
+        private void Dgv_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+            {
+                dgv.ClearSelection();
+                dgv.Rows[e.RowIndex].Selected = true;
+                dgvContextMenu.Show(Cursor.Position);
+                dgvContextMenu.Tag = e.RowIndex; // store row index in Tag
+            }
+        }
+        private void DgvContextMenu_DeleteClick(object sender, EventArgs e)
+        {
+            if (dgvContextMenu.Tag is int rowIndex)
+            {
+                object id = null;
+
+                // Try primary key from the selected row
+                if (dgv.Columns.Contains(primaryKeyColumn))
+                {
+                    id = dgv[primaryKeyColumn, rowIndex].Value;
+                }
+                else
+                {
+                    var drv = dgv.Rows[rowIndex].DataBoundItem as DataRowView;
+                    if (drv != null && drv.Row.Table.Columns.Contains(primaryKeyColumn))
+                        id = drv.Row[primaryKeyColumn];
+                }
+
+                if (id == null || id == DBNull.Value)
+                {
+                    MessageBox.Show("Unable to determine primary key for deletion.", "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (MessageBox.Show("Delete this record?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        DeleteRow(id);
+                        LoadData(CurrentPage);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Delete failed: " + ex.Message, "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
 
         #region Helper: editable columns discovery
         /// <summary>

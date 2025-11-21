@@ -702,6 +702,13 @@ tableName: "items",
 columnNames: new string[] { "generic_name", "brand_name" },
 filterControl: searchItemsTextBox
 );
+
+            SearchHelper.Search(
+dgv: dgvOtherItems,
+tableName: "other_items",
+columnNames: new string[] { "generic_name", "brand_name" },
+filterControl: searchItemsTextBox
+);
         }
 
         private void dgvAvailableItems_CellContentClick(object sender, DataGridViewCellEventArgs e)

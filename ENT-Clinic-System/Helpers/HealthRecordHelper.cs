@@ -125,23 +125,8 @@ namespace ENT_Clinic_System.Helpers
             DataGridView pastMedicalHistoryDGV,
             DataGridView allergiesDGV,
             DataGridView familyHistoryDGV,
-            DataGridView personalSocialHistoryDGV,
-            TextBox bpTextBox,
-            TextBox temperatureTextBox,
-            TextBox prTextBox,
-            TextBox rrTextBox,
-            TextBox htTextBox,
-            TextBox wtTextBox,
-            ComboBox generalAppearance,
-            ComboBox skin,
-            ComboBox headAndFace,
-            ComboBox eyes,
-            ComboBox neck,
-            ComboBox chestLungs,
-            ComboBox heart,
-            ComboBox abdomen,
-            ComboBox extremities,
-            ComboBox neurologic
+            DataGridView personalSocialHistoryDGV
+
         )
         {
             try
@@ -167,32 +152,12 @@ namespace ENT_Clinic_System.Helpers
                                 SetDgvData(familyHistoryDGV, reader["family_history"]?.ToString());
                                 SetDgvData(personalSocialHistoryDGV, reader["personal_social_history"]?.ToString());
 
-                                // --- Vital Signs ---
-                                bpTextBox.Text = reader["bp"]?.ToString();
-                                temperatureTextBox.Text = reader["temperature"]?.ToString();
-                                prTextBox.Text = reader["pr"]?.ToString();
-                                rrTextBox.Text = reader["rr"]?.ToString();
-                                htTextBox.Text = reader["ht"]?.ToString();
-                                wtTextBox.Text = reader["wt"]?.ToString();
-
-                                // --- Physical Exam ---
-                                generalAppearance.Text = reader["general_appearance"]?.ToString();
-                                skin.Text = reader["skin"]?.ToString();
-                                headAndFace.Text = reader["head_and_face"]?.ToString();
-                                eyes.Text = reader["eyes"]?.ToString();
-                                neck.Text = reader["neck"]?.ToString();
-                                chestLungs.Text = reader["chest_lungs"]?.ToString();
-                                heart.Text = reader["heart"]?.ToString();
-                                abdomen.Text = reader["abdomen"]?.ToString();
-                                extremities.Text = reader["extremities"]?.ToString();
-                                neurologic.Text = reader["neurologic"]?.ToString();
                             }
                             else
                             {
                                 // No record found → clear all UI
-                                ClearAll(pastMedicalHistoryDGV, allergiesDGV, familyHistoryDGV, personalSocialHistoryDGV,
-                                         bpTextBox, temperatureTextBox, prTextBox, rrTextBox, htTextBox, wtTextBox,
-                                         generalAppearance, skin, headAndFace, eyes, neck, chestLungs, heart, abdomen, extremities, neurologic);
+                                ClearAll(pastMedicalHistoryDGV, allergiesDGV, familyHistoryDGV, personalSocialHistoryDGV
+                                         );
                             }
                         }
                     }

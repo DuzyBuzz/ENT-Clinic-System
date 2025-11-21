@@ -214,7 +214,8 @@ namespace ENT_Clinic_System
 
         private void patientQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowSingleInstanceForm<DoctorPatientsQueu>();
+            DoctorPatientsQueu doctorPatientsQueue = new DoctorPatientsQueu();
+            LoadUserControl(doctorPatientsQueue);
 
         }
 

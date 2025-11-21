@@ -46,8 +46,8 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.55569F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 57.44431F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1814, 853);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -55,21 +55,21 @@
             // 
             this.dispensingPanel.AutoScroll = true;
             this.dispensingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dispensingPanel.Location = new System.Drawing.Point(0, 426);
+            this.dispensingPanel.Location = new System.Drawing.Point(0, 363);
             this.dispensingPanel.Margin = new System.Windows.Forms.Padding(0);
             this.dispensingPanel.Name = "dispensingPanel";
-            this.dispensingPanel.Size = new System.Drawing.Size(1814, 427);
+            this.dispensingPanel.Size = new System.Drawing.Size(1814, 490);
             this.dispensingPanel.TabIndex = 1;
             this.dispensingPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.dispensingPanel_Paint);
             // 
             // billingPanel
             // 
             this.billingPanel.AutoScroll = true;
-            this.billingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.billingPanel.BackColor = System.Drawing.Color.White;
             this.billingPanel.Location = new System.Drawing.Point(0, 0);
             this.billingPanel.Margin = new System.Windows.Forms.Padding(0);
             this.billingPanel.Name = "billingPanel";
-            this.billingPanel.Size = new System.Drawing.Size(1814, 426);
+            this.billingPanel.Size = new System.Drawing.Size(1691, 331);
             this.billingPanel.TabIndex = 0;
             // 
             // PaymentsControl

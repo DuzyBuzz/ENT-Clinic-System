@@ -14,10 +14,11 @@
         {
             if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
-        }
+        } 
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DoctorPatientsQueu));
@@ -33,6 +34,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultationHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.admitingOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.referralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPatients)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvQueue)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -40,6 +46,7 @@
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.patientsContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvPatients
@@ -71,6 +78,7 @@
             this.dgvQueue.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvQueue.BackgroundColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.dgvQueue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvQueue.ContextMenuStrip = this.patientsContextMenuStrip;
             this.dgvQueue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvQueue.Location = new System.Drawing.Point(3, 20);
             this.dgvQueue.MultiSelect = false;
@@ -209,6 +217,43 @@
             this.groupBox2.Text = "Queue";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
+            // patientsContextMenuStrip
+            // 
+            this.patientsContextMenuStrip.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewConsultationToolStripMenuItem,
+            this.consultationHistoryToolStripMenuItem,
+            this.admitingOrdersToolStripMenuItem,
+            this.referralToolStripMenuItem});
+            this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(231, 130);
+            // 
+            // viewConsultationToolStripMenuItem
+            // 
+            this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
+            this.viewConsultationToolStripMenuItem.Text = "New Consultation";
+            this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
+            // 
+            // consultationHistoryToolStripMenuItem
+            // 
+            this.consultationHistoryToolStripMenuItem.Name = "consultationHistoryToolStripMenuItem";
+            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
+            this.consultationHistoryToolStripMenuItem.Text = "Consultation History";
+            // 
+            // admitingOrdersToolStripMenuItem
+            // 
+            this.admitingOrdersToolStripMenuItem.Name = "admitingOrdersToolStripMenuItem";
+            this.admitingOrdersToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
+            this.admitingOrdersToolStripMenuItem.Text = "Admiting Orders";
+            this.admitingOrdersToolStripMenuItem.Click += new System.EventHandler(this.admitingOrdersToolStripMenuItem_Click);
+            // 
+            // referralToolStripMenuItem
+            // 
+            this.referralToolStripMenuItem.Name = "referralToolStripMenuItem";
+            this.referralToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
+            this.referralToolStripMenuItem.Text = "Referral";
+            // 
             // DoctorPatientsQueu
             // 
             this.ClientSize = new System.Drawing.Size(1301, 807);
@@ -216,9 +261,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.refreshButton);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DoctorPatientsQueu";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Patients Queue";
             this.Load += new System.EventHandler(this.PatientsQueue_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPatients)).EndInit();
@@ -229,6 +272,7 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.patientsContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -239,5 +283,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.ContextMenuStrip patientsContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem viewConsultationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultationHistoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem admitingOrdersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem referralToolStripMenuItem;
     }
 }

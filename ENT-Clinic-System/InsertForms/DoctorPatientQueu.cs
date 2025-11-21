@@ -1,4 +1,5 @@
 ﻿using AForge.Imaging.Filters;
+using ENT_Clinic_System.Admission;
 using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.UserControls;
 using MySql.Data.MySqlClient;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ENT_Clinic_System.InsertForms
 {
-    public partial class DoctorPatientsQueu : Form
+    public partial class DoctorPatientsQueu : UserControl
     {
         private DataTable patientsTable;
         private DataTable queueTable;
@@ -25,20 +26,14 @@ namespace ENT_Clinic_System.InsertForms
 
             dgvQueue.AutoGenerateColumns = true;
 
-            // ✅ Add Context Menu for right click
-            var contextMenu = new ContextMenuStrip();
-            var viewConsultationItem = new ToolStripMenuItem("View Consultation");
-            viewConsultationItem.Click += viewConsultationItem_Click;
-            contextMenu.Items.Add(viewConsultationItem);
-            dgvQueue.ContextMenuStrip = contextMenu;
+
 
             // Subscribe events
             dgvQueue.CurrentCellDirtyStateChanged += dgvQueue_CurrentCellDirtyStateChanged;
             dgvQueue.CellValueChanged += dgvQueue_CellValueChanged;
             dgvQueue.MouseDown += dgvQueue_MouseDown;
 
-            // Ensure watcher cleaned up on close
-            this.FormClosing += PatientsQueue_FormClosing;
+
         }
 
         private void PatientsQueue_Load(object sender, EventArgs e)
@@ -364,14 +359,11 @@ namespace ENT_Clinic_System.InsertForms
             if (e.Button == MouseButtons.Right)
             {
                 var hitTest = dgvQueue.HitTest(e.X, e.Y);
+
                 if (hitTest.RowIndex >= 0)
                 {
                     dgvQueue.ClearSelection();
                     dgvQueue.Rows[hitTest.RowIndex].Selected = true;
-                }
-                else
-                {
-                    dgvQueue.ClearSelection();
                 }
             }
         }
@@ -379,65 +371,7 @@ namespace ENT_Clinic_System.InsertForms
         // ✅ Opens ConsultationControl safely
         private void viewConsultationItem_Click(object sender, EventArgs e)
         {
-            if (dgvQueue.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a patient from the queue first.", "No selection",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
-            try
-            {
-                var selectedRow = dgvQueue.SelectedRows[0];
-
-                // ✅ Check if patient_id column exists
-                if (!dgvQueue.Columns.Contains("patient_id"))
-                {
-                    MessageBox.Show("The queue does not contain a patient_id column.", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                var patientIdObj = selectedRow.Cells["patient_id"].Value;
-                if (patientIdObj == null || patientIdObj == DBNull.Value)
-                {
-                    MessageBox.Show("This queue entry is not linked to a patient.", "Information",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                int patientId = Convert.ToInt32(patientIdObj);
-
-                // ✅ Update status to 'examining'
-                using (var conn = DBConfig.GetConnection())
-                {
-                    conn.Open();
-
-                    string updateSql = @"
-                UPDATE queue 
-                SET status = 'examining', called_at = NOW() 
-                WHERE patient_id = @pid AND DATE(created_at) = CURDATE();
-            ";
-
-                    using (var cmd = new MySqlCommand(updateSql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@pid", patientId);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                // ✅ Open consultation window
-                ConsultationControl consultation = new ConsultationControl(patientId);
-                consultation.Show();
-
-                // ✅ Refresh queue display to reflect updated status
-                LoadQueue();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error opening consultation: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -533,6 +467,121 @@ namespace ENT_Clinic_System.InsertForms
         private void dgvQueue_CellValueChanged_1(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void admitingOrdersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvQueue.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a patient record first.",
+                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Assume you only need to open one patient's history (not multiple)
+                DataGridViewRow row = dgvQueue.SelectedRows[0];
+
+                // Make sure the cell exists and has a value
+                if (row.Cells["patient_id"].Value == null)
+                {
+                    MessageBox.Show("Selected row does not contain a valid patient ID.",
+                        "Invalid Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Get the IDs safely
+                int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+
+                //// Optional: retrieve patient name for a friendlier window title
+                //string patientName = row.Cells.Contains("patient_name")
+                //    ? Convert.ToString(row.Cells["patient_name"].Value)
+                //    : string.Empty;
+
+                // Open the scanned history form for this patient
+                try
+                {
+                    AdmittingOrderForm consultationHistory = new AdmittingOrderForm(patientId);
+                    //if (!string.IsNullOrEmpty(patientName))
+                    //    consultationHistory.Text = $"Scanned Documents - {patientName}";
+
+                    consultationHistory.Show(); // Use ShowDialog so it blocks until closed
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error opening consultation history: " + ex.Message,
+                        "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error handling selection: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void viewConsultationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvQueue.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a patient from the queue first.", "No selection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var selectedRow = dgvQueue.SelectedRows[0];
+
+                // ✅ Check if patient_id column exists
+                if (!dgvQueue.Columns.Contains("patient_id"))
+                {
+                    MessageBox.Show("The queue does not contain a patient_id column.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var patientIdObj = selectedRow.Cells["patient_id"].Value;
+                if (patientIdObj == null || patientIdObj == DBNull.Value)
+                {
+                    MessageBox.Show("This queue entry is not linked to a patient.", "Information",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                int patientId = Convert.ToInt32(patientIdObj);
+
+                // ✅ Update status to 'examining'
+                using (var conn = DBConfig.GetConnection())
+                {
+                    conn.Open();
+
+                    string updateSql = @"
+                UPDATE queue 
+                SET status = 'examining', called_at = NOW() 
+                WHERE patient_id = @pid AND DATE(created_at) = CURDATE();
+            ";
+
+                    using (var cmd = new MySqlCommand(updateSql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@pid", patientId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // ✅ Open consultation window
+                ConsultationControl consultation = new ConsultationControl(patientId);
+                consultation.Show();
+
+                // ✅ Refresh queue display to reflect updated status
+                LoadQueue();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error opening consultation: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
