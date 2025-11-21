@@ -242,7 +242,7 @@ namespace ENT_Clinic_System.PrintingForms
                 float footerY = e.MarginBounds.Bottom - 25;
                 try
                 {
-                    WaterMarkHelper.PrintFooter(g, left, (int)footerY, (int)contentWidth + 50);
+                    WaterMarkHelper_lic.PrintFooter(g, left, (int)footerY, (int)contentWidth + 50);
                 }
                 catch { }
             }

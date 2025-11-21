@@ -62,6 +62,8 @@ namespace ENT_Clinic_System.Admission
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
+            this.cbmVitalSigns = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).BeginInit();
             this.SuspendLayout();
             // 
@@ -212,7 +214,7 @@ namespace ENT_Clinic_System.Admission
             // lblActivity
             // 
             this.lblActivity.AutoSize = true;
-            this.lblActivity.Location = new System.Drawing.Point(320, 216);
+            this.lblActivity.Location = new System.Drawing.Point(310, 216);
             this.lblActivity.Name = "lblActivity";
             this.lblActivity.Size = new System.Drawing.Size(44, 13);
             this.lblActivity.TabIndex = 20;
@@ -225,9 +227,9 @@ namespace ENT_Clinic_System.Admission
             "Bed rest",
             "Out of bed as tolerated",
             "Ambulate"});
-            this.cboActivity.Location = new System.Drawing.Point(380, 213);
+            this.cboActivity.Location = new System.Drawing.Point(370, 213);
             this.cboActivity.Name = "cboActivity";
-            this.cboActivity.Size = new System.Drawing.Size(150, 21);
+            this.cboActivity.Size = new System.Drawing.Size(230, 21);
             this.cboActivity.TabIndex = 21;
             // 
             // lblIVFluids
@@ -376,12 +378,37 @@ namespace ENT_Clinic_System.Admission
             this.btnPrint.Text = "Print Order";
             this.btnPrint.UseVisualStyleBackColor = true;
             // 
+            // cbmVitalSigns
+            // 
+            this.cbmVitalSigns.FormattingEnabled = true;
+            this.cbmVitalSigns.Items.AddRange(new object[] {
+            "Bed rest",
+            "Out of bed as tolerated",
+            "Ambulate"});
+            this.cbmVitalSigns.Location = new System.Drawing.Point(676, 213);
+            this.cbmVitalSigns.Name = "cbmVitalSigns";
+            this.cbmVitalSigns.Size = new System.Drawing.Size(199, 21);
+            this.cbmVitalSigns.TabIndex = 39;
+            this.cbmVitalSigns.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(616, 216);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.TabIndex = 38;
+            this.label1.Text = "Vital Signs:";
+            this.label1.Visible = false;
+            // 
             // AdmittingOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(895, 770);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.cbmVitalSigns);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSave);
@@ -462,5 +489,7 @@ private System.Windows.Forms.TextBox txtPatientName;
         private System.Windows.Forms.Button btnSave;
    private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnPrint;
+        private System.Windows.Forms.ComboBox cbmVitalSigns;
+        private System.Windows.Forms.Label label1;
     }
 }

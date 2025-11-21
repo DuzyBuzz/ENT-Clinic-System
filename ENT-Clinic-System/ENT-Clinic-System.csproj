@@ -209,6 +209,7 @@
     <Compile Include="Consultation\BillingForm.Designer.cs">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\WaterMarkHelper_lic.cs" />
     <Compile Include="PrintingFroms\AdmitingOrdersPrintHelper.cs" />
     <Compile Include="PrintingFroms\ReferralPrintHelper.cs" />
     <Compile Include="Referral\ReferralForm.cs">
