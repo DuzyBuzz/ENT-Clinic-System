@@ -175,9 +175,9 @@ namespace ENT_Clinic_System.Admission
             this.lblDiagnosis.AutoSize = true;
             this.lblDiagnosis.Location = new System.Drawing.Point(20, 160);
             this.lblDiagnosis.Name = "lblDiagnosis";
-            this.lblDiagnosis.Size = new System.Drawing.Size(117, 13);
+            this.lblDiagnosis.Size = new System.Drawing.Size(60, 13);
             this.lblDiagnosis.TabIndex = 12;
-            this.lblDiagnosis.Text = "Diagnosis / Impression:";
+            this.lblDiagnosis.Text = "Impression:";
             // 
             // txtDiagnosis
             // 

@@ -30,12 +30,12 @@
             this.dtAdmitDate = new System.Windows.Forms.DateTimePicker();
             this.lblRefDoctor = new System.Windows.Forms.Label();
             this.grpEvaluation = new System.Windows.Forms.GroupBox();
+            this.chkCoManagement = new System.Windows.Forms.CheckBox();
+            this.chkEmergency = new System.Windows.Forms.CheckBox();
             this.chkEvalMgmt = new System.Windows.Forms.CheckBox();
             this.chkPreOp = new System.Windows.Forms.CheckBox();
             this.lblWorkingImp = new System.Windows.Forms.Label();
             this.txtWorkingImp = new System.Windows.Forms.TextBox();
-            this.chkCoManagement = new System.Windows.Forms.CheckBox();
-            this.chkEmergency = new System.Windows.Forms.CheckBox();
             this.lblAdditionalInfo = new System.Windows.Forms.Label();
             this.txtAdditionalInfo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -169,6 +169,22 @@
             this.grpEvaluation.TabIndex = 11;
             this.grpEvaluation.TabStop = false;
             // 
+            // chkCoManagement
+            // 
+            this.chkCoManagement.Location = new System.Drawing.Point(73, 41);
+            this.chkCoManagement.Name = "chkCoManagement";
+            this.chkCoManagement.Size = new System.Drawing.Size(104, 24);
+            this.chkCoManagement.TabIndex = 0;
+            this.chkCoManagement.Text = "Co-Management";
+            // 
+            // chkEmergency
+            // 
+            this.chkEmergency.Location = new System.Drawing.Point(255, 41);
+            this.chkEmergency.Name = "chkEmergency";
+            this.chkEmergency.Size = new System.Drawing.Size(104, 24);
+            this.chkEmergency.TabIndex = 1;
+            this.chkEmergency.Text = "Emergency";
+            // 
             // chkEvalMgmt
             // 
             this.chkEvalMgmt.Location = new System.Drawing.Point(73, 19);
@@ -201,22 +217,6 @@
             this.txtWorkingImp.Name = "txtWorkingImp";
             this.txtWorkingImp.Size = new System.Drawing.Size(420, 60);
             this.txtWorkingImp.TabIndex = 13;
-            // 
-            // chkCoManagement
-            // 
-            this.chkCoManagement.Location = new System.Drawing.Point(73, 41);
-            this.chkCoManagement.Name = "chkCoManagement";
-            this.chkCoManagement.Size = new System.Drawing.Size(104, 24);
-            this.chkCoManagement.TabIndex = 0;
-            this.chkCoManagement.Text = "Co-Management";
-            // 
-            // chkEmergency
-            // 
-            this.chkEmergency.Location = new System.Drawing.Point(255, 41);
-            this.chkEmergency.Name = "chkEmergency";
-            this.chkEmergency.Size = new System.Drawing.Size(104, 24);
-            this.chkEmergency.TabIndex = 1;
-            this.chkEmergency.Text = "Emergency";
             // 
             // lblAdditionalInfo
             // 
@@ -312,6 +312,7 @@
             this.Name = "ReferralForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Referral Form";
+            this.Load += new System.EventHandler(this.ReferralForm_Load);
             this.grpEvaluation.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).EndInit();
             this.ResumeLayout(false);

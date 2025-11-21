@@ -137,6 +137,7 @@ namespace ENT_Clinic_System.PrintingForms
             using (Font titleFont = new Font("Segoe UI", 14F, FontStyle.Bold))
             using (Font sectionTitleFont = new Font("Arial", 9F, FontStyle.Bold))
             using (Font labelFont = new Font("Arial", 8F, FontStyle.Bold))
+            using (Font italicFont = new Font("Arial", 9F, FontStyle.Italic))
             using (Font valueFont = new Font("Arial", 8F, FontStyle.Underline))
             using (Font bodyFont = new Font("Arial", 8F, FontStyle.Regular))
             {
@@ -180,7 +181,9 @@ namespace ENT_Clinic_System.PrintingForms
                 }
 
                 DrawSection("Chief Complaints", _chief_complaints);
-                DrawSection("Diagnosis", _diagnosis);
+                DrawSection("Impression", _diagnosis);
+                g.DrawString("Please admit to room of choice under my service. TPR q shift and record", italicFont, Brushes.DarkGray, contentLeft, y);
+                y += 15;
                 DrawSection("Diet", _diet);
                 DrawSection("Activity", _activity);
                 DrawSection("Vital Signs", _vitalSigns);

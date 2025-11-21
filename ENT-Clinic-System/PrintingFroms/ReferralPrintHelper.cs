@@ -156,7 +156,7 @@ namespace ENT_Clinic_System.PrintingForms
                 y += bodyFont.Height +15;
 
                 // ===== INTRO =====
-                g.DrawString("Referring the above named patient to you for:", bodyFont, Brushes.Gray, contentLeft, y);
+                g.DrawString("Referring the above named patient to you for:", bodyFont, Brushes.Black, contentLeft, y);
                 y += bodyFont.Height + 15;
 
                 // ===== REFERRAL TYPE CHECKBOXES (2 columns, multiple rows) =====

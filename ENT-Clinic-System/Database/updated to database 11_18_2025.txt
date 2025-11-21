@@ -2,6 +2,57 @@ added in the billing discount_name,
 added in the consultation procedure,
 added in the consultation a trigger auto complete
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` TRIGGER `tr_consultation_set_done` AFTER INSERT ON `consultation` FOR EACH ROW BEGIN
+    UPDATE queue
+    SET 
+        status = 'Done',
+        finished_at = NOW()
+    WHERE patient_id = NEW.patient_id
+      AND status = 'Examining';   -- only change if currently examining
+END$$
+DELIMITER ;
+
+CREATE TABLE `admitting_orders` (
+  `admitting_order_id` int NOT NULL AUTO_INCREMENT,
+  `patient_id` int NOT NULL,
+  `diagnosis` longtext COLLATE utf8mb4_unicode_ci,
+  `chief_complaints` longtext COLLATE utf8mb4_unicode_ci,
+  `vital_signs` longtext COLLATE utf8mb4_unicode_ci,
+  `diet` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `activity` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `medications` longtext COLLATE utf8mb4_unicode_ci,
+  `iv_fluids` longtext COLLATE utf8mb4_unicode_ci,
+  `laboratory` longtext COLLATE utf8mb4_unicode_ci,
+  `imaging` longtext COLLATE utf8mb4_unicode_ci,
+  `nursing_instructions` longtext COLLATE utf8mb4_unicode_ci,
+  `special_instructions` longtext COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`admitting_order_id`),
+  KEY `fk_patient_id` (`patient_id`),
+  CONSTRAINT `fk_admitting_patient` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+CREATE TABLE `referrals` (
+  `referral_id` int NOT NULL AUTO_INCREMENT,
+  `patient_id` int NOT NULL,
+  `referring_doctor` varchar(255) DEFAULT NULL,
+  `referral_type` text,
+  `present_working_impression` text,
+  `plan` text,
+  `additional_info` text,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`referral_id`),
+  KEY `patient_id` (`patient_id`),
+  CONSTRAINT `referrals_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
 drop event ev_cancel_pending_queue;
 CREATE EVENT ev_cancel_pending_queue
 ON SCHEDULE EVERY 1 DAY
@@ -10,15 +61,6 @@ DO
     UPDATE queue
     SET status = 'Cancelled'
     WHERE status = 'Waiting';
-
-CREATE DEFINER=`root`@`localhost` TRIGGER `tr_consultation_set_done` AFTER INSERT ON `consultation` FOR EACH ROW BEGIN
-    UPDATE queue
-    SET 
-        status = 'Done',
-        finished_at = NOW()
-    WHERE patient_id = NEW.patient_id
-      AND status = 'Examining';   -- only change if currently examining
-END
 
 
 DELIMITER $$

@@ -2,6 +2,7 @@
 using ENT_Clinic_System.PrintingForms;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
@@ -227,6 +228,23 @@ namespace ENT_Clinic_System.Referral
             {
                 Debug.WriteLine("Print failed", ex);
             }
+        }
+
+        private void ReferralForm_Load(object sender, EventArgs e)
+        {
+            // Autocomplete for the relationship combobox (single column)
+            AutoCompleteHelper.SetupAutoComplete(
+                cmbReferingDoctor,
+                "referrals",
+                new List<string> { "referring_doctor" } // pass as a list
+            );
+
+            // Populate combobox items from the same column
+            ComboBoxCollectionHelper.PopulateComboBox(
+                cmbReferingDoctor,
+                "referrals",
+                "referring_doctor"
+            );
         }
     }
 }
