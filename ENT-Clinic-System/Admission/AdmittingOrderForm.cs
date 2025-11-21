@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Admission
@@ -26,9 +27,14 @@ namespace ENT_Clinic_System.Admission
         private void WireEventHandlers()
         {
             dgvOrders.CellClick += DgvOrders_CellClick;
+            dgvOrders.CellMouseDown += DgvOrders_CellMouseDown; // for right-click selection
             btnSave.Click += BtnSave_Click;
             btnClear.Click += BtnClear_Click;
             btnPrint.Click += BtnPrint_Click;
+            btnUpdate.Click += BtnUpdate_Click;
+
+            // Context menu delete
+            deleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
         }
 
         private void LoadPatientBasicInfo()
@@ -63,6 +69,7 @@ namespace ENT_Clinic_System.Admission
 
                     dgvOrders.DataSource = dt;
                     FormatDataGridViewHeaders();
+                    dgvOrders.ClearSelection();
                 }
             }
             catch (Exception ex)
@@ -107,6 +114,32 @@ namespace ENT_Clinic_System.Admission
             catch (Exception ex)
             {
                 ShowError("Error reading selected order", ex);
+            }
+        }
+
+        // ensure right-click selects row under cursor so context menu acts on that row
+        private void DgvOrders_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
+                {
+                    dgvOrders.ClearSelection();
+                    dgvOrders.Rows[e.RowIndex].Selected = true;
+
+                    var cell = dgvOrders.Rows[e.RowIndex].Cells["admitting_order_id"];
+                    if (cell?.Value != null && int.TryParse(cell.Value.ToString(), out int orderId))
+                    {
+                        _currentOrderId = orderId;
+                    }
+
+                    // Show context menu at mouse position (designer already associates ContextMenuStrip)
+                    // The DataGridView will automatically show its ContextMenuStrip on right-click.
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error selecting row", ex);
             }
         }
 
@@ -167,14 +200,31 @@ namespace ENT_Clinic_System.Admission
                     conn.Open();
 
                     if (_currentOrderId == 0)
-                        InsertNewOrder(conn);
+                        InsertNewOrder(conn);     // sets _currentOrderId to the inserted id
                     else
-                        UpdateExistingOrder(conn);
+                        UpdateExistingOrder(conn); // updates row with _currentOrderId
                 }
 
                 MessageBox.Show("Order saved successfully.", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // Ask user if they want to print the saved/updated order
+                var dr = MessageBox.Show("Do you want to print this order now?", "Print",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes && _currentOrderId > 0)
+                {
+                    try
+                    {
+                        var printHelper = new AdmitOrdersPrintHelper(_currentOrderId);
+                        printHelper.ShowPreview();
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowError("Failed to preview/print", ex);
+                    }
+                }
+
+                // Reset UI & reload
                 _currentOrderId = 0;
                 LoadOrdersList();
                 ClearFields();
@@ -182,6 +232,27 @@ namespace ENT_Clinic_System.Admission
             catch (Exception ex)
             {
                 ShowError("Error saving order", ex);
+            }
+        }
+
+        // New Update button: triggers update flow. This uses the same save logic but ensures a selection exists.
+        private void BtnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_currentOrderId == 0)
+                {
+                    MessageBox.Show("Please select an admitting order to update.", "No Order Selected",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Reuse save path; since _currentOrderId != 0 it will take the update branch
+                BtnSave_Click(sender, e);
+            }
+            catch (Exception ex)
+            {
+                ShowError("Update failed", ex);
             }
         }
 
@@ -210,6 +281,18 @@ namespace ENT_Clinic_System.Admission
             {
                 AddParametersToCommand(cmd);
                 cmd.ExecuteNonQuery();
+
+                // capture inserted id so user can print newly created order
+                try
+                {
+                    long lastId = cmd.LastInsertedId;
+                    if (lastId > 0)
+                        _currentOrderId = (int)lastId;
+                }
+                catch
+                {
+                    // ignore failure to read last inserted id — printing will only be available if id is set
+                }
             }
         }
 
@@ -242,7 +325,7 @@ namespace ENT_Clinic_System.Admission
             cmd.Parameters.AddWithValue("@pid", _patientId);
             cmd.Parameters.AddWithValue("@diagnosis", SqlSafeValue(txtDiagnosis.Text));
             cmd.Parameters.AddWithValue("@chief", SqlSafeValue(txtCC.Text));
-            cmd.Parameters.AddWithValue("@vital", SqlSafeValue(cbmVitalSigns.Text));   // ✔ vital signs saved
+            cmd.Parameters.AddWithValue("@vital", SqlSafeValue(cbmVitalSigns.Text));
             cmd.Parameters.AddWithValue("@diet", SqlSafeValue(cboDiet.Text));
             cmd.Parameters.AddWithValue("@activity", SqlSafeValue(cboActivity.Text));
             cmd.Parameters.AddWithValue("@meds", SqlSafeValue(txtMedications.Text));
@@ -310,6 +393,54 @@ namespace ENT_Clinic_System.Admission
             catch (Exception ex)
             {
                 ShowError("Print failed", ex);
+            }
+        }
+
+        // Context menu delete click
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedOrder();
+        }
+
+        // Delete logic with confirmation
+        private void DeleteSelectedOrder()
+        {
+            try
+            {
+                if (_currentOrderId == 0)
+                {
+                    MessageBox.Show("Please select a record to delete.", "No Selection",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var resp = MessageBox.Show("Are you sure you want to delete this admitting order? This action cannot be undone.",
+                    "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (resp != DialogResult.Yes) return;
+
+                using (var conn = DBConfig.GetConnection())
+                using (var cmd = new MySqlCommand("DELETE FROM `admitting_orders` WHERE `admitting_order_id` = @id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", _currentOrderId);
+                    conn.Open();
+                    int affected = cmd.ExecuteNonQuery();
+                    if (affected > 0)
+                    {
+                        MessageBox.Show("Order deleted.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        _currentOrderId = 0;
+                        ClearFields();
+                        LoadOrdersList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Delete failed or already removed.", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Error deleting record", ex);
             }
         }
 

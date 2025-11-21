@@ -1,33 +1,34 @@
 namespace ENT_Clinic_System.Admission
 {
     partial class AdmittingOrderForm
- {
+    {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-    /// Clean up any resources being used.
+        /// Clean up any resources being used.
         /// </summary>
- /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-      protected override void Dispose(bool disposing)
-  {
-          if (disposing && (components != null))
-    {
-      components.Dispose();
-     }
-     base.Dispose(disposing);
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
-    #region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-    /// <summary>
+        /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-      private void InitializeComponent()
-{
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblPatientName = new System.Windows.Forms.Label();
             this.txtPatientName = new System.Windows.Forms.TextBox();
@@ -64,7 +65,14 @@ namespace ENT_Clinic_System.Admission
             this.btnPrint = new System.Windows.Forms.Button();
             this.cbmVitalSigns = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+
+            // New controls
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -269,7 +277,7 @@ namespace ENT_Clinic_System.Admission
             // lblMedications
             // 
             this.lblMedications.AutoSize = true;
-            this.lblMedications.Location = new System.Drawing.Point(20, 326);
+            this.lblMedications.Location = new System.Drawing.Point(20, 365);
             this.lblMedications.Name = "lblMedications";
             this.lblMedications.Size = new System.Drawing.Size(67, 13);
             this.lblMedications.TabIndex = 26;
@@ -277,7 +285,7 @@ namespace ENT_Clinic_System.Admission
             // 
             // txtMedications
             // 
-            this.txtMedications.Location = new System.Drawing.Point(150, 323);
+            this.txtMedications.Location = new System.Drawing.Point(150, 365);
             this.txtMedications.Multiline = true;
             this.txtMedications.Name = "txtMedications";
             this.txtMedications.Size = new System.Drawing.Size(725, 35);
@@ -286,7 +294,7 @@ namespace ENT_Clinic_System.Admission
             // lblImaging
             // 
             this.lblImaging.AutoSize = true;
-            this.lblImaging.Location = new System.Drawing.Point(20, 366);
+            this.lblImaging.Location = new System.Drawing.Point(22, 327);
             this.lblImaging.Name = "lblImaging";
             this.lblImaging.Size = new System.Drawing.Size(47, 13);
             this.lblImaging.TabIndex = 28;
@@ -294,7 +302,7 @@ namespace ENT_Clinic_System.Admission
             // 
             // txtImaging
             // 
-            this.txtImaging.Location = new System.Drawing.Point(150, 363);
+            this.txtImaging.Location = new System.Drawing.Point(150, 324);
             this.txtImaging.Multiline = true;
             this.txtImaging.Name = "txtImaging";
             this.txtImaging.Size = new System.Drawing.Size(725, 35);
@@ -338,7 +346,7 @@ namespace ENT_Clinic_System.Admission
             // 
             this.dgvOrders.AllowUserToAddRows = false;
             this.dgvOrders.AllowUserToDeleteRows = false;
-            this.dgvOrders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvOrders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOrders.BackgroundColor = System.Drawing.SystemColors.Control;
@@ -350,31 +358,42 @@ namespace ENT_Clinic_System.Admission
             this.dgvOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvOrders.Size = new System.Drawing.Size(855, 200);
             this.dgvOrders.TabIndex = 34;
+            // Attach context menu to dgv
+            this.dgvOrders.ContextMenuStrip = this.contextMenuStrip1;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(495, 503);
+            this.btnSave.Location = new System.Drawing.Point(375, 503);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(120, 35);
+            this.btnSave.Size = new System.Drawing.Size(100, 35);
             this.btnSave.TabIndex = 35;
             this.btnSave.Text = "Save Order";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
+            // btnUpdate (NEW)
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(485, 503);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(100, 35);
+            this.btnUpdate.TabIndex = 36;
+            this.btnUpdate.Text = "Update Order";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(625, 503);
+            this.btnClear.Location = new System.Drawing.Point(595, 503);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(120, 35);
-            this.btnClear.TabIndex = 36;
+            this.btnClear.Size = new System.Drawing.Size(100, 35);
+            this.btnClear.TabIndex = 37;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             // 
             // btnPrint
             // 
-            this.btnPrint.Location = new System.Drawing.Point(755, 503);
+            this.btnPrint.Location = new System.Drawing.Point(705, 503);
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(120, 35);
-            this.btnPrint.TabIndex = 37;
+            this.btnPrint.Size = new System.Drawing.Size(100, 35);
+            this.btnPrint.TabIndex = 38;
             this.btnPrint.Text = "Print Order";
             this.btnPrint.UseVisualStyleBackColor = true;
             // 
@@ -401,6 +420,20 @@ namespace ENT_Clinic_System.Admission
             this.label1.Text = "Vital Signs:";
             this.label1.Visible = false;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 26);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.Red; // red foreground as requested
+            // 
             // AdmittingOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -411,6 +444,7 @@ namespace ENT_Clinic_System.Admission
             this.Controls.Add(this.cbmVitalSigns);
             this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.dgvOrders);
             this.Controls.Add(this.lblTitle);
@@ -448,48 +482,54 @@ namespace ENT_Clinic_System.Admission
             this.Text = "Admitting Order Form";
             this.Load += new System.EventHandler(this.AdmittingOrderForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
-     }
+        }
 
         #endregion
 
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblPatientName;
-private System.Windows.Forms.TextBox txtPatientName;
+        private System.Windows.Forms.TextBox txtPatientName;
         private System.Windows.Forms.Label lblAge;
-   private System.Windows.Forms.TextBox txtAge;
+        private System.Windows.Forms.TextBox txtAge;
         private System.Windows.Forms.Label lblSex;
         private System.Windows.Forms.TextBox txtSex;
-      private System.Windows.Forms.Label lblAdmitDate;
-   private System.Windows.Forms.DateTimePicker dtAdmitDate;
+        private System.Windows.Forms.Label lblAdmitDate;
+        private System.Windows.Forms.DateTimePicker dtAdmitDate;
         private System.Windows.Forms.Label lblRoomNote;
         private System.Windows.Forms.Label lblCC;
         private System.Windows.Forms.TextBox txtCC;
         private System.Windows.Forms.Label lblDiagnosis;
-    private System.Windows.Forms.TextBox txtDiagnosis;
-      private System.Windows.Forms.Label lblDiet;
+        private System.Windows.Forms.TextBox txtDiagnosis;
+        private System.Windows.Forms.Label lblDiet;
         private System.Windows.Forms.ComboBox cboDiet;
         private System.Windows.Forms.Label lblActivity;
-     private System.Windows.Forms.ComboBox cboActivity;
+        private System.Windows.Forms.ComboBox cboActivity;
         private System.Windows.Forms.Label lblIVFluids;
         private System.Windows.Forms.TextBox txtIVFluids;
-    private System.Windows.Forms.Label lblLabs;
-   private System.Windows.Forms.TextBox txtLabs;
+        private System.Windows.Forms.Label lblLabs;
+        private System.Windows.Forms.TextBox txtLabs;
         private System.Windows.Forms.Label lblMedications;
         private System.Windows.Forms.TextBox txtMedications;
-   private System.Windows.Forms.Label lblImaging;
+        private System.Windows.Forms.Label lblImaging;
         private System.Windows.Forms.TextBox txtImaging;
         private System.Windows.Forms.Label lblNursing;
         private System.Windows.Forms.TextBox txtNursing;
         private System.Windows.Forms.Label lblSpecialOrders;
         private System.Windows.Forms.TextBox txtSurgery;
-     private System.Windows.Forms.DataGridView dgvOrders;
+        private System.Windows.Forms.DataGridView dgvOrders;
         private System.Windows.Forms.Button btnSave;
-   private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.ComboBox cbmVitalSigns;
         private System.Windows.Forms.Label label1;
+
+        // New controls
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

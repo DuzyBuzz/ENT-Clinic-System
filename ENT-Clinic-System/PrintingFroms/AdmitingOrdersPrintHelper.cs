@@ -13,6 +13,8 @@ namespace ENT_Clinic_System.PrintingForms
     {
         private readonly int _admitOrderId;
         private readonly PrintDocument _printDocument;
+        // track how many chars we've printed per section (index => chars consumed)
+        private List<int> _sectionCharIndices = null;
 
         // Patient info
         private string _patientName = "";
@@ -148,11 +150,12 @@ namespace ENT_Clinic_System.PrintingForms
         {
             ("Chief Complaints", _chief_complaints ?? string.Empty, false),
             ("Impression", _diagnosis ?? string.Empty, false),
-            // special note as its own section (italic)
             ("Notes", "Please admit to room of choice under my service.\nTPR q shift and record", true),
-            // flatten two-column items into sequential sections for robust pagination
+
+            // Diet + IV Fluids will be handled as a paired block (side-by-side)
             ("Diet", _diet ?? string.Empty, false),
             ("IV Fluids", _ivFluids ?? string.Empty, false),
+
             ("Activity", _activity ?? string.Empty, false),
             ("Medications", _medications ?? string.Empty, false),
             ("Laboratory", _laboratory ?? string.Empty, false),
@@ -161,9 +164,11 @@ namespace ENT_Clinic_System.PrintingForms
             ("Special Orders", _specialInstructions ?? string.Empty, false)
         };
 
-                // start state
+                // per-section consumption indexes (initially zero)
+                _sectionCharIndices = Enumerable.Repeat(0, _sections.Count).ToList();
+
                 _currentSectionIndex = 0;
-                _currentCharIndex = 0;
+                // we no longer use a single _currentCharIndex; per-section indices are in _sectionCharIndices
                 _headerPrintedOnThisJob = false;
             }
 
@@ -180,10 +185,7 @@ namespace ENT_Clinic_System.PrintingForms
                 {
                     y = WaterMarkHelper.PrintHeader(g, left, (int)y, e.PageBounds.Width);
                 }
-                catch
-                {
-                    // ignore header errors
-                }
+                catch { }
                 y += 6;
 
                 // Print patient info only once at the very start of the job (first page)
@@ -218,23 +220,157 @@ namespace ENT_Clinic_System.PrintingForms
                 // Iterate sections, resuming from saved progress
                 while (_currentSectionIndex < _sections.Count)
                 {
+                    // Pair handling: if current is "Diet" and next is "IV Fluids", draw them side-by-side
+                    bool isDietPair = false;
+                    if (_currentSectionIndex + 1 < _sections.Count &&
+                        string.Equals(_sections[_currentSectionIndex].title, "Diet", StringComparison.OrdinalIgnoreCase) &&
+                        string.Equals(_sections[_currentSectionIndex + 1].title, "IV Fluids", StringComparison.OrdinalIgnoreCase))
+                    {
+                        isDietPair = true;
+                    }
+
+                    if (isDietPair)
+                    {
+                        // left column = Diet, right column = IV Fluids
+                        var leftSection = _sections[_currentSectionIndex];
+                        var rightSection = _sections[_currentSectionIndex + 1];
+
+                        int leftIndex = _sectionCharIndices[_currentSectionIndex];
+                        int rightIndex = _sectionCharIndices[_currentSectionIndex + 1];
+
+                        // If both contents are empty, skip
+                        if (string.IsNullOrWhiteSpace(leftSection.content) && string.IsNullOrWhiteSpace(rightSection.content))
+                        {
+                            _currentSectionIndex += 2;
+                            continue;
+                        }
+
+                        // Measure & optionally print titles for each column (only on first print of that column)
+                        float titleHeightLeft = 0f, titleHeightRight = 0f;
+                        bool printLeftTitle = leftIndex == 0 && !string.IsNullOrWhiteSpace(leftSection.content);
+                        bool printRightTitle = rightIndex == 0 && !string.IsNullOrWhiteSpace(rightSection.content);
+
+                        // compute column geometry
+                        float gutter = 12f;
+                        float colWidthF = (contentWidth - gutter) / 2f;
+                        int colWidth = (int)Math.Floor(colWidthF);
+
+                        // titles (if any)
+                        if (printLeftTitle)
+                        {
+                            titleHeightLeft = g.MeasureString(leftSection.title + ":", sectionTitleFont).Height;
+                        }
+                        if (printRightTitle)
+                        {
+                            titleHeightRight = g.MeasureString(rightSection.title + ":", sectionTitleFont).Height;
+                        }
+
+                        float titlesHeight = Math.Max(titleHeightLeft, titleHeightRight);
+                        if (titlesHeight > 0)
+                        {
+                            if (y + titlesHeight > bottomLimit)
+                            {
+                                e.HasMorePages = true;
+                                return;
+                            }
+
+                            if (printLeftTitle)
+                                g.DrawString(leftSection.title + ":", sectionTitleFont, Brushes.Black, left, y);
+                            if (printRightTitle)
+                                g.DrawString(rightSection.title + ":", sectionTitleFont, Brushes.Black, left + colWidth + gutter, y);
+
+                            y += titlesHeight + 2;
+                        }
+
+                        // Now draw as much as fits in both columns for the current page
+                        float availableHeight = bottomLimit - y;
+                        if (availableHeight <= 0)
+                        {
+                            e.HasMorePages = true;
+                            return;
+                        }
+
+                        // fonts for columns (Notes seldom italic here; use bodyFont)
+                        Font leftFont = leftSection.isItalic ? italicFont : bodyFont;
+                        Font rightFont = rightSection.isItalic ? italicFont : bodyFont;
+
+                        // draw chunks that fit for each column (returns chars drawn and height used)
+                        int drawnLeft = DrawTextChunkThatFits(g, leftSection.content, leftFont, left, y, colWidth, availableHeight, leftIndex, out float heightLeft);
+                        int drawnRight = DrawTextChunkThatFits(g, rightSection.content, rightFont, left + colWidth + gutter, y, colWidth, availableHeight, rightIndex, out float heightRight);
+
+                        // if neither column could draw anything, request next page to avoid infinite loop
+                        if (drawnLeft == 0 && drawnRight == 0)
+                        {
+                            // If both contents had length 0 we would have skipped earlier — here nothing fits in availableHeight
+                            e.HasMorePages = true;
+                            return;
+                        }
+
+                        float heightUsed = Math.Max(heightLeft, heightRight);
+
+                        // Re-draw the actual substrings to align vertically (DrawTextChunkThatFits already drew substring individually,
+                        // but to ensure both columns use same height and alignment, call DrawString with the substring again into rects with heightUsed.)
+                        // Extract the substrings we actually drew
+                        string leftToDraw = (drawnLeft > 0) ? leftSection.content.Substring(leftIndex, drawnLeft) : string.Empty;
+                        string rightToDraw = (drawnRight > 0) ? rightSection.content.Substring(rightIndex, drawnRight) : string.Empty;
+
+                        // Clear any previously drawn overlapping area if necessary (not usually required). We'll draw directly into the rects:
+                        var leftRect = new RectangleF(left, y, colWidthF, heightUsed);
+                        var rightRect = new RectangleF(left + colWidthF + gutter, y, colWidthF, heightUsed);
+
+                        if (!string.IsNullOrEmpty(leftToDraw))
+                            g.DrawString(leftToDraw, leftFont, Brushes.Black, leftRect);
+
+                        if (!string.IsNullOrEmpty(rightToDraw))
+                            g.DrawString(rightToDraw, rightFont, Brushes.Black, rightRect);
+
+                        // Advance per-section indices and y
+                        _sectionCharIndices[_currentSectionIndex] += drawnLeft;
+                        _sectionCharIndices[_currentSectionIndex + 1] += drawnRight;
+
+                        y += heightUsed + 8;
+
+                        // If both columns fully consumed, advance past the pair; otherwise keep pointer at the pair so we continue printing remaining part next iteration/page
+                        bool leftDone = _sectionCharIndices[_currentSectionIndex] >= (leftSection.content?.Length ?? 0);
+                        bool rightDone = _sectionCharIndices[_currentSectionIndex + 1] >= (rightSection.content?.Length ?? 0);
+
+                        if (leftDone && rightDone)
+                        {
+                            _currentSectionIndex += 2;
+                            // continue loop to next section
+                        }
+                        else
+                        {
+                            // remain on the pair so next PrintPage continues from remaining indexes
+                            if (y >= bottomLimit - 1)
+                            {
+                                e.HasMorePages = true;
+                                return;
+                            }
+                            // continue loop (will re-enter pair handling)
+                        }
+
+                        continue; // proceed to next iteration of while loop
+                    } // end isDietPair
+
+                    // (non-paired) single-column section handling (unchanged except using per-section index)
                     var section = _sections[_currentSectionIndex];
+                    int sectionIndex = _currentSectionIndex;
+                    int consumed = _sectionCharIndices[sectionIndex];
 
                     // Skip empty sections quickly
                     if (string.IsNullOrWhiteSpace(section.content))
                     {
                         _currentSectionIndex++;
-                        _currentCharIndex = 0;
                         continue;
                     }
 
-                    // If we are at the start of this section, print the section title first
-                    if (_currentCharIndex == 0)
+                    // If at the start of this section (consumed == 0), print the section title first
+                    if (consumed == 0)
                     {
                         float titleHeight = g.MeasureString(section.title + ":", sectionTitleFont).Height;
                         if (y + titleHeight > bottomLimit)
                         {
-                            // Not enough room for title -> next page
                             e.HasMorePages = true;
                             return;
                         }
@@ -243,47 +379,31 @@ namespace ENT_Clinic_System.PrintingForms
                     }
 
                     // Now draw as much of the section.content as fits
-                    float availableHeight = bottomLimit - y;
-                    if (availableHeight <= 0)
+                    float availableHeightSingle = bottomLimit - y;
+                    if (availableHeightSingle <= 0)
                     {
-                        // No vertical space left -> next page
                         e.HasMorePages = true;
                         return;
                     }
 
-                    // choose font: italic section uses italicFont
                     Font fontToUse = section.isItalic ? italicFont : bodyFont;
 
-                    // Draw chunk of text that fits and get how many chars were drawn
-                    int charsDrawn = DrawTextChunkThatFits(g, section.content, fontToUse, left, y, contentWidth, availableHeight, _currentCharIndex, out float heightUsed);
+                    int charsDrawnSingle = DrawTextChunkThatFits(g, section.content, fontToUse, left, y, (int)contentWidth, availableHeightSingle, consumed, out float heightUsedSingle);
 
-                    if (charsDrawn <= 0)
+                    if (charsDrawnSingle <= 0)
                     {
-                        // If nothing could be drawn on this page and we were at the start of the section,
-                        // force-print at least something to avoid infinite loop (very rare).
-                        if (_currentCharIndex == 0)
-                        {
-                            g.DrawString(section.content, fontToUse, Brushes.Black, new RectangleF(left, y, contentWidth, availableHeight));
-                            heightUsed = g.MeasureString(section.content, fontToUse, (int)contentWidth).Height;
-                            charsDrawn = section.content.Length;
-                        }
-                        else
-                        {
-                            // We drew nothing because no room; continue on next page
-                            e.HasMorePages = true;
-                            return;
-                        }
+                        // If nothing could be drawn on this page at the current consumed index, request next page
+                        e.HasMorePages = true;
+                        return;
                     }
 
-                    // Advance pointers
-                    _currentCharIndex += charsDrawn;
-                    y += heightUsed + 8; // spacing after section text
+                    _sectionCharIndices[sectionIndex] += charsDrawnSingle;
+                    y += heightUsedSingle + 8;
 
                     // If the entire section content was consumed, move to the next section
-                    if (_currentCharIndex >= section.content.Length)
+                    if (_sectionCharIndices[sectionIndex] >= (section.content?.Length ?? 0))
                     {
                         _currentSectionIndex++;
-                        _currentCharIndex = 0;
                     }
 
                     // If we've used up the page space, continue on next page
@@ -292,8 +412,6 @@ namespace ENT_Clinic_System.PrintingForms
                         e.HasMorePages = true;
                         return;
                     }
-
-                    // loop continues to next section
                 } // end while sections
 
                 // All sections printed — print footer and finish
@@ -307,11 +425,12 @@ namespace ENT_Clinic_System.PrintingForms
                 // Reset state for the next print job
                 e.HasMorePages = false;
                 _sections = null;
+                _sectionCharIndices = null;
                 _currentSectionIndex = 0;
-                _currentCharIndex = 0;
                 _headerPrintedOnThisJob = false;
             } // end using fonts
         }
+
 
         // Helper: draws maximal substring of 'text' starting at startIndex that fits inside the given height.
         // Returns number of characters drawn and sets heightUsed to the drawn block height.
