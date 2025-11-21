@@ -90,6 +90,8 @@ SELECT
     SUM(CASE WHEN c.nose_exam IS NOT NULL AND TRIM(c.nose_exam) <> '' THEN 1 ELSE 0 END) AS NoseCount,
     SUM(CASE WHEN c.throat_exam IS NOT NULL AND TRIM(c.throat_exam) <> '' THEN 1 ELSE 0 END) AS ThroatCount,
     SUM(CASE WHEN c.others_exam IS NOT NULL AND TRIM(c.others_exam) <> '' THEN 1 ELSE 0 END) AS OthersCount,
+    SUM(CASE WHEN c.maxillofacial_exam IS NOT NULL AND TRIM(c.maxillofacial_exam) <> '' THEN 1 ELSE 0 END) AS MaxillofacialCount,
+    SUM(CASE WHEN c.head_and_neck_exam IS NOT NULL AND TRIM(c.head_and_neck_exam) <> '' THEN 1 ELSE 0 END) AS HeadNeckCount,
     COUNT(c.consultation_id) AS TotalConsults
 FROM (
     SELECT 1 AS MonthNumber, 'January' AS MonthName UNION ALL
@@ -111,6 +113,7 @@ LEFT JOIN consultation c
 GROUP BY m.MonthNumber, m.MonthName
 ORDER BY m.MonthNumber;
 ";
+
             var dt = QueryToTable(sql);
 
             var dtClean = new DataTable();
@@ -120,6 +123,8 @@ ORDER BY m.MonthNumber;
             dtClean.Columns.Add("NoseCount", typeof(int));
             dtClean.Columns.Add("ThroatCount", typeof(int));
             dtClean.Columns.Add("OthersCount", typeof(int));
+            dtClean.Columns.Add("MaxillofacialCount", typeof(int));
+            dtClean.Columns.Add("HeadNeckCount", typeof(int));
             dtClean.Columns.Add("TotalConsults", typeof(int));
 
             if (dt != null)
@@ -133,6 +138,8 @@ ORDER BY m.MonthNumber;
                         r["NoseCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["NoseCount"]),
                         r["ThroatCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["ThroatCount"]),
                         r["OthersCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["OthersCount"]),
+                        r["MaxillofacialCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["MaxillofacialCount"]),
+                        r["HeadNeckCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["HeadNeckCount"]),
                         r["TotalConsults"] == DBNull.Value ? 0 : Convert.ToInt32(r["TotalConsults"])
                     );
                 }
@@ -143,9 +150,69 @@ ORDER BY m.MonthNumber;
             RenderMonthlyLineChart(chartEnt, dtClean);
         }
 
-        // ----------------------
-        // RenderMonthlyLineChart (dynamic Y axis)
-        // ----------------------
+        private void LoadDailySummary()
+        {
+            const string sql = @"
+WITH RECURSIVE days AS (
+    SELECT CURDATE() - INTERVAL 29 DAY AS DayDate
+    UNION ALL
+    SELECT DayDate + INTERVAL 1 DAY
+    FROM days
+    WHERE DayDate < CURDATE()
+)
+SELECT 
+    d.DayDate,
+    DATE_FORMAT(d.DayDate, '%b %d') AS DayLabel,
+    COUNT(c.consultation_id) AS TotalConsults,
+    SUM(CASE WHEN c.ear_exam IS NOT NULL AND TRIM(c.ear_exam) <> '' THEN 1 ELSE 0 END) AS EarCount,
+    SUM(CASE WHEN c.nose_exam IS NOT NULL AND TRIM(c.nose_exam) <> '' THEN 1 ELSE 0 END) AS NoseCount,
+    SUM(CASE WHEN c.throat_exam IS NOT NULL AND TRIM(c.throat_exam) <> '' THEN 1 ELSE 0 END) AS ThroatCount,
+    SUM(CASE WHEN c.others_exam IS NOT NULL AND TRIM(c.others_exam) <> '' THEN 1 ELSE 0 END) AS OthersCount,
+    SUM(CASE WHEN c.maxillofacial_exam IS NOT NULL AND TRIM(c.maxillofacial_exam) <> '' THEN 1 ELSE 0 END) AS MaxillofacialCount,
+    SUM(CASE WHEN c.head_and_neck_exam IS NOT NULL AND TRIM(c.head_and_neck_exam) <> '' THEN 1 ELSE 0 END) AS HeadNeckCount
+FROM days d
+LEFT JOIN consultation c
+    ON DATE(c.consultation_date) = d.DayDate
+GROUP BY d.DayDate
+ORDER BY d.DayDate;
+";
+
+            var raw = QueryToTable(sql);
+
+            var dt = new DataTable();
+            dt.Columns.Add("DayDate", typeof(DateTime));
+            dt.Columns.Add("DayLabel", typeof(string));
+            dt.Columns.Add("TotalConsults", typeof(int));
+            dt.Columns.Add("EarCount", typeof(int));
+            dt.Columns.Add("NoseCount", typeof(int));
+            dt.Columns.Add("ThroatCount", typeof(int));
+            dt.Columns.Add("OthersCount", typeof(int));
+            dt.Columns.Add("MaxillofacialCount", typeof(int));
+            dt.Columns.Add("HeadNeckCount", typeof(int));
+
+            if (raw != null)
+            {
+                foreach (DataRow r in raw.Rows)
+                {
+                    dt.Rows.Add(
+                        r["DayDate"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(r["DayDate"]),
+                        r["DayLabel"]?.ToString() ?? "",
+                        r["TotalConsults"] == DBNull.Value ? 0 : Convert.ToInt32(r["TotalConsults"]),
+                        r["EarCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["EarCount"]),
+                        r["NoseCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["NoseCount"]),
+                        r["ThroatCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["ThroatCount"]),
+                        r["OthersCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["OthersCount"]),
+                        r["MaxillofacialCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["MaxillofacialCount"]),
+                        r["HeadNeckCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["HeadNeckCount"])
+                    );
+                }
+            }
+
+            dgvDaily.DataSource = dt;
+            FormatGrid(dgvDaily);
+            RenderDailyLineChart(chartDaily, dt);
+        }
+
         private void RenderMonthlyLineChart(Chart chart, DataTable dt)
         {
             try
@@ -169,7 +236,7 @@ ORDER BY m.MonthNumber;
 
                 chart.Legends.Add(new Legend("Legend") { Docking = Docking.Top, LegendStyle = LegendStyle.Row });
 
-                var totalSeries = new Series("Total Consultations")
+                chart.Series.Add(new Series("Total Consultations")
                 {
                     ChartType = SeriesChartType.Column,
                     XValueMember = "MonthName",
@@ -177,30 +244,28 @@ ORDER BY m.MonthNumber;
                     IsValueShownAsLabel = true,
                     ChartArea = "MainArea",
                     Color = Color.LightGray
-                };
-                chart.Series.Add(totalSeries);
+                });
 
                 chart.Series.Add(CreateLineSeries("Ear", "MonthName", "EarCount", "MainArea"));
                 chart.Series.Add(CreateLineSeries("Nose", "MonthName", "NoseCount", "MainArea"));
                 chart.Series.Add(CreateLineSeries("Throat", "MonthName", "ThroatCount", "MainArea"));
+                chart.Series.Add(CreateLineSeries("Maxillofacial", "MonthName", "MaxillofacialCount", "MainArea"));
+                chart.Series.Add(CreateLineSeries("Head & Neck", "MonthName", "HeadNeckCount", "MainArea"));
                 chart.Series.Add(CreateLineSeries("Others", "MonthName", "OthersCount", "MainArea"));
 
-                // determine max value across relevant columns to set axis nicely
-                try
-                {
-                    var values = new List<int>();
-                    foreach (DataRow r in dt.Rows)
+                // Apply dynamic Y-axis
+                var values = dt.Rows.Cast<DataRow>()
+                    .SelectMany(r => new[]
                     {
-                        int v;
-                        if (int.TryParse(Convert.ToString(r["TotalConsults"]), out v)) values.Add(v);
-                        if (int.TryParse(Convert.ToString(r["EarCount"]), out v)) values.Add(v);
-                        if (int.TryParse(Convert.ToString(r["NoseCount"]), out v)) values.Add(v);
-                        if (int.TryParse(Convert.ToString(r["ThroatCount"]), out v)) values.Add(v);
-                        if (int.TryParse(Convert.ToString(r["OthersCount"]), out v)) values.Add(v);
-                    }
-                    ApplyDynamicYAxis(ca, values);
-                }
-                catch { /* ignore if something unexpected */ }
+                Convert.ToInt32(r["TotalConsults"]),
+                Convert.ToInt32(r["EarCount"]),
+                Convert.ToInt32(r["NoseCount"]),
+                Convert.ToInt32(r["ThroatCount"]),
+                Convert.ToInt32(r["OthersCount"]),
+                Convert.ToInt32(r["MaxillofacialCount"]),
+                Convert.ToInt32(r["HeadNeckCount"])
+                    }).ToList();
+                ApplyDynamicYAxis(ca, values);
 
                 chart.DataSource = dt;
                 chart.DataBind();
@@ -211,66 +276,6 @@ ORDER BY m.MonthNumber;
             }
         }
 
-        private void LoadDailySummary()
-        {
-            const string sql = @"
-WITH RECURSIVE days AS (
-    SELECT CURDATE() - INTERVAL 29 DAY AS DayDate
-    UNION ALL
-    SELECT DayDate + INTERVAL 1 DAY
-    FROM days
-    WHERE DayDate < CURDATE()
-)
-SELECT 
-    d.DayDate,
-    DATE_FORMAT(d.DayDate, '%b %d') AS DayLabel,
-    COUNT(c.consultation_id) AS TotalConsults,
-    SUM(CASE WHEN c.ear_exam IS NOT NULL AND TRIM(c.ear_exam) <> '' THEN 1 ELSE 0 END) AS EarCount,
-    SUM(CASE WHEN c.nose_exam IS NOT NULL AND TRIM(c.nose_exam) <> '' THEN 1 ELSE 0 END) AS NoseCount,
-    SUM(CASE WHEN c.throat_exam IS NOT NULL AND TRIM(c.throat_exam) <> '' THEN 1 ELSE 0 END) AS ThroatCount,
-    SUM(CASE WHEN c.others_exam IS NOT NULL AND TRIM(c.others_exam) <> '' THEN 1 ELSE 0 END) AS OthersCount
-FROM days d
-LEFT JOIN consultation c
-    ON DATE(c.consultation_date) = d.DayDate
-GROUP BY d.DayDate
-ORDER BY d.DayDate;
-";
-
-            var raw = QueryToTable(sql);
-
-            var dt = new DataTable();
-            dt.Columns.Add("DayDate", typeof(DateTime));
-            dt.Columns.Add("DayLabel", typeof(string));
-            dt.Columns.Add("TotalConsults", typeof(int));
-            dt.Columns.Add("EarCount", typeof(int));
-            dt.Columns.Add("NoseCount", typeof(int));
-            dt.Columns.Add("ThroatCount", typeof(int));
-            dt.Columns.Add("OthersCount", typeof(int));
-
-            if (raw != null)
-            {
-                foreach (DataRow r in raw.Rows)
-                {
-                    dt.Rows.Add(
-                        r["DayDate"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(r["DayDate"]),
-                        r["DayLabel"]?.ToString() ?? "",
-                        r["TotalConsults"] == DBNull.Value ? 0 : Convert.ToInt32(r["TotalConsults"]),
-                        r["EarCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["EarCount"]),
-                        r["NoseCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["NoseCount"]),
-                        r["ThroatCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["ThroatCount"]),
-                        r["OthersCount"] == DBNull.Value ? 0 : Convert.ToInt32(r["OthersCount"])
-                    );
-                }
-            }
-
-            dgvDaily.DataSource = dt;
-            FormatGrid(dgvDaily);
-            RenderDailyLineChart(chartDaily, dt);
-        }
-
-        // ----------------------
-        // RenderDailyLineChart (dynamic Y axis)
-        // ----------------------
         private void RenderDailyLineChart(Chart chart, DataTable dt)
         {
             try
@@ -281,7 +286,7 @@ ORDER BY d.DayDate;
                 chart.Legends.Clear();
 
                 var area = new ChartArea("DailyArea");
-                area.AxisX.Interval = 1;                 // show every day label
+                area.AxisX.Interval = 1;
                 area.AxisX.MajorGrid.Enabled = false;
                 area.AxisX.LabelStyle.Angle = -45;
                 area.AxisX.IsMarginVisible = true;
@@ -292,7 +297,7 @@ ORDER BY d.DayDate;
                 chart.Titles.Add("Daily Consultation Summary (Last 30 Days)");
                 chart.Legends.Add(new Legend() { Docking = Docking.Top });
 
-                var total = new Series("Total Consultations")
+                chart.Series.Add(new Series("Total Consultations")
                 {
                     ChartType = SeriesChartType.Column,
                     XValueMember = "DayLabel",
@@ -301,30 +306,28 @@ ORDER BY d.DayDate;
                     IsValueShownAsLabel = true,
                     ChartArea = "DailyArea",
                     Color = Color.LightGray
-                };
-                chart.Series.Add(total);
+                });
 
                 chart.Series.Add(CreateLineSeries("Ear", "DayLabel", "EarCount", "DailyArea"));
                 chart.Series.Add(CreateLineSeries("Nose", "DayLabel", "NoseCount", "DailyArea"));
                 chart.Series.Add(CreateLineSeries("Throat", "DayLabel", "ThroatCount", "DailyArea"));
+                chart.Series.Add(CreateLineSeries("Maxillofacial", "DayLabel", "MaxillofacialCount", "DailyArea"));
+                chart.Series.Add(CreateLineSeries("Head & Neck", "DayLabel", "HeadNeckCount", "DailyArea"));
                 chart.Series.Add(CreateLineSeries("Others", "DayLabel", "OthersCount", "DailyArea"));
 
-                // Build values list and apply dynamic Y axis
-                try
-                {
-                    var values = new List<int>();
-                    foreach (DataRow r in dt.Rows)
+
+                var values = dt.Rows.Cast<DataRow>()
+                    .SelectMany(r => new[]
                     {
-                        int v;
-                        if (int.TryParse(Convert.ToString(r["TotalConsults"]), out v)) values.Add(v);
-                        if (int.TryParse(Convert.ToString(r["EarCount"]), out v)) values.Add(v);
-                        if (int.TryParse(Convert.ToString(r["NoseCount"]), out v)) values.Add(v);
-                        if (int.TryParse(Convert.ToString(r["ThroatCount"]), out v)) values.Add(v);
-                        if (int.TryParse(Convert.ToString(r["OthersCount"]), out v)) values.Add(v);
-                    }
-                    ApplyDynamicYAxis(area, values);
-                }
-                catch { /* ignore */ }
+                Convert.ToInt32(r["TotalConsults"]),
+                Convert.ToInt32(r["EarCount"]),
+                Convert.ToInt32(r["NoseCount"]),
+                Convert.ToInt32(r["ThroatCount"]),
+                Convert.ToInt32(r["OthersCount"]),
+                Convert.ToInt32(r["MaxillofacialCount"]),
+                Convert.ToInt32(r["HeadNeckCount"])
+                    }).ToList();
+                ApplyDynamicYAxis(area, values);
 
                 chart.DataSource = dt;
                 chart.DataBind();
@@ -337,14 +340,9 @@ ORDER BY d.DayDate;
 
         /// <summary>
         /// Create a line series with explicit X column and ChartArea.
-        /// Caller must pass the correct X column name (e.g. "DayLabel" or "MonthName")
-        /// and the exact ChartArea name created on the chart.
         /// </summary>
         private Series CreateLineSeries(string name, string xMember, string yMember, string chartArea)
         {
-            if (string.IsNullOrWhiteSpace(chartArea))
-                throw new ArgumentException("chartArea must be provided and must match an existing ChartArea.Name", nameof(chartArea));
-
             var s = new Series(name)
             {
                 ChartType = SeriesChartType.Line,
@@ -360,6 +358,7 @@ ORDER BY d.DayDate;
         }
 
         #endregion
+
 
         #region Queue summaries (daily & monthly)
 
@@ -646,7 +645,6 @@ ORDER BY FIELD(AgeGroup, '0-12','13-19','20-39','40-59','60-79','80-99','100-120
         #region ENT Overview + Exam Distribution
 
         // Load general ENT overview in DataGridView
-        // Load general ENT overview in DataGridView
         private void LoadEntConsultationOverview()
         {
             const string sql = @"
@@ -654,7 +652,7 @@ SELECT
     column_name AS ColumnName,
     value AS Value,
     `count` AS EntryCount
-FROM autocomplete_entries
+FROM v_autocomplete_entries
 ORDER BY column_name, `count` DESC;
 ";
 
@@ -665,7 +663,6 @@ ORDER BY column_name, `count` DESC;
             FormatGrid(dgvEntOverview);
 
             // Automatically render chart for the first column if data exists
-            // No default mapping to ear_exam or chief_complaint
             if (dgvEntOverview.Rows.Count > 0)
             {
                 string firstColumn = dgvEntOverview.Rows[0].Cells["ColumnName"].Value?.ToString();
@@ -676,7 +673,7 @@ ORDER BY column_name, `count` DESC;
             }
         }
 
-        // Render chart for autocomplete_entries column
+        // Render chart for autocomplete_entries column (top 20 + "Others")
         private void RenderAutocompleteChart(string columnName)
         {
             if (string.IsNullOrEmpty(columnName)) return;
@@ -693,7 +690,7 @@ ORDER BY EntryCount DESC;
             var dt = QueryToTable(sql, new Dictionary<string, object> { { "@col", columnName } });
             if (dt == null || dt.Rows.Count == 0) return;
 
-            // Top 20 values, combine others
+            // Top 20 values, combine the rest as "Others"
             int topN = 20;
             var dtChart = dt.Clone();
             int othersCount = 0;
@@ -701,9 +698,14 @@ ORDER BY EntryCount DESC;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 if (i < topN)
+                {
+                    // Import top rows
                     dtChart.ImportRow(dt.Rows[i]);
+                }
                 else
+                {
                     othersCount += Convert.ToInt32(dt.Rows[i]["EntryCount"]);
+                }
             }
 
             if (othersCount > 0)
@@ -727,9 +729,10 @@ ORDER BY EntryCount DESC;
             ca.AxisY.MajorGrid.LineColor = Color.LightGray;
             ca.AxisY.Title = "Count";
             ca.AxisX.Title = "Values";
+            ca.AxisY.Minimum = 0;
             chartEntOverview.ChartAreas.Add(ca);
 
-            chartEntOverview.Titles.Add($"Top {topN} Values for '{columnName}'");
+            chartEntOverview.Titles.Add(string.Format("Top {0} Values for '{1}'", topN, columnName));
             chartEntOverview.Legends.Add(new Legend() { Docking = Docking.Bottom, LegendStyle = LegendStyle.Table });
 
             var series = new Series("Entries")
@@ -743,12 +746,20 @@ ORDER BY EntryCount DESC;
             };
             chartEntOverview.Series.Add(series);
 
+            // Auto-scale Y axis based on dtChart values (top + others)
+            int maxVal = 0;
+            foreach (DataRow r in dtChart.Rows)
+            {
+                int v = Convert.ToInt32(r["EntryCount"]);
+                if (v > maxVal) maxVal = v;
+            }
+            ca.AxisY.Maximum = maxVal + Math.Max(1, maxVal / 10);
+
             chartEntOverview.DataSource = dtChart;
             chartEntOverview.DataBind();
         }
 
-
-        // Load ENT exam value distribution based on ComboBox selection
+        // Load ENT exam value distribution based on ComboBox selection (reads from v_autocomplete_entries)
         private void LoadEntExamTrend(string examName)
         {
             string examColumn;
@@ -764,6 +775,12 @@ ORDER BY EntryCount DESC;
                 case "Throat Exam":
                     examColumn = "throat_exam";
                     break;
+                case "Maxillofacial Exam":
+                    examColumn = "maxillofacial_exam";
+                    break;
+                case "Head & Neck Exam":
+                    examColumn = "head_and_neck_exam";
+                    break;
                 case "Others Exam":
                     examColumn = "others_exam";
                     break;
@@ -775,27 +792,22 @@ ORDER BY EntryCount DESC;
             RenderExamValueDistribution(examColumn, examName);
         }
 
-        // Render chart for selected ENT exam
-        // Render chart for selected ENT exam
-        // ----------------------
-        // RenderExamValueDistribution (dynamic Y axis) - top 20 (no "Others")
-        // ----------------------
+        // Render chart for selected ENT exam (top 20) using v_autocomplete_entries
         private void RenderExamValueDistribution(string examColumn, string displayName)
         {
             if (string.IsNullOrEmpty(examColumn)) return;
 
-            string sql = $@"
+            string sql = @"
 SELECT 
-    {examColumn} AS Value,
-    COUNT(*) AS EntryCount
-FROM consultation
-WHERE {examColumn} IS NOT NULL AND TRIM({examColumn}) <> ''
-GROUP BY {examColumn}
+    value AS Value,
+    `count` AS EntryCount
+FROM v_autocomplete_entries
+WHERE column_name = @col
 ORDER BY EntryCount DESC
-LIMIT 20;  -- Only take top 20
+LIMIT 20;
 ";
 
-            var dt = QueryToTable(sql);
+            var dt = QueryToTable(sql, new Dictionary<string, object> { { "@col", examColumn } });
             if (dt == null || dt.Rows.Count == 0) return;
 
             // Clear previous chart
@@ -811,9 +823,10 @@ LIMIT 20;  -- Only take top 20
             ca.AxisY.MajorGrid.LineColor = Color.LightGray;
             ca.AxisX.Title = "Values";
             ca.AxisY.Title = "Count";
+            ca.AxisY.Minimum = 0;
             chartEntOverview.ChartAreas.Add(ca);
 
-            chartEntOverview.Titles.Add($"Top {dt.Rows.Count} Values for {displayName}");
+            chartEntOverview.Titles.Add(string.Format("Top {0} Values for {1}", dt.Rows.Count, displayName));
             chartEntOverview.Legends.Add(new Legend() { Docking = Docking.Bottom, LegendStyle = LegendStyle.Table });
 
             var series = new Series("Entries")
@@ -827,20 +840,21 @@ LIMIT 20;  -- Only take top 20
             };
             chartEntOverview.Series.Add(series);
 
-            // compute dynamic axis range from dt values
-            try
+            // Auto-scale Y axis based on dt values
+            int maxVal = 0;
+            foreach (DataRow r in dt.Rows)
             {
-                var vals = dt.AsEnumerable().Select(r => Convert.ToInt32(r["EntryCount"])).ToList();
-                ApplyDynamicYAxis(ca, vals);
+                int v = Convert.ToInt32(r["EntryCount"]);
+                if (v > maxVal) maxVal = v;
             }
-            catch { /* ignore */ }
+            ca.AxisY.Maximum = maxVal + Math.Max(1, maxVal / 10);
 
             chartEntOverview.DataSource = dt;
             chartEntOverview.DataBind();
         }
 
-
         #endregion
+
 
 
 
@@ -1011,6 +1025,7 @@ ORDER BY m.MonthNumber;
             ca.AxisX.LabelStyle.Angle = -45;
             ca.AxisY.MajorGrid.LineColor = Color.LightGray;
             chartBilling.ChartAreas.Add(ca);
+            ca.AxisY.LabelStyle.Format = "N2";
 
             chartBilling.Titles.Add($"Monthly Billing Summary - {DateTime.Now:yyyy}");
             chartBilling.Legends.Add(new Legend() { Docking = Docking.Bottom, LegendStyle = LegendStyle.Table });

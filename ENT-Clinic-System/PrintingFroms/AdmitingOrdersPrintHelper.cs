@@ -195,8 +195,8 @@ namespace ENT_Clinic_System.PrintingForms
                     g.DrawString(_patientName, valueFont, Brushes.Black, left + 100, y);
                     g.DrawString("Age:", labelFont, Brushes.Black, left + 400, y);
                     g.DrawString(_patientAge, valueFont, Brushes.Black, left + 430, y);
-                    g.DrawString("Sex:", labelFont, Brushes.Black, left + 470, y);
-                    g.DrawString(_patientGender, valueFont, Brushes.Black, left + 500, y);
+                    g.DrawString("Sex:", labelFont, Brushes.Black, left + 450, y);
+                    g.DrawString(_patientGender, valueFont, Brushes.Black, left + 480, y);
                     y += 20;
 
                     g.DrawString("Address:", labelFont, Brushes.Black, left, y);

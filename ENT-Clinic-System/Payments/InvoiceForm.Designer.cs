@@ -59,6 +59,10 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.searchPatientTextBox = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.selectedItemsDataGridView)).BeginInit();
             this.groupBoxSelected.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -77,6 +81,8 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
+            this.tableLayoutPanel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // selectedItemsDataGridView
@@ -338,7 +344,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBox1.Location = new System.Drawing.Point(451, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(893, 228);
+            this.groupBox1.Size = new System.Drawing.Size(893, 354);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Prescriptions";
@@ -358,17 +364,17 @@
             this.prescriptionDataGridView.Name = "prescriptionDataGridView";
             this.prescriptionDataGridView.ReadOnly = true;
             this.prescriptionDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.prescriptionDataGridView.Size = new System.Drawing.Size(887, 206);
+            this.prescriptionDataGridView.Size = new System.Drawing.Size(887, 332);
             this.prescriptionDataGridView.TabIndex = 0;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.patientsDataGridView);
+            this.groupBox2.Controls.Add(this.tableLayoutPanel8);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(442, 228);
+            this.groupBox2.Size = new System.Drawing.Size(442, 354);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Patients";
@@ -383,11 +389,11 @@
             this.patientsDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.patientsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.patientsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.patientsDataGridView.Location = new System.Drawing.Point(3, 19);
+            this.patientsDataGridView.Location = new System.Drawing.Point(3, 39);
             this.patientsDataGridView.MultiSelect = false;
             this.patientsDataGridView.Name = "patientsDataGridView";
             this.patientsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.patientsDataGridView.Size = new System.Drawing.Size(436, 206);
+            this.patientsDataGridView.Size = new System.Drawing.Size(430, 290);
             this.patientsDataGridView.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -400,8 +406,8 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.28169F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.71831F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.40397F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.59603F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1353, 604);
             this.tableLayoutPanel1.TabIndex = 15;
             // 
@@ -411,7 +417,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1347, 358);
+            this.panel1.Size = new System.Drawing.Size(1347, 232);
             this.panel1.TabIndex = 0;
             // 
             // groupBoxAvailable
@@ -422,7 +428,7 @@
             this.groupBoxAvailable.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.groupBoxAvailable.Location = new System.Drawing.Point(0, 0);
             this.groupBoxAvailable.Name = "groupBoxAvailable";
-            this.groupBoxAvailable.Size = new System.Drawing.Size(1347, 358);
+            this.groupBoxAvailable.Size = new System.Drawing.Size(1347, 232);
             this.groupBoxAvailable.TabIndex = 5;
             this.groupBoxAvailable.TabStop = false;
             this.groupBoxAvailable.Text = "Available Items (Inventory)";
@@ -442,12 +448,12 @@
             this.availableItemsDataGridView.Name = "availableItemsDataGridView";
             this.availableItemsDataGridView.ReadOnly = true;
             this.availableItemsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.availableItemsDataGridView.Size = new System.Drawing.Size(1341, 294);
+            this.availableItemsDataGridView.Size = new System.Drawing.Size(1341, 168);
             this.availableItemsDataGridView.TabIndex = 2;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.White;
             this.tableLayoutPanel2.ColumnCount = 6;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.38461F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.52119F));
@@ -467,6 +473,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1341, 42);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
@@ -524,6 +531,7 @@
             this.searchItemsTextBox.Name = "searchItemsTextBox";
             this.searchItemsTextBox.Size = new System.Drawing.Size(425, 26);
             this.searchItemsTextBox.TabIndex = 1;
+            this.searchItemsTextBox.TextChanged += new System.EventHandler(this.searchItemsTextBox_TextChanged);
             // 
             // categoryCombobox
             // 
@@ -560,11 +568,11 @@
             this.tableLayoutPanel3.Controls.Add(this.groupBox2, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.groupBox1, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 367);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 241);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1347, 234);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1347, 360);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // tableLayoutPanel6
@@ -597,6 +605,62 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 43.37748F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(533, 604);
             this.tableLayoutPanel7.TabIndex = 16;
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 1;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.Controls.Add(this.patientsDataGridView, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 19);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 2;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(436, 332);
+            this.tableLayoutPanel8.TabIndex = 1;
+            this.tableLayoutPanel8.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel8_Paint);
+            // 
+            // searchPatientTextBox
+            // 
+            this.searchPatientTextBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.searchPatientTextBox.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.searchPatientTextBox.Location = new System.Drawing.Point(123, 0);
+            this.searchPatientTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.searchPatientTextBox.Name = "searchPatientTextBox";
+            this.searchPatientTextBox.Size = new System.Drawing.Size(307, 26);
+            this.searchPatientTextBox.TabIndex = 2;
+            this.searchPatientTextBox.TextChanged += new System.EventHandler(this.searchPatientTextBox_TextChanged);
+            // 
+            // tableLayoutPanel9
+            // 
+            this.tableLayoutPanel9.ColumnCount = 2;
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 123F));
+            this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel9.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.searchPatientTextBox, 1, 0);
+            this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel9.Name = "tableLayoutPanel9";
+            this.tableLayoutPanel9.RowCount = 1;
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(430, 30);
+            this.tableLayoutPanel9.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label4.Location = new System.Drawing.Point(4, 0);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(115, 30);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Search Patient:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // InvoiceForm
             // 
@@ -634,6 +698,9 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
+            this.tableLayoutPanel9.ResumeLayout(false);
+            this.tableLayoutPanel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -678,5 +745,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.TextBox searchPatientTextBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
+        private System.Windows.Forms.Label label4;
     }
 }

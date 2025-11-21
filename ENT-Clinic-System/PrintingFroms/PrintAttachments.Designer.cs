@@ -25,7 +25,9 @@
             this.labelVideos = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.updateButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // imagesPanel
@@ -50,10 +52,10 @@
             // 
             // printButton
             // 
-            this.printButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.printButton.Location = new System.Drawing.Point(3, 578);
+            this.printButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.printButton.Location = new System.Drawing.Point(195, 3);
             this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(120, 39);
+            this.printButton.Size = new System.Drawing.Size(186, 33);
             this.printButton.TabIndex = 2;
             this.printButton.Text = "Print Images";
             this.printButton.UseVisualStyleBackColor = true;
@@ -88,9 +90,8 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.updateButton, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.labelImages, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.printButton, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.videosPanel, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.imagesPanel, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.labelVideos, 1, 0);
@@ -106,14 +107,29 @@
             // 
             // updateButton
             // 
-            this.updateButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.updateButton.Location = new System.Drawing.Point(657, 578);
+            this.updateButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.updateButton.Location = new System.Drawing.Point(3, 3);
             this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(120, 39);
+            this.updateButton.Size = new System.Drawing.Size(186, 33);
             this.updateButton.TabIndex = 5;
             this.updateButton.Text = "Update";
             this.updateButton.UseVisualStyleBackColor = true;
             this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.printButton, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.updateButton, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(393, 578);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(384, 39);
+            this.tableLayoutPanel2.TabIndex = 0;
             // 
             // PrintAttachments
             // 
@@ -124,11 +140,13 @@
             this.Text = "Print Attachments";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button updateButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }

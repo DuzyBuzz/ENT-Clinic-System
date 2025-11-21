@@ -33,6 +33,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.referredByComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.patientContactNumberTextBox = new System.Windows.Forms.TextBox();
@@ -70,8 +72,6 @@
             this.contactMiddleNameTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.submitButton = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.referredByComboBox = new System.Windows.Forms.ComboBox();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -105,7 +105,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 559F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 598F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(734, 598);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -154,6 +154,30 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Patient Information";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(22, 369);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 20);
+            this.label3.TabIndex = 62;
+            this.label3.Text = "Referred by";
+            // 
+            // referredByComboBox
+            // 
+            this.referredByComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.referredByComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.referredByComboBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.referredByComboBox.FormattingEnabled = true;
+            this.referredByComboBox.Location = new System.Drawing.Point(129, 361);
+            this.referredByComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.referredByComboBox.Name = "referredByComboBox";
+            this.referredByComboBox.Size = new System.Drawing.Size(531, 28);
+            this.referredByComboBox.TabIndex = 61;
+            this.referredByComboBox.SelectedIndexChanged += new System.EventHandler(this.referredByComboBox_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -262,12 +286,14 @@
             this.statusComboBox.Items.AddRange(new object[] {
             "Single",
             "Married",
-            "Widowed",
-            "Separated"});
+            "Widow/er",
+            "Separated",
+            "Divorced",
+            "Annulled"});
             this.statusComboBox.Location = new System.Drawing.Point(129, 311);
             this.statusComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.statusComboBox.Name = "statusComboBox";
-            this.statusComboBox.Size = new System.Drawing.Size(126, 28);
+            this.statusComboBox.Size = new System.Drawing.Size(137, 28);
             this.statusComboBox.TabIndex = 48;
             // 
             // lastnameTexBox
@@ -607,30 +633,6 @@
             this.submitButton.Text = "Submit";
             this.submitButton.UseVisualStyleBackColor = false;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(22, 369);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 20);
-            this.label3.TabIndex = 62;
-            this.label3.Text = "Referred by";
-            // 
-            // referredByComboBox
-            // 
-            this.referredByComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.referredByComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.referredByComboBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.referredByComboBox.FormattingEnabled = true;
-            this.referredByComboBox.Location = new System.Drawing.Point(129, 361);
-            this.referredByComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.referredByComboBox.Name = "referredByComboBox";
-            this.referredByComboBox.Size = new System.Drawing.Size(531, 28);
-            this.referredByComboBox.TabIndex = 61;
-            this.referredByComboBox.SelectedIndexChanged += new System.EventHandler(this.referredByComboBox_SelectedIndexChanged);
             // 
             // PatientInfoForm
             // 

@@ -583,5 +583,10 @@ namespace ENT_Clinic_System.InsertForms
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void referralToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

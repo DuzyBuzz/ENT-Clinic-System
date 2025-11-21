@@ -204,27 +204,29 @@ namespace ENT_Clinic_System.UserControls
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(noseDGV, "nose", "nose_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(throatDGV, "throat", "throat_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(maxillofacialDGV, "maxillofacial", "maxillofacial_exam");
-            AutoCompleteDgvHelper.InitializeAutocompleteColumn(headNeckDGV, "headneck", "headneck_exam");
+            AutoCompleteDgvHelper.InitializeAutocompleteColumn(headNeckDGV, "head_and_neck", "head_and_neck_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(othersDGV, "others", "others_exam");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(diagnosisDGV, "diagnosis", "diagnosis");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(recommendationsDGV, "recommendations", "recommendations");
         }
 
-        private void SaveAutoComplete()
-        {
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(pastMedicalHistoryDGV, "history", "history");
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(allergiesDGV, "allergies", "allergies");
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(familyHistoryDGV, "family_history", "family_history");
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(personalSocialHistoryDGV, "personal_social_history", "personal_social_history");
+        //private void SaveAutoComplete()
+        //{
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(pastMedicalHistoryDGV, "history", "history");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(allergiesDGV, "allergies", "allergies");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(familyHistoryDGV, "family_history", "family_history");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(personalSocialHistoryDGV, "personal_social_history", "personal_social_history");
 
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(earsDGV, "ears", "ear_exam");
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(noseDGV, "nose", "nose_exam");
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(throatDGV, "throat", "throat_exam");
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(othersDGV, "others", "others_exam");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(earsDGV, "ears", "ear_exam");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(noseDGV, "nose", "nose_exam");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(throatDGV, "throat", "throat_exam");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(maxillofacialDGV, "maxillofacial", "maxillofacial_exam");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(headNeckDGV, "head_and_neck", "head_and_neck_exam");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(othersDGV, "others", "others_exam");
 
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(diagnosisDGV, "diagnosis", "diagnosis");
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(recommendationsDGV, "recommendations", "recommendations");
-        }
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(diagnosisDGV, "diagnosis", "diagnosis");
+        //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(recommendationsDGV, "recommendations", "recommendations");
+        //}
 
         private void LoadConsultationDate(int patientID)
         {
@@ -417,6 +419,8 @@ namespace ENT_Clinic_System.UserControls
                     EarsCsv = GetDgvValuesAsCsv(earsDGV),
                     NoseCsv = GetDgvValuesAsCsv(noseDGV),
                     ThroatCsv = GetDgvValuesAsCsv(throatDGV),
+                    MaxillofacialCsv = GetDgvValuesAsCsv(maxillofacialDGV),
+                    HeadNeckCsv = GetDgvValuesAsCsv(headNeckDGV),
                     OthersCsv = GetDgvValuesAsCsv(othersDGV),
                     DiagnosisCsv = GetDgvValuesAsCsv(diagnosisDGV),
                     RecommendationsCsv = GetDgvValuesAsCsv(recommendationsDGV),
@@ -435,6 +439,8 @@ namespace ENT_Clinic_System.UserControls
                     !string.IsNullOrEmpty(inputs.EarsCsv) ||
                     !string.IsNullOrEmpty(inputs.NoseCsv) ||
                     !string.IsNullOrEmpty(inputs.ThroatCsv) ||
+                    !string.IsNullOrEmpty(inputs.MaxillofacialCsv) ||
+                    !string.IsNullOrEmpty(inputs.HeadNeckCsv) ||
                     !string.IsNullOrEmpty(inputs.OthersCsv) ||
                     !string.IsNullOrEmpty(inputs.DiagnosisCsv) ||
                     !string.IsNullOrEmpty(inputs.ProceduresCsv) ||
@@ -529,7 +535,7 @@ namespace ENT_Clinic_System.UserControls
                 videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
 
                 // Save autocomplete values (user-defined function)
-                SaveAutoComplete();
+                //SaveAutoComplete();
 
                 // ✅ Close form after save
                 this.Close();

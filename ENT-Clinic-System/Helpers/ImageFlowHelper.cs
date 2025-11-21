@@ -8,7 +8,7 @@ using System.Windows.Forms;
 public class ImageFlowHelper
 {
     private readonly FlowLayoutPanel panel;
-    private readonly string[] categories = new[] {"", "Nose", "Ears", "Throat" };
+    private readonly string[] categories = new[] { "", "Nose", "Ears", "Throat", "Maxillofacial", "Head & Neck", "Others" };
 
     // Map Panel -> (ImagePath, NoteLabel, CategoryLabel, Note, Category)
     private readonly Dictionary<Panel, (string ImagePath, Label NoteLabel, Label CategoryLabel, string Note, string Category)> imageNotes

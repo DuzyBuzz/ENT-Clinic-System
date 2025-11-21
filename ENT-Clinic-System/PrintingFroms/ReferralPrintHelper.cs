@@ -132,12 +132,12 @@ namespace ENT_Clinic_System.PrintingForms
 
 
                 // ===== PATIENT INFO SECTION (with underlined values) =====
-                g.DrawString("Name:", labelFont, Brushes.Black, contentLeft, y);
-                g.DrawString(_patientName, valueFont, Brushes.Black, contentLeft + 100, y);
-                g.DrawString("Age:", labelFont, Brushes.Black, contentLeft + 400, y);
-                g.DrawString(_patientAge, valueFont, Brushes.Black, contentLeft + 430, y);
-                g.DrawString("Sex:", labelFont, Brushes.Black, contentLeft + 470, y);
-                g.DrawString(_patientGender, valueFont, Brushes.Black, contentLeft + 500, y);
+                g.DrawString("Name:", labelFont, Brushes.Black, left, y);
+                g.DrawString(_patientName, valueFont, Brushes.Black, left + 100, y);
+                g.DrawString("Age:", labelFont, Brushes.Black, left + 400, y);
+                g.DrawString(_patientAge, valueFont, Brushes.Black, left + 430, y);
+                g.DrawString("Sex:", labelFont, Brushes.Black, left + 450, y);
+                g.DrawString(_patientGender, valueFont, Brushes.Black, left + 480, y);
                 y += 20;
 
                 g.DrawString("Address:", labelFont, Brushes.Black, contentLeft, y);

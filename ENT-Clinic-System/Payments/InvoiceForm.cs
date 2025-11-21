@@ -662,5 +662,41 @@ namespace ENT_Clinic_System.Payments
                 saveButton.PerformClick(); // ✅ Triggers the button click event
             }
         }
+
+        private void tableLayoutPanel8_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void searchItemsTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void searchPatientTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = searchPatientTextBox.Text.Trim().ToLower();
+
+            if (patientsDataGridView.DataSource is DataTable dt && dt.Rows.Count > 0)
+            {
+                var filteredRows = dt.AsEnumerable()
+                    .Where(row => row["full_name"].ToString().ToLower().Contains(searchText));
+
+                if (filteredRows.Any())
+                {
+                    patientsDataGridView.DataSource = filteredRows.CopyToDataTable();
+                }
+                if (searchText == "")
+                {
+                    // No results → reload all patients
+                    LoadPatientsFromPrescriptions();
+                }
+
+
+                FormatPatientsGrid(); // Keep the formatting consistent
+            }
+        }
+
+
     }
 }

@@ -54,11 +54,26 @@ namespace ENT_Clinic_System.Payments
                 {
                     paymentHistoryDataGridView.ClearSelection();
                     paymentHistoryDataGridView.Rows[hit.RowIndex].Selected = true;
-                    paymentHistoryDataGridView.CurrentCell =
-                        paymentHistoryDataGridView.Rows[hit.RowIndex].Cells[0];
+
+                    // Set CurrentCell only to a visible column
+                    DataGridViewRow row = paymentHistoryDataGridView.Rows[hit.RowIndex];
+                    DataGridViewCell firstVisibleCell = null;
+
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        if (cell.Visible)
+                        {
+                            firstVisibleCell = cell;
+                            break;
+                        }
+                    }
+
+                    if (firstVisibleCell != null)
+                        paymentHistoryDataGridView.CurrentCell = firstVisibleCell;
                 }
             }
         }
+
         /// <summary>
         /// Handles the delete command from the right-click menu.
         /// </summary>
@@ -605,6 +620,11 @@ namespace ENT_Clinic_System.Payments
                 e.SuppressKeyPress = true; // ✅ Prevents "ding" sound or moving to next control
                 saveButton.PerformClick(); // ✅ Triggers the button click event
             }
+        }
+
+        private void tableLayoutPanel7_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
