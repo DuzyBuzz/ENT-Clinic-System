@@ -166,8 +166,42 @@ namespace ENT_Clinic_System
 
         private void MainFormReceptionist_FormClosing(object sender, FormClosingEventArgs e)
         {
+            BackupSql();
             Application.Exit();
 
+        }
+        private void BackupSql()
+        {
+            try
+            {
+                // Provide the path to mysqldump.exe
+                string mysqldumpPath = @"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
+
+                // Create the helper instance with WinForms-safe logging
+                SQLBackupHelper backupHelper = new SQLBackupHelper(
+                    mysqldumpPath,
+                    infoLogger: msg => Debug.WriteLine("[BACKUP] " + msg),
+                    warningLogger: msg => Debug.WriteLine("[BACKUP-WARN] " + msg),
+                    errorLogger: msg => Debug.WriteLine("[BACKUP-ERROR] " + msg)
+                );
+
+                // Run the backup
+                int result = backupHelper.RunBackup();
+
+                // Check the result and provide appropriate feedback
+                if (result == 0)
+                {
+                    Debug.WriteLine("Backup completed successfully.");
+                }
+                else
+                {
+                    Debug.WriteLine("Backup failed with code: " + result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Backup operation failed: " + ex.Message);
+            }
         }
 
 

@@ -293,7 +293,7 @@ Commands.Stage(repo, backupFileName);
           if (repo.RetrieveStatus().IsDirty)
     {
        _infoLogger("Committing changes...");
-       var author = new Signature("BackupBot", "backup@domain.com", DateTimeOffset.Now);
+       var author = new Signature("ENT_Clinic_Dr. Bascos", "backup@domain.com", DateTimeOffset.Now);
 repo.Commit(string.Format("Daily backup {0}", DateTime.Today.ToString("yyyy-MM-dd")), author, author);
 
      // Ensure internet available

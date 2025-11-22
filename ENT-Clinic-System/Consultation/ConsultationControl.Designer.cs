@@ -30,18 +30,20 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
@@ -138,7 +140,6 @@
             this.recentIllnessRichTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.pastMedicalHistoryDGV = new System.Windows.Forms.DataGridView();
-            this.past_medical_history = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.entTabControl = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -190,6 +191,13 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
+            this.history = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.maxillofacialDGV = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.headNeckDGV = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
@@ -247,6 +255,10 @@
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage8.SuspendLayout();
+            this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxillofacialDGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.headNeckDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -547,7 +559,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.44781F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.55219F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 330F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 331F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel6, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel13, 2, 0);
@@ -1177,8 +1189,8 @@
             // 
             // personal_social_history
             // 
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personal_social_history.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personal_social_history.DefaultCellStyle = dataGridViewCellStyle16;
             this.personal_social_history.HeaderText = "";
             this.personal_social_history.Name = "personal_social_history";
             this.personal_social_history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1216,8 +1228,8 @@
             // 
             // family_history
             // 
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.family_history.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.family_history.DefaultCellStyle = dataGridViewCellStyle17;
             this.family_history.HeaderText = "";
             this.family_history.Name = "family_history";
             this.family_history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1257,8 +1269,8 @@
             // 
             // allergies
             // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.allergies.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.allergies.DefaultCellStyle = dataGridViewCellStyle18;
             this.allergies.HeaderText = "";
             this.allergies.Name = "allergies";
             this.allergies.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1278,8 +1290,8 @@
             // consultationDateDataGridView
             // 
             this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
             this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1425,7 +1437,7 @@
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.83721F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.16279F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1056, 857);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1055, 857);
             this.tableLayoutPanel6.TabIndex = 1;
             this.tableLayoutPanel6.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel6_Paint);
             // 
@@ -1443,7 +1455,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1054, 630);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1053, 630);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // tableLayoutPanel7
@@ -1459,7 +1471,7 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1052, 313);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1051, 313);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // groupBox4
@@ -1470,7 +1482,7 @@
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox4.Size = new System.Drawing.Size(521, 307);
+            this.groupBox4.Size = new System.Drawing.Size(520, 307);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Recent Illness";
@@ -1482,7 +1494,7 @@
             this.recentIllnessRichTextBox.Location = new System.Drawing.Point(0, 19);
             this.recentIllnessRichTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.recentIllnessRichTextBox.Name = "recentIllnessRichTextBox";
-            this.recentIllnessRichTextBox.Size = new System.Drawing.Size(521, 288);
+            this.recentIllnessRichTextBox.Size = new System.Drawing.Size(520, 288);
             this.recentIllnessRichTextBox.TabIndex = 12;
             this.recentIllnessRichTextBox.Text = "";
             // 
@@ -1491,7 +1503,7 @@
             this.groupBox9.Controls.Add(this.pastMedicalHistoryDGV);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox9.Location = new System.Drawing.Point(530, 3);
+            this.groupBox9.Location = new System.Drawing.Point(529, 3);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Padding = new System.Windows.Forms.Padding(0);
             this.groupBox9.Size = new System.Drawing.Size(519, 307);
@@ -1508,7 +1520,7 @@
             this.pastMedicalHistoryDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.pastMedicalHistoryDGV.ColumnHeadersVisible = false;
             this.pastMedicalHistoryDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.past_medical_history});
+            this.history});
             this.pastMedicalHistoryDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pastMedicalHistoryDGV.Location = new System.Drawing.Point(0, 19);
             this.pastMedicalHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
@@ -1517,15 +1529,6 @@
             this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(519, 288);
             this.pastMedicalHistoryDGV.TabIndex = 8;
             this.pastMedicalHistoryDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.pastMedicalHistoryDGV_CellContentClick);
-            // 
-            // past_medical_history
-            // 
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.past_medical_history.DefaultCellStyle = dataGridViewCellStyle5;
-            this.past_medical_history.HeaderText = "";
-            this.past_medical_history.Name = "past_medical_history";
-            this.past_medical_history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.past_medical_history.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // tableLayoutPanel8
             // 
@@ -1542,7 +1545,7 @@
             this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.61049F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.38951F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1052, 314);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1051, 314);
             this.tableLayoutPanel8.TabIndex = 2;
             // 
             // entTabControl
@@ -1550,6 +1553,8 @@
             this.entTabControl.Controls.Add(this.tabPage3);
             this.entTabControl.Controls.Add(this.tabPage4);
             this.entTabControl.Controls.Add(this.tabPage5);
+            this.entTabControl.Controls.Add(this.tabPage8);
+            this.entTabControl.Controls.Add(this.tabPage9);
             this.entTabControl.Controls.Add(this.tabPage6);
             this.entTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.entTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
@@ -1558,7 +1563,7 @@
             this.entTabControl.Multiline = true;
             this.entTabControl.Name = "entTabControl";
             this.entTabControl.SelectedIndex = 0;
-            this.entTabControl.Size = new System.Drawing.Size(1050, 275);
+            this.entTabControl.Size = new System.Drawing.Size(1049, 275);
             this.entTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.entTabControl.TabIndex = 4;
             this.entTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.entTabControl_DrawItem);
@@ -1569,7 +1574,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1042, 242);
+            this.tabPage3.Size = new System.Drawing.Size(1041, 242);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Ears";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1588,14 +1593,14 @@
             this.earsDGV.Margin = new System.Windows.Forms.Padding(0);
             this.earsDGV.Name = "earsDGV";
             this.earsDGV.RowHeadersWidth = 25;
-            this.earsDGV.Size = new System.Drawing.Size(1042, 242);
+            this.earsDGV.Size = new System.Drawing.Size(1041, 242);
             this.earsDGV.TabIndex = 8;
             this.earsDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.earsDGV_CellContentClick);
             // 
             // ears
             // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ears.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ears.DefaultCellStyle = dataGridViewCellStyle4;
             this.ears.HeaderText = "";
             this.ears.Name = "ears";
             this.ears.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1607,7 +1612,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 29);
             this.tabPage4.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1043, 242);
+            this.tabPage4.Size = new System.Drawing.Size(1041, 242);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Nose";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1626,14 +1631,14 @@
             this.noseDGV.Margin = new System.Windows.Forms.Padding(0);
             this.noseDGV.Name = "noseDGV";
             this.noseDGV.RowHeadersWidth = 25;
-            this.noseDGV.Size = new System.Drawing.Size(1043, 242);
+            this.noseDGV.Size = new System.Drawing.Size(1041, 242);
             this.noseDGV.TabIndex = 8;
             this.noseDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.noseDGV_CellContentClick);
             // 
             // nose
             // 
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nose.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nose.DefaultCellStyle = dataGridViewCellStyle20;
             this.nose.HeaderText = "";
             this.nose.Name = "nose";
             this.nose.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1644,7 +1649,7 @@
             this.tabPage5.Controls.Add(this.throatDGV);
             this.tabPage5.Location = new System.Drawing.Point(4, 29);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(1043, 242);
+            this.tabPage5.Size = new System.Drawing.Size(1041, 242);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Throat";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1663,14 +1668,14 @@
             this.throatDGV.Margin = new System.Windows.Forms.Padding(0);
             this.throatDGV.Name = "throatDGV";
             this.throatDGV.RowHeadersWidth = 25;
-            this.throatDGV.Size = new System.Drawing.Size(1043, 242);
+            this.throatDGV.Size = new System.Drawing.Size(1041, 242);
             this.throatDGV.TabIndex = 8;
             this.throatDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.throatDGV_CellContentClick);
             // 
             // throat
             // 
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.throat.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.throat.DefaultCellStyle = dataGridViewCellStyle21;
             this.throat.HeaderText = "";
             this.throat.Name = "throat";
             this.throat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1681,7 +1686,7 @@
             this.tabPage6.Controls.Add(this.othersDGV);
             this.tabPage6.Location = new System.Drawing.Point(4, 29);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1043, 242);
+            this.tabPage6.Size = new System.Drawing.Size(1041, 242);
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "Others";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1700,14 +1705,14 @@
             this.othersDGV.Margin = new System.Windows.Forms.Padding(0);
             this.othersDGV.Name = "othersDGV";
             this.othersDGV.RowHeadersWidth = 25;
-            this.othersDGV.Size = new System.Drawing.Size(1043, 242);
+            this.othersDGV.Size = new System.Drawing.Size(1041, 242);
             this.othersDGV.TabIndex = 8;
             this.othersDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.othersDGV_CellContentClick);
             // 
             // others
             // 
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.others.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.others.DefaultCellStyle = dataGridViewCellStyle22;
             this.others.HeaderText = "";
             this.others.Name = "others";
             this.others.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1720,7 +1725,7 @@
             this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(4, 1);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(1044, 36);
+            this.label3.Size = new System.Drawing.Size(1043, 36);
             this.label3.TabIndex = 0;
             this.label3.Text = "ENT Physical Examination and Findings";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1741,7 +1746,7 @@
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(1048, 218);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(1047, 218);
             this.tableLayoutPanel9.TabIndex = 2;
             this.tableLayoutPanel9.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel9_Paint);
             // 
@@ -1776,8 +1781,8 @@
             // 
             // diagnosis
             // 
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle23;
             this.diagnosis.HeaderText = "";
             this.diagnosis.Name = "diagnosis";
             this.diagnosis.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1803,7 +1808,7 @@
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.followUpTablePanel.Size = new System.Drawing.Size(214, 210);
+            this.followUpTablePanel.Size = new System.Drawing.Size(213, 210);
             this.followUpTablePanel.TabIndex = 2;
             this.followUpTablePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.followUpTablePanel_Paint);
             // 
@@ -1843,7 +1848,7 @@
             this.tableLayoutPanel15.Name = "tableLayoutPanel15";
             this.tableLayoutPanel15.RowCount = 1;
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(206, 31);
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(205, 31);
             this.tableLayoutPanel15.TabIndex = 6;
             // 
             // followUpDateTimePicker
@@ -1852,7 +1857,7 @@
             this.followUpDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.followUpDateTimePicker.Location = new System.Drawing.Point(89, 3);
             this.followUpDateTimePicker.Name = "followUpDateTimePicker";
-            this.followUpDateTimePicker.Size = new System.Drawing.Size(114, 26);
+            this.followUpDateTimePicker.Size = new System.Drawing.Size(113, 26);
             this.followUpDateTimePicker.TabIndex = 0;
             // 
             // label13
@@ -1878,7 +1883,7 @@
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 1;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(206, 45);
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(205, 45);
             this.tableLayoutPanel16.TabIndex = 8;
             // 
             // saveConsultationButton
@@ -1888,7 +1893,7 @@
             this.saveConsultationButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.saveConsultationButton.Location = new System.Drawing.Point(3, 3);
             this.saveConsultationButton.Name = "saveConsultationButton";
-            this.saveConsultationButton.Size = new System.Drawing.Size(200, 39);
+            this.saveConsultationButton.Size = new System.Drawing.Size(199, 39);
             this.saveConsultationButton.TabIndex = 1;
             this.saveConsultationButton.Text = "Save Consultation";
             this.saveConsultationButton.UseVisualStyleBackColor = false;
@@ -1899,7 +1904,7 @@
             this.noteRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.noteRichTextBox.Location = new System.Drawing.Point(4, 99);
             this.noteRichTextBox.Name = "noteRichTextBox";
-            this.noteRichTextBox.Size = new System.Drawing.Size(206, 55);
+            this.noteRichTextBox.Size = new System.Drawing.Size(205, 55);
             this.noteRichTextBox.TabIndex = 9;
             this.noteRichTextBox.Text = "";
             // 
@@ -1934,8 +1939,8 @@
             // 
             // recommendations
             // 
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recommendations.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recommendations.DefaultCellStyle = dataGridViewCellStyle24;
             this.recommendations.HeaderText = "";
             this.recommendations.Name = "recommendations";
             this.recommendations.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1953,7 +1958,7 @@
             this.tableLayoutPanel13.Controls.Add(this.imageFlowLayoutPanel, 0, 2);
             this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel26, 0, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(1552, 3);
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(1551, 3);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 5;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.306604F));
@@ -1961,7 +1966,7 @@
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.94948F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.13318F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.50287F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(325, 857);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(326, 857);
             this.tableLayoutPanel13.TabIndex = 2;
             this.tableLayoutPanel13.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel13_Paint);
             // 
@@ -1975,7 +1980,7 @@
             this.tableLayoutPanel14.Name = "tableLayoutPanel14";
             this.tableLayoutPanel14.RowCount = 1;
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(317, 25);
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(318, 25);
             this.tableLayoutPanel14.TabIndex = 7;
             this.tableLayoutPanel14.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel14_Paint);
             // 
@@ -1996,7 +2001,7 @@
             this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 665);
             this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
-            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(317, 188);
+            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(318, 188);
             this.videoFlowLayoutPanel.TabIndex = 6;
             // 
             // tableLayoutPanel17
@@ -2009,7 +2014,7 @@
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 1;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(317, 29);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(318, 29);
             this.tableLayoutPanel17.TabIndex = 5;
             // 
             // label5
@@ -2029,7 +2034,7 @@
             this.imageFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageFlowLayoutPanel.Location = new System.Drawing.Point(4, 82);
             this.imageFlowLayoutPanel.Name = "imageFlowLayoutPanel";
-            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(317, 540);
+            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(318, 540);
             this.imageFlowLayoutPanel.TabIndex = 4;
             // 
             // tableLayoutPanel26
@@ -2044,7 +2049,7 @@
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
             this.tableLayoutPanel26.RowCount = 1;
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel26.Size = new System.Drawing.Size(317, 39);
+            this.tableLayoutPanel26.Size = new System.Drawing.Size(318, 39);
             this.tableLayoutPanel26.TabIndex = 4;
             // 
             // label1
@@ -2067,7 +2072,7 @@
             this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(156, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(161, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(162, 39);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -2122,8 +2127,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle25;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -2168,6 +2173,87 @@
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(142, 39);
             this.miniToolStrip.TabIndex = 3;
+            // 
+            // history
+            // 
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.history.DefaultCellStyle = dataGridViewCellStyle26;
+            this.history.HeaderText = "";
+            this.history.Name = "history";
+            this.history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.history.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.maxillofacialDGV);
+            this.tabPage8.Location = new System.Drawing.Point(4, 29);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(1041, 242);
+            this.tabPage8.TabIndex = 4;
+            this.tabPage8.Text = "Maxillofacial";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.headNeckDGV);
+            this.tabPage9.Location = new System.Drawing.Point(4, 29);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Size = new System.Drawing.Size(1041, 242);
+            this.tabPage9.TabIndex = 5;
+            this.tabPage9.Text = "Head & Neck";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // maxillofacialDGV
+            // 
+            this.maxillofacialDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.maxillofacialDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.maxillofacialDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.maxillofacialDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.maxillofacialDGV.ColumnHeadersVisible = false;
+            this.maxillofacialDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn2});
+            this.maxillofacialDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.maxillofacialDGV.Location = new System.Drawing.Point(0, 0);
+            this.maxillofacialDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.maxillofacialDGV.Name = "maxillofacialDGV";
+            this.maxillofacialDGV.RowHeadersWidth = 25;
+            this.maxillofacialDGV.Size = new System.Drawing.Size(1041, 242);
+            this.maxillofacialDGV.TabIndex = 9;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle27;
+            this.dataGridViewTextBoxColumn2.HeaderText = "";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // headNeckDGV
+            // 
+            this.headNeckDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.headNeckDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.headNeckDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.headNeckDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.headNeckDGV.ColumnHeadersVisible = false;
+            this.headNeckDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn3});
+            this.headNeckDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.headNeckDGV.Location = new System.Drawing.Point(0, 0);
+            this.headNeckDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.headNeckDGV.Name = "headNeckDGV";
+            this.headNeckDGV.RowHeadersWidth = 25;
+            this.headNeckDGV.Size = new System.Drawing.Size(1041, 242);
+            this.headNeckDGV.TabIndex = 9;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle15;
+            this.dataGridViewTextBoxColumn3.HeaderText = "";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // ConsultationControl
             // 
@@ -2253,6 +2339,10 @@
             this.toolStrip1.PerformLayout();
             this.tableLayoutPanel18.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.maxillofacialDGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.headNeckDGV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2388,7 +2478,6 @@
         private System.Windows.Forms.DataGridView familyHistoryDGV;
         private System.Windows.Forms.DataGridViewTextBoxColumn family_history;
         private System.Windows.Forms.DataGridViewTextBoxColumn allergies;
-        private System.Windows.Forms.DataGridViewTextBoxColumn past_medical_history;
         private System.Windows.Forms.DataGridViewTextBoxColumn personal_social_history;
         private System.Windows.Forms.Label referedByLabel;
         private System.Windows.Forms.Label label6;
@@ -2407,5 +2496,12 @@
         private System.Windows.Forms.ToolStripMenuItem laboratoryResultsToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn history;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.DataGridView maxillofacialDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.DataGridView headNeckDGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }

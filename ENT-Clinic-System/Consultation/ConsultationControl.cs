@@ -194,7 +194,7 @@ namespace ENT_Clinic_System.UserControls
         private void LoadAutoComplete()
         {
             // Health Record Autocomplete (DGVs)
-            AutoCompleteDgvHelper.InitializeAutocompleteColumn(pastMedicalHistoryDGV, "past_medical_history", "past_medical_history");
+            AutoCompleteDgvHelper.InitializeAutocompleteColumn(pastMedicalHistoryDGV, "history", "history");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(allergiesDGV, "allergies", "allergies");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(familyHistoryDGV, "family_history", "family_history");
             AutoCompleteDgvHelper.InitializeAutocompleteColumn(personalSocialHistoryDGV, "personal_social_history", "personal_social_history");
@@ -210,7 +210,7 @@ namespace ENT_Clinic_System.UserControls
 
         private void SaveAutoComplete()
         {
-            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(pastMedicalHistoryDGV, "past_medical_history", "past_medical_history");
+            AutoCompleteDgvHelper.SaveAllAutocompleteEntries(pastMedicalHistoryDGV, "history", "history");
             AutoCompleteDgvHelper.SaveAllAutocompleteEntries(allergiesDGV, "allergies", "allergies");
             AutoCompleteDgvHelper.SaveAllAutocompleteEntries(familyHistoryDGV, "family_history", "family_history");
             AutoCompleteDgvHelper.SaveAllAutocompleteEntries(personalSocialHistoryDGV, "personal_social_history", "personal_social_history");

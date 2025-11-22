@@ -87,7 +87,7 @@ namespace ENT_Clinic_System.Helpers
 
                     foreach (var value in uniqueValues)
                     {
-                        string checkQuery = "SELECT COUNT(*) FROM autocomplete_entries WHERE column_name=@col AND UPPER(value)=@val";
+                        string checkQuery = "SELECT COUNT(*) FROM v_autocomplete_entries WHERE column_name=@col AND UPPER(value)=@val";
                         using (var checkCmd = new MySqlCommand(checkQuery, conn))
                         {
                             checkCmd.Parameters.AddWithValue("@col", entryColumnName);
@@ -96,7 +96,7 @@ namespace ENT_Clinic_System.Helpers
 
                             if (count == 0)
                             {
-                                string insertQuery = "INSERT INTO autocomplete_entries (column_name, value) VALUES (@col, @val)";
+                                string insertQuery = "INSERT INTO v_autocomplete_entries (column_name, value) VALUES (@col, @val)";
                                 using (var insertCmd = new MySqlCommand(insertQuery, conn))
                                 {
                                     insertCmd.Parameters.AddWithValue("@col", entryColumnName);
@@ -126,7 +126,7 @@ namespace ENT_Clinic_System.Helpers
                 using (var conn = DBConfig.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT DISTINCT UPPER(value) AS value FROM autocomplete_entries WHERE column_name=@col ORDER BY value ASC";
+                    string query = "SELECT DISTINCT UPPER(value) AS value FROM v_autocomplete_entries WHERE column_name=@col ORDER BY value ASC";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
