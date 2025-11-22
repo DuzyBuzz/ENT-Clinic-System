@@ -80,6 +80,7 @@ namespace ENT_Clinic_System.Helpers
                     dgv.AutoGenerateColumns = true;
                     dgv.DataSource = dt;
                 }
+
             }
             catch (Exception ex)
             {

@@ -30,20 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
@@ -117,20 +116,6 @@
             this.groupBox15 = new System.Windows.Forms.GroupBox();
             this.allergiesDGV = new System.Windows.Forms.DataGridView();
             this.allergies = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.consultationDateDataGridView = new System.Windows.Forms.DataGridView();
-            this.consultation_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.printAttachmentButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.medicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showPrescriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createPrescriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showPrescriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.laboratoryRequestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showLaboratoryRequestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.laboratoryResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -154,8 +139,10 @@
             this.throat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.maxillofacialDGV = new System.Windows.Forms.DataGridView();
+            this.maxillofacial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.headNeckDGV = new System.Windows.Forms.DataGridView();
+            this.head_and_neck = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.othersDGV = new System.Windows.Forms.DataGridView();
             this.others = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -196,8 +183,6 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
-            this.maxillofacial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.head_and_neck = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
@@ -220,9 +205,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.familyHistoryDGV)).BeginInit();
             this.groupBox15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.allergiesDGV)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).BeginInit();
-            this.consultationHistoryContextMenuStrip.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -559,7 +541,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.44781F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 68.55219F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 333F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 336F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel6, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel13, 2, 0);
@@ -570,6 +552,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1880, 863);
             this.tableLayoutPanel2.TabIndex = 0;
+            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
             // tableLayoutPanel3
             // 
@@ -583,20 +566,19 @@
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 853F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(478, 853);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(477, 853);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(478, 853);
+            this.tabControl1.Size = new System.Drawing.Size(477, 853);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -605,7 +587,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(470, 820);
+            this.tabPage1.Size = new System.Drawing.Size(469, 820);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
@@ -624,7 +606,7 @@
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.8076F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.907364F));
             this.tableLayoutPanel25.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.16627F));
-            this.tableLayoutPanel25.Size = new System.Drawing.Size(470, 820);
+            this.tableLayoutPanel25.Size = new System.Drawing.Size(469, 820);
             this.tableLayoutPanel25.TabIndex = 0;
             this.tableLayoutPanel25.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel25_Paint);
             // 
@@ -635,7 +617,7 @@
             this.groupBox3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(3, 575);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(464, 242);
+            this.groupBox3.Size = new System.Drawing.Size(463, 242);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Physical Examination";
@@ -680,7 +662,7 @@
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel10.Size = new System.Drawing.Size(458, 217);
+            this.tableLayoutPanel10.Size = new System.Drawing.Size(457, 217);
             this.tableLayoutPanel10.TabIndex = 0;
             this.tableLayoutPanel10.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel10_Paint);
             // 
@@ -692,7 +674,7 @@
             this.neurologicComboBox.Location = new System.Drawing.Point(273, 190);
             this.neurologicComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.neurologicComboBox.Name = "neurologicComboBox";
-            this.neurologicComboBox.Size = new System.Drawing.Size(184, 24);
+            this.neurologicComboBox.Size = new System.Drawing.Size(183, 24);
             this.neurologicComboBox.TabIndex = 28;
             this.neurologicComboBox.SelectedIndexChanged += new System.EventHandler(this.neurologicComboBox_SelectedIndexChanged);
             // 
@@ -704,7 +686,7 @@
             this.extremetiesComboBox.Location = new System.Drawing.Point(273, 169);
             this.extremetiesComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.extremetiesComboBox.Name = "extremetiesComboBox";
-            this.extremetiesComboBox.Size = new System.Drawing.Size(184, 24);
+            this.extremetiesComboBox.Size = new System.Drawing.Size(183, 24);
             this.extremetiesComboBox.TabIndex = 27;
             this.extremetiesComboBox.SelectedIndexChanged += new System.EventHandler(this.extremetiesComboBox_SelectedIndexChanged);
             // 
@@ -716,7 +698,7 @@
             this.abdomenComboBox.Location = new System.Drawing.Point(273, 148);
             this.abdomenComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.abdomenComboBox.Name = "abdomenComboBox";
-            this.abdomenComboBox.Size = new System.Drawing.Size(184, 24);
+            this.abdomenComboBox.Size = new System.Drawing.Size(183, 24);
             this.abdomenComboBox.TabIndex = 26;
             this.abdomenComboBox.SelectedIndexChanged += new System.EventHandler(this.abdomenComboBox_SelectedIndexChanged);
             // 
@@ -728,7 +710,7 @@
             this.heartComboBox.Location = new System.Drawing.Point(273, 127);
             this.heartComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.heartComboBox.Name = "heartComboBox";
-            this.heartComboBox.Size = new System.Drawing.Size(184, 24);
+            this.heartComboBox.Size = new System.Drawing.Size(183, 24);
             this.heartComboBox.TabIndex = 25;
             this.heartComboBox.SelectedIndexChanged += new System.EventHandler(this.heartComboBox_SelectedIndexChanged);
             // 
@@ -740,7 +722,7 @@
             this.chestLungsComboBox.Location = new System.Drawing.Point(273, 106);
             this.chestLungsComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.chestLungsComboBox.Name = "chestLungsComboBox";
-            this.chestLungsComboBox.Size = new System.Drawing.Size(184, 24);
+            this.chestLungsComboBox.Size = new System.Drawing.Size(183, 24);
             this.chestLungsComboBox.TabIndex = 24;
             this.chestLungsComboBox.SelectedIndexChanged += new System.EventHandler(this.chestLungsComboBox_SelectedIndexChanged);
             // 
@@ -752,7 +734,7 @@
             this.neckComboBox.Location = new System.Drawing.Point(273, 85);
             this.neckComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.neckComboBox.Name = "neckComboBox";
-            this.neckComboBox.Size = new System.Drawing.Size(184, 24);
+            this.neckComboBox.Size = new System.Drawing.Size(183, 24);
             this.neckComboBox.TabIndex = 23;
             this.neckComboBox.SelectedIndexChanged += new System.EventHandler(this.neckComboBox_SelectedIndexChanged);
             // 
@@ -765,7 +747,7 @@
             this.eyesComboBox.Location = new System.Drawing.Point(273, 64);
             this.eyesComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.eyesComboBox.Name = "eyesComboBox";
-            this.eyesComboBox.Size = new System.Drawing.Size(184, 24);
+            this.eyesComboBox.Size = new System.Drawing.Size(183, 24);
             this.eyesComboBox.TabIndex = 22;
             this.eyesComboBox.SelectedIndexChanged += new System.EventHandler(this.eyesComboBox_SelectedIndexChanged);
             // 
@@ -777,7 +759,7 @@
             this.headAndFaceComboBox.Location = new System.Drawing.Point(273, 43);
             this.headAndFaceComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.headAndFaceComboBox.Name = "headAndFaceComboBox";
-            this.headAndFaceComboBox.Size = new System.Drawing.Size(184, 24);
+            this.headAndFaceComboBox.Size = new System.Drawing.Size(183, 24);
             this.headAndFaceComboBox.TabIndex = 21;
             this.headAndFaceComboBox.SelectedIndexChanged += new System.EventHandler(this.headAndFaceComboBox_SelectedIndexChanged);
             // 
@@ -789,7 +771,7 @@
             this.skinComboBox.Location = new System.Drawing.Point(273, 22);
             this.skinComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.skinComboBox.Name = "skinComboBox";
-            this.skinComboBox.Size = new System.Drawing.Size(184, 24);
+            this.skinComboBox.Size = new System.Drawing.Size(183, 24);
             this.skinComboBox.TabIndex = 20;
             this.skinComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -921,7 +903,7 @@
             this.generalApperanceComboBox.Location = new System.Drawing.Point(273, 1);
             this.generalApperanceComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.generalApperanceComboBox.Name = "generalApperanceComboBox";
-            this.generalApperanceComboBox.Size = new System.Drawing.Size(184, 24);
+            this.generalApperanceComboBox.Size = new System.Drawing.Size(183, 24);
             this.generalApperanceComboBox.TabIndex = 19;
             this.generalApperanceComboBox.SelectedIndexChanged += new System.EventHandler(this.generalApperanceComboBox_SelectedIndexChanged);
             // 
@@ -933,7 +915,7 @@
             this.groupBox2.Location = new System.Drawing.Point(3, 502);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox2.Size = new System.Drawing.Size(464, 67);
+            this.groupBox2.Size = new System.Drawing.Size(463, 67);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Vital Signs";
@@ -966,17 +948,17 @@
             this.tableLayoutPanel29.RowCount = 2;
             this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel29.Size = new System.Drawing.Size(464, 48);
+            this.tableLayoutPanel29.Size = new System.Drawing.Size(463, 48);
             this.tableLayoutPanel29.TabIndex = 0;
             // 
             // wtTextBox
             // 
             this.wtTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.wtTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wtTextBox.Location = new System.Drawing.Point(366, 24);
+            this.wtTextBox.Location = new System.Drawing.Point(364, 24);
             this.wtTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.wtTextBox.Name = "wtTextBox";
-            this.wtTextBox.Size = new System.Drawing.Size(98, 22);
+            this.wtTextBox.Size = new System.Drawing.Size(99, 22);
             this.wtTextBox.TabIndex = 16;
             this.wtTextBox.TextChanged += new System.EventHandler(this.wtTextBox_TextChanged);
             // 
@@ -987,7 +969,7 @@
             this.htTextBox.Location = new System.Drawing.Point(191, 24);
             this.htTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.htTextBox.Name = "htTextBox";
-            this.htTextBox.Size = new System.Drawing.Size(93, 22);
+            this.htTextBox.Size = new System.Drawing.Size(92, 22);
             this.htTextBox.TabIndex = 15;
             this.htTextBox.TextChanged += new System.EventHandler(this.htTextBox_TextChanged);
             // 
@@ -1006,10 +988,10 @@
             // 
             this.prTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.prTextBox.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.prTextBox.Location = new System.Drawing.Point(366, 0);
+            this.prTextBox.Location = new System.Drawing.Point(364, 0);
             this.prTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.prTextBox.Name = "prTextBox";
-            this.prTextBox.Size = new System.Drawing.Size(98, 22);
+            this.prTextBox.Size = new System.Drawing.Size(99, 22);
             this.prTextBox.TabIndex = 13;
             this.prTextBox.TextChanged += new System.EventHandler(this.prTextBox_TextChanged);
             // 
@@ -1020,7 +1002,7 @@
             this.temperatureTextBox.Location = new System.Drawing.Point(191, 0);
             this.temperatureTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.temperatureTextBox.Name = "temperatureTextBox";
-            this.temperatureTextBox.Size = new System.Drawing.Size(93, 22);
+            this.temperatureTextBox.Size = new System.Drawing.Size(92, 22);
             this.temperatureTextBox.TabIndex = 12;
             this.temperatureTextBox.TextChanged += new System.EventHandler(this.temperatureTextBox_TextChanged);
             // 
@@ -1029,10 +1011,10 @@
             this.label35.AutoSize = true;
             this.label35.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label35.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label35.Location = new System.Drawing.Point(284, 24);
+            this.label35.Location = new System.Drawing.Point(283, 24);
             this.label35.Margin = new System.Windows.Forms.Padding(0);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(82, 24);
+            this.label35.Size = new System.Drawing.Size(81, 24);
             this.label35.TabIndex = 10;
             this.label35.Text = "Wt (lbs):";
             this.label35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1068,10 +1050,10 @@
             this.label28.AutoSize = true;
             this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label28.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(284, 0);
+            this.label28.Location = new System.Drawing.Point(283, 0);
             this.label28.Margin = new System.Windows.Forms.Padding(0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(82, 24);
+            this.label28.Size = new System.Drawing.Size(81, 24);
             this.label28.TabIndex = 4;
             this.label28.Text = "PR:";
             this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1131,18 +1113,17 @@
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(470, 499);
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(469, 499);
             this.tableLayoutPanel11.TabIndex = 3;
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.complaintsRichTextBox);
-            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(470, 124);
+            this.groupBox5.Size = new System.Drawing.Size(469, 124);
             this.groupBox5.TabIndex = 12;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Chief Complaints";
@@ -1153,7 +1134,7 @@
             this.complaintsRichTextBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.complaintsRichTextBox.Location = new System.Drawing.Point(3, 22);
             this.complaintsRichTextBox.Name = "complaintsRichTextBox";
-            this.complaintsRichTextBox.Size = new System.Drawing.Size(464, 99);
+            this.complaintsRichTextBox.Size = new System.Drawing.Size(463, 99);
             this.complaintsRichTextBox.TabIndex = 11;
             this.complaintsRichTextBox.Text = "";
             // 
@@ -1165,7 +1146,7 @@
             this.groupBox14.Location = new System.Drawing.Point(0, 372);
             this.groupBox14.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(470, 127);
+            this.groupBox14.Size = new System.Drawing.Size(469, 127);
             this.groupBox14.TabIndex = 15;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Personal/Social History";
@@ -1185,13 +1166,13 @@
             this.personalSocialHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
             this.personalSocialHistoryDGV.Name = "personalSocialHistoryDGV";
             this.personalSocialHistoryDGV.RowHeadersWidth = 25;
-            this.personalSocialHistoryDGV.Size = new System.Drawing.Size(464, 102);
+            this.personalSocialHistoryDGV.Size = new System.Drawing.Size(463, 102);
             this.personalSocialHistoryDGV.TabIndex = 9;
             // 
             // personal_social_history
             // 
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personal_social_history.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personal_social_history.DefaultCellStyle = dataGridViewCellStyle1;
             this.personal_social_history.HeaderText = "";
             this.personal_social_history.Name = "personal_social_history";
             this.personal_social_history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1205,7 +1186,7 @@
             this.groupBox13.Location = new System.Drawing.Point(0, 248);
             this.groupBox13.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(470, 124);
+            this.groupBox13.Size = new System.Drawing.Size(469, 124);
             this.groupBox13.TabIndex = 14;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Family History";
@@ -1224,13 +1205,13 @@
             this.familyHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
             this.familyHistoryDGV.Name = "familyHistoryDGV";
             this.familyHistoryDGV.RowHeadersWidth = 25;
-            this.familyHistoryDGV.Size = new System.Drawing.Size(464, 99);
+            this.familyHistoryDGV.Size = new System.Drawing.Size(463, 99);
             this.familyHistoryDGV.TabIndex = 9;
             // 
             // family_history
             // 
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.family_history.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.family_history.DefaultCellStyle = dataGridViewCellStyle2;
             this.family_history.HeaderText = "";
             this.family_history.Name = "family_history";
             this.family_history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1244,7 +1225,7 @@
             this.groupBox15.Location = new System.Drawing.Point(0, 124);
             this.groupBox15.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(470, 124);
+            this.groupBox15.Size = new System.Drawing.Size(469, 124);
             this.groupBox15.TabIndex = 16;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Allergies";
@@ -1264,154 +1245,25 @@
             this.allergiesDGV.Margin = new System.Windows.Forms.Padding(0);
             this.allergiesDGV.Name = "allergiesDGV";
             this.allergiesDGV.RowHeadersWidth = 25;
-            this.allergiesDGV.Size = new System.Drawing.Size(464, 99);
+            this.allergiesDGV.Size = new System.Drawing.Size(463, 99);
             this.allergiesDGV.TabIndex = 8;
             this.allergiesDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.allergiesDGV_CellContentClick);
             // 
             // allergies
             // 
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.allergies.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.allergies.DefaultCellStyle = dataGridViewCellStyle3;
             this.allergies.HeaderText = "";
             this.allergies.Name = "allergies";
             this.allergies.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.allergies.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.consultationDateDataGridView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(470, 820);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Visits";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // consultationDateDataGridView
-            // 
-            this.consultationDateDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.consultationDateDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle31;
-            this.consultationDateDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.consultationDateDataGridView.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.consultationDateDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.consultationDateDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.consultationDateDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.consultation_date});
-            this.consultationDateDataGridView.ContextMenuStrip = this.consultationHistoryContextMenuStrip;
-            this.consultationDateDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.consultationDateDataGridView.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.consultationDateDataGridView.Location = new System.Drawing.Point(3, 3);
-            this.consultationDateDataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.consultationDateDataGridView.Name = "consultationDateDataGridView";
-            this.consultationDateDataGridView.RowHeadersVisible = false;
-            this.consultationDateDataGridView.Size = new System.Drawing.Size(464, 814);
-            this.consultationDateDataGridView.TabIndex = 2;
-            this.consultationDateDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.consultationDateDataGridView_CellClick);
-            // 
-            // consultation_date
-            // 
-            this.consultation_date.DataPropertyName = "consultation_date";
-            this.consultation_date.HeaderText = "Consultation History";
-            this.consultation_date.Name = "consultation_date";
-            this.consultation_date.ReadOnly = true;
-            // 
-            // consultationHistoryContextMenuStrip
-            // 
-            this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.printConsultationHistoryButton,
-            this.printAttachmentButton,
-            this.medicalCertificateToolStripMenuItem,
-            this.showPrescriptionsToolStripMenuItem,
-            this.laboratoryRequestToolStripMenuItem1});
-            this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
-            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(184, 114);
-            // 
-            // printConsultationHistoryButton
-            // 
-            this.printConsultationHistoryButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.printConsultationHistoryButton.Name = "printConsultationHistoryButton";
-            this.printConsultationHistoryButton.Size = new System.Drawing.Size(183, 22);
-            this.printConsultationHistoryButton.Text = "Consultation History";
-            this.printConsultationHistoryButton.Click += new System.EventHandler(this.printConsultationHistoryButton_Click);
-            // 
-            // printAttachmentButton
-            // 
-            this.printAttachmentButton.Name = "printAttachmentButton";
-            this.printAttachmentButton.Size = new System.Drawing.Size(183, 22);
-            this.printAttachmentButton.Text = "Attachments";
-            this.printAttachmentButton.Click += new System.EventHandler(this.printAttachmentButton_Click);
-            // 
-            // medicalCertificateToolStripMenuItem
-            // 
-            this.medicalCertificateToolStripMenuItem.Name = "medicalCertificateToolStripMenuItem";
-            this.medicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.medicalCertificateToolStripMenuItem.Text = "Medical Certificate";
-            this.medicalCertificateToolStripMenuItem.Click += new System.EventHandler(this.medicalCertificateToolStripMenuItem_Click);
-            // 
-            // showPrescriptionsToolStripMenuItem
-            // 
-            this.showPrescriptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createPrescriptionToolStripMenuItem,
-            this.showPrescriptionToolStripMenuItem});
-            this.showPrescriptionsToolStripMenuItem.Name = "showPrescriptionsToolStripMenuItem";
-            this.showPrescriptionsToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.showPrescriptionsToolStripMenuItem.Text = "Prescriptions";
-            this.showPrescriptionsToolStripMenuItem.Click += new System.EventHandler(this.showPrescriptionsToolStripMenuItem_Click);
-            // 
-            // createPrescriptionToolStripMenuItem
-            // 
-            this.createPrescriptionToolStripMenuItem.Name = "createPrescriptionToolStripMenuItem";
-            this.createPrescriptionToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.createPrescriptionToolStripMenuItem.Text = "Create Prescription";
-            this.createPrescriptionToolStripMenuItem.Click += new System.EventHandler(this.createPrescriptionToolStripMenuItem_Click);
-            // 
-            // showPrescriptionToolStripMenuItem
-            // 
-            this.showPrescriptionToolStripMenuItem.Name = "showPrescriptionToolStripMenuItem";
-            this.showPrescriptionToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.showPrescriptionToolStripMenuItem.Text = "Show Prescription";
-            this.showPrescriptionToolStripMenuItem.Click += new System.EventHandler(this.showPrescriptionToolStripMenuItem_Click);
-            // 
-            // laboratoryRequestToolStripMenuItem1
-            // 
-            this.laboratoryRequestToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createToolStripMenuItem,
-            this.showLaboratoryRequestToolStripMenuItem,
-            this.laboratoryResultsToolStripMenuItem});
-            this.laboratoryRequestToolStripMenuItem1.Name = "laboratoryRequestToolStripMenuItem1";
-            this.laboratoryRequestToolStripMenuItem1.Size = new System.Drawing.Size(183, 22);
-            this.laboratoryRequestToolStripMenuItem1.Text = "Laboratory Request";
-            this.laboratoryRequestToolStripMenuItem1.Click += new System.EventHandler(this.laboratoryRequestToolStripMenuItem1_Click);
-            // 
-            // createToolStripMenuItem
-            // 
-            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.createToolStripMenuItem.Text = "Create Laboratory Request";
-            this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
-            // 
-            // showLaboratoryRequestToolStripMenuItem
-            // 
-            this.showLaboratoryRequestToolStripMenuItem.Name = "showLaboratoryRequestToolStripMenuItem";
-            this.showLaboratoryRequestToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.showLaboratoryRequestToolStripMenuItem.Text = "Show Laboratory Request";
-            this.showLaboratoryRequestToolStripMenuItem.Click += new System.EventHandler(this.showLaboratoryRequestToolStripMenuItem_Click);
-            // 
-            // laboratoryResultsToolStripMenuItem
-            // 
-            this.laboratoryResultsToolStripMenuItem.Name = "laboratoryResultsToolStripMenuItem";
-            this.laboratoryResultsToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.laboratoryResultsToolStripMenuItem.Text = "Laboratory Results";
-            this.laboratoryResultsToolStripMenuItem.Click += new System.EventHandler(this.laboratoryResultsToolStripMenuItem_Click);
             // 
             // tabPage7
             // 
             this.tabPage7.Controls.Add(this.panel1);
             this.tabPage7.Location = new System.Drawing.Point(4, 29);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(470, 820);
+            this.tabPage7.Size = new System.Drawing.Size(469, 820);
             this.tabPage7.TabIndex = 2;
             this.tabPage7.Text = "Consultation History";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1421,7 +1273,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(470, 820);
+            this.panel1.Size = new System.Drawing.Size(469, 820);
             this.panel1.TabIndex = 0;
             // 
             // tableLayoutPanel6
@@ -1433,12 +1285,12 @@
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel9, 0, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(489, 3);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(488, 3);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.83721F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.16279F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1054, 857);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1052, 857);
             this.tableLayoutPanel6.TabIndex = 1;
             this.tableLayoutPanel6.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel6_Paint);
             // 
@@ -1456,7 +1308,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1052, 630);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1050, 630);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // tableLayoutPanel7
@@ -1472,7 +1324,7 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1050, 313);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1048, 313);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
             // groupBox4
@@ -1483,7 +1335,7 @@
             this.groupBox4.Location = new System.Drawing.Point(3, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox4.Size = new System.Drawing.Size(520, 307);
+            this.groupBox4.Size = new System.Drawing.Size(519, 307);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Recent Illness";
@@ -1495,7 +1347,7 @@
             this.recentIllnessRichTextBox.Location = new System.Drawing.Point(0, 19);
             this.recentIllnessRichTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.recentIllnessRichTextBox.Name = "recentIllnessRichTextBox";
-            this.recentIllnessRichTextBox.Size = new System.Drawing.Size(520, 288);
+            this.recentIllnessRichTextBox.Size = new System.Drawing.Size(519, 288);
             this.recentIllnessRichTextBox.TabIndex = 12;
             this.recentIllnessRichTextBox.Text = "";
             // 
@@ -1504,10 +1356,10 @@
             this.groupBox9.Controls.Add(this.pastMedicalHistoryDGV);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox9.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox9.Location = new System.Drawing.Point(529, 3);
+            this.groupBox9.Location = new System.Drawing.Point(528, 3);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox9.Size = new System.Drawing.Size(518, 307);
+            this.groupBox9.Size = new System.Drawing.Size(517, 307);
             this.groupBox9.TabIndex = 13;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Past Medical History";
@@ -1527,14 +1379,14 @@
             this.pastMedicalHistoryDGV.Margin = new System.Windows.Forms.Padding(0);
             this.pastMedicalHistoryDGV.Name = "pastMedicalHistoryDGV";
             this.pastMedicalHistoryDGV.RowHeadersWidth = 25;
-            this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(518, 288);
+            this.pastMedicalHistoryDGV.Size = new System.Drawing.Size(517, 288);
             this.pastMedicalHistoryDGV.TabIndex = 8;
             this.pastMedicalHistoryDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.pastMedicalHistoryDGV_CellContentClick);
             // 
             // history
             // 
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.history.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.history.DefaultCellStyle = dataGridViewCellStyle4;
             this.history.HeaderText = "";
             this.history.Name = "history";
             this.history.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1555,7 +1407,7 @@
             this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.61049F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.38951F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(1050, 314);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(1048, 314);
             this.tableLayoutPanel8.TabIndex = 2;
             // 
             // entTabControl
@@ -1573,7 +1425,7 @@
             this.entTabControl.Multiline = true;
             this.entTabControl.Name = "entTabControl";
             this.entTabControl.SelectedIndex = 0;
-            this.entTabControl.Size = new System.Drawing.Size(1048, 275);
+            this.entTabControl.Size = new System.Drawing.Size(1046, 275);
             this.entTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.entTabControl.TabIndex = 4;
             this.entTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.entTabControl_DrawItem);
@@ -1584,7 +1436,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1040, 242);
+            this.tabPage3.Size = new System.Drawing.Size(1038, 242);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Ears";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1603,14 +1455,14 @@
             this.earsDGV.Margin = new System.Windows.Forms.Padding(0);
             this.earsDGV.Name = "earsDGV";
             this.earsDGV.RowHeadersWidth = 25;
-            this.earsDGV.Size = new System.Drawing.Size(1040, 242);
+            this.earsDGV.Size = new System.Drawing.Size(1038, 242);
             this.earsDGV.TabIndex = 8;
             this.earsDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.earsDGV_CellContentClick);
             // 
             // ears
             // 
-            dataGridViewCellStyle32.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ears.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ears.DefaultCellStyle = dataGridViewCellStyle5;
             this.ears.HeaderText = "";
             this.ears.Name = "ears";
             this.ears.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1622,7 +1474,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 29);
             this.tabPage4.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1041, 242);
+            this.tabPage4.Size = new System.Drawing.Size(1039, 242);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Nose";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1641,14 +1493,14 @@
             this.noseDGV.Margin = new System.Windows.Forms.Padding(0);
             this.noseDGV.Name = "noseDGV";
             this.noseDGV.RowHeadersWidth = 25;
-            this.noseDGV.Size = new System.Drawing.Size(1041, 242);
+            this.noseDGV.Size = new System.Drawing.Size(1039, 242);
             this.noseDGV.TabIndex = 8;
             this.noseDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.noseDGV_CellContentClick);
             // 
             // nose
             // 
-            dataGridViewCellStyle33.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nose.DefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nose.DefaultCellStyle = dataGridViewCellStyle6;
             this.nose.HeaderText = "";
             this.nose.Name = "nose";
             this.nose.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1659,7 +1511,7 @@
             this.tabPage5.Controls.Add(this.throatDGV);
             this.tabPage5.Location = new System.Drawing.Point(4, 29);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(1041, 242);
+            this.tabPage5.Size = new System.Drawing.Size(1039, 242);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Throat";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1678,14 +1530,14 @@
             this.throatDGV.Margin = new System.Windows.Forms.Padding(0);
             this.throatDGV.Name = "throatDGV";
             this.throatDGV.RowHeadersWidth = 25;
-            this.throatDGV.Size = new System.Drawing.Size(1041, 242);
+            this.throatDGV.Size = new System.Drawing.Size(1039, 242);
             this.throatDGV.TabIndex = 8;
             this.throatDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.throatDGV_CellContentClick);
             // 
             // throat
             // 
-            dataGridViewCellStyle34.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.throat.DefaultCellStyle = dataGridViewCellStyle34;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.throat.DefaultCellStyle = dataGridViewCellStyle7;
             this.throat.HeaderText = "";
             this.throat.Name = "throat";
             this.throat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1696,7 +1548,7 @@
             this.tabPage8.Controls.Add(this.maxillofacialDGV);
             this.tabPage8.Location = new System.Drawing.Point(4, 29);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(1040, 242);
+            this.tabPage8.Size = new System.Drawing.Size(1039, 242);
             this.tabPage8.TabIndex = 4;
             this.tabPage8.Text = "Maxillofacial";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1715,15 +1567,24 @@
             this.maxillofacialDGV.Margin = new System.Windows.Forms.Padding(0);
             this.maxillofacialDGV.Name = "maxillofacialDGV";
             this.maxillofacialDGV.RowHeadersWidth = 25;
-            this.maxillofacialDGV.Size = new System.Drawing.Size(1040, 242);
+            this.maxillofacialDGV.Size = new System.Drawing.Size(1039, 242);
             this.maxillofacialDGV.TabIndex = 9;
+            // 
+            // maxillofacial
+            // 
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.maxillofacial.DefaultCellStyle = dataGridViewCellStyle8;
+            this.maxillofacial.HeaderText = "";
+            this.maxillofacial.Name = "maxillofacial";
+            this.maxillofacial.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.maxillofacial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // tabPage9
             // 
             this.tabPage9.Controls.Add(this.headNeckDGV);
             this.tabPage9.Location = new System.Drawing.Point(4, 29);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(1040, 242);
+            this.tabPage9.Size = new System.Drawing.Size(1039, 242);
             this.tabPage9.TabIndex = 5;
             this.tabPage9.Text = "Head & Neck";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1742,15 +1603,24 @@
             this.headNeckDGV.Margin = new System.Windows.Forms.Padding(0);
             this.headNeckDGV.Name = "headNeckDGV";
             this.headNeckDGV.RowHeadersWidth = 25;
-            this.headNeckDGV.Size = new System.Drawing.Size(1040, 242);
+            this.headNeckDGV.Size = new System.Drawing.Size(1039, 242);
             this.headNeckDGV.TabIndex = 9;
+            // 
+            // head_and_neck
+            // 
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.head_and_neck.DefaultCellStyle = dataGridViewCellStyle9;
+            this.head_and_neck.HeaderText = "";
+            this.head_and_neck.Name = "head_and_neck";
+            this.head_and_neck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.head_and_neck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.othersDGV);
             this.tabPage6.Location = new System.Drawing.Point(4, 29);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1040, 242);
+            this.tabPage6.Size = new System.Drawing.Size(1039, 242);
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "Others";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1769,14 +1639,14 @@
             this.othersDGV.Margin = new System.Windows.Forms.Padding(0);
             this.othersDGV.Name = "othersDGV";
             this.othersDGV.RowHeadersWidth = 25;
-            this.othersDGV.Size = new System.Drawing.Size(1040, 242);
+            this.othersDGV.Size = new System.Drawing.Size(1039, 242);
             this.othersDGV.TabIndex = 8;
             this.othersDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.othersDGV_CellContentClick);
             // 
             // others
             // 
-            dataGridViewCellStyle35.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.others.DefaultCellStyle = dataGridViewCellStyle35;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.others.DefaultCellStyle = dataGridViewCellStyle10;
             this.others.HeaderText = "";
             this.others.Name = "others";
             this.others.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1789,7 +1659,7 @@
             this.label3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(4, 1);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(1042, 36);
+            this.label3.Size = new System.Drawing.Size(1040, 36);
             this.label3.TabIndex = 0;
             this.label3.Text = "ENT Physical Examination and Findings";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1810,7 +1680,7 @@
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.RowCount = 1;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel9.Size = new System.Drawing.Size(1046, 218);
+            this.tableLayoutPanel9.Size = new System.Drawing.Size(1044, 218);
             this.tableLayoutPanel9.TabIndex = 2;
             this.tableLayoutPanel9.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel9_Paint);
             // 
@@ -1845,8 +1715,8 @@
             // 
             // diagnosis
             // 
-            dataGridViewCellStyle36.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle36;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.diagnosis.DefaultCellStyle = dataGridViewCellStyle11;
             this.diagnosis.HeaderText = "";
             this.diagnosis.Name = "diagnosis";
             this.diagnosis.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1872,7 +1742,7 @@
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
             this.followUpTablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.followUpTablePanel.Size = new System.Drawing.Size(214, 210);
+            this.followUpTablePanel.Size = new System.Drawing.Size(212, 210);
             this.followUpTablePanel.TabIndex = 2;
             this.followUpTablePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.followUpTablePanel_Paint);
             // 
@@ -1912,16 +1782,16 @@
             this.tableLayoutPanel15.Name = "tableLayoutPanel15";
             this.tableLayoutPanel15.RowCount = 1;
             this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel15.Size = new System.Drawing.Size(206, 31);
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(204, 31);
             this.tableLayoutPanel15.TabIndex = 6;
             // 
             // followUpDateTimePicker
             // 
             this.followUpDateTimePicker.Dock = System.Windows.Forms.DockStyle.Fill;
             this.followUpDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.followUpDateTimePicker.Location = new System.Drawing.Point(89, 3);
+            this.followUpDateTimePicker.Location = new System.Drawing.Point(88, 3);
             this.followUpDateTimePicker.Name = "followUpDateTimePicker";
-            this.followUpDateTimePicker.Size = new System.Drawing.Size(114, 26);
+            this.followUpDateTimePicker.Size = new System.Drawing.Size(113, 26);
             this.followUpDateTimePicker.TabIndex = 0;
             // 
             // label13
@@ -1947,7 +1817,7 @@
             this.tableLayoutPanel16.Name = "tableLayoutPanel16";
             this.tableLayoutPanel16.RowCount = 1;
             this.tableLayoutPanel16.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel16.Size = new System.Drawing.Size(206, 45);
+            this.tableLayoutPanel16.Size = new System.Drawing.Size(204, 45);
             this.tableLayoutPanel16.TabIndex = 8;
             // 
             // saveConsultationButton
@@ -1957,7 +1827,7 @@
             this.saveConsultationButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.saveConsultationButton.Location = new System.Drawing.Point(3, 3);
             this.saveConsultationButton.Name = "saveConsultationButton";
-            this.saveConsultationButton.Size = new System.Drawing.Size(200, 39);
+            this.saveConsultationButton.Size = new System.Drawing.Size(198, 39);
             this.saveConsultationButton.TabIndex = 1;
             this.saveConsultationButton.Text = "Save Consultation";
             this.saveConsultationButton.UseVisualStyleBackColor = false;
@@ -1968,7 +1838,7 @@
             this.noteRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.noteRichTextBox.Location = new System.Drawing.Point(4, 99);
             this.noteRichTextBox.Name = "noteRichTextBox";
-            this.noteRichTextBox.Size = new System.Drawing.Size(206, 55);
+            this.noteRichTextBox.Size = new System.Drawing.Size(204, 55);
             this.noteRichTextBox.TabIndex = 9;
             this.noteRichTextBox.Text = "";
             // 
@@ -2003,8 +1873,8 @@
             // 
             // recommendations
             // 
-            dataGridViewCellStyle37.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recommendations.DefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recommendations.DefaultCellStyle = dataGridViewCellStyle12;
             this.recommendations.HeaderText = "";
             this.recommendations.Name = "recommendations";
             this.recommendations.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -2022,7 +1892,7 @@
             this.tableLayoutPanel13.Controls.Add(this.imageFlowLayoutPanel, 0, 2);
             this.tableLayoutPanel13.Controls.Add(this.tableLayoutPanel26, 0, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(1549, 3);
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(1546, 3);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 5;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.306604F));
@@ -2030,7 +1900,7 @@
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 63.94948F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.13318F));
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.50287F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(328, 857);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(331, 857);
             this.tableLayoutPanel13.TabIndex = 2;
             this.tableLayoutPanel13.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel13_Paint);
             // 
@@ -2044,7 +1914,7 @@
             this.tableLayoutPanel14.Name = "tableLayoutPanel14";
             this.tableLayoutPanel14.RowCount = 1;
             this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(320, 25);
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(323, 25);
             this.tableLayoutPanel14.TabIndex = 7;
             this.tableLayoutPanel14.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel14_Paint);
             // 
@@ -2065,7 +1935,7 @@
             this.videoFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.videoFlowLayoutPanel.Location = new System.Drawing.Point(4, 665);
             this.videoFlowLayoutPanel.Name = "videoFlowLayoutPanel";
-            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(320, 188);
+            this.videoFlowLayoutPanel.Size = new System.Drawing.Size(323, 188);
             this.videoFlowLayoutPanel.TabIndex = 6;
             // 
             // tableLayoutPanel17
@@ -2078,7 +1948,7 @@
             this.tableLayoutPanel17.Name = "tableLayoutPanel17";
             this.tableLayoutPanel17.RowCount = 1;
             this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(320, 29);
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(323, 29);
             this.tableLayoutPanel17.TabIndex = 5;
             // 
             // label5
@@ -2098,7 +1968,7 @@
             this.imageFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imageFlowLayoutPanel.Location = new System.Drawing.Point(4, 82);
             this.imageFlowLayoutPanel.Name = "imageFlowLayoutPanel";
-            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(320, 540);
+            this.imageFlowLayoutPanel.Size = new System.Drawing.Size(323, 540);
             this.imageFlowLayoutPanel.TabIndex = 4;
             // 
             // tableLayoutPanel26
@@ -2113,7 +1983,7 @@
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
             this.tableLayoutPanel26.RowCount = 1;
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel26.Size = new System.Drawing.Size(320, 39);
+            this.tableLayoutPanel26.Size = new System.Drawing.Size(323, 39);
             this.tableLayoutPanel26.TabIndex = 4;
             // 
             // label1
@@ -2134,9 +2004,9 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.toolStripButton2});
-            this.toolStrip1.Location = new System.Drawing.Point(157, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(159, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(163, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(164, 39);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -2191,8 +2061,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -2238,24 +2108,6 @@
             this.miniToolStrip.Size = new System.Drawing.Size(142, 39);
             this.miniToolStrip.TabIndex = 3;
             // 
-            // maxillofacial
-            // 
-            dataGridViewCellStyle39.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maxillofacial.DefaultCellStyle = dataGridViewCellStyle39;
-            this.maxillofacial.HeaderText = "";
-            this.maxillofacial.Name = "maxillofacial";
-            this.maxillofacial.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.maxillofacial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // head_and_neck
-            // 
-            dataGridViewCellStyle40.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.head_and_neck.DefaultCellStyle = dataGridViewCellStyle40;
-            this.head_and_neck.HeaderText = "";
-            this.head_and_neck.Name = "head_and_neck";
-            this.head_and_neck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.head_and_neck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // ConsultationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -2298,9 +2150,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.familyHistoryDGV)).EndInit();
             this.groupBox15.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.allergiesDGV)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).EndInit();
-            this.consultationHistoryContextMenuStrip.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
@@ -2357,9 +2206,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.ContextMenuStrip consultationHistoryContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem printConsultationHistoryButton;
-        private System.Windows.Forms.ToolStripMenuItem printAttachmentButton;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.PictureBox patientProfilePictureBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel23;
@@ -2382,9 +2228,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        public System.Windows.Forms.DataGridView consultationDateDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn consultation_date;
         private System.Windows.Forms.TableLayoutPanel followUpTablePanel;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox followUpCheckBox;
@@ -2453,8 +2296,6 @@
         private System.Windows.Forms.ComboBox eyesComboBox;
         private System.Windows.Forms.ComboBox skinComboBox;
         private System.Windows.Forms.ComboBox generalApperanceComboBox;
-        private System.Windows.Forms.ToolStripMenuItem showPrescriptionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem laboratoryRequestToolStripMenuItem1;
         private System.Windows.Forms.RichTextBox complaintsRichTextBox;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox9;
@@ -2483,12 +2324,6 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.ToolStripMenuItem createPrescriptionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showPrescriptionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem medicalCertificateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showLaboratoryRequestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem laboratoryResultsToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridViewTextBoxColumn history;

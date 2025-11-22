@@ -15,7 +15,7 @@ using CommonDialog = WIA.CommonDialog; // ✅ alias for scanner dialog
 
 namespace ENT_Clinic_System.PrintingForms
 {
-    public partial class LabResultsForm : Form
+    public partial class LabResultsForm : UserControl
     {
         private int consultationId;
         private int patientId;

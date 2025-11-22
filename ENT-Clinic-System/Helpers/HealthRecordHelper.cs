@@ -60,7 +60,7 @@ namespace ENT_Clinic_System.Helpers
                                     extremities=@extremities, neurologic=@neurologic,
                                     updated_at=NOW()
                                WHERE patient_id=@patientId"
-                            : @"INSERT INTO health_record (
+                            : @"INSERT INTO health_record_history (
                                     patient_id, bp, temperature, pr, rr, ht, wt,
                                     past_medical_history, allergies, family_history, personal_social_history,
                                     general_appearance, skin, head_and_face, eyes, neck,

@@ -150,6 +150,7 @@
             // datePicker
             // 
             this.datePicker.Dock = System.Windows.Forms.DockStyle.Left;
+            this.datePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.datePicker.Location = new System.Drawing.Point(1035, 3);
             this.datePicker.Name = "datePicker";
             this.datePicker.Size = new System.Drawing.Size(200, 20);
@@ -158,7 +159,8 @@
             // selectAllButton
             // 
             this.selectAllButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.selectAllButton.Location = new System.Drawing.Point(319, 3);
+            this.selectAllButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.selectAllButton.Location = new System.Drawing.Point(317, 3);
             this.selectAllButton.Name = "selectAllButton";
             this.selectAllButton.Size = new System.Drawing.Size(120, 31);
             this.selectAllButton.TabIndex = 9;
@@ -168,7 +170,8 @@
             // deselectAllButton
             // 
             this.deselectAllButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.deselectAllButton.Location = new System.Drawing.Point(575, 3);
+            this.deselectAllButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.deselectAllButton.Location = new System.Drawing.Point(572, 3);
             this.deselectAllButton.Name = "deselectAllButton";
             this.deselectAllButton.Size = new System.Drawing.Size(105, 31);
             this.deselectAllButton.TabIndex = 10;
@@ -177,7 +180,8 @@
             // refreshButton
             // 
             this.refreshButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.refreshButton.Location = new System.Drawing.Point(449, 3);
+            this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.refreshButton.Location = new System.Drawing.Point(446, 3);
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Size = new System.Drawing.Size(120, 31);
             this.refreshButton.TabIndex = 11;
@@ -253,6 +257,7 @@
             // saveRequestButton
             // 
             this.saveRequestButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.saveRequestButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.saveRequestButton.Location = new System.Drawing.Point(724, 3);
             this.saveRequestButton.Name = "saveRequestButton";
             this.saveRequestButton.Size = new System.Drawing.Size(150, 31);
@@ -263,6 +268,7 @@
             // addTestsButton
             // 
             this.addTestsButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.addTestsButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.addTestsButton.Location = new System.Drawing.Point(547, 29);
             this.addTestsButton.Name = "addTestsButton";
             this.addTestsButton.Size = new System.Drawing.Size(100, 26);
@@ -369,7 +375,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 77.30376F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22.69625F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 196F));
             this.tableLayoutPanel1.Controls.Add(this.refreshButton, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.deselectAllButton, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.saveRequestButton, 3, 0);

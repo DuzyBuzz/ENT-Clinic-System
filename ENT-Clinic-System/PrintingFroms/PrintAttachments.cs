@@ -9,7 +9,7 @@ using ENT_Clinic_System.Helpers;
 
 namespace ENT_Clinic_System.Consultation
 {
-    public partial class PrintAttachments : Form
+    public partial class PrintAttachments : UserControl
     {
         private int consultationId;
         private int patientId;
@@ -62,7 +62,6 @@ namespace ENT_Clinic_System.Consultation
                             else
                             {
                                 MessageBox.Show("Consultation not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                this.Close();
                             }
                         }
                     }
@@ -73,7 +72,6 @@ namespace ENT_Clinic_System.Consultation
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading patient info: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
             }
         }
 

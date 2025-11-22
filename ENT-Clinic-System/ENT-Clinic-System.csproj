@@ -213,6 +213,12 @@
     <Compile Include="Consultation\BillingForm.Designer.cs">
       <DependentUpon>BillingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Consultation\ConsultationHistoryControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Consultation\ConsultationHistoryControl.Designer.cs">
+      <DependentUpon>ConsultationHistoryControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\SQLBackupHelper.cs" />
     <Compile Include="Helpers\WaterMarkHelper_lic.cs" />
     <Compile Include="PrintingFroms\AdmitingOrdersPrintHelper.cs" />
@@ -414,7 +420,7 @@
     <Compile Include="PrintingFroms\BillingPrinter.cs" />
     <Compile Include="PrintingFroms\LabRequestPrintHelper.cs" />
     <Compile Include="PrintingFroms\LabResultsForm.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PrintingFroms\LabResultsForm.Designer.cs">
       <DependentUpon>LabResultsForm.cs</DependentUpon>
@@ -461,7 +467,7 @@
     <Compile Include="PrintingFroms\InvoicePrinter.cs" />
     <Compile Include="PrintingFroms\PrescriptionPrintHelper.cs" />
     <Compile Include="PrintingFroms\PrintAttachments.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PrintingFroms\PrintAttachments.Designer.cs">
       <DependentUpon>PrintAttachments.cs</DependentUpon>
@@ -590,6 +596,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Consultation\BillingForm.resx">
       <DependentUpon>BillingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Consultation\ConsultationHistoryControl.resx">
+      <DependentUpon>ConsultationHistoryControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Consultation\PrescriptionNoteForm .resx">
       <DependentUpon>PrescriptionNoteForm .cs</DependentUpon>

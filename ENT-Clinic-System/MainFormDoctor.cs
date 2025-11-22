@@ -2,7 +2,6 @@
 using ENT_Clinic_System.Admission;
 using ENT_Clinic_System.Consultation;
 using ENT_Clinic_System.Helpers;
-using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.Helpers.ReportHelpers;
 using ENT_Clinic_System.InsertForms;
 using ENT_Clinic_System.Inventory;
@@ -70,7 +69,7 @@ namespace ENT_Clinic_System
 
 
 
-        private void LoadUserControl(UserControl uc)
+        public void LoadUserControl(UserControl uc)
         {
             MainPanel.Controls.Clear();     
             uc.Dock = DockStyle.Fill;       
@@ -166,6 +165,7 @@ namespace ENT_Clinic_System
 
         private void MainFormReceptionist_FormClosing(object sender, FormClosingEventArgs e)
         {
+            this.Hide();
             BackupSql();
             Application.Exit();
 

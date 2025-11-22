@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.Helpers
@@ -840,12 +841,120 @@ namespace ENT_Clinic_System.Helpers
         {
             if (e.Button == MouseButtons.Right && e.RowIndex >= 0)
             {
-                dgv.ClearSelection();
-                dgv.Rows[e.RowIndex].Selected = true;
+                // Check if the row is fully selected
+                bool rowFullySelected = dgv.Rows[e.RowIndex].Selected &&
+                                        dgv.SelectedRows.Count == 1;
+
+                if (!rowFullySelected)
+                {
+                    // Prevent context menu when row is not fully selected
+                    return;
+                }
+
+                // Allow Delete menu only if full row is selected
                 dgvContextMenu.Show(Cursor.Position);
-                dgvContextMenu.Tag = e.RowIndex; // store row index in Tag
+                dgvContextMenu.Tag = e.RowIndex;
             }
         }
+        /// <summary>
+        /// Loads rows from any table filtered by any column.
+        /// Fills the target DataGridView with the results.
+        /// </summary>
+        /// <param name="dgv">DataGridView to populate</param>
+        /// <param name="tableName">Name of the database table</param>
+        /// <param name="columnName">Name of the column used for WHERE filtering</param>
+        /// <param name="value">Value to filter (ex: consultation_id = 1)</param>
+        /// <summary>
+        /// Instance version: load rows filtered by a column and enable CRUD operations
+        /// (updates will be applied to the helper's configured baseTableName).
+        /// </summary>
+        public void LoadRowsByColumn(string tableOrViewName, string columnName, object value)
+        {
+            if (string.IsNullOrWhiteSpace(tableOrViewName)) throw new ArgumentException("tableOrViewName required", nameof(tableOrViewName));
+            if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentException("columnName required", nameof(columnName));
+            if (value == null) throw new ArgumentNullException(nameof(value));
+
+            // Basic safety for names to avoid injection via table/column identifiers
+            var safeNamePattern = @"^[A-Za-z0-9_]+$";
+            if (!Regex.IsMatch(tableOrViewName, safeNamePattern))
+                throw new ArgumentException("Invalid table/view name format.", nameof(tableOrViewName));
+            if (!Regex.IsMatch(columnName, safeNamePattern))
+                throw new ArgumentException("Invalid column name format.", nameof(columnName));
+
+            try
+            {
+                string sql = $"SELECT * FROM `{tableOrViewName}` WHERE `{columnName}` = @value";
+
+                using (var conn = DBConfig.GetConnection())
+                using (var cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@value", value);
+
+                    using (var adapter = new MySqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+
+                        // bind
+                        dgv.AutoGenerateColumns = true;
+                        dgv.DataSource = dt;
+
+                        // visual / behavior settings for CRUD
+                        dgv.AllowUserToAddRows = false;            // adding through form instead of DGV
+                        dgv.AllowUserToDeleteRows = true;          // delete handled by UserDeletingRow or context menu
+                        dgv.ReadOnly = false;                      // allow editing, but we'll mark specific columns readonly below
+                        dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                        dgv.MultiSelect = false;
+                        dgv.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
+
+                        // Prevent SortMode conflict when SelectionMode = FullColumnSelect/FullRowSelect
+                        foreach (DataGridViewColumn col in dgv.Columns)
+                        {
+                            col.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                            // Determine data property name (the actual column name in DataTable)
+                            string dataName = string.IsNullOrWhiteSpace(col.DataPropertyName) ? col.Name : col.DataPropertyName;
+
+                            // Primary key should be read-only (and optionally hidden)
+                            if (string.Equals(dataName, primaryKeyColumn, StringComparison.OrdinalIgnoreCase))
+                            {
+                                col.ReadOnly = true;
+                                // If you prefer to hide the PK column, uncomment next line:
+                                // col.Visible = false;
+                                continue;
+                            }
+
+                            // Only columns that exist in the base table (editableColumns) are editable
+                            if (editableColumns != null && editableColumns.Count > 0)
+                            {
+                                col.ReadOnly = !editableColumns.Contains(dataName);
+                            }
+                            else
+                            {
+                                // If we couldn't load editableColumns (permissions error), be conservative and make columns read-only
+                                col.ReadOnly = true;
+                            }
+                        }
+
+                        // If primary key is not present in the result, warn (updates/deletes will fail)
+                        if (!dt.Columns.Contains(primaryKeyColumn))
+                        {
+                            // keep UI responsive but inform developer
+                            // you might want to hide edit/delete features in UI when PK missing
+                            Console.WriteLine($"Warning: result does not contain primary key column '{primaryKeyColumn}'. Updates/deletes will not work.");
+                        }
+
+                        UpdatePageInfoLabel();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load data: " + ex.Message, "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         private void DgvContextMenu_DeleteClick(object sender, EventArgs e)
         {
             if (dgvContextMenu.Tag is int rowIndex)

@@ -24,7 +24,6 @@ namespace ENT_Clinic_System.PrintingForms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LabResultsForm));
             this.dgvLabResults = new System.Windows.Forms.DataGridView();
             this.result_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +54,7 @@ namespace ENT_Clinic_System.PrintingForms
             this.dgvLabResults.AllowUserToAddRows = false;
             this.dgvLabResults.AllowUserToDeleteRows = false;
             this.dgvLabResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvLabResults.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvLabResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLabResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.result_id,
@@ -68,7 +68,7 @@ namespace ENT_Clinic_System.PrintingForms
             this.dgvLabResults.Name = "dgvLabResults";
             this.dgvLabResults.ReadOnly = true;
             this.dgvLabResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvLabResults.Size = new System.Drawing.Size(1100, 200);
+            this.dgvLabResults.Size = new System.Drawing.Size(1623, 200);
             this.dgvLabResults.TabIndex = 0;
             this.dgvLabResults.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLabResults_CellClick);
             // 
@@ -141,15 +141,15 @@ namespace ENT_Clinic_System.PrintingForms
             // 
             this.flpPreview.AutoScroll = true;
             this.flpPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flpPreview.Location = new System.Drawing.Point(20, 319);
+            this.flpPreview.Location = new System.Drawing.Point(20, 310);
             this.flpPreview.Name = "flpPreview";
-            this.flpPreview.Size = new System.Drawing.Size(1100, 329);
+            this.flpPreview.Size = new System.Drawing.Size(1623, 245);
             this.flpPreview.TabIndex = 5;
             this.flpPreview.Paint += new System.Windows.Forms.PaintEventHandler(this.flpPreview_Paint);
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(615, 273);
+            this.btnAdd.Location = new System.Drawing.Point(630, 273);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(97, 30);
             this.btnAdd.TabIndex = 6;
@@ -161,7 +161,7 @@ namespace ENT_Clinic_System.PrintingForms
             // 
             this.btnUpdate.Location = new System.Drawing.Point(514, 274);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(80, 30);
+            this.btnUpdate.Size = new System.Drawing.Size(95, 30);
             this.btnUpdate.TabIndex = 7;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -195,7 +195,7 @@ namespace ENT_Clinic_System.PrintingForms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(394, 384);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(414, 20);
+            this.progressBar.Size = new System.Drawing.Size(954, 20);
             this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 1;
             this.progressBar.Visible = false;
@@ -206,7 +206,7 @@ namespace ENT_Clinic_System.PrintingForms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.Location = new System.Drawing.Point(394, 361);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(414, 20);
+            this.lblStatus.Size = new System.Drawing.Size(954, 20);
             this.lblStatus.TabIndex = 2;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lblStatus.Visible = false;
@@ -251,7 +251,6 @@ namespace ENT_Clinic_System.PrintingForms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1132, 678);
             this.Controls.Add(this.ScanButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtResultText);
@@ -266,11 +265,8 @@ namespace ENT_Clinic_System.PrintingForms
             this.Controls.Add(this.btnAttachFile);
             this.Controls.Add(this.dgvLabResults);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.Name = "LabResultsForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Laboratory  Results";
+            this.Size = new System.Drawing.Size(1672, 571);
             this.Load += new System.EventHandler(this.LabResultsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabResults)).EndInit();
             this.cmsDelete.ResumeLayout(false);

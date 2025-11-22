@@ -16,9 +16,9 @@ namespace ENT_Clinic_System.Helpers
             int y = startY;
 
             // Fetch settings safely
-            string clinicName = SettingsHelper.GetSetting("clinic_name") ?? "ENT Clinic";
-            string clinicSubtitle = SettingsHelper.GetSetting("clinic_subtitle") ?? "";
-            string clinicAddress = SettingsHelper.GetSetting("clinic_address") ?? "";
+            string clinicName = "MA. CANDIE PEARL O. BASCOS-VILLENA, MD. FPSO-HNS";
+            string clinicSubtitle = "Fellow, Phil. Society of Otolaryngology, Head & Neck Surgery";
+            string clinicAddress = SettingsHelper.GetSetting("clinic_address") ?? "388 E. Lopez St., Jaro, Iloilo City"; 
             string clinicTel = SettingsHelper.GetSetting("clinic_tel") ?? "";
             string clinicMobile = SettingsHelper.GetSetting("clinic_mobile") ?? "";
             string clinicEmailAdd = SettingsHelper.GetSetting("clinic_email") ?? "";
@@ -200,7 +200,7 @@ namespace ENT_Clinic_System.Helpers
         {
             int y = startY;
 
-            string clinicName = SettingsHelper.GetSetting("clinic_name") ?? "Unknown Clinic Name";
+            string clinicName = "MA. CANDIE PEARL O. BASCOS-VILLENA, MD.";
             string licenseNumber = SettingsHelper.GetSetting("license_number") ?? "";
             string ptrNumber = SettingsHelper.GetSetting("ptr") ?? "";
             string s2Number = SettingsHelper.GetSetting("stwo") ?? "";
@@ -212,25 +212,25 @@ namespace ENT_Clinic_System.Helpers
             {
                 int colX = pageWidth - 150;
 
-                g.DrawString(clinicName, nameFont, Brushes.Black, colX - 150, y);
+                g.DrawString(clinicName, nameFont, Brushes.Black, colX - 90, y);
                 y += 18;
 
                 // License number
-                g.DrawString("Lic. No.", labelFont, Brushes.Black, colX - 150, y);
-                g.DrawLine(linePen, colX - 100, y + 10, colX + 160, y + 10);
-                g.DrawString(licenseNumber, numberFont, Brushes.Black, colX, y - 2);
+                g.DrawString("Lic. No.", labelFont, Brushes.Black, colX - 90, y);
+                g.DrawLine(linePen, colX - 40, y + 10, colX + 160, y + 10);
+                g.DrawString(licenseNumber, numberFont, Brushes.Black, colX + 40, y - 2);
                 y += 16;
 
                 // PTR
-                g.DrawString("PTR No.", labelFont, Brushes.Black, colX - 150, y);
-                g.DrawLine(linePen, colX - 100, y + 10, colX + 160, y + 10);
-                g.DrawString(ptrNumber, numberFont, Brushes.Black, colX, y - 2);
+                g.DrawString("PTR No.", labelFont, Brushes.Black, colX - 90, y);
+                g.DrawLine(linePen, colX - 40, y + 10, colX + 160, y + 10);
+                g.DrawString(ptrNumber, numberFont, Brushes.Black, colX + 40, y - 2);
                 y += 16;
 
                 // S2
-                g.DrawString("S2 No.", labelFont, Brushes.Black, colX - 150, y);
-                g.DrawLine(linePen, colX - 100, y + 10, colX + 160, y + 10);
-                g.DrawString(s2Number, numberFont, Brushes.Black, colX, y - 2);
+                g.DrawString("S2 No.", labelFont, Brushes.Black, colX - 90, y);
+                g.DrawLine(linePen, colX - 40, y + 10, colX + 160, y + 10);
+                g.DrawString(s2Number, numberFont, Brushes.Black, colX + 40, y - 2);
                 y += 16;
             }
 

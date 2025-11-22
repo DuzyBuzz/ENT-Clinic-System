@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ENT_Clinic_System.PrintingForms
@@ -15,15 +16,15 @@ namespace ENT_Clinic_System.PrintingForms
         private int _consultationId;
         private PrintDocument _printDocument;
 
-        // Patient info
+        // Patient info (from first lab request row)
         private string _patientName = "";
         private string _patientAddress = "";
         private string _patientAge = "";
         private string _patientGender = "";
-        private DateTime _requestDate;
+        private DateTime _latestRequestDate;
 
-        // Selected lab tests grouped by category
-        private Dictionary<string, List<string>> _selectedTestsByCategory = new Dictionary<string, List<string>>();
+        // All selected lab tests grouped by category
+        private Dictionary<string, List<string>> _selectedTestsByCategory = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
         public LabRequestPrintHelper(int consultationId)
         {
@@ -37,7 +38,7 @@ namespace ENT_Clinic_System.PrintingForms
         }
 
         // ===========================
-        // LOAD DATA
+        // LOAD DATA (merge all lab requests)
         // ===========================
         private void LoadData()
         {
@@ -48,12 +49,14 @@ namespace ENT_Clinic_System.PrintingForms
                     conn.Open();
 
                     string query = @"
-                        SELECT p.full_name, p.address, p.age, p.sex, lr.request_date, lr.test_ids
+                        SELECT lr.request_date, lr.test_ids, 
+                               p.full_name, p.address, p.age, p.sex
                         FROM lab_requests lr
                         JOIN patients p ON lr.patient_id = p.patient_id
                         WHERE lr.consultation_id = @consultationId
-                        ORDER BY lr.request_date DESC
-                        LIMIT 1";
+                        ORDER BY lr.request_date ASC;";
+
+                    List<int> allTestIds = new List<int>();
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
@@ -61,52 +64,102 @@ namespace ENT_Clinic_System.PrintingForms
 
                         using (var reader = cmd.ExecuteReader())
                         {
-                            if (!reader.Read())
-                                throw new Exception("No lab request found for this consultation.");
-
-                            _patientName = reader["full_name"].ToString();
-                            _patientAddress = reader["address"].ToString();
-                            _patientAge = reader["age"].ToString();
-                            _patientGender = reader["sex"].ToString();
-                            _requestDate = Convert.ToDateTime(reader["request_date"]);
-
-                            string jsonTests = reader["test_ids"].ToString();
-                            List<int> checkedTestIds = JsonSerializer.Deserialize<List<int>>(jsonTests) ?? new List<int>();
-                            reader.Close();
-
-                            if (checkedTestIds.Count > 0)
+                            if (!reader.HasRows)
                             {
-                                string ids = string.Join(",", checkedTestIds);
-                                string testQuery = $@"
-                                    SELECT category, test_name
-                                    FROM lab_tests
-                                    WHERE id IN ({ids})
-                                    ORDER BY category, test_name";
+                                MessageBox.Show("No lab requests found for this consultation.", "No Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return;
+                            }
 
-                                using (var testCmd = new MySqlCommand(testQuery, conn))
-                                using (var testReader = testCmd.ExecuteReader())
+                            while (reader.Read())
+                            {
+                                // Load patient info once
+                                if (string.IsNullOrEmpty(_patientName))
                                 {
-                                    while (testReader.Read())
-                                    {
-                                        string cat = testReader["category"].ToString();
-                                        string testName = testReader["test_name"].ToString();
-
-                                        if (!_selectedTestsByCategory.ContainsKey(cat))
-                                            _selectedTestsByCategory[cat] = new List<string>();
-
-                                        _selectedTestsByCategory[cat].Add(testName);
-                                    }
+                                    _patientName = reader["full_name"]?.ToString() ?? "";
+                                    _patientAddress = reader["address"]?.ToString() ?? "";
+                                    _patientAge = reader["age"]?.ToString() ?? "";
+                                    _patientGender = reader["sex"]?.ToString() ?? "";
                                 }
+
+                                // Keep latest request date
+                                if (!reader.IsDBNull(reader.GetOrdinal("request_date")))
+                                {
+                                    DateTime reqDate = Convert.ToDateTime(reader["request_date"]);
+                                    if (reqDate > _latestRequestDate) _latestRequestDate = reqDate;
+                                }
+
+                                // Parse test_ids safely
+                                string rawTestIds = reader["test_ids"]?.ToString() ?? "";
+                                var parsed = ParseTestIds(rawTestIds);
+                                if (parsed?.Count > 0) allTestIds.AddRange(parsed);
                             }
                         }
                     }
+
+                    // Remove duplicates and order
+                    var mergedTestIds = allTestIds.Distinct().OrderBy(id => id).ToList();
+                    if (mergedTestIds.Count == 0) return;
+
+                    // Fetch test info from lab_tests table
+                    string idsCsv = string.Join(",", mergedTestIds);
+                    string testQuery = $@"
+                        SELECT category, test_name
+                        FROM lab_tests
+                        WHERE id IN ({idsCsv})
+                        ORDER BY category, test_name;";
+
+                    using (var testCmd = new MySqlCommand(testQuery, conn))
+                    using (var testReader = testCmd.ExecuteReader())
+                    {
+                        while (testReader.Read())
+                        {
+                            string category = testReader["category"]?.ToString() ?? "Uncategorized";
+                            string testName = testReader["test_name"]?.ToString() ?? "";
+
+                            if (!_selectedTestsByCategory.TryGetValue(category, out var list))
+                            {
+                                list = new List<string>();
+                                _selectedTestsByCategory[category] = list;
+                            }
+
+                            if (!list.Contains(testName))
+                                list.Add(testName);
+                        }
+                    }
+
+                    // Sort tests within each category
+                    foreach (var key in _selectedTestsByCategory.Keys.ToList())
+                        _selectedTestsByCategory[key] = _selectedTestsByCategory[key].OrderBy(n => n).ToList();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading lab request: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error loading lab requests: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // Robust parser for test_ids JSON array or [1,2,3] format
+        private List<int> ParseTestIds(string raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw)) return new List<int>();
+
+            raw = raw.Trim();
+
+            try
+            {
+                // Try JSON array first
+                var ints = JsonSerializer.Deserialize<List<int>>(raw);
+                if (ints != null) return ints;
+            }
+            catch { }
+
+            // Fallback regex for [1,2,3] format
+            var matches = Regex.Matches(raw, @"\d+");
+            var list = new List<int>();
+            foreach (Match m in matches)
+                if (int.TryParse(m.Value, out int v)) list.Add(v);
+
+            return list;
         }
 
         // ===========================
@@ -115,92 +168,78 @@ namespace ENT_Clinic_System.PrintingForms
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
-            int leftMargin = 10;
+            int left = 10;
             int y = 10;
 
-            // 1️⃣ Header (Watermark + Clinic Info)
-            y = WaterMarkHelper.PrintHeader(g, leftMargin, y, e.PageBounds.Width);
+            // Header
+            y = WaterMarkHelper.PrintHeader(g, left, y, e.PageBounds.Width);
 
-            // Patient Info
-            // 🧾 Patient Info Section (with underlined values)
+            // Patient info
             using (Font labelFont = new Font("Arial", 8, FontStyle.Bold))
             using (Font valueFont = new Font("Arial", 8, FontStyle.Underline))
             {
-                // --- Name ---
-                g.DrawString("Name:", labelFont, Brushes.Black, leftMargin, y);
-                g.DrawString(_patientName, valueFont, Brushes.Black, leftMargin + 100, y);
+                g.DrawString("Name:", labelFont, Brushes.Black, left, y);
+                g.DrawString(_patientName, valueFont, Brushes.Black, left + 100, y);
 
-                // --- Age ---
-                g.DrawString("Age:", labelFont, Brushes.Black, leftMargin + 400, y);
-                g.DrawString(_patientAge, valueFont, Brushes.Black, leftMargin + 430, y);
+                g.DrawString("Age:", labelFont, Brushes.Black, left + 400, y);
+                g.DrawString(_patientAge, valueFont, Brushes.Black, left + 430, y);
 
-                // --- Sex ---
-                g.DrawString("Sex:", labelFont, Brushes.Black, leftMargin + 470, y);
-                g.DrawString(_patientGender, valueFont, Brushes.Black, leftMargin + 500, y);
+                g.DrawString("Sex:", labelFont, Brushes.Black, left + 470, y);
+                g.DrawString(_patientGender, valueFont, Brushes.Black, left + 500, y);
 
                 y += 20;
 
-                // --- Address ---
-                g.DrawString("Address:", labelFont, Brushes.Black, leftMargin, y);
-                g.DrawString(_patientAddress, valueFont, Brushes.Black, leftMargin + 100, y);
+                g.DrawString("Address:", labelFont, Brushes.Black, left, y);
+                g.DrawString(_patientAddress, valueFont, Brushes.Black, left + 100, y);
 
-                // --- Date ---
-                g.DrawString("Date:", labelFont, Brushes.Black, leftMargin + 400, y);
-                string formattedDate = _requestDate.ToString("MMMM dd, yyyy");
-                g.DrawString(formattedDate, valueFont, Brushes.Black, leftMargin + 435, y);
+                g.DrawString("Date:", labelFont, Brushes.Black, left + 400, y);
+                g.DrawString(_latestRequestDate.ToString("MMMM dd, yyyy"), valueFont, Brushes.Black, left + 435, y);
 
                 y += 15;
             }
 
-            // 2️⃣.5️⃣ Title Section (LABORATORY REQUEST)
+            // Title
             using (Font titleFont = new Font("Times Roman", 12, FontStyle.Bold | FontStyle.Underline))
             {
-                string titleText = "LABORATORY REQUEST";
-                SizeF titleSize = g.MeasureString(titleText, titleFont);
-
-                // Center horizontally
-                float centerX = (e.PageBounds.Width - titleSize.Width) / 2;
-                g.DrawString(titleText, titleFont, Brushes.Black, centerX, y);
-                y += (int)titleSize.Height + 10; // move down a bit for spacing
+                string title = "LABORATORY REQUEST";
+                SizeF size = g.MeasureString(title, titleFont);
+                float centerX = (e.PageBounds.Width - size.Width) / 2;
+                g.DrawString(title, titleFont, Brushes.Black, centerX, y);
+                y += (int)size.Height + 10;
             }
 
-            // 3️⃣ Selected Lab Tests Section
-            using (Font categoryFont = new Font("Arial", 9, FontStyle.Bold))
+            // Tests by category
+            using (Font catFont = new Font("Arial", 9, FontStyle.Bold))
             using (Font testFont = new Font("Arial", 8))
             {
                 if (_selectedTestsByCategory.Count == 0)
                 {
-                    g.DrawString("No lab tests selected.", testFont, Brushes.Black, leftMargin + 20, y);
+                    g.DrawString("No lab tests selected.", testFont, Brushes.Black, left + 20, y);
                 }
                 else
                 {
-                    foreach (var category in _selectedTestsByCategory)
+                    foreach (var cat in _selectedTestsByCategory)
                     {
-                        // Draw category title
-                        g.DrawString(category.Key, categoryFont, Brushes.Black, leftMargin + 20, y);
+                        g.DrawString(cat.Key, catFont, Brushes.Black, left + 20, y);
                         y += 18;
 
-                        // Draw tests
-                        foreach (var testName in category.Value)
+                        foreach (var test in cat.Value)
                         {
-                            g.DrawString($"• {testName}", testFont, Brushes.Black, leftMargin + 40, y);
+                            g.DrawString($"• {test}", testFont, Brushes.Black, left + 40, y);
                             y += 16;
                         }
 
-                        // Light divider line after each category
-                        using (Pen dividerPen = new Pen(Color.FromArgb(120, 0, 0, 0), 1))
-                        {
-                            g.DrawLine(dividerPen, leftMargin + 50, y, e.PageBounds.Width - leftMargin - 20, y);
-                        }
+                        using (Pen p = new Pen(Color.FromArgb(120, 0, 0, 0), 1))
+                            g.DrawLine(p, left + 50, y, e.PageBounds.Width - left - 20, y);
+
                         y += 10;
                     }
                 }
             }
 
-            // 4️⃣ Footer
-            WaterMarkHelper.PrintFooter(g, leftMargin, e.MarginBounds.Bottom - 30, e.MarginBounds.Width + 10);
+            // Footer
+            WaterMarkHelper.PrintFooter(g, left, e.MarginBounds.Bottom - 30, e.MarginBounds.Width + 10);
         }
-
 
         // ===========================
         // SHOW PRINT PREVIEW

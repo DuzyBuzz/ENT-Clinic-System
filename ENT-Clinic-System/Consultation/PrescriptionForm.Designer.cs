@@ -123,7 +123,7 @@ namespace ENT_Clinic_System.Consultation
             this.btnSubmit.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSubmit.Location = new System.Drawing.Point(532, 3);
             this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(101, 32);
+            this.btnSubmit.Size = new System.Drawing.Size(100, 32);
             this.btnSubmit.TabIndex = 2;
             this.btnSubmit.Text = "Submit";
             this.btnSubmit.UseVisualStyleBackColor = true;
@@ -222,7 +222,7 @@ namespace ENT_Clinic_System.Consultation
             this.tableLayoutPanel4.ColumnCount = 3;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.18123F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.81878F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 2, 0);
             this.tableLayoutPanel4.Controls.Add(this.clearButton, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.btnSubmit, 1, 0);

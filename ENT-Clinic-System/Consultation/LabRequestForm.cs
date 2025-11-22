@@ -170,13 +170,13 @@ namespace ENT_Clinic_System.Consultation
                 {
                     try
                     {
-                        // 🧩 Step 3: Delete any existing lab request with the same consultation_id
-                        using (var deleteCmd = new MySqlCommand(
-                            "DELETE FROM lab_requests WHERE consultation_id = @consultation", conn, transaction))
-                        {
-                            deleteCmd.Parameters.AddWithValue("@consultation", consultationId);
-                            deleteCmd.ExecuteNonQuery();
-                        }
+                        //// 🧩 Step 3: Delete any existing lab request with the same consultation_id
+                        //using (var deleteCmd = new MySqlCommand(
+                        //    "DELETE FROM lab_requests WHERE consultation_id = @consultation", conn, transaction))
+                        //{
+                        //    deleteCmd.Parameters.AddWithValue("@consultation", consultationId);
+                        //    deleteCmd.ExecuteNonQuery();
+                        //}
 
                         // 🧩 Step 4: Prepare the new record to insert
                         string jsonTestIds = JsonSerializer.Serialize(selectedTestIds);

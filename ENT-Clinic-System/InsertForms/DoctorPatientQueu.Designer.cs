@@ -37,6 +37,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.consultationHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPatients)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvQueue)).BeginInit();
             this.patientsContextMenuStrip.SuspendLayout();
@@ -94,29 +95,30 @@
             this.patientsContextMenuStrip.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewConsultationToolStripMenuItem,
+            this.consultationHistoryToolStripMenuItem,
             this.admitingOrdersToolStripMenuItem,
             this.referralToolStripMenuItem});
             this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(210, 104);
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(231, 130);
             // 
             // viewConsultationToolStripMenuItem
             // 
             this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
             this.viewConsultationToolStripMenuItem.Text = "New Consultation";
             this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
             // 
             // admitingOrdersToolStripMenuItem
             // 
             this.admitingOrdersToolStripMenuItem.Name = "admitingOrdersToolStripMenuItem";
-            this.admitingOrdersToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            this.admitingOrdersToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
             this.admitingOrdersToolStripMenuItem.Text = "Admiting Orders";
             this.admitingOrdersToolStripMenuItem.Click += new System.EventHandler(this.admitingOrdersToolStripMenuItem_Click);
             // 
             // referralToolStripMenuItem
             // 
             this.referralToolStripMenuItem.Name = "referralToolStripMenuItem";
-            this.referralToolStripMenuItem.Size = new System.Drawing.Size(209, 26);
+            this.referralToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
             this.referralToolStripMenuItem.Text = "Referral";
             this.referralToolStripMenuItem.Click += new System.EventHandler(this.referralToolStripMenuItem_Click);
             // 
@@ -246,6 +248,13 @@
             this.groupBox2.Text = "Queue";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
+            // consultationHistoryToolStripMenuItem
+            // 
+            this.consultationHistoryToolStripMenuItem.Name = "consultationHistoryToolStripMenuItem";
+            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
+            this.consultationHistoryToolStripMenuItem.Text = "Consultation History";
+            this.consultationHistoryToolStripMenuItem.Click += new System.EventHandler(this.consultationHistoryToolStripMenuItem_Click);
+            // 
             // DoctorPatientsQueu
             // 
             this.Controls.Add(this.groupBox2);
@@ -278,5 +287,6 @@
         private System.Windows.Forms.ToolStripMenuItem viewConsultationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem admitingOrdersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem referralToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultationHistoryToolStripMenuItem;
     }
 }

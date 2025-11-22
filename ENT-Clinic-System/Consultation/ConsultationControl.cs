@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 using Syncfusion.Collections;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -32,7 +33,7 @@ namespace ENT_Clinic_System.UserControls
 
             LoadPatientLabels(_patientId);
             InitializeVideoContextMenu();
-            LoadConsultationDate(patientId);
+            //LoadConsultationDate(patientId);
         }
 
         private void ConsultationControl_Load(object sender, EventArgs e)
@@ -228,31 +229,39 @@ namespace ENT_Clinic_System.UserControls
         //    AutoCompleteDgvHelper.SaveAllAutocompleteEntries(recommendationsDGV, "recommendations", "recommendations");
         //}
 
-        private void LoadConsultationDate(int patientID)
-        {
-            List<string> consultationColumns = new List<string>
-            {
-                "consultation_id",
-                "patient_id",
-                "consultation_date",
-            };
+    //    private void LoadConsultationDate(int patientID)
+    //    {
+    //        List<string> consultationColumns = new List<string>
+    //{
+    //    "consultation_id",
+    //    "patient_id",
+    //    "consultation_date",
+    //};
 
-            viewHelper = new DGVViewHelper(
-                consultationDateDataGridView,   
-                "consultation",               
-                consultationColumns,
-                "patient_id"                
-            );
+    //        viewHelper = new DGVViewHelper(
+    //            consultationDateDataGridView,
+    //            "consultation",
+    //            consultationColumns,
+    //            "patient_id"
+    //        );
 
-            viewHelper.LoadData(patientID);
+    //        viewHelper.LoadData(patientID);
 
-            // Hide ID and patient ID columns
-            if (consultationDateDataGridView.Columns.Contains("consultation_id"))
-                consultationDateDataGridView.Columns["consultation_id"].Visible = false;
+    //        // Sort by consultation_date DESC (latest on top)
+    //        if (consultationDateDataGridView.DataSource is DataTable dt)
+    //        {
+    //            dt.DefaultView.Sort = "consultation_date DESC";
+    //            consultationDateDataGridView.DataSource = dt.DefaultView.ToTable();
+    //        }
 
-            if (consultationDateDataGridView.Columns.Contains("patient_id"))
-                consultationDateDataGridView.Columns["patient_id"].Visible = false;
-        }
+    //        // Hide ID and patient ID columns
+    //        if (consultationDateDataGridView.Columns.Contains("consultation_id"))
+    //            consultationDateDataGridView.Columns["consultation_id"].Visible = false;
+
+    //        if (consultationDateDataGridView.Columns.Contains("patient_id"))
+    //            consultationDateDataGridView.Columns["patient_id"].Visible = false;
+    //    }
+
 
 
         private void InitializeVideoContextMenu()
@@ -630,134 +639,134 @@ namespace ENT_Clinic_System.UserControls
 
         }
 
-        private void printConsultationHistoryButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (consultationDateDataGridView.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show("Please select a consultation to print.",
-                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+        //private void printConsultationHistoryButton_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (consultationDateDataGridView.SelectedRows.Count == 0)
+        //        {
+        //            MessageBox.Show("Please select a consultation to print.",
+        //                "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //            return;
+        //        }
 
-                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
-                {
-                    if (row.Cells["consultation_id"].Value == null ||
-                        row.Cells["patient_id"].Value == null ||
-                        row.Cells["consultation_date"].Value == null)
-                        continue;
+        //        foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+        //        {
+        //            if (row.Cells["consultation_id"].Value == null ||
+        //                row.Cells["patient_id"].Value == null ||
+        //                row.Cells["consultation_date"].Value == null)
+        //                continue;
 
-                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
-                    int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
-                    string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
+        //            int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+        //            int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+        //            string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
 
-                    try
-                    {
-                        // Create the print helper (this loads the patient + consultation data)
-                        PrintTextHistory printer = new PrintTextHistory(patientId, consultationId);
+        //            try
+        //            {
+        //                // Create the print helper (this loads the patient + consultation data)
+        //                PrintTextHistory printer = new PrintTextHistory(patientId, consultationId);
 
-                        // Call your custom ShowPreview() (the version with custom toolbar buttons)
-                        printer.ShowPreview();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error printing consultation history: " + ex.Message,
-                            "Print Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+        //                // Call your custom ShowPreview() (the version with custom toolbar buttons)
+        //                printer.ShowPreview();
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                MessageBox.Show("Error printing consultation history: " + ex.Message,
+        //                    "Print Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //            }
 
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error opening consultation record: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-
-        private void printAttachmentButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (consultationDateDataGridView.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show("Please select a consultation to print.",
-                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
-                {
-                    if (row.Cells["consultation_id"].Value == null ||
-                        row.Cells["patient_id"].Value == null ||
-                        row.Cells["consultation_date"].Value == null)
-                        continue;
-
-                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
-                    int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
-                    string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
-
-                    // Open the PrintConsultationHistory form and pass the IDs
-                    PrintAttachments printForm = new PrintAttachments(consultationId);
-                    printForm.Show();
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error opening consultation record: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void printMedicalCertificateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (consultationDateDataGridView.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show("Please select a consultation to print.",
-                        "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
-                {
-                    if (row.Cells["consultation_id"].Value == null ||
-                        row.Cells["patient_id"].Value == null ||
-                        row.Cells["consultation_date"].Value == null)
-                        continue;
-
-                    int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
-                    int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
-
-                    // 🔹 Show input dialog before printing
-                    using (var inputForm = new PurposeInputForm())
-                    {
-                        if (inputForm.ShowDialog() == DialogResult.OK)
-                        {
-                            string requestName = inputForm.PurposeText;
-
-                            // Pass user input to MedicalCertificatePrinter
-                            var printer = new MedicalCertificatePrinter(patientId, consultationId, requestName);
-                            printer.ShowPreview();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error opening consultation record: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void prescribeMedicineButton_Click(object sender, EventArgs e)
-        {
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error opening consultation record: " + ex.Message,
+        //            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
 
-        }
+        //private void printAttachmentButton_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (consultationDateDataGridView.SelectedRows.Count == 0)
+        //        {
+        //            MessageBox.Show("Please select a consultation to print.",
+        //                "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //            return;
+        //        }
+
+        //        foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+        //        {
+        //            if (row.Cells["consultation_id"].Value == null ||
+        //                row.Cells["patient_id"].Value == null ||
+        //                row.Cells["consultation_date"].Value == null)
+        //                continue;
+
+        //            int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+        //            int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+        //            string consultationDate = Convert.ToString(row.Cells["consultation_date"].Value);
+
+        //            // Open the PrintConsultationHistory form and pass the IDs
+        //            PrintAttachments printForm = new PrintAttachments(consultationId);
+        //            printForm.Show();
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error opening consultation record: " + ex.Message,
+        //            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        //private void printMedicalCertificateToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (consultationDateDataGridView.SelectedRows.Count == 0)
+        //        {
+        //            MessageBox.Show("Please select a consultation to print.",
+        //                "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //            return;
+        //        }
+
+        //        foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+        //        {
+        //            if (row.Cells["consultation_id"].Value == null ||
+        //                row.Cells["patient_id"].Value == null ||
+        //                row.Cells["consultation_date"].Value == null)
+        //                continue;
+
+        //            int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+        //            int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+
+        //            // 🔹 Show input dialog before printing
+        //            using (var inputForm = new PurposeInputForm())
+        //            {
+        //                if (inputForm.ShowDialog() == DialogResult.OK)
+        //                {
+        //                    string requestName = inputForm.PurposeText;
+
+        //                    // Pass user input to MedicalCertificatePrinter
+        //                    var printer = new MedicalCertificatePrinter(patientId, consultationId, requestName);
+        //                    printer.ShowPreview();
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error opening consultation record: " + ex.Message,
+        //            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        //private void prescribeMedicineButton_Click(object sender, EventArgs e)
+        //{
+
+
+        //}
 
         private void fullNameLabel_Click(object sender, EventArgs e)
         {
@@ -1429,99 +1438,109 @@ namespace ENT_Clinic_System.UserControls
 
         }
 
-        private void ProcessSelectedConsultations(Action<int, int> action)
-        {
-            if (consultationDateDataGridView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a consultation to process.",
-                    "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+        ////private void ProcessSelectedConsultations(Action<int, int> action)
+        ////{
+        ////    if (consultationDateDataGridView.SelectedRows.Count == 0)
+        ////    {
+        ////        MessageBox.Show("Please select a consultation to process.",
+        ////            "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        ////        return;
+        ////    }
 
-            foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
-            {
-                if (row.Cells["consultation_id"].Value == null || row.Cells["patient_id"].Value == null)
-                    continue;
+        ////    foreach (DataGridViewRow row in consultationDateDataGridView.SelectedRows)
+        ////    {
+        ////        if (row.Cells["consultation_id"].Value == null || row.Cells["patient_id"].Value == null)
+        ////            continue;
 
-                int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
-                int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
+        ////        int consultationId = Convert.ToInt32(row.Cells["consultation_id"].Value);
+        ////        int patientId = Convert.ToInt32(row.Cells["patient_id"].Value);
 
-                try
-                {
-                    action(patientId, consultationId);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error processing consultation: " + ex.Message,
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
+        ////        try
+        ////        {
+        ////            action(patientId, consultationId);
+        ////        }
+        ////        catch (Exception ex)
+        ////        {
+        ////            MessageBox.Show("Error processing consultation: " + ex.Message,
+        ////                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        ////        }
+        ////    }
+        ////}
 
-        // --- Menu item handlers ---
+        //// --- Menu item handlers ---
 
-        private void laboratoryResultsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ProcessSelectedConsultations((patientId, consultationId) =>
-            {
-                LabResultsForm labResultsForm = new LabResultsForm(consultationId, patientId);
-                labResultsForm.Show();
-            });
-        }
+        //private void laboratoryResultsToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    ProcessSelectedConsultations((patientId, consultationId) =>
+        //    {
+        //        LabResultsForm labResultsForm = new LabResultsForm(consultationId, patientId);
+        //        labResultsForm.Show();
+        //    });
+        //}
 
-        private void showLaboratoryRequestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ProcessSelectedConsultations((patientId, consultationId) =>
-            {
-                var helper = new LabRequestPrintHelper(consultationId);
-                helper.ShowPreview();
-            });
-        }
+        //private void showLaboratoryRequestToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    ProcessSelectedConsultations((patientId, consultationId) =>
+        //    {
+        //        var helper = new LabRequestPrintHelper(consultationId);
+        //        helper.ShowPreview();
+        //    });
+        //}
 
-        private void createToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ProcessSelectedConsultations((patientId, consultationId) =>
-            {
-                LabRequestForm labForm = new LabRequestForm(patientId, consultationId);
-                labForm.ShowDialog();
-            });
-        }
+        //private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    ProcessSelectedConsultations((patientId, consultationId) =>
+        //    {
+        //        LabRequestForm labForm = new LabRequestForm(patientId, consultationId);
+        //        labForm.ShowDialog();
+        //    });
+        //}
 
-        private void showPrescriptionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ProcessSelectedConsultations((patientId, consultationId) =>
-            {
-                var printer = new PrescriptionPrintHelper(consultationId);
-                printer.ShowPreview();
-            });
-        }
+        //private void showPrescriptionToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    ProcessSelectedConsultations((patientId, consultationId) =>
+        //    {
+        //        var printer = new PrescriptionPrintHelper(consultationId);
+        //        printer.ShowPreview();
+        //    });
+        //}
 
-        private void createPrescriptionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ProcessSelectedConsultations((patientId, consultationId) =>
-            {
-                PrescriptionForm prescriptionForm = new PrescriptionForm(patientId, consultationId);
-                prescriptionForm.ShowDialog();
-            });
-        }
+        //private void createPrescriptionToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    ProcessSelectedConsultations((patientId, consultationId) =>
+        //    {
+        //        PrescriptionForm prescriptionForm = new PrescriptionForm(patientId, consultationId);
+        //        prescriptionForm.ShowDialog();
+        //    });
+        //}
 
-        private void medicalCertificateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ProcessSelectedConsultations((patientId, consultationId) =>
-            {
-                using (var inputForm = new PurposeInputForm())
-                {
-                    if (inputForm.ShowDialog() == DialogResult.OK)
-                    {
-                        string requestName = inputForm.PurposeText;
-                        var printer = new MedicalCertificatePrinter(patientId, consultationId, requestName);
-                        printer.ShowPreview();
-                    }
-                }
-            });
-        }
+        //private void medicalCertificateToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    ProcessSelectedConsultations((patientId, consultationId) =>
+        //    {
+        //        using (var inputForm = new PurposeInputForm())
+        //        {
+        //            if (inputForm.ShowDialog() == DialogResult.OK)
+        //            {
+        //                string requestName = inputForm.PurposeText;
+        //                var printer = new MedicalCertificatePrinter(patientId, consultationId, requestName);
+        //                printer.ShowPreview();
+        //            }
+        //        }
+        //    });
+        //}
 
         private void scannedConsultationHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
         {
 
         }

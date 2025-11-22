@@ -200,7 +200,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Search Patient:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // patientsDataGridView
             // 
@@ -233,8 +232,6 @@
             this.patientsDataGridView.Name = "patientsDataGridView";
             this.patientsDataGridView.Size = new System.Drawing.Size(1898, 954);
             this.patientsDataGridView.TabIndex = 1;
-            this.patientsDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.patientsDataGridView_CellContentClick);
-            this.patientsDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.patientsDataGridView_KeyDown);
             this.patientsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.patientsDataGridView_MouseDown);
             // 
             // patient_id
@@ -339,7 +336,6 @@
             this.referralToolStripMenuItem});
             this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
             this.patientsContextMenuStrip.Size = new System.Drawing.Size(231, 108);
-            this.patientsContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.patientsContextMenuStrip_Opening);
             // 
             // viewConsultationToolStripMenuItem
             // 
@@ -354,7 +350,6 @@
             this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
             this.consultationHistoryToolStripMenuItem.Text = "Consultation History";
             this.consultationHistoryToolStripMenuItem.Click += new System.EventHandler(this.consultationHistoryToolStripMenuItem_Click);
-            this.consultationHistoryToolStripMenuItem.MouseEnter += new System.EventHandler(this.consultationHistoryToolStripMenuItem_MouseEnter);
             // 
             // admitingOrdersToolStripMenuItem
             // 
@@ -376,7 +371,6 @@
             this.printConsultationHistoryButton.Name = "printConsultationHistoryButton";
             this.printConsultationHistoryButton.Size = new System.Drawing.Size(259, 24);
             this.printConsultationHistoryButton.Text = "Show Consultation History";
-            this.printConsultationHistoryButton.Click += new System.EventHandler(this.printConsultationHistoryButton_Click_1);
             // 
             // printAttachmentButton
             // 
@@ -410,7 +404,6 @@
             this.showLaboratoryRequesToolStripMenuItem.Name = "showLaboratoryRequesToolStripMenuItem";
             this.showLaboratoryRequesToolStripMenuItem.Size = new System.Drawing.Size(259, 24);
             this.showLaboratoryRequesToolStripMenuItem.Text = "Show Laboratory Requests";
-            this.showLaboratoryRequesToolStripMenuItem.Click += new System.EventHandler(this.showLaboratoryRequesToolStripMenuItem_Click);
             // 
             // showPrescriptionsToolStripMenuItem
             // 
@@ -440,7 +433,6 @@
             this.Name = "PatientListControl";
             this.Size = new System.Drawing.Size(1904, 1010);
             this.Load += new System.EventHandler(this.PatientListControl_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PatientListControl_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -489,6 +481,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn createdat;
         private System.Windows.Forms.DataGridViewImageColumn photo;
         private System.Windows.Forms.ToolStripMenuItem admitingOrdersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem referralToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem referralToolStripMenuItem; 
     }
 }

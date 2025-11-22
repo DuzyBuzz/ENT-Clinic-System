@@ -121,3 +121,163 @@ CREATE TABLE `prescription_other` (
   CONSTRAINT `fk_prescription_other_item` FOREIGN KEY (`item_id`) REFERENCES `other_items` (`item_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_prescription_other_patient` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`patient_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+SELECT * FROM ent_clinic_db.v_autocomplete_entries;
+CREATE ALGORITHM=UNDEFINED 
+DEFINER=`root`@`localhost` 
+SQL SECURITY DEFINER 
+VIEW `ent_clinic_db`.`v_autocomplete_entries` AS
+
+WITH RECURSIVE `seq` AS (
+    SELECT 1 AS `n` 
+    UNION ALL 
+    SELECT `seq`.`n` + 1 AS `n` 
+    FROM `seq` 
+    WHERE `seq`.`n` < 200
+), 
+`all_consult` AS (
+    SELECT `consultation_id`, 'chief_complaint' AS `column_name`, `chief_complaint` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'history' AS `column_name`, `history` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'ear_exam' AS `column_name`, `ear_exam` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'nose_exam' AS `column_name`, `nose_exam` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'throat_exam' AS `column_name`, `throat_exam` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+
+    
+    UNION ALL
+    SELECT `consultation_id`, 'others_exam' AS `column_name`, `others_exam` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'diagnosis' AS `column_name`, `diagnosis` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'recommendations' AS `column_name`, `recommendations` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    -- NEW COLUMNS
+    UNION ALL
+    SELECT `consultation_id`, 'maxillofacial' AS `column_name`, `maxillofacial` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'head_and_neck' AS `column_name`, `head_and_neck` AS `raw_value`
+    FROM `ent_clinic_db`.`consultation`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'past_medical_history' AS `column_name`, `past_medical_history` AS `raw_value`
+    FROM `ent_clinic_db`.`health_record_history`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'family_history' AS `column_name`, `family_history` AS `raw_value`
+    FROM `ent_clinic_db`.`health_record_history`
+    
+    UNION ALL
+    SELECT `consultation_id`, 'personal_social_history' AS `column_name`, `personal_social_history` AS `raw_value`
+    FROM `ent_clinic_db`.`health_record_history`
+), 
+`normalized` AS (
+    SELECT 
+        `all_consult`.`consultation_id`,
+        `all_consult`.`column_name`,
+        TRIM(BOTH ',' FROM TRIM(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(
+            REPLACE(REPLACE(REPLACE(`all_consult`.`raw_value`, CHAR(13),' '), CHAR(10),' '),';',','), '\\s+', ' '), ',+', ','), '^,|,$',''))) AS `norm_value`
+    FROM `all_consult`
+    WHERE `all_consult`.`raw_value` IS NOT NULL AND TRIM(`all_consult`.`raw_value`) <> ''
+), 
+`tokens` AS (
+    SELECT 
+        `normalized`.`consultation_id`,
+        `normalized`.`column_name`,
+        TRIM(REGEXP_SUBSTR(`normalized`.`norm_value`, '[^,]+', 1, `s`.`n`)) AS `token`,
+        `s`.`n` AS `seq_no`,
+        ((1 + LENGTH(`normalized`.`norm_value`)) - LENGTH(REPLACE(`normalized`.`norm_value`, ',', ''))) AS `token_count`
+    FROM `normalized` 
+    JOIN `seq` `s` ON s.n <= ((1 + LENGTH(`normalized`.`norm_value`)) - LENGTH(REPLACE(`normalized`.`norm_value`, ',', '')))
+    WHERE `normalized`.`norm_value` IS NOT NULL AND TRIM(`normalized`.`norm_value`) <> ''
+), 
+`processed` AS (
+    SELECT 
+        t.consultation_id,
+        t.column_name,
+        t.seq_no,
+        t.token_count,
+        CASE WHEN UPPER(t.token) IN ('AS','AD','AU') THEN NULL ELSE t.token END AS pending_obs,
+        CASE WHEN UPPER(t.token) IN ('AS','AD','AU') THEN t.token ELSE NULL END AS emitted_obs
+    FROM tokens t
+    WHERE t.seq_no = 1
+    
+    UNION ALL
+    
+    SELECT 
+        t.consultation_id,
+        t.column_name,
+        t.seq_no,
+        t.token_count,
+        CASE WHEN UPPER(t.token) IN ('AS','AD','AU') THEN NULL ELSE t.token END AS pending_obs,
+        CASE WHEN UPPER(t.token) IN ('AS','AD','AU') THEN 
+            CASE WHEN p.pending_obs IS NOT NULL THEN CONCAT(p.pending_obs, ', ', t.token) ELSE t.token END
+        ELSE p.pending_obs END AS emitted_obs
+    FROM tokens t
+    JOIN processed p ON t.consultation_id = p.consultation_id AND t.column_name = p.column_name AND t.seq_no = p.seq_no + 1
+), 
+`observations` AS (
+    SELECT consultation_id, column_name, emitted_obs AS obs
+    FROM processed
+    WHERE emitted_obs IS NOT NULL
+    
+    UNION ALL
+    
+    SELECT consultation_id, column_name, pending_obs AS obs
+    FROM processed
+    WHERE pending_obs IS NOT NULL AND seq_no = token_count
+)
+SELECT 
+    column_name,
+    CONCAT(UPPER(LEFT(obs,1)), LOWER(SUBSTR(obs,2))) AS value,
+    COUNT(0) AS count
+FROM observations
+WHERE obs IS NOT NULL AND TRIM(obs) <> ''
+GROUP BY column_name, value
+ORDER BY column_name, count DESC;
+
+
+-- Enable event scheduler if not already
+SET GLOBAL event_scheduler = ON;
+
+-- Change delimiter
+DELIMITER $$
+
+CREATE EVENT IF NOT EXISTS cancel_old_waiting_queues
+ON SCHEDULE EVERY 1 DAY
+STARTS TIMESTAMP(CURDATE(), '10:00:00')  -- runs every day at 10 AM
+DO
+BEGIN
+    UPDATE ent_clinic_db.queue
+    SET status = 'Cancelled',
+        updated_at = NOW()
+    WHERE status = 'Waiting'
+      AND DATE(created_at) < CURDATE()
+      AND (finished_at IS NULL OR finished_at = '');
+END$$
+
+-- Reset delimiter
+DELIMITER ;
+

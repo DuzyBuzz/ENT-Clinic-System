@@ -413,19 +413,19 @@ namespace ENT_Clinic_System.Consultation
 
                     try
                     {
-                        // ✅ Step 1: Delete existing prescriptions for this consultation
-                        string deletePrescriptionQuery = "DELETE FROM prescription WHERE consultation_id = @consultation_id";
-                        string deleteOtherQuery = "DELETE FROM prescription_other WHERE consultation_id = @consultation_id";
+                        //// ✅ Step 1: Delete existing prescriptions for this consultation
+                        //string deletePrescriptionQuery = "DELETE FROM prescription WHERE consultation_id = @consultation_id";
+                        //string deleteOtherQuery = "DELETE FROM prescription_other WHERE consultation_id = @consultation_id";
 
-                        using (var deleteCmd1 = new MySqlCommand(deletePrescriptionQuery, conn, transaction))
-                        using (var deleteCmd2 = new MySqlCommand(deleteOtherQuery, conn, transaction))
-                        {
-                            deleteCmd1.Parameters.AddWithValue("@consultation_id", _consultationId);
-                            deleteCmd2.Parameters.AddWithValue("@consultation_id", _consultationId);
+                        //using (var deleteCmd1 = new MySqlCommand(deletePrescriptionQuery, conn, transaction))
+                        //using (var deleteCmd2 = new MySqlCommand(deleteOtherQuery, conn, transaction))
+                        //{
+                        //    deleteCmd1.Parameters.AddWithValue("@consultation_id", _consultationId);
+                        //    deleteCmd2.Parameters.AddWithValue("@consultation_id", _consultationId);
 
-                            deleteCmd1.ExecuteNonQuery();
-                            deleteCmd2.ExecuteNonQuery();
-                        }
+                        //    deleteCmd1.ExecuteNonQuery();
+                        //    deleteCmd2.ExecuteNonQuery();
+                        //}
 
                         // ✅ Step 2: Insert new prescription items
                         foreach (DataGridViewRow row in dgvSelectedItems.Rows)
