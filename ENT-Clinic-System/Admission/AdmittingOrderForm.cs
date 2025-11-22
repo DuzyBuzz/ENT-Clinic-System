@@ -442,7 +442,7 @@ namespace ENT_Clinic_System.Admission
             {
                 ShowError("Error deleting record", ex);
             }
-        }
+        } 
 
         private void ShowError(string title, Exception ex) 
         {
