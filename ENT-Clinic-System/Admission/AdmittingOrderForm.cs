@@ -444,7 +444,7 @@ namespace ENT_Clinic_System.Admission
             }
         }
 
-        private void ShowError(string title, Exception ex)
+        private void ShowError(string title, Exception ex) 
         {
             MessageBox.Show($"{title}: {ex.Message}", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
