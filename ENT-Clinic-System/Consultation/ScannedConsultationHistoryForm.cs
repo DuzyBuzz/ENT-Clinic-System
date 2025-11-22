@@ -8,11 +8,11 @@ using ENT_Clinic_System.Helpers; // For DBConfig
 
 namespace ENT_Clinic_System.Consultation
 {
-    public partial class ScannedConsultationHistoryForm : Form
+    public partial class ScannedConsultationHistoryForm : UserControl
     {
-        private readonly string _patientId;
+        private readonly int _patientId;
 
-        public ScannedConsultationHistoryForm(string patientId)
+        public ScannedConsultationHistoryForm(int patientId)
         {
             InitializeComponent();
             _patientId = patientId;
@@ -25,7 +25,7 @@ namespace ENT_Clinic_System.Consultation
             LoadPatientName(_patientId);
         }
 
-        private void LoadPatientName(string patientId)
+        private void LoadPatientName(int patientId)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace ENT_Clinic_System.Consultation
         /// <summary>
         /// Loads all scanned documents for the given patient and displays them.
         /// </summary>
-        private void LoadPatientScannedDocuments(string patientId)
+        private void LoadPatientScannedDocuments(int patientId)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace ENT_Clinic_System.Consultation
             {
                 PictureBox pb = new PictureBox
                 {
-                    Size = new Size(800, 1000),
+                    Size = new Size(471, 820),
                     SizeMode = PictureBoxSizeMode.Zoom,
                     BorderStyle = BorderStyle.FixedSingle,
                     Margin = new Padding(10),

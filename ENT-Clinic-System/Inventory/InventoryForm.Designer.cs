@@ -21,7 +21,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InventoryForm));
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.refreshPatientsButton = new System.Windows.Forms.Button();
@@ -187,7 +186,7 @@
             this.sortCategoryCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sortCategoryCombobox.ForeColor = System.Drawing.SystemColors.ControlText;
             this.sortCategoryCombobox.FormattingEnabled = true;
-            this.sortCategoryCombobox.Location = new System.Drawing.Point(604, 6);
+            this.sortCategoryCombobox.Location = new System.Drawing.Point(604, 13);
             this.sortCategoryCombobox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 8);
             this.sortCategoryCombobox.Name = "sortCategoryCombobox";
             this.sortCategoryCombobox.Size = new System.Drawing.Size(179, 28);
@@ -912,12 +911,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1586, 933);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Arial Narrow", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "InventoryForm";
-            this.Text = "Inventory Management";
+            this.Size = new System.Drawing.Size(1586, 933);
             this.Load += new System.EventHandler(this.InventoryForm_Load);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

@@ -57,7 +57,6 @@
             this.patientsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewConsultationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scannedHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.admitingOrdersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referralToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printConsultationHistoryButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -336,46 +335,38 @@
             this.patientsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewConsultationToolStripMenuItem,
             this.consultationHistoryToolStripMenuItem,
-            this.scannedHistoryToolStripMenuItem,
             this.admitingOrdersToolStripMenuItem,
             this.referralToolStripMenuItem});
             this.patientsContextMenuStrip.Name = "patientsContextMenuStrip";
-            this.patientsContextMenuStrip.Size = new System.Drawing.Size(297, 156);
+            this.patientsContextMenuStrip.Size = new System.Drawing.Size(231, 108);
             this.patientsContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.patientsContextMenuStrip_Opening);
             // 
             // viewConsultationToolStripMenuItem
             // 
             this.viewConsultationToolStripMenuItem.Name = "viewConsultationToolStripMenuItem";
-            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(296, 26);
+            this.viewConsultationToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
             this.viewConsultationToolStripMenuItem.Text = "New Consultation";
             this.viewConsultationToolStripMenuItem.Click += new System.EventHandler(this.viewConsultationToolStripMenuItem_Click);
             // 
             // consultationHistoryToolStripMenuItem
             // 
             this.consultationHistoryToolStripMenuItem.Name = "consultationHistoryToolStripMenuItem";
-            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(296, 26);
+            this.consultationHistoryToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
             this.consultationHistoryToolStripMenuItem.Text = "Consultation History";
             this.consultationHistoryToolStripMenuItem.Click += new System.EventHandler(this.consultationHistoryToolStripMenuItem_Click);
             this.consultationHistoryToolStripMenuItem.MouseEnter += new System.EventHandler(this.consultationHistoryToolStripMenuItem_MouseEnter);
             // 
-            // scannedHistoryToolStripMenuItem
-            // 
-            this.scannedHistoryToolStripMenuItem.Name = "scannedHistoryToolStripMenuItem";
-            this.scannedHistoryToolStripMenuItem.Size = new System.Drawing.Size(296, 26);
-            this.scannedHistoryToolStripMenuItem.Text = "Scanned Consultation History";
-            this.scannedHistoryToolStripMenuItem.Click += new System.EventHandler(this.scannedHistoryToolStripMenuItem_Click);
-            // 
             // admitingOrdersToolStripMenuItem
             // 
             this.admitingOrdersToolStripMenuItem.Name = "admitingOrdersToolStripMenuItem";
-            this.admitingOrdersToolStripMenuItem.Size = new System.Drawing.Size(296, 26);
+            this.admitingOrdersToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
             this.admitingOrdersToolStripMenuItem.Text = "Admiting Orders";
             this.admitingOrdersToolStripMenuItem.Click += new System.EventHandler(this.admitingOrdersToolStripMenuItem_Click);
             // 
             // referralToolStripMenuItem
             // 
             this.referralToolStripMenuItem.Name = "referralToolStripMenuItem";
-            this.referralToolStripMenuItem.Size = new System.Drawing.Size(296, 26);
+            this.referralToolStripMenuItem.Size = new System.Drawing.Size(230, 26);
             this.referralToolStripMenuItem.Text = "Referral";
             this.referralToolStripMenuItem.Click += new System.EventHandler(this.referralToolStripMenuItem_Click);
             // 
@@ -497,7 +488,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn referred_by;
         private System.Windows.Forms.DataGridViewTextBoxColumn createdat;
         private System.Windows.Forms.DataGridViewImageColumn photo;
-        private System.Windows.Forms.ToolStripMenuItem scannedHistoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem admitingOrdersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem referralToolStripMenuItem;
     }

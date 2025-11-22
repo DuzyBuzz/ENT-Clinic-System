@@ -37,6 +37,11 @@ namespace ENT_Clinic_System.UserControls
 
         private void ConsultationControl_Load(object sender, EventArgs e)
         {
+
+
+
+            ScannedConsultationHistoryForm scannedConsultationHistoryForm = new ScannedConsultationHistoryForm(_patientId);
+            LoadUserControl(scannedConsultationHistoryForm);
             videoHelper = new VideoFlowHelper(videoFlowLayoutPanel);
             imageHelper = new ImageFlowHelper(imageFlowLayoutPanel);
             // Call this after initializing your form and your FlowLayoutPanel
@@ -531,6 +536,15 @@ namespace ENT_Clinic_System.UserControls
             {
                 MessageBox.Show("Failed to save consultation: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+
+        private void LoadUserControl(UserControl uc)
+        {
+            panel1.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            panel1.Controls.Add(uc);
+            uc.BringToFront();
         }
 
 
@@ -1501,15 +1515,7 @@ namespace ENT_Clinic_System.UserControls
 
         private void scannedConsultationHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int patientIdInt = _patientId; // original integer
-            string patientIdStr = patientIdInt.ToString(); // convert to string
 
-
-            var consultationHistory = new ScannedConsultationHistoryForm(patientIdStr);
-            //if (!string.IsNullOrEmpty(patientName))
-            //    consultationHistory.Text = $"Scanned Documents - {patientName}";
-
-            consultationHistory.Show(); // Use ShowDialog so it blocks until closed
         }
     }
 }
