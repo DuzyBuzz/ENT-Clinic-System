@@ -314,11 +314,11 @@ namespace ENT_Clinic_System.PrintingForms
             // 🔹 Always show the "Follow-up visit on:" label
             using (Font labelFont = new Font("Arial", 9, FontStyle.Bold))
             {
-                string labelText = "Follow-up visit on:";
+                //string labelText = "Follow-up visit on:";
                 float footerY = e.PageBounds.Bottom - 70; // position near footer
 
                 // Draw label text
-                g.DrawString(labelText, labelFont, Brushes.Black, leftMargin + 30, footerY);
+                //g.DrawString(labelText, labelFont, Brushes.Black, leftMargin + 30, footerY);
 
                 // 🔹 If follow-up date exists, draw it below the label and underline it
                 if (_followUpDate.HasValue)

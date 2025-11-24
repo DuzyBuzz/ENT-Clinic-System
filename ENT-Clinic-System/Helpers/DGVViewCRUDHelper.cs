@@ -23,6 +23,11 @@ namespace ENT_Clinic_System.Helpers
         private readonly string baseTableName;        // used for UPDATE / DELETE
         private readonly string primaryKeyColumn;
         private ContextMenuStrip dgvContextMenu;
+        // Track last filter for LoadRowsByColumn()
+        private string lastFilterTableOrView = null;
+        private string lastFilterColumn = null;
+        private object lastFilterValue = null;
+        private bool isFilteredByColumn = false;
 
         // paging state
         public int PageSize { get; set; } = 1500;
@@ -870,6 +875,15 @@ namespace ENT_Clinic_System.Helpers
         /// </summary>
         public void LoadRowsByColumn(string tableOrViewName, string columnName, object value)
         {
+
+            // Remember last used filter so delete will reload the SAME filter
+            lastFilterTableOrView = tableOrViewName;
+            lastFilterColumn = columnName;
+            lastFilterValue = value;
+            isFilteredByColumn = true;
+
+
+
             if (string.IsNullOrWhiteSpace(tableOrViewName)) throw new ArgumentException("tableOrViewName required", nameof(tableOrViewName));
             if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentException("columnName required", nameof(columnName));
             if (value == null) throw new ArgumentNullException(nameof(value));
@@ -953,6 +967,16 @@ namespace ENT_Clinic_System.Helpers
                 MessageBox.Show("Failed to load data: " + ex.Message, "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void ReloadAfterDelete()
+        {
+            if (isFilteredByColumn)
+            {
+                LoadRowsByColumn(lastFilterTableOrView, lastFilterColumn, lastFilterValue);
+                return;
+            }
+
+            LoadData(CurrentPage);
+        }
 
 
         private void DgvContextMenu_DeleteClick(object sender, EventArgs e)
@@ -984,7 +1008,8 @@ namespace ENT_Clinic_System.Helpers
                     try
                     {
                         DeleteRow(id);
-                        LoadData(CurrentPage);
+                        ReloadAfterDelete();
+
                     }
                     catch (Exception ex)
                     {

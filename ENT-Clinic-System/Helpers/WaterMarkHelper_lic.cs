@@ -221,17 +221,17 @@ namespace ENT_Clinic_System.Helpers
                 g.DrawString(licenseNumber, numberFont, Brushes.Black, colX + 40, y - 2);
                 y += 16;
 
-                // PTR
-                g.DrawString("PTR No.", labelFont, Brushes.Black, colX - 90, y);
-                g.DrawLine(linePen, colX - 40, y + 10, colX + 160, y + 10);
-                g.DrawString(ptrNumber, numberFont, Brushes.Black, colX + 40, y - 2);
-                y += 16;
+                //// PTR
+                //g.DrawString("PTR No.", labelFont, Brushes.Black, colX - 90, y);
+                //g.DrawLine(linePen, colX - 40, y + 10, colX + 160, y + 10);
+                //g.DrawString(ptrNumber, numberFont, Brushes.Black, colX + 40, y - 2);
+                //y += 16;
 
-                // S2
-                g.DrawString("S2 No.", labelFont, Brushes.Black, colX - 90, y);
-                g.DrawLine(linePen, colX - 40, y + 10, colX + 160, y + 10);
-                g.DrawString(s2Number, numberFont, Brushes.Black, colX + 40, y - 2);
-                y += 16;
+                //// S2
+                //g.DrawString("S2 No.", labelFont, Brushes.Black, colX - 90, y);
+                //g.DrawLine(linePen, colX - 40, y + 10, colX + 160, y + 10);
+                //g.DrawString(s2Number, numberFont, Brushes.Black, colX + 40, y - 2);
+                //y += 16;
             }
 
             return y;

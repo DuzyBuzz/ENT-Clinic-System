@@ -32,24 +32,24 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultationHistoryControl));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel23 = new System.Windows.Forms.TableLayoutPanel();
@@ -74,6 +74,8 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.consultationDateDataGridView = new System.Windows.Forms.DataGridView();
             this.consultation_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.medicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabConsultation = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -88,11 +90,23 @@
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.entTabControl = new System.Windows.Forms.TabControl();
             this.earsTabPage = new System.Windows.Forms.TabPage();
+            this.earsDGV = new System.Windows.Forms.DataGridView();
+            this.ears = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.noseTabPage = new System.Windows.Forms.TabPage();
+            this.noseDGV = new System.Windows.Forms.DataGridView();
+            this.nose = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.throatTabPage = new System.Windows.Forms.TabPage();
+            this.throatDGV = new System.Windows.Forms.DataGridView();
+            this.throat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.maxillofacialTabPage = new System.Windows.Forms.TabPage();
+            this.maxillofacialDGV = new System.Windows.Forms.DataGridView();
+            this.maxillofacial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.headNeckTabPage = new System.Windows.Forms.TabPage();
+            this.headNeckDGV = new System.Windows.Forms.DataGridView();
+            this.head_and_neck = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.othersTabPage = new System.Windows.Forms.TabPage();
+            this.othersDGV = new System.Windows.Forms.DataGridView();
+            this.others = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
@@ -165,26 +179,8 @@
             this.AttachmentsPanel = new System.Windows.Forms.Panel();
             this.tabPrescriptions = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
-            this.prescriptionDGV = new System.Windows.Forms.DataGridView();
-            this.tabLaboratories = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
-            this.labRequestDGV = new System.Windows.Forms.DataGridView();
-            this.labResultsPanel = new System.Windows.Forms.Panel();
-            this.labDGV = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
-            this.request_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.test_ids = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.request_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.test_list = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.othersPrescriptionDGV = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
-            this.newPrescriptionButton = new System.Windows.Forms.Button();
-            this.printPrescriptionButton = new System.Windows.Forms.Button();
-            this.tableLayoutPanel19 = new System.Windows.Forms.TableLayoutPanel();
-            this.printLabRequest = new System.Windows.Forms.Button();
-            this.createNewLabRequest = new System.Windows.Forms.Button();
+            this.prescriptionDGV = new System.Windows.Forms.DataGridView();
             this.prescription_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.patient_ids = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.item_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -197,7 +193,25 @@
             this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sig = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel18 = new System.Windows.Forms.TableLayoutPanel();
+            this.printPrescriptionButton = new System.Windows.Forms.Button();
+            this.newPrescriptionButton = new System.Windows.Forms.Button();
+            this.tabLaboratories = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+            this.labResultsPanel = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel17 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel19 = new System.Windows.Forms.TableLayoutPanel();
+            this.printLabRequest = new System.Windows.Forms.Button();
+            this.createNewLabRequest = new System.Windows.Forms.Button();
+            this.labRequestDGV = new System.Windows.Forms.DataGridView();
+            this.request_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.test_ids = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.request_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.test_list = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.labDGV = new System.Windows.Forms.DataGridView();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -209,20 +223,6 @@
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ears = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.earsDGV = new System.Windows.Forms.DataGridView();
-            this.nose = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.noseDGV = new System.Windows.Forms.DataGridView();
-            this.throat = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.throatDGV = new System.Windows.Forms.DataGridView();
-            this.maxillofacial = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.maxillofacialDGV = new System.Windows.Forms.DataGridView();
-            this.head_and_neck = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.headNeckDGV = new System.Windows.Forms.DataGridView();
-            this.others = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.othersDGV = new System.Windows.Forms.DataGridView();
-            this.consultationHistoryContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.medicalCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanel23.SuspendLayout();
             this.tableLayoutPanel24.SuspendLayout();
@@ -230,6 +230,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).BeginInit();
+            this.consultationHistoryContextMenuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabConsultation.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -242,11 +243,17 @@
             this.tableLayoutPanel8.SuspendLayout();
             this.entTabControl.SuspendLayout();
             this.earsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.earsDGV)).BeginInit();
             this.noseTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.noseDGV)).BeginInit();
             this.throatTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).BeginInit();
             this.maxillofacialTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxillofacialDGV)).BeginInit();
             this.headNeckTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.headNeckDGV)).BeginInit();
             this.othersTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.othersDGV)).BeginInit();
             this.tableLayoutPanel9.SuspendLayout();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.diagnosisDGV)).BeginInit();
@@ -272,22 +279,15 @@
             this.tabAttachments.SuspendLayout();
             this.tabPrescriptions.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.othersPrescriptionDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.prescriptionDGV)).BeginInit();
+            this.tableLayoutPanel18.SuspendLayout();
             this.tabLaboratories.SuspendLayout();
             this.tableLayoutPanel14.SuspendLayout();
+            this.tableLayoutPanel17.SuspendLayout();
+            this.tableLayoutPanel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.labRequestDGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.labDGV)).BeginInit();
-            this.tableLayoutPanel17.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.othersPrescriptionDGV)).BeginInit();
-            this.tableLayoutPanel18.SuspendLayout();
-            this.tableLayoutPanel19.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.earsDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.noseDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maxillofacialDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.headNeckDGV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.othersDGV)).BeginInit();
-            this.consultationHistoryContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // miniToolStrip
@@ -316,7 +316,7 @@
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 1;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 97F));
+            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 93F));
             this.tableLayoutPanel12.Size = new System.Drawing.Size(1866, 93);
             this.tableLayoutPanel12.TabIndex = 1;
             // 
@@ -629,6 +629,21 @@
             this.consultation_date.Name = "consultation_date";
             this.consultation_date.ReadOnly = true;
             // 
+            // consultationHistoryContextMenuStrip
+            // 
+            this.consultationHistoryContextMenuStrip.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.medicalCertificateToolStripMenuItem});
+            this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
+            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(209, 28);
+            // 
+            // medicalCertificateToolStripMenuItem
+            // 
+            this.medicalCertificateToolStripMenuItem.Name = "medicalCertificateToolStripMenuItem";
+            this.medicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(208, 24);
+            this.medicalCertificateToolStripMenuItem.Text = "Medical Certificate";
+            this.medicalCertificateToolStripMenuItem.Click += new System.EventHandler(this.medicalCertificateToolStripMenuItem_Click);
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabConsultation);
@@ -829,56 +844,212 @@
             this.earsTabPage.Text = "Ears";
             this.earsTabPage.UseVisualStyleBackColor = true;
             // 
+            // earsDGV
+            // 
+            this.earsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.earsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.earsDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.earsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.earsDGV.ColumnHeadersVisible = false;
+            this.earsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ears});
+            this.earsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.earsDGV.Location = new System.Drawing.Point(0, 0);
+            this.earsDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.earsDGV.Name = "earsDGV";
+            this.earsDGV.RowHeadersWidth = 25;
+            this.earsDGV.Size = new System.Drawing.Size(1304, 227);
+            this.earsDGV.TabIndex = 8;
+            // 
+            // ears
+            // 
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ears.DefaultCellStyle = dataGridViewCellStyle3;
+            this.ears.HeaderText = "";
+            this.ears.Name = "ears";
+            this.ears.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ears.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // noseTabPage
             // 
             this.noseTabPage.Controls.Add(this.noseDGV);
             this.noseTabPage.Location = new System.Drawing.Point(4, 29);
             this.noseTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.noseTabPage.Name = "noseTabPage";
-            this.noseTabPage.Size = new System.Drawing.Size(1300, 239);
+            this.noseTabPage.Size = new System.Drawing.Size(1304, 227);
             this.noseTabPage.TabIndex = 1;
             this.noseTabPage.Text = "Nose";
             this.noseTabPage.UseVisualStyleBackColor = true;
+            // 
+            // noseDGV
+            // 
+            this.noseDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.noseDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.noseDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.noseDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.noseDGV.ColumnHeadersVisible = false;
+            this.noseDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nose});
+            this.noseDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.noseDGV.Location = new System.Drawing.Point(0, 0);
+            this.noseDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.noseDGV.Name = "noseDGV";
+            this.noseDGV.RowHeadersWidth = 25;
+            this.noseDGV.Size = new System.Drawing.Size(1304, 227);
+            this.noseDGV.TabIndex = 8;
+            // 
+            // nose
+            // 
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nose.DefaultCellStyle = dataGridViewCellStyle4;
+            this.nose.HeaderText = "";
+            this.nose.Name = "nose";
+            this.nose.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.nose.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // throatTabPage
             // 
             this.throatTabPage.Controls.Add(this.throatDGV);
             this.throatTabPage.Location = new System.Drawing.Point(4, 29);
             this.throatTabPage.Name = "throatTabPage";
-            this.throatTabPage.Size = new System.Drawing.Size(1300, 239);
+            this.throatTabPage.Size = new System.Drawing.Size(1304, 227);
             this.throatTabPage.TabIndex = 2;
             this.throatTabPage.Text = "Throat";
             this.throatTabPage.UseVisualStyleBackColor = true;
+            // 
+            // throatDGV
+            // 
+            this.throatDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.throatDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.throatDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.throatDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.throatDGV.ColumnHeadersVisible = false;
+            this.throatDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.throat});
+            this.throatDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.throatDGV.Location = new System.Drawing.Point(0, 0);
+            this.throatDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.throatDGV.Name = "throatDGV";
+            this.throatDGV.RowHeadersWidth = 25;
+            this.throatDGV.Size = new System.Drawing.Size(1304, 227);
+            this.throatDGV.TabIndex = 8;
+            // 
+            // throat
+            // 
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.throat.DefaultCellStyle = dataGridViewCellStyle5;
+            this.throat.HeaderText = "";
+            this.throat.Name = "throat";
+            this.throat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.throat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // maxillofacialTabPage
             // 
             this.maxillofacialTabPage.Controls.Add(this.maxillofacialDGV);
             this.maxillofacialTabPage.Location = new System.Drawing.Point(4, 29);
             this.maxillofacialTabPage.Name = "maxillofacialTabPage";
-            this.maxillofacialTabPage.Size = new System.Drawing.Size(1300, 239);
+            this.maxillofacialTabPage.Size = new System.Drawing.Size(1304, 227);
             this.maxillofacialTabPage.TabIndex = 4;
             this.maxillofacialTabPage.Text = "Maxillofacial";
             this.maxillofacialTabPage.UseVisualStyleBackColor = true;
+            // 
+            // maxillofacialDGV
+            // 
+            this.maxillofacialDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.maxillofacialDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.maxillofacialDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.maxillofacialDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.maxillofacialDGV.ColumnHeadersVisible = false;
+            this.maxillofacialDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.maxillofacial});
+            this.maxillofacialDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.maxillofacialDGV.Location = new System.Drawing.Point(0, 0);
+            this.maxillofacialDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.maxillofacialDGV.Name = "maxillofacialDGV";
+            this.maxillofacialDGV.RowHeadersWidth = 25;
+            this.maxillofacialDGV.Size = new System.Drawing.Size(1304, 227);
+            this.maxillofacialDGV.TabIndex = 9;
+            // 
+            // maxillofacial
+            // 
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.maxillofacial.DefaultCellStyle = dataGridViewCellStyle6;
+            this.maxillofacial.HeaderText = "";
+            this.maxillofacial.Name = "maxillofacial";
+            this.maxillofacial.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.maxillofacial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // headNeckTabPage
             // 
             this.headNeckTabPage.Controls.Add(this.headNeckDGV);
             this.headNeckTabPage.Location = new System.Drawing.Point(4, 29);
             this.headNeckTabPage.Name = "headNeckTabPage";
-            this.headNeckTabPage.Size = new System.Drawing.Size(1300, 239);
+            this.headNeckTabPage.Size = new System.Drawing.Size(1304, 227);
             this.headNeckTabPage.TabIndex = 5;
             this.headNeckTabPage.Text = "Head & Neck";
             this.headNeckTabPage.UseVisualStyleBackColor = true;
+            // 
+            // headNeckDGV
+            // 
+            this.headNeckDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.headNeckDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.headNeckDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.headNeckDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.headNeckDGV.ColumnHeadersVisible = false;
+            this.headNeckDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.head_and_neck});
+            this.headNeckDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.headNeckDGV.Location = new System.Drawing.Point(0, 0);
+            this.headNeckDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.headNeckDGV.Name = "headNeckDGV";
+            this.headNeckDGV.RowHeadersWidth = 25;
+            this.headNeckDGV.Size = new System.Drawing.Size(1304, 227);
+            this.headNeckDGV.TabIndex = 9;
+            // 
+            // head_and_neck
+            // 
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.head_and_neck.DefaultCellStyle = dataGridViewCellStyle7;
+            this.head_and_neck.HeaderText = "";
+            this.head_and_neck.Name = "head_and_neck";
+            this.head_and_neck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.head_and_neck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // othersTabPage
             // 
             this.othersTabPage.Controls.Add(this.othersDGV);
             this.othersTabPage.Location = new System.Drawing.Point(4, 29);
             this.othersTabPage.Name = "othersTabPage";
-            this.othersTabPage.Size = new System.Drawing.Size(1300, 239);
+            this.othersTabPage.Size = new System.Drawing.Size(1304, 227);
             this.othersTabPage.TabIndex = 3;
             this.othersTabPage.Text = "Others";
             this.othersTabPage.UseVisualStyleBackColor = true;
+            // 
+            // othersDGV
+            // 
+            this.othersDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.othersDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.othersDGV.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.othersDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.othersDGV.ColumnHeadersVisible = false;
+            this.othersDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.others});
+            this.othersDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.othersDGV.Location = new System.Drawing.Point(0, 0);
+            this.othersDGV.Margin = new System.Windows.Forms.Padding(0);
+            this.othersDGV.Name = "othersDGV";
+            this.othersDGV.RowHeadersWidth = 25;
+            this.othersDGV.Size = new System.Drawing.Size(1304, 227);
+            this.othersDGV.TabIndex = 8;
+            // 
+            // others
+            // 
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.others.DefaultCellStyle = dataGridViewCellStyle8;
+            this.others.HeaderText = "";
+            this.others.Name = "others";
+            this.others.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.others.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // label3
             // 
@@ -1824,6 +1995,35 @@
             this.tableLayoutPanel13.Size = new System.Drawing.Size(1678, 824);
             this.tableLayoutPanel13.TabIndex = 0;
             // 
+            // othersPrescriptionDGV
+            // 
+            this.othersPrescriptionDGV.AllowUserToAddRows = false;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.othersPrescriptionDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
+            this.othersPrescriptionDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.othersPrescriptionDGV.BackgroundColor = System.Drawing.Color.White;
+            this.othersPrescriptionDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.othersPrescriptionDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.othersPrescriptionDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.generic_names,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9,
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewTextBoxColumn11,
+            this.dataGridViewTextBoxColumn4});
+            this.othersPrescriptionDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.othersPrescriptionDGV.GridColor = System.Drawing.SystemColors.ActiveBorder;
+            this.othersPrescriptionDGV.Location = new System.Drawing.Point(3, 390);
+            this.othersPrescriptionDGV.Name = "othersPrescriptionDGV";
+            this.othersPrescriptionDGV.Size = new System.Drawing.Size(1672, 381);
+            this.othersPrescriptionDGV.TabIndex = 5;
+            // 
             // prescriptionDGV
             // 
             this.prescriptionDGV.AllowUserToAddRows = false;
@@ -1852,270 +2052,6 @@
             this.prescriptionDGV.Name = "prescriptionDGV";
             this.prescriptionDGV.Size = new System.Drawing.Size(1672, 381);
             this.prescriptionDGV.TabIndex = 2;
-            // 
-            // tabLaboratories
-            // 
-            this.tabLaboratories.Controls.Add(this.tableLayoutPanel14);
-            this.tabLaboratories.Controls.Add(this.labDGV);
-            this.tabLaboratories.Location = new System.Drawing.Point(4, 29);
-            this.tabLaboratories.Name = "tabLaboratories";
-            this.tabLaboratories.Size = new System.Drawing.Size(1678, 824);
-            this.tabLaboratories.TabIndex = 4;
-            this.tabLaboratories.Text = "Laboratories";
-            this.tabLaboratories.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel14
-            // 
-            this.tableLayoutPanel14.ColumnCount = 1;
-            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel14.Controls.Add(this.labResultsPanel, 0, 1);
-            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel17, 0, 0);
-            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel14.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
-            this.tableLayoutPanel14.RowCount = 2;
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel14.Size = new System.Drawing.Size(1678, 824);
-            this.tableLayoutPanel14.TabIndex = 4;
-            // 
-            // labRequestDGV
-            // 
-            this.labRequestDGV.AllowUserToAddRows = false;
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labRequestDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle18;
-            this.labRequestDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.labRequestDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.labRequestDGV.BackgroundColor = System.Drawing.Color.White;
-            this.labRequestDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labRequestDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.labRequestDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.request_id,
-            this.patient_id,
-            this.consultation_id,
-            this.test_ids,
-            this.request_date,
-            this.test_list});
-            this.labRequestDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labRequestDGV.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.labRequestDGV.Location = new System.Drawing.Point(3, 3);
-            this.labRequestDGV.Name = "labRequestDGV";
-            this.labRequestDGV.ReadOnly = true;
-            this.labRequestDGV.Size = new System.Drawing.Size(1666, 185);
-            this.labRequestDGV.TabIndex = 2;
-            // 
-            // labResultsPanel
-            // 
-            this.labResultsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labResultsPanel.Location = new System.Drawing.Point(3, 250);
-            this.labResultsPanel.Name = "labResultsPanel";
-            this.labResultsPanel.Size = new System.Drawing.Size(1672, 571);
-            this.labResultsPanel.TabIndex = 3;
-            // 
-            // labDGV
-            // 
-            this.labDGV.AllowUserToAddRows = false;
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle20;
-            this.labDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.labDGV.BackgroundColor = System.Drawing.Color.White;
-            this.labDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.labDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labDGV.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.labDGV.Location = new System.Drawing.Point(0, 0);
-            this.labDGV.Name = "labDGV";
-            this.labDGV.Size = new System.Drawing.Size(1678, 824);
-            this.labDGV.TabIndex = 3;
-            // 
-            // tableLayoutPanel17
-            // 
-            this.tableLayoutPanel17.ColumnCount = 1;
-            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel19, 0, 1);
-            this.tableLayoutPanel17.Controls.Add(this.labRequestDGV, 0, 0);
-            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel17.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
-            this.tableLayoutPanel17.RowCount = 2;
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel17.Size = new System.Drawing.Size(1672, 241);
-            this.tableLayoutPanel17.TabIndex = 4;
-            // 
-            // request_id
-            // 
-            this.request_id.DataPropertyName = "request_id";
-            this.request_id.HeaderText = "Column1";
-            this.request_id.Name = "request_id";
-            this.request_id.ReadOnly = true;
-            this.request_id.Visible = false;
-            // 
-            // patient_id
-            // 
-            this.patient_id.DataPropertyName = "patient_id";
-            this.patient_id.HeaderText = "Column1";
-            this.patient_id.Name = "patient_id";
-            this.patient_id.ReadOnly = true;
-            this.patient_id.Visible = false;
-            // 
-            // consultation_id
-            // 
-            this.consultation_id.DataPropertyName = "consultation_id";
-            this.consultation_id.HeaderText = "Column1";
-            this.consultation_id.Name = "consultation_id";
-            this.consultation_id.ReadOnly = true;
-            this.consultation_id.Visible = false;
-            // 
-            // test_ids
-            // 
-            this.test_ids.DataPropertyName = "test_ids";
-            this.test_ids.HeaderText = "Column1";
-            this.test_ids.Name = "test_ids";
-            this.test_ids.ReadOnly = true;
-            this.test_ids.Visible = false;
-            // 
-            // request_date
-            // 
-            this.request_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.request_date.DataPropertyName = "request_date";
-            this.request_date.HeaderText = "Date";
-            this.request_date.Name = "request_date";
-            this.request_date.ReadOnly = true;
-            // 
-            // test_list
-            // 
-            this.test_list.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.test_list.DataPropertyName = "test_list";
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.test_list.DefaultCellStyle = dataGridViewCellStyle19;
-            this.test_list.FillWeight = 98.47716F;
-            this.test_list.HeaderText = "Tests";
-            this.test_list.Name = "test_list";
-            this.test_list.ReadOnly = true;
-            // 
-            // othersPrescriptionDGV
-            // 
-            this.othersPrescriptionDGV.AllowUserToAddRows = false;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.othersPrescriptionDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
-            this.othersPrescriptionDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.othersPrescriptionDGV.BackgroundColor = System.Drawing.Color.White;
-            this.othersPrescriptionDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.othersPrescriptionDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.othersPrescriptionDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6,
-            this.generic_names,
-            this.dataGridViewTextBoxColumn7,
-            this.dataGridViewTextBoxColumn8,
-            this.dataGridViewTextBoxColumn9,
-            this.dataGridViewTextBoxColumn10,
-            this.dataGridViewTextBoxColumn11,
-            this.dataGridViewTextBoxColumn4});
-            this.othersPrescriptionDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.othersPrescriptionDGV.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.othersPrescriptionDGV.Location = new System.Drawing.Point(3, 390);
-            this.othersPrescriptionDGV.Name = "othersPrescriptionDGV";
-            this.othersPrescriptionDGV.Size = new System.Drawing.Size(1672, 381);
-            this.othersPrescriptionDGV.TabIndex = 5;
-            // 
-            // tableLayoutPanel18
-            // 
-            this.tableLayoutPanel18.ColumnCount = 2;
-            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel18.Controls.Add(this.printPrescriptionButton, 1, 0);
-            this.tableLayoutPanel18.Controls.Add(this.newPrescriptionButton, 0, 0);
-            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel18.Location = new System.Drawing.Point(3, 777);
-            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
-            this.tableLayoutPanel18.RowCount = 1;
-            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel18.Size = new System.Drawing.Size(1672, 44);
-            this.tableLayoutPanel18.TabIndex = 6;
-            // 
-            // newPrescriptionButton
-            // 
-            this.newPrescriptionButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.newPrescriptionButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.newPrescriptionButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.newPrescriptionButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newPrescriptionButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.newPrescriptionButton.Location = new System.Drawing.Point(1257, 5);
-            this.newPrescriptionButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.newPrescriptionButton.Name = "newPrescriptionButton";
-            this.newPrescriptionButton.Size = new System.Drawing.Size(211, 34);
-            this.newPrescriptionButton.TabIndex = 5;
-            this.newPrescriptionButton.Text = "Create New Prescription";
-            this.newPrescriptionButton.UseVisualStyleBackColor = false;
-            this.newPrescriptionButton.Click += new System.EventHandler(this.newPrescriptionButton_Click_1);
-            // 
-            // printPrescriptionButton
-            // 
-            this.printPrescriptionButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.printPrescriptionButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.printPrescriptionButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.printPrescriptionButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.printPrescriptionButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.printPrescriptionButton.Location = new System.Drawing.Point(1476, 5);
-            this.printPrescriptionButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.printPrescriptionButton.Name = "printPrescriptionButton";
-            this.printPrescriptionButton.Size = new System.Drawing.Size(192, 34);
-            this.printPrescriptionButton.TabIndex = 6;
-            this.printPrescriptionButton.Text = "Print Prescription";
-            this.printPrescriptionButton.UseVisualStyleBackColor = false;
-            this.printPrescriptionButton.Click += new System.EventHandler(this.printPrescriptionButton_Click);
-            // 
-            // tableLayoutPanel19
-            // 
-            this.tableLayoutPanel19.ColumnCount = 2;
-            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel19.Controls.Add(this.printLabRequest, 1, 0);
-            this.tableLayoutPanel19.Controls.Add(this.createNewLabRequest, 0, 0);
-            this.tableLayoutPanel19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel19.Location = new System.Drawing.Point(3, 194);
-            this.tableLayoutPanel19.Name = "tableLayoutPanel19";
-            this.tableLayoutPanel19.RowCount = 1;
-            this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel19.Size = new System.Drawing.Size(1666, 44);
-            this.tableLayoutPanel19.TabIndex = 7;
-            // 
-            // printLabRequest
-            // 
-            this.printLabRequest.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.printLabRequest.Dock = System.Windows.Forms.DockStyle.Right;
-            this.printLabRequest.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.printLabRequest.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.printLabRequest.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.printLabRequest.Location = new System.Drawing.Point(1470, 5);
-            this.printLabRequest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.printLabRequest.Name = "printLabRequest";
-            this.printLabRequest.Size = new System.Drawing.Size(192, 34);
-            this.printLabRequest.TabIndex = 6;
-            this.printLabRequest.Text = "Print Lab Request";
-            this.printLabRequest.UseVisualStyleBackColor = false;
-            this.printLabRequest.Click += new System.EventHandler(this.printLabRequest_Click);
-            // 
-            // createNewLabRequest
-            // 
-            this.createNewLabRequest.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.createNewLabRequest.Dock = System.Windows.Forms.DockStyle.Right;
-            this.createNewLabRequest.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.createNewLabRequest.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createNewLabRequest.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.createNewLabRequest.Location = new System.Drawing.Point(1251, 5);
-            this.createNewLabRequest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.createNewLabRequest.Name = "createNewLabRequest";
-            this.createNewLabRequest.Size = new System.Drawing.Size(211, 34);
-            this.createNewLabRequest.TabIndex = 5;
-            this.createNewLabRequest.Text = "Create New Lab Request";
-            this.createNewLabRequest.UseVisualStyleBackColor = false;
-            this.createNewLabRequest.Click += new System.EventHandler(this.createNewLabRequest_Click);
             // 
             // prescription_id
             // 
@@ -2203,12 +2139,247 @@
             this.quantity.HeaderText = "Quantity";
             this.quantity.Name = "quantity";
             // 
-            // dataGridViewTextBoxColumn1
+            // tableLayoutPanel18
             // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "prescription_other_id";
-            this.dataGridViewTextBoxColumn1.HeaderText = "prescription_id";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Visible = false;
+            this.tableLayoutPanel18.ColumnCount = 2;
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel18.Controls.Add(this.printPrescriptionButton, 1, 0);
+            this.tableLayoutPanel18.Controls.Add(this.newPrescriptionButton, 0, 0);
+            this.tableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel18.Location = new System.Drawing.Point(3, 777);
+            this.tableLayoutPanel18.Name = "tableLayoutPanel18";
+            this.tableLayoutPanel18.RowCount = 1;
+            this.tableLayoutPanel18.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel18.Size = new System.Drawing.Size(1672, 44);
+            this.tableLayoutPanel18.TabIndex = 6;
+            // 
+            // printPrescriptionButton
+            // 
+            this.printPrescriptionButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.printPrescriptionButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.printPrescriptionButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.printPrescriptionButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.printPrescriptionButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.printPrescriptionButton.Location = new System.Drawing.Point(1476, 5);
+            this.printPrescriptionButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.printPrescriptionButton.Name = "printPrescriptionButton";
+            this.printPrescriptionButton.Size = new System.Drawing.Size(192, 34);
+            this.printPrescriptionButton.TabIndex = 6;
+            this.printPrescriptionButton.Text = "Print Prescription";
+            this.printPrescriptionButton.UseVisualStyleBackColor = false;
+            this.printPrescriptionButton.Click += new System.EventHandler(this.printPrescriptionButton_Click);
+            // 
+            // newPrescriptionButton
+            // 
+            this.newPrescriptionButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.newPrescriptionButton.Dock = System.Windows.Forms.DockStyle.Right;
+            this.newPrescriptionButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.newPrescriptionButton.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newPrescriptionButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.newPrescriptionButton.Location = new System.Drawing.Point(1257, 5);
+            this.newPrescriptionButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.newPrescriptionButton.Name = "newPrescriptionButton";
+            this.newPrescriptionButton.Size = new System.Drawing.Size(211, 34);
+            this.newPrescriptionButton.TabIndex = 5;
+            this.newPrescriptionButton.Text = "Create New Prescription";
+            this.newPrescriptionButton.UseVisualStyleBackColor = false;
+            this.newPrescriptionButton.Click += new System.EventHandler(this.newPrescriptionButton_Click_1);
+            // 
+            // tabLaboratories
+            // 
+            this.tabLaboratories.Controls.Add(this.tableLayoutPanel14);
+            this.tabLaboratories.Controls.Add(this.labDGV);
+            this.tabLaboratories.Location = new System.Drawing.Point(4, 29);
+            this.tabLaboratories.Name = "tabLaboratories";
+            this.tabLaboratories.Size = new System.Drawing.Size(1678, 824);
+            this.tabLaboratories.TabIndex = 4;
+            this.tabLaboratories.Text = "Laboratories";
+            this.tabLaboratories.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel14
+            // 
+            this.tableLayoutPanel14.ColumnCount = 1;
+            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel14.Controls.Add(this.labResultsPanel, 0, 1);
+            this.tableLayoutPanel14.Controls.Add(this.tableLayoutPanel17, 0, 0);
+            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel14.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
+            this.tableLayoutPanel14.RowCount = 2;
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(1678, 824);
+            this.tableLayoutPanel14.TabIndex = 4;
+            // 
+            // labResultsPanel
+            // 
+            this.labResultsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labResultsPanel.Location = new System.Drawing.Point(3, 250);
+            this.labResultsPanel.Name = "labResultsPanel";
+            this.labResultsPanel.Size = new System.Drawing.Size(1672, 571);
+            this.labResultsPanel.TabIndex = 3;
+            // 
+            // tableLayoutPanel17
+            // 
+            this.tableLayoutPanel17.ColumnCount = 1;
+            this.tableLayoutPanel17.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.Controls.Add(this.tableLayoutPanel19, 0, 1);
+            this.tableLayoutPanel17.Controls.Add(this.labRequestDGV, 0, 0);
+            this.tableLayoutPanel17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel17.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel17.Name = "tableLayoutPanel17";
+            this.tableLayoutPanel17.RowCount = 2;
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel17.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel17.Size = new System.Drawing.Size(1672, 241);
+            this.tableLayoutPanel17.TabIndex = 4;
+            // 
+            // tableLayoutPanel19
+            // 
+            this.tableLayoutPanel19.ColumnCount = 2;
+            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel19.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel19.Controls.Add(this.printLabRequest, 1, 0);
+            this.tableLayoutPanel19.Controls.Add(this.createNewLabRequest, 0, 0);
+            this.tableLayoutPanel19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel19.Location = new System.Drawing.Point(3, 194);
+            this.tableLayoutPanel19.Name = "tableLayoutPanel19";
+            this.tableLayoutPanel19.RowCount = 1;
+            this.tableLayoutPanel19.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel19.Size = new System.Drawing.Size(1666, 44);
+            this.tableLayoutPanel19.TabIndex = 7;
+            // 
+            // printLabRequest
+            // 
+            this.printLabRequest.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.printLabRequest.Dock = System.Windows.Forms.DockStyle.Right;
+            this.printLabRequest.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.printLabRequest.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.printLabRequest.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.printLabRequest.Location = new System.Drawing.Point(1470, 5);
+            this.printLabRequest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.printLabRequest.Name = "printLabRequest";
+            this.printLabRequest.Size = new System.Drawing.Size(192, 34);
+            this.printLabRequest.TabIndex = 6;
+            this.printLabRequest.Text = "Print Lab Request";
+            this.printLabRequest.UseVisualStyleBackColor = false;
+            this.printLabRequest.Click += new System.EventHandler(this.printLabRequest_Click);
+            // 
+            // createNewLabRequest
+            // 
+            this.createNewLabRequest.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.createNewLabRequest.Dock = System.Windows.Forms.DockStyle.Right;
+            this.createNewLabRequest.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.createNewLabRequest.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.createNewLabRequest.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.createNewLabRequest.Location = new System.Drawing.Point(1251, 5);
+            this.createNewLabRequest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.createNewLabRequest.Name = "createNewLabRequest";
+            this.createNewLabRequest.Size = new System.Drawing.Size(211, 34);
+            this.createNewLabRequest.TabIndex = 5;
+            this.createNewLabRequest.Text = "Create New Lab Request";
+            this.createNewLabRequest.UseVisualStyleBackColor = false;
+            this.createNewLabRequest.Click += new System.EventHandler(this.createNewLabRequest_Click);
+            // 
+            // labRequestDGV
+            // 
+            this.labRequestDGV.AllowUserToAddRows = false;
+            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.labRequestDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle18;
+            this.labRequestDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.labRequestDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.labRequestDGV.BackgroundColor = System.Drawing.Color.White;
+            this.labRequestDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labRequestDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.labRequestDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.request_id,
+            this.patient_id,
+            this.consultation_id,
+            this.test_ids,
+            this.request_date,
+            this.test_list});
+            this.labRequestDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labRequestDGV.GridColor = System.Drawing.SystemColors.ActiveBorder;
+            this.labRequestDGV.Location = new System.Drawing.Point(3, 3);
+            this.labRequestDGV.Name = "labRequestDGV";
+            this.labRequestDGV.ReadOnly = true;
+            this.labRequestDGV.Size = new System.Drawing.Size(1666, 185);
+            this.labRequestDGV.TabIndex = 2;
+            // 
+            // request_id
+            // 
+            this.request_id.DataPropertyName = "request_id";
+            this.request_id.HeaderText = "Column1";
+            this.request_id.Name = "request_id";
+            this.request_id.ReadOnly = true;
+            this.request_id.Visible = false;
+            // 
+            // patient_id
+            // 
+            this.patient_id.DataPropertyName = "patient_id";
+            this.patient_id.HeaderText = "Column1";
+            this.patient_id.Name = "patient_id";
+            this.patient_id.ReadOnly = true;
+            this.patient_id.Visible = false;
+            // 
+            // consultation_id
+            // 
+            this.consultation_id.DataPropertyName = "consultation_id";
+            this.consultation_id.HeaderText = "Column1";
+            this.consultation_id.Name = "consultation_id";
+            this.consultation_id.ReadOnly = true;
+            this.consultation_id.Visible = false;
+            // 
+            // test_ids
+            // 
+            this.test_ids.DataPropertyName = "test_ids";
+            this.test_ids.HeaderText = "Column1";
+            this.test_ids.Name = "test_ids";
+            this.test_ids.ReadOnly = true;
+            this.test_ids.Visible = false;
+            // 
+            // request_date
+            // 
+            this.request_date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.request_date.DataPropertyName = "request_date";
+            this.request_date.HeaderText = "Date";
+            this.request_date.Name = "request_date";
+            this.request_date.ReadOnly = true;
+            // 
+            // test_list
+            // 
+            this.test_list.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.test_list.DataPropertyName = "test_list";
+            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.test_list.DefaultCellStyle = dataGridViewCellStyle19;
+            this.test_list.FillWeight = 98.47716F;
+            this.test_list.HeaderText = "Tests";
+            this.test_list.Name = "test_list";
+            this.test_list.ReadOnly = true;
+            // 
+            // labDGV
+            // 
+            this.labDGV.AllowUserToAddRows = false;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.labDGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle20;
+            this.labDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.labDGV.BackgroundColor = System.Drawing.Color.White;
+            this.labDGV.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.labDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.labDGV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labDGV.GridColor = System.Drawing.SystemColors.ActiveBorder;
+            this.labDGV.Location = new System.Drawing.Point(0, 0);
+            this.labDGV.Name = "labDGV";
+            this.labDGV.Size = new System.Drawing.Size(1678, 824);
+            this.labDGV.TabIndex = 3;
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "prescription_other_id";
+            this.id.Name = "id";
+            this.id.Visible = false;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -2289,177 +2460,6 @@
             this.dataGridViewTextBoxColumn4.HeaderText = "Quantity";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
-            // ears
-            // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ears.DefaultCellStyle = dataGridViewCellStyle3;
-            this.ears.HeaderText = "";
-            this.ears.Name = "ears";
-            this.ears.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ears.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // earsDGV
-            // 
-            this.earsDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.earsDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.earsDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.earsDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.earsDGV.ColumnHeadersVisible = false;
-            this.earsDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ears});
-            this.earsDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.earsDGV.Location = new System.Drawing.Point(0, 0);
-            this.earsDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.earsDGV.Name = "earsDGV";
-            this.earsDGV.RowHeadersWidth = 25;
-            this.earsDGV.Size = new System.Drawing.Size(1304, 227);
-            this.earsDGV.TabIndex = 8;
-            // 
-            // nose
-            // 
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nose.DefaultCellStyle = dataGridViewCellStyle4;
-            this.nose.HeaderText = "";
-            this.nose.Name = "nose";
-            this.nose.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.nose.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // noseDGV
-            // 
-            this.noseDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.noseDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.noseDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.noseDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.noseDGV.ColumnHeadersVisible = false;
-            this.noseDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nose});
-            this.noseDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.noseDGV.Location = new System.Drawing.Point(0, 0);
-            this.noseDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.noseDGV.Name = "noseDGV";
-            this.noseDGV.RowHeadersWidth = 25;
-            this.noseDGV.Size = new System.Drawing.Size(1300, 239);
-            this.noseDGV.TabIndex = 8;
-            // 
-            // throat
-            // 
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.throat.DefaultCellStyle = dataGridViewCellStyle5;
-            this.throat.HeaderText = "";
-            this.throat.Name = "throat";
-            this.throat.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.throat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // throatDGV
-            // 
-            this.throatDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.throatDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.throatDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.throatDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.throatDGV.ColumnHeadersVisible = false;
-            this.throatDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.throat});
-            this.throatDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.throatDGV.Location = new System.Drawing.Point(0, 0);
-            this.throatDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.throatDGV.Name = "throatDGV";
-            this.throatDGV.RowHeadersWidth = 25;
-            this.throatDGV.Size = new System.Drawing.Size(1300, 239);
-            this.throatDGV.TabIndex = 8;
-            // 
-            // maxillofacial
-            // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maxillofacial.DefaultCellStyle = dataGridViewCellStyle6;
-            this.maxillofacial.HeaderText = "";
-            this.maxillofacial.Name = "maxillofacial";
-            this.maxillofacial.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.maxillofacial.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // maxillofacialDGV
-            // 
-            this.maxillofacialDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.maxillofacialDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.maxillofacialDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.maxillofacialDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.maxillofacialDGV.ColumnHeadersVisible = false;
-            this.maxillofacialDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.maxillofacial});
-            this.maxillofacialDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.maxillofacialDGV.Location = new System.Drawing.Point(0, 0);
-            this.maxillofacialDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.maxillofacialDGV.Name = "maxillofacialDGV";
-            this.maxillofacialDGV.RowHeadersWidth = 25;
-            this.maxillofacialDGV.Size = new System.Drawing.Size(1300, 239);
-            this.maxillofacialDGV.TabIndex = 9;
-            // 
-            // head_and_neck
-            // 
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.head_and_neck.DefaultCellStyle = dataGridViewCellStyle7;
-            this.head_and_neck.HeaderText = "";
-            this.head_and_neck.Name = "head_and_neck";
-            this.head_and_neck.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.head_and_neck.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // headNeckDGV
-            // 
-            this.headNeckDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.headNeckDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.headNeckDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.headNeckDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.headNeckDGV.ColumnHeadersVisible = false;
-            this.headNeckDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.head_and_neck});
-            this.headNeckDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.headNeckDGV.Location = new System.Drawing.Point(0, 0);
-            this.headNeckDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.headNeckDGV.Name = "headNeckDGV";
-            this.headNeckDGV.RowHeadersWidth = 25;
-            this.headNeckDGV.Size = new System.Drawing.Size(1300, 239);
-            this.headNeckDGV.TabIndex = 9;
-            // 
-            // others
-            // 
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.others.DefaultCellStyle = dataGridViewCellStyle8;
-            this.others.HeaderText = "";
-            this.others.Name = "others";
-            this.others.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.others.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // othersDGV
-            // 
-            this.othersDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.othersDGV.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.othersDGV.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.othersDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.othersDGV.ColumnHeadersVisible = false;
-            this.othersDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.others});
-            this.othersDGV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.othersDGV.Location = new System.Drawing.Point(0, 0);
-            this.othersDGV.Margin = new System.Windows.Forms.Padding(0);
-            this.othersDGV.Name = "othersDGV";
-            this.othersDGV.RowHeadersWidth = 25;
-            this.othersDGV.Size = new System.Drawing.Size(1300, 239);
-            this.othersDGV.TabIndex = 8;
-            // 
-            // consultationHistoryContextMenuStrip
-            // 
-            this.consultationHistoryContextMenuStrip.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.medicalCertificateToolStripMenuItem});
-            this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
-            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(209, 28);
-            // 
-            // medicalCertificateToolStripMenuItem
-            // 
-            this.medicalCertificateToolStripMenuItem.Name = "medicalCertificateToolStripMenuItem";
-            this.medicalCertificateToolStripMenuItem.Size = new System.Drawing.Size(208, 24);
-            this.medicalCertificateToolStripMenuItem.Text = "Medical Certificate";
-            this.medicalCertificateToolStripMenuItem.Click += new System.EventHandler(this.medicalCertificateToolStripMenuItem_Click);
-            // 
             // ConsultationHistoryControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2480,6 +2480,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.consultationDateDataGridView)).EndInit();
+            this.consultationHistoryContextMenuStrip.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabConsultation.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -2493,11 +2494,17 @@
             this.tableLayoutPanel8.PerformLayout();
             this.entTabControl.ResumeLayout(false);
             this.earsTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.earsDGV)).EndInit();
             this.noseTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.noseDGV)).EndInit();
             this.throatTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).EndInit();
             this.maxillofacialTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.maxillofacialDGV)).EndInit();
             this.headNeckTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.headNeckDGV)).EndInit();
             this.othersTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.othersDGV)).EndInit();
             this.tableLayoutPanel9.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.diagnosisDGV)).EndInit();
@@ -2527,22 +2534,15 @@
             this.tabAttachments.ResumeLayout(false);
             this.tabPrescriptions.ResumeLayout(false);
             this.tableLayoutPanel13.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.othersPrescriptionDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.prescriptionDGV)).EndInit();
+            this.tableLayoutPanel18.ResumeLayout(false);
             this.tabLaboratories.ResumeLayout(false);
             this.tableLayoutPanel14.ResumeLayout(false);
+            this.tableLayoutPanel17.ResumeLayout(false);
+            this.tableLayoutPanel19.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.labRequestDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.labDGV)).EndInit();
-            this.tableLayoutPanel17.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.othersPrescriptionDGV)).EndInit();
-            this.tableLayoutPanel18.ResumeLayout(false);
-            this.tableLayoutPanel19.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.earsDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.noseDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.throatDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maxillofacialDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.headNeckDGV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.othersDGV)).EndInit();
-            this.consultationHistoryContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2684,18 +2684,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel19;
         private System.Windows.Forms.Button printLabRequest;
         private System.Windows.Forms.Button createNewLabRequest;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn generic_names;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn prescription_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn patient_ids;
         private System.Windows.Forms.DataGridViewTextBoxColumn item_id;
@@ -2722,5 +2710,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn others;
         private System.Windows.Forms.ContextMenuStrip consultationHistoryContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem medicalCertificateToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn generic_names;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     }
 }
