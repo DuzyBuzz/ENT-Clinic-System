@@ -293,32 +293,47 @@ namespace ENT_Clinic_System.PrintingForms
         /// <summary>
         /// Saves an entry in the issued_medical_certificate table.
         /// </summary>
-        public static void SaveIssuedMedicalCertificate(int consultationId)
+        public static void SaveIssuedMedicalCertificate(int consultationId, string requester)
         {
             using (var conn = DBConfig.GetConnection())
             {
                 conn.Open();
 
-                string insertSql = @"
-                    INSERT INTO issued_medical_certificate (consultation_id)
-                    VALUES (@consultationId)";
+                // 1. Check if the pair already exists
+                const string checkSql = @"
+            SELECT COUNT(*)
+            FROM issued_medical_certificate
+            WHERE consultation_id = @consultationId
+              AND requester = @requester;";
 
-                using (var cmd = new MySqlCommand(insertSql, conn))
+                using (var checkCmd = new MySqlCommand(checkSql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@consultationId", consultationId);
+                    checkCmd.Parameters.Add("@consultationId", MySqlDbType.Int32).Value = consultationId;
+                    checkCmd.Parameters.Add("@requester", MySqlDbType.VarChar).Value = requester;
 
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (MySqlException ex)
-                    {
-                        if (ex.Number != 1062) // Ignore duplicate entries
-                            throw;
-                    }
+                    long exists = (long)checkCmd.ExecuteScalar();
+
+                    // If already existing → ignore
+                    if (exists > 0)
+                        return;
+                }
+
+                // 2. Insert only if not existing
+                const string insertSql = @"
+            INSERT INTO issued_medical_certificate (consultation_id, requester)
+            VALUES (@consultationId, @requester);";
+
+                using (var insertCmd = new MySqlCommand(insertSql, conn))
+                {
+                    insertCmd.Parameters.Add("@consultationId", MySqlDbType.Int32).Value = consultationId;
+                    insertCmd.Parameters.Add("@requester", MySqlDbType.VarChar).Value = requester;
+
+                    insertCmd.ExecuteNonQuery();
                 }
             }
         }
+
+
 
         /// <summary>
         /// Displays the print preview with a custom "Print" button.
@@ -353,7 +368,7 @@ namespace ENT_Clinic_System.PrintingForms
                             if (printDialog.ShowDialog() == DialogResult.OK)
                                 printDocument.Print();
 
-                            SaveIssuedMedicalCertificate(consultationId);
+                            SaveIssuedMedicalCertificate(consultationId, requester);
                         }
                     };
                     tool.Items.Insert(0, customPrint);

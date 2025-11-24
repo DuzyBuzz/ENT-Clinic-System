@@ -46,6 +46,8 @@
             this.patientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.issuedMedicalCertificatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultationsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.paymentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,6 +55,7 @@
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.expensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -181,13 +184,15 @@
             this.menuStrip1.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
+            this.fileToolStripMenuItem,
             this.patientsToolStripMenuItem,
             this.consultationsToolStripMenuItem1,
             this.consultationsToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.paymentsToolStripMenuItem,
             this.reportsToolStripMenuItem,
-            this.accountToolStripMenuItem});
+            this.accountToolStripMenuItem,
+            this.expensesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(12, 5, 0, 5);
@@ -202,6 +207,21 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(28, 29);
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.issuedMedicalCertificatesToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 29);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // issuedMedicalCertificatesToolStripMenuItem
+            // 
+            this.issuedMedicalCertificatesToolStripMenuItem.Name = "issuedMedicalCertificatesToolStripMenuItem";
+            this.issuedMedicalCertificatesToolStripMenuItem.Size = new System.Drawing.Size(297, 30);
+            this.issuedMedicalCertificatesToolStripMenuItem.Text = "Issued Medical Certificates";
+            this.issuedMedicalCertificatesToolStripMenuItem.Click += new System.EventHandler(this.issuedMedicalCertificatesToolStripMenuItem_Click);
             // 
             // consultationsToolStripMenuItem1
             // 
@@ -257,6 +277,14 @@
             this.logoutToolStripMenuItem.Size = new System.Drawing.Size(257, 30);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            // 
+            // expensesToolStripMenuItem
+            // 
+            this.expensesToolStripMenuItem.Name = "expensesToolStripMenuItem";
+            this.expensesToolStripMenuItem.Size = new System.Drawing.Size(101, 29);
+            this.expensesToolStripMenuItem.Text = "Expenses";
+            this.expensesToolStripMenuItem.Visible = false;
+            this.expensesToolStripMenuItem.Click += new System.EventHandler(this.expensesToolStripMenuItem_Click);
             // 
             // MainPanel
             // 
@@ -322,5 +350,8 @@
         private System.Windows.Forms.ToolStripMenuItem profileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem admitOrderTemplateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem issuedMedicalCertificatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem expensesToolStripMenuItem;
     }
 }

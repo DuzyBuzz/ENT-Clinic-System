@@ -50,9 +50,6 @@
             this.dateToPicker = new System.Windows.Forms.DateTimePicker();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.consulationDGV = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.searchDateButton = new System.Windows.Forms.Button();
-            this.pageLabel = new System.Windows.Forms.Label();
             this.full_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.consultation_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.patient_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -100,6 +97,9 @@
             this.recorded_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.history_created_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.history_updated_at = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.searchDateButton = new System.Windows.Forms.Button();
+            this.pageLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.consulationDGV)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
@@ -262,61 +262,6 @@
             this.consulationDGV.Size = new System.Drawing.Size(1583, 1101);
             this.consulationDGV.TabIndex = 2;
             this.consulationDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.consulationDGV_CellContentClick_1);
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 9;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 249F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel4.Controls.Add(this.refreshButton, 3, 0);
-            this.tableLayoutPanel4.Controls.Add(this.searchButton, 2, 0);
-            this.tableLayoutPanel4.Controls.Add(this.searchTextBox, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.searchDateButton, 8, 0);
-            this.tableLayoutPanel4.Controls.Add(this.pageLabel, 6, 0);
-            this.tableLayoutPanel4.Controls.Add(this.dateToPicker, 7, 0);
-            this.tableLayoutPanel4.Controls.Add(this.dateFromPicker, 5, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 6);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1579, 46);
-            this.tableLayoutPanel4.TabIndex = 0;
-            // 
-            // searchDateButton
-            // 
-            this.searchDateButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchDateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.searchDateButton.Location = new System.Drawing.Point(1431, 3);
-            this.searchDateButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.searchDateButton.Name = "searchDateButton";
-            this.searchDateButton.Size = new System.Drawing.Size(146, 40);
-            this.searchDateButton.TabIndex = 12;
-            this.searchDateButton.Text = "Filter Date";
-            this.searchDateButton.UseVisualStyleBackColor = true;
-            this.searchDateButton.Click += new System.EventHandler(this.searchDateButton_Click);
-            // 
-            // pageLabel
-            // 
-            this.pageLabel.AutoSize = true;
-            this.pageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pageLabel.Font = new System.Drawing.Font("Arial Narrow", 11.25F);
-            this.pageLabel.Location = new System.Drawing.Point(1069, 0);
-            this.pageLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.pageLabel.Name = "pageLabel";
-            this.pageLabel.Size = new System.Drawing.Size(245, 46);
-            this.pageLabel.TabIndex = 9;
-            this.pageLabel.Text = "Page";
-            this.pageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // full_name
             // 
@@ -649,6 +594,61 @@
             this.history_updated_at.Name = "history_updated_at";
             this.history_updated_at.Visible = false;
             this.history_updated_at.Width = 34;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 9;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 249F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel4.Controls.Add(this.refreshButton, 3, 0);
+            this.tableLayoutPanel4.Controls.Add(this.searchButton, 2, 0);
+            this.tableLayoutPanel4.Controls.Add(this.searchTextBox, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.searchDateButton, 8, 0);
+            this.tableLayoutPanel4.Controls.Add(this.pageLabel, 6, 0);
+            this.tableLayoutPanel4.Controls.Add(this.dateToPicker, 7, 0);
+            this.tableLayoutPanel4.Controls.Add(this.dateFromPicker, 5, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 6);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1579, 46);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // searchDateButton
+            // 
+            this.searchDateButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.searchDateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.searchDateButton.Location = new System.Drawing.Point(1431, 3);
+            this.searchDateButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.searchDateButton.Name = "searchDateButton";
+            this.searchDateButton.Size = new System.Drawing.Size(146, 40);
+            this.searchDateButton.TabIndex = 12;
+            this.searchDateButton.Text = "Filter Date";
+            this.searchDateButton.UseVisualStyleBackColor = true;
+            this.searchDateButton.Click += new System.EventHandler(this.searchDateButton_Click);
+            // 
+            // pageLabel
+            // 
+            this.pageLabel.AutoSize = true;
+            this.pageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pageLabel.Font = new System.Drawing.Font("Arial Narrow", 11.25F);
+            this.pageLabel.Location = new System.Drawing.Point(1069, 0);
+            this.pageLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.pageLabel.Name = "pageLabel";
+            this.pageLabel.Size = new System.Drawing.Size(245, 46);
+            this.pageLabel.TabIndex = 9;
+            this.pageLabel.Text = "Page";
+            this.pageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ConsultationListControl
             // 

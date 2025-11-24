@@ -1,6 +1,7 @@
 ﻿using Accord;
 using ENT_Clinic_System.Admission;
 using ENT_Clinic_System.Consultation;
+using ENT_Clinic_System.Files;
 using ENT_Clinic_System.Helpers;
 using ENT_Clinic_System.Helpers.ReportHelpers;
 using ENT_Clinic_System.InsertForms;
@@ -30,7 +31,7 @@ namespace ENT_Clinic_System
 
 
         }
-  
+
         private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowSingleInstanceForm<PatientInfoForm>();
@@ -71,10 +72,10 @@ namespace ENT_Clinic_System
 
         public void LoadUserControl(UserControl uc)
         {
-            MainPanel.Controls.Clear();     
-            uc.Dock = DockStyle.Fill;       
-            MainPanel.Controls.Add(uc);     
-            uc.BringToFront();            
+            MainPanel.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            MainPanel.Controls.Add(uc);
+            uc.BringToFront();
         }
 
 
@@ -714,14 +715,29 @@ namespace ENT_Clinic_System
                 reportSubtitle: "",
                 showRowNumbers: false,
                 landscape: false, // portrait
-                totalColumns: new List<string> { "Current_Stock" , "Cost_Price"  , "Selling_Price"},
+                totalColumns: new List<string> { "Current_Stock", "Cost_Price", "Selling_Price" },
                 columnWidths: columnWidths
             );
 
             ReportHelper_v2.ShowPreview();
         }
 
+        private void issuesPrescriptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void issuedMedicalCertificatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MedicalCertificateList medicalCertificateList = new MedicalCertificateList();
+            LoadUserControl(medicalCertificateList);
+        }
+
+        private void expensesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExpensesControl expensesControl = new ExpensesControl();   
+            LoadUserControl(expensesControl);
+        }
     }
 
 }

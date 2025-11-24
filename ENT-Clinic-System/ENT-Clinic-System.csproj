@@ -219,6 +219,24 @@
     <Compile Include="Consultation\ConsultationHistoryControl.Designer.cs">
       <DependentUpon>ConsultationHistoryControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Files\LabRequestsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Files\LabRequestsList.Designer.cs">
+      <DependentUpon>LabRequestsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Files\MedicalCertificateList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Files\MedicalCertificateList.Designer.cs">
+      <DependentUpon>MedicalCertificateList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Files\PrescriptionList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Files\PrescriptionList.Designer.cs">
+      <DependentUpon>PrescriptionList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\SQLBackupHelper.cs" />
     <Compile Include="Helpers\WaterMarkHelper_lic.cs" />
     <Compile Include="PrintingFroms\AdmitingOrdersPrintHelper.cs" />
@@ -583,6 +601,12 @@
     <Compile Include="UserControls\DefaultControl.Designer.cs">
       <DependentUpon>DefaultControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ExpensesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ExpensesControl.Designer.cs">
+      <DependentUpon>ExpensesControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PatientListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -605,6 +629,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Consultation\ScannedConsultationHistoryForm.resx">
       <DependentUpon>ScannedConsultationHistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Files\LabRequestsList.resx">
+      <DependentUpon>LabRequestsList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Files\MedicalCertificateList.resx">
+      <DependentUpon>MedicalCertificateList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Files\PrescriptionList.resx">
+      <DependentUpon>PrescriptionList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Helpers\CameraConsultationForm.resx">
       <DependentUpon>CameraConsultationForm.cs</DependentUpon>
@@ -721,6 +754,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DefaultControl.resx">
       <DependentUpon>DefaultControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ExpensesControl.resx">
+      <DependentUpon>ExpensesControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\PatientListControl.resx">
       <DependentUpon>PatientListControl.cs</DependentUpon>

@@ -635,7 +635,7 @@
             this.consultationHistoryContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.medicalCertificateToolStripMenuItem});
             this.consultationHistoryContextMenuStrip.Name = "consultationHistoryContextMenuStrip";
-            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(209, 28);
+            this.consultationHistoryContextMenuStrip.Size = new System.Drawing.Size(209, 50);
             // 
             // medicalCertificateToolStripMenuItem
             // 
